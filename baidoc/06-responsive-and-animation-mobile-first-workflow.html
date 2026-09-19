@@ -1,0 +1,90 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mobile-First Workflow | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-6.html">Chương 6</a> &rsaquo; Responsive & animation &rsaquo; Bài 2/5</p>
+<h1 class="lesson-title">Mobile-First Workflow</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 2/5</span><span>Module: Responsive & animation</span><span>~5 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="mobilefirst-workflow">Mobile-First Workflow</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Hiểu khái niệm mobile-first: viết CSS nền cho màn hình nhỏ trước, phóng to dần sau</li><li>Giải thích được ba lý do chiến lược khiến mobile-first thắng desktop-first</li><li>Chuyển một đoạn CSS desktop-first sang mobile-first với sự trợ giúp của AI</li></ul>
+<h3 id="h-3-mobilefirst-ngha-l-g">Mobile-first nghĩa là gì<a class="anchor" href="#h-3-mobilefirst-ngha-l-g" aria-label="Liên kết mục">#</a></h3>
+<p>Có hai cách tổ chức CSS responsive:</p>
+<ul><li><strong>Desktop-first</strong>: viết layout hoàn chỉnh cho màn hình rộng, rồi dùng <code>@media (max-width: ...)</code> để "vá" lại cho màn hình nhỏ.</li><li><strong>Mobile-first</strong>: viết CSS tối giản cho màn hình hẹp trước, rồi dùng <code>@media (min-width: ...)</code> để <strong>nâng cấp dần</strong> khi màn hình rộng ra.</li></ul>
+<p>Cùng một kết quả — menu trên desktop xếp ngang, trên mobile bị giấu — viết hai kiểu sẽ khác hẳn nhau:</p>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>/* --- DESKTOP-FIRST: viết to trước, "sửa" nhỏ sau --- */
+.header-nav { display: flex; justify-content: space-between; }
+.header-nav .menu { display: flex; gap: 1rem; }
+
+@media (max-width: 767.98px) {
+  .header-nav { display: block; }
+  .header-nav .menu { display: none; } /* vô hiệu hoá luật desktop */
+}</code></pre></figure>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>/* --- MOBILE-FIRST: viết nhỏ trước, "thêm" to sau --- */
+.header-nav { display: block; }
+.header-nav .menu { display: none; } /* mặc định: ẩn, JS sẽ mở khi bấm nút */
+
+@media (min-width: 768px) {
+  .header-nav { display: flex; justify-content: space-between; }
+  .header-nav .menu { display: flex; gap: 1rem; }
+}</code></pre></figure>
+<p>Chú ý sự khác biệt về tư duy: desktop-first <strong>gỡ bỏ</strong> khả năng đã có; mobile-first chỉ <strong>thêm</strong> khả năng mới. Bản mobile-first khớp với bản năng của CSS hơn — luật mặc định là "sự thật" cho mọi màn hình, media query chỉ là lớp gia cố.</p>
+<h3 id="h-10-v-sao-mobilefirst-thng">Vì sao mobile-first thắng<a class="anchor" href="#h-10-v-sao-mobilefirst-thng" aria-label="Liên kết mục">#</a></h3>
+<ol><li><strong>Đúng với người dùng thật.</strong> Trang Highland Hospital phần lớn khách truy cập từ điện thoại — họ tìm giờ khám, bấm nút đặt lịch ngay trên màn hình nhỏ. Nếu trải nghiệm mobile chỉ là "bản desktop bị vá", họ sẽ là người chịu thiệt.</li><li><strong>Ràng buộc là người thầy tốt.</strong> Bắt đầu từ 360px, bạn buộc phải hỏi: điều gì quan trọng nhất với bệnh nhân? Số điện thoại đặt lịch phải nổi bật, chuyên khoa phải dễ thấy — còn slogan dài có thể cắt. Khoảng hẹp ép bạn ưu tiên nội dung.</li><li><strong>CSS ngắn hơn, ít lỗi hơn.</strong> Với <code>min-width</code>, mỗi media query chỉ thêm vài dòng thay đổi nhỏ. Với <code>max-width</code>, muốn sửa trên màn hình nhỏ bạn phải ghi đè từng thuộc tính desktop đã đặt — vừa dài vừa dễ quên một thuộc tính, sinh ra chiến tranh cascade.</li></ol>
+<h3 id="h-12-prompt-mu-chuyn-desktopfirst-sang-mobilefirst">Prompt mẫu: chuyển desktop-first sang mobile-first<a class="anchor" href="#h-12-prompt-mu-chuyn-desktopfirst-sang-mobilefirst" aria-label="Liên kết mục">#</a></h3>
+<p>Quy trình an toàn: dán CSS cũ + mô tả kết quả hiển thị, yêu cầu AI viết lại theo mobile-first, đồng thời <strong>giữ nguyên tên class và hành vi</strong>.</p>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Đây là CSS desktop-first của khối "Đặt lịch nhanh" trên trang Highland
+Hospital: lưới 3 cột khi màn hình rộng, xếp dọc khi hẹp (ảnh chụp kèm).
+
+/* [Dán CSS desktop-first của bạn vào đây] */
+
+Viết lại theo mobile-first: luật cơ bản dành cho màn hình dưới 768px
+(xếp dọc, nút đặt lịch toàn chiều rộng), sau đó @media (min-width: 768px)
+bật lưới 2 cột, @media (min-width: 992px) chuyển sang 3 cột và tăng
+khoảng cách. Giữ nguyên tên class, màu sắc, font-size. Kèm một dòng
+giải thích cho từng khối CSS.</code></pre></figure>
+<p>Khi nhận câu trả lời, đừng bê nguyên vào file. So sánh hai bản xem hành vi nào bị đổi, đặc biệt các thuộc tính "biến mất" khi lật ngược hướng query — đó là chỗ AI hay sót. Đã hiểu từng dòng rồi mới thay thế, đúng bước 4 "Tinh chỉnh &amp; Tối ưu".</p>
+<h3 id="h-16-th-t-vit-file-css-theo-mobilefirst">Thứ tự viết file CSS theo mobile-first<a class="anchor" href="#h-16-th-t-vit-file-css-theo-mobilefirst" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>/* 1. Reset + biến + kiểu nền (áp dụng cho mọi màn hình) */
+:root { --brand: #0d6efd; --space: 1rem; }
+* { box-sizing: border-box; margin: 0; }
+body { font-family: system-ui, sans-serif; line-height: 1.6; }
+
+/* 2. Layout mặc định — chính là trải nghiệm mobile */
+.doctor-grid { display: block; }
+.booking-form label { display: block; margin-top: var(--space); }
+
+/* 3. Nâng cấp dần theo min-width, tăng dần mốc */
+@media (min-width: 768px) {
+  .doctor-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+}
+
+@media (min-width: 992px) {
+  .doctor-grid { grid-template-columns: repeat(4, 1fr); }
+}</code></pre></figure>
+<p>Quy tắc vàng để nhớ: <strong><code>min-width</code> đi cùng mobile-first, <code>max-width</code> đi cùng desktop-first</strong>. Trong một dự án chỉ dùng một hướng — trộn hai hướng là cách nhanh nhất để có một file CSS không ai dám đụng vào.</p>
+<h3 id="h-19-thc-hnh">Thực hành<a class="anchor" href="#h-19-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Mở lại Hero hoặc lưới Doctor Cards ở Chương 5, xác định nó đang viết theo hướng nào.</li><li>Nếu là desktop-first, dùng prompt ở trên để AI viết lại theo mobile-first, rồi tự review và thay thế.</li><li>Kiểm tra bằng Responsive Mode: trang phải đẹp sẵn ở 360px mà không cần một media query nào "vá lỗi".</li></ul>
+<h3 id="h-21-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-21-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Đã có nền tảng responsive đúng hướng — bài sau xử lý hai thành phần hay vỡ nhất trên màn hình nhỏ: hình ảnh và chữ, với <code>max-width: 100%</code> và hàm <code>clamp()</code>.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">7 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-mobilefirst-ngha-l-g">Mobile-first nghĩa là gì</a></li><li><a href="#h-10-v-sao-mobilefirst-thng">Vì sao mobile-first thắng</a></li><li><a href="#h-12-prompt-mu-chuyn-desktopfirst-sang-mobilefirst">Prompt mẫu: chuyển desktop-first sang mobile-first</a></li><li><a href="#h-16-th-t-vit-file-css-theo-mobilefirst">Thứ tự viết file CSS theo mobile-first</a></li><li><a href="#h-19-thc-hnh">Thực hành</a></li><li><a href="#h-21-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="06-responsive-and-animation-media-queries-breakpoints.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Media Queries & Breakpoints</strong></span></a><a href="06-responsive-and-animation-hinh-anh-typography-linh-hoat.html" rel="next"><span><small>Bài sau</small><strong>Hình ảnh & Typography linh hoạt</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

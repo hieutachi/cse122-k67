@@ -1,0 +1,89 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tối ưu hiệu năng & Responsive | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-9.html">Chương 9</a> &rsaquo; Dự án Highland Hospital &rsaquo; Bài 5/6</p>
+<h1 class="lesson-title">Tối ưu hiệu năng & Responsive</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 5/6</span><span>Module: Dự án Highland Hospital</span><span>~7 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="ti-u-hiu-nng-amp-responsive">Tối ưu hiệu năng &amp; Responsive</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Đo hiệu năng bằng Lighthouse trong DevTools và biết đọc kết quả</li><li>Tối ưu hình ảnh: lazy loading, kích thước đúng chỗ dùng — giảm layout shift</li><li>Kiểm tra responsive toàn bộ 3 trang ở 320 / 768 / 1024 / 1440 px</li><li>Áp dụng accessibility cơ bản: contrast, alt, label, focus</li></ul>
+<h3 id="h-3-chc-nng-xong-ri--gi-l-cht-lng">Chức năng xong rồi — giờ là chất lượng<a class="anchor" href="#h-3-chc-nng-xong-ri--gi-l-cht-lng" aria-label="Liên kết mục">#</a></h3>
+<p>Bài 02–04 giúp trang <strong>chạy được</strong>. Bài này giúp trang <strong>chạy tốt</strong>: mở nhanh trên mạng 3G, không giật layout, đọc được bằng screen reader, dùng được bằng bàn phím. Đây cũng là nhóm tiêu chí mà nhà tuyển dụng và khách hàng hay kiểm tra nhất.</p>
+<h3 id="h-5-o-bng-lighthouse">Đo bằng Lighthouse<a class="anchor" href="#h-5-o-bng-lighthouse" aria-label="Liên kết mục">#</a></h3>
+<p>Lighthouse là công cụ audit miễn phí có sẵn trong Chrome:</p>
+<ol><li>Mở <code>index.html</code> bằng Live Server (phải chạy qua HTTP, không phải <code>file://</code>).</li><li>DevTools (F12) → tab <strong>Lighthouse</strong>.</li><li>Chọn <strong>Mobile</strong>, loại <strong>Pages</strong>, bấm <em>Analyze page load</em>.</li><li>Chờ ~30 giây, đọc 4 chỉ số: <strong>Performance, Accessibility, Best Practices, SEO</strong> — mỗi chỉ số từ 0–100.</li></ol>
+<p>Lần chạy đầu tiên thường báo 3 vấn đề quen thuộc — ghi lại điểm số trước khi sửa để sau này so sánh:</p>
+<div class="table-card"><table><thead><tr><th>Vấn đề Lighthouse hay báo</th><th>Nghĩa là gì</th><th>Cách xử lý</th></tr></thead><tbody><tr><td>"Images: display next-gen formats"</td><td>Ảnh JPEG/PNG nặng</td><td>Chuyển sang WebP/AVIF, nén</td></tr><tr><td>"Properly size images"</td><td>Ảnh gửi về to hơn chỗ hiển thị</td><td>Cấp ảnh đúng kích thước + <code>srcset</code></td></tr><tr><td>"Eliminate render-blocking resources"</td><td>CSS/JS chặn render</td><td>Giữ CDN, thêm <code>defer</code> cho JS</td></tr><tr><td>"Preload Largest Contentful Paint image"</td><td>Ảnh hero tải quá muộn</td><td>Đặt ảnh hero tải sớm (mặc định)</td></tr></tbody></table></div>
+<h3 id="h-10-hnh-nh-lazy-loading--ng-kch-thc">Hình ảnh: lazy loading + đúng kích thước<a class="anchor" href="#h-10-hnh-nh-lazy-loading--ng-kch-thc" aria-label="Liên kết mục">#</a></h3>
+<p>Quy tắc vàng của hình ảnh trên web: <strong>chỉ tải thứ người dùng sắp nhìn thấy, và chỉ tải đúng độ phân giải cần dùng</strong>.</p>
+<h4 id="1-lazy-loading-nh-di-fold">1. Lazy loading ảnh dưới fold</h4>
+<p>Ảnh hero (xuất hiện ngay khi mở trang) phải tải ngay; mọi ảnh <strong>dưới vùng nhìn đầu tiên</strong> — chân dung bác sĩ, ảnh trong testimonials — nên trì hoãn:</p>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;!-- Landing: ảnh bác sĩ do JS render — thêm loading="lazy" ngay trong template --&gt;
+&lt;img src="${d.avatar}" alt="Ảnh ${d.name}"
+     loading="lazy" width="400" height="300" class="card-img-top doctor-avatar"&gt;</code></pre></figure>
+<p>Thêm <strong><code>width</code> + <code>height</code></strong> cho mọi ảnh: trình duyệt dành sẵn đúng khoảng trống đó trước khi ảnh về, chống layout shift (điểm CLS trong Lighthouse). Lưu ý: kích thước khai báo là kích thước gốc của file ảnh, CSS vẫn tự co ảnh cho vừa card.</p>
+<h4 id="2-ngun-nh-linh-hot">2. Nguồn ảnh linh hoạt</h4>
+<p>Tạo 2 bản ảnh (bản 400px cho mobile, bản 800px cho desktop) rồi để trình duyệt tự chọn:</p>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;img src="img/hero-800.webp"
+     srcset="img/hero-400.webp 400w, img/hero-800.webp 800w"
+     sizes="(max-width: 992px) 100vw, 50vw"
+     width="800" height="500"
+     fetchpriority="high"
+     alt="Đội ngũ bác sĩ Highland Hospital tại sảnh bệnh viện"&gt;</code></pre></figure>
+<p>Giải thích nhanh: <code>srcset</code> + <code>sizes</code> là cơ chế trình duyệt chọn file ảnh theo màn hình; <code>fetchpriority="high"</code> báo trình duyệt ưu tiên tải ảnh này (dùng cho ảnh hero duy nhất, không dùng tràn lan).</p>
+<h3 id="h-20-gim-layout-shift-amp-render-nhanh">Giảm layout shift &amp; render nhanh<a class="anchor" href="#h-20-gim-layout-shift-amp-render-nhanh" aria-label="Liên kết mục">#</a></h3>
+<ul><li><strong>Đặt <code>width</code>/<code>height</code></strong> cho mọi ảnh (đã làm ở trên) — nguyên nhân số một của layout shift.</li><li><strong>Không chèn nội dung vào giữa trang sau khi đã vẽ</strong> — render lưới bác sĩ vào một container có chiều cao dự kiến thay vì để trang "nhảy" khi JS chạy.</li><li><strong>Giữ navbar <code>fixed-top</code> nhưng nhớ <code>scroll-padding-top</code></strong> (đã làm ở bài 02).</li><li><strong>JS <code>defer</code></strong> (đã làm ở bài 03) — trình duyệt vẽ trang trước, chạy script sau.</li></ul>
+<p>Toàn bộ các mẹo trên nằm trong nhóm "Core Web Vitals": <strong>LCP</strong> (ảnh hero tải nhanh), <strong>CLS</strong> (trang không nhảy), <strong>INP</strong> (bấm nút phản hồi tức thì) — chạy lại Lighthouse sau khi sửa, cả 3 nhóm này phải xanh.</p>
+<h3 id="h-23-kim-tra-responsive-4-mc">Kiểm tra responsive 4 mốc<a class="anchor" href="#h-23-kim-tra-responsive-4-mc" aria-label="Liên kết mục">#</a></h3>
+<p>Mở chế độ responsive trong DevTools (Ctrl+Shift+M) và duyệt <strong>cả 3 trang</strong> (index, booking, admin) ở 4 mốc:</p>
+<div class="table-card"><table><thead><tr><th>Mốc</th><th>Thiết bị điển hình</th><th>Điều cần xác nhận trên Highland</th></tr></thead><tbody><tr><td><strong>320px</strong></td><td>iPhone SE / Android cũ</td><td>Navbar gọn thành hamburger; card 1 cột; không tràn ngang (không có thanh cuộn ngang); nút vừa chạm</td></tr><tr><td><strong>768px</strong></td><td>iPad dọc</td><td>Services/doctors 2 cột; form đặt lịch không bị bóp</td></tr><tr><td><strong>1024px</strong></td><td>iPad ngang / laptop nhỏ</td><td>Doctors 3 cột; bảng admin có cuộn ngang trong <code>table-responsive</code></td></tr><tr><td><strong>1440px</strong></td><td>Desktop phổ biến</td><td>Container căn giữa đẹp; ảnh không vỡ, không giãn méo</td></tr></tbody></table></div>
+<p>Cách kiểm tra nhanh hiện tượng tràn: kéo ngang trang ở 320px — nếu có thanh cuộn ngang, dùng DevTools Elements để tìm phần tử thừa, hoặc gõ trong Console:</p>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>// Tìm phần tử rộng hơn viewport — nguyên nhân gây tràn ngang
+document.querySelectorAll('*').forEach(el =&gt; {
+  if (el.scrollWidth &gt; document.documentElement.clientWidth) {
+    console.warn('Tràn ngang:', el.tagName, el.className, el.scrollWidth);
+  }
+});</code></pre></figure>
+<h3 id="h-28-accessibility-c-bn---dng-l-chun">Accessibility cơ bản — đủ dùng là chuẩn<a class="anchor" href="#h-28-accessibility-c-bn---dng-l-chun" aria-label="Liên kết mục">#</a></h3>
+<p>Bốn kiểm tra nhanh, sửa được ngay trên dự án của bạn:</p>
+<ol><li><strong>Contrast</strong> — chữ xám nhạt trên nền trắng (<code>text-secondary</code> mặc định của Bootstrap) có thể dưới chuẩn 4.5:1 với chữ nhỏ. Kiểm tra bằng Lighthouse hoặc tiện ích <em>axe DevTools</em>. Cách chữa nhanh: thay <code>text-secondary</code> bằng <code>text-body-secondary</code> (tối hơn vừa đủ) hoặc tự đặt màu <code>#4b5563</code> trong <code>css/style.css</code>.</li><li><strong><code>alt</code> mô tả được nội dung</strong> — <code>alt="Ảnh bác sĩ"</code> là chưa đủ; phải là <code>alt="BS. Nguyễn Văn An — chuyên khoa Tim mạch"</code>. Ảnh trang trí thuần tuý dùng <code>alt=""</code> để screen reader bỏ qua.</li><li><strong>Label cho mọi input</strong> — mỗi ô nhập phải có <code>&lt;label&gt;</code> với <code>for</code> khớp <code>id</code>, hoặc <code>aria-label</code>; nút chỉ có icon phải có <code>title</code> hoặc <code>aria-label</code> (nút ✓ / ✕ / 🗑 ở bảng admin chính là điểm hay bị quên).</li><li><strong>Focus nhìn thấy được</strong> — dùng phím <code>Tab</code> đi hết trang: mọi link/nút phải có viền focus rõ (Bootstrap có sẵn <code>:focus-visible</code>; đừng viết CSS xoá outline).</li></ol>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;!-- Ví dụ sửa cho nút icon ở bảng admin --&gt;
+&lt;button class="btn btn-sm btn-outline-danger" data-action="delete"
+        aria-label="Xoá lịch hẹn của ${a.patient}"&gt;🗑&lt;/button&gt;</code></pre></figure>
+<h3 id="h-32-prompt-ai-r-sot">Prompt AI rà soát<a class="anchor" href="#h-32-prompt-ai-r-sot" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Rà soát giúp tôi trang web Highland Hospital (tôi dán toàn bộ index.html,
+css/style.css và js/main.js). Kiểm tra và liệt kê theo mức độ ưu tiên:
+
+1. Accessibility: thẻ semantic, heading cấp, alt ảnh, label form, aria-*, focus
+2. Hiệu năng: ảnh thiếu width/height hoặc loading="lazy", tài nguyên chặn render
+3. Responsive: class col không nhất quán, text/container có thể tràn ở 320px
+4. Lỗi HTML: thẻ lồng sai, id trùng, thuộc tính sai
+
+Mỗi lỗi cho: vị trí (dòng/section), vì sao là lỗi, và đoạn sửa cụ thể.
+Đừng viết lại cả file — chỉ liệt kê vấn đề và chỗ cần sửa.</code></pre></figure>
+<h3 id="h-34-thc-hnh">Thực hành<a class="anchor" href="#h-34-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<ol><li>Chạy Lighthouse cho cả 3 trang, chụp lại điểm số ban đầu.</li><li>Sửa ảnh: thêm <code>width</code>/<code>height</code>, <code>loading="lazy"</code> cho ảnh bác sĩ, chuyển 2–3 ảnh sang WebP (dùng ảnh placeholder miễn phí là được).</li><li>Sửa hết lỗi contrast và <code>aria-label</code> cho nút icon trong bảng admin.</li><li>Duyệt 4 mốc 320/768/1024/1440 cho cả 3 trang, chạy đoạn Console tìm phần tử tràn và sửa.</li><li>Chạy lại Lighthouse — ghi lại điểm mới và so sánh; mục tiêu ≥ 90 Performance và 100 Accessibility trên bản đã nén ảnh.</li><li>Chạy prompt rà soát ở trên và xử lý 3 lỗi quan trọng nhất AI tìm được (sau khi tự kiểm chứng).</li></ol>
+<h3 id="h-36-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-36-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Dự án đã chạy nhanh và mượt trên mọi màn hình. Bài cuối cùng — <em>Tư duy component &amp; hướng đi tiếp theo</em> — sẽ soi lại toàn bộ dự án dưới góc component, chỉ đường sang React/Vue/Angular và cách deploy sản phẩm lên mạng.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">10 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-chc-nng-xong-ri--gi-l-cht-lng">Chức năng xong rồi — giờ là chất lượng</a></li><li><a href="#h-5-o-bng-lighthouse">Đo bằng Lighthouse</a></li><li><a href="#h-10-hnh-nh-lazy-loading--ng-kch-thc">Hình ảnh: lazy loading + đúng kích thước</a></li><li><a href="#h-20-gim-layout-shift-amp-render-nhanh">Giảm layout shift &amp; render nhanh</a></li><li><a href="#h-23-kim-tra-responsive-4-mc">Kiểm tra responsive 4 mốc</a></li><li><a href="#h-28-accessibility-c-bn---dng-l-chun">Accessibility cơ bản — đủ dùng là chuẩn</a></li><li><a href="#h-32-prompt-ai-r-sot">Prompt AI rà soát</a></li><li><a href="#h-34-thc-hnh">Thực hành</a></li><li><a href="#h-36-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="12-highland-hospital-project-xay-admin-dashboard.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Xây Admin Dashboard</strong></span></a><a href="12-highland-hospital-project-tu-duy-component-hu-ng-di-ti-p-theo.html" rel="next"><span><small>Bài sau</small><strong>Tư duy component & hướng đi tiếp theo</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

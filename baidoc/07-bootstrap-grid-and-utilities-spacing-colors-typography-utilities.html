@@ -1,0 +1,89 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Spacing, Colors & Typography utilities | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-6.html">Chương 6</a> &rsaquo; Bootstrap grid & utilities &rsaquo; Bài 3/5</p>
+<h1 class="lesson-title">Spacing, Colors & Typography utilities</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 3/5</span><span>Module: Bootstrap grid & utilities</span><span>~4 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="spacing-colors-amp-typography-utilities">Spacing, Colors &amp; Typography utilities</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Điều chỉnh khoảng cách bằng <code>m-<em></code>, <code>p-</em></code>, <code>mx-auto</code>, <code>gap</code> mà không viết CSS</li><li>Tô màu nhanh bằng <code>bg-<em></code>, <code>text-</em></code>, <code>text-bg-*</code> và hiểu cách chúng tương tác</li><li>Bật/tắt phần tử theo màn hình bằng <code>d-none</code> / <code>d-md-block</code>; dùng typography <code>display-*</code>, <code>lead</code>, <code>text-center</code></li><li>Áp dụng vào header Highland Hospital</li></ul>
+<h3 id="h-3-utility-class--v-kh-b-qua-file-css">Utility class — vũ khí bỏ qua file CSS<a class="anchor" href="#h-3-utility-class--v-kh-b-qua-file-css" aria-label="Liên kết mục">#</a></h3>
+<p>Utility class là những class một thuộc tính, một ý nghĩa: <code>mt-3</code> = <code>margin-top: 1rem</code>, <code>p-2</code> = <code>padding: 0.5rem</code>. Lợi ích: chỉnh khoảng cách <strong>ngay trong HTML</strong>, không phải mở CSS, không lo cascade đè nhau. Chi phí là HTML dài hơn — nhưng với AI hỗ trợ viết thì gần như bằng không.</p>
+<h3 id="h-5-spacing-m-p-v-thang-05">Spacing: m, p và thang 0–5<a class="anchor" href="#h-5-spacing-m-p-v-thang-05" aria-label="Liên kết mục">#</a></h3>
+<p>Thang đo Bootstrap tính theo <code>rem</code> (1rem = 16px):</p>
+<div class="table-card"><table><thead><tr><th>Class</th><th>Giá trị</th><th></th><th>Class</th><th>Giá trị</th></tr></thead><tbody><tr><td><code>m-0</code> / <code>p-0</code></td><td>0</td><td></td><td><code>m-3</code> / <code>p-3</code></td><td>1rem</td></tr><tr><td><code>m-1</code> / <code>p-1</code></td><td>0.25rem</td><td></td><td><code>m-4</code> / <code>p-4</code></td><td>1.5rem</td></tr><tr><td><code>m-2</code> / <code>p-2</code></td><td>0.5rem</td><td></td><td><code>m-5</code> / <code>p-5</code></td><td>3rem</td></tr></tbody></table></div>
+<p>Mở rộng theo hướng: <code>t</code> (top), <code>b</code> (bottom), <code>s</code> (start/trái), <code>e</code> (end/phải), <code>x</code> (trái+phải), <code>y</code> (trên+dưới) — ví dụ <code>pt-4</code>, <code>mx-auto</code>, <code>py-5</code>. <code>mx-auto</code> chỉ canh giữa được khi phần tử có bề ngang giới hạn — nhớ kèm <code>max-width</code> hoặc nằm trong cột <code>col-<em></code>. Khoảng cách <strong>giữa</strong> các phần tử con trong flex/grid dùng class <code>gap-</em></code> (như <code>gap-3</code>, <code>gap-md-4</code>) thay vì <code>me-*</code> cho từng đứa con:</p>
+<h3 id="h-9-colors-bg-text-v-textbg">Colors: bg, text và text-bg<a class="anchor" href="#h-9-colors-bg-text-v-textbg" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;p class="text-primary"&gt;Xanh chủ đạo Bootstrap&lt;/p&gt;
+&lt;p class="text-success"&gt;Thông báo thành công&lt;/p&gt;
+&lt;p class="text-danger"&gt;Lỗi nhập liệu&lt;/p&gt;
+&lt;p class="text-muted"&gt;Phụ đề mờ — dùng cho mô tả&lt;/p&gt;
+
+&lt;div class="bg-primary text-white p-3 rounded"&gt;Nền xanh, chữ trắng&lt;/div&gt;
+&lt;div class="bg-light text-dark p-3 rounded"&gt;Nền nhạt, chữ tối&lt;/div&gt;</code></pre></figure>
+<p>Bộ màu gồm 8 màu ngữ nghĩa: <code>primary</code> (xanh dương), <code>secondary</code> (xám), <code>success</code> (xanh lá — thành công), <code>danger</code> (đỏ — lỗi), <code>warning</code> (vàng — cảnh báo), <code>info</code>, <code>light</code>, <code>dark</code>. Hai điều cần biết:</p>
+<ul><li>Có cả biến thể nhạt: <code>bg-primary-subtle</code>, <code>text-primary-emphasis</code> — đẹp cho vùng highlight.</li><li><code>text-bg-*</code> (Bootstrap 5.2+) tự chọn chữ tương phản: <code>&lt;div class="text-bg-warning p-2"&gt;</code> cho chữ tối trên nền vàng đúng chuẩn, không cần tự nghĩ <code>text-white</code> hay <code>text-dark</code>.</li></ul>
+<h3 id="h-13-display-utilities-bttt-theo-mn-hnh">Display utilities: bật/tắt theo màn hình<a class="anchor" href="#h-13-display-utilities-bttt-theo-mn-hnh" aria-label="Liên kết mục">#</a></h3>
+<p>Họ <code>d-*</code> chính là <code>display</code> — và kết hợp breakpoint cho khả năng responsive:</p>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;p class="d-none d-md-block"&gt;
+  Đoạn này ẩn trên mobile (d-none), hiện lại từ 768px (d-md-block).
+&lt;/p&gt;
+&lt;p class="d-md-none"&gt;
+  Đoạn này chỉ hiện dưới 768px — thường là "slogan ngắn" cho màn hình nhỏ.
+&lt;/p&gt;</code></pre></figure>
+<p>Nguyên lý luôn là "đặt trạng thái nền trước, mở lại sau": <code>d-none</code> (ẩn) rồi <code>d-md-block</code> (hiện từ md). Họ này sẽ phát huy sức mạnh ở Chương 8 khi làm navbar mobile với nút hamburger.</p>
+<h3 id="h-17-typography-utilities">Typography utilities<a class="anchor" href="#h-17-typography-utilities" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;h1 class="display-3"&gt;Highland Hospital&lt;/h1&gt;   &lt;!-- to hơn h1 thường --&gt;
+&lt;p class="lead"&gt;Hệ thống y tế vì sức khỏe gia đình bạn.&lt;/p&gt; &lt;!-- đoạn dẫn lớn hơn --&gt;
+&lt;p class="text-center"&gt;Đặt lịch qua hotline 1900 1234&lt;/p&gt;
+&lt;p class="fw-bold"&gt;Chữ đậm&lt;/p&gt;</code></pre></figure>
+<p><code>display-1</code> đến <code>display-6</code> dành cho tiêu đề trang trí (hero), <code>lead</code> cho câu dẫn dưới tiêu đề, <code>text-center</code>/<code>text-md-start</code>... canh chữ — họ này cũng chạy theo breakpoint.</p>
+<h3 id="h-20-p-dng-header-highland-hospital">Áp dụng: header Highland Hospital<a class="anchor" href="#h-20-p-dng-header-highland-hospital" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;header class="bg-primary text-white"&gt;
+  &lt;div class="container py-4"&gt;
+    &lt;div class="d-flex justify-content-between align-items-center"&gt;
+      &lt;div&gt;
+        &lt;h1 class="display-6 mb-0"&gt;Highland Hospital&lt;/h1&gt;
+        &lt;p class="d-none d-sm-block mb-0 small text-white-50"&gt;
+          Đặt lịch khám trực tuyến · Khám chữa bệnh chất lượng cao
+        &lt;/p&gt;
+      &lt;/div&gt;
+      &lt;a href="tel:19001234" class="btn btn-light"&gt;1900 1234&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/header&gt;</code></pre></figure>
+<p>Đọc ngược lại: header nền xanh chữ trắng; nội dung trong container, đệm dọc <code>py-4</code>; hàng ngang <code>d-flex</code> với <code>justify-content-between</code> (hai đầu) và <code>align-items-center</code> (canh giữa dọc); slogan <strong>chỉ hiện từ 576px</strong> nhờ <code>d-none d-sm-block</code> — mobile chỉ còn tên bệnh viện và số điện thoại.</p>
+<h3 id="h-23-prompt-mu-ai-dng-utilities-cho-header">Prompt mẫu: AI dùng utilities cho header<a class="anchor" href="#h-23-prompt-mu-ai-dng-utilities-cho-header" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Dựng header cho trang Highland Hospital chỉ bằng Bootstrap 5 utilities và
+components, KHÔNG viết CSS riêng. Yêu cầu: nền gradient? — không, dùng
+bg-primary; bên trái là tên bệnh viện bằng display-6 cùng slogan
+.lead nhỏ chỉ hiện từ breakpoint sm; bên phải nút "Đặt lịch khám" dạng
+btn-light có icon điện thoại. Khoảng cách đệm dọc vừa phải, dùng py-4
+hoặc tương đương. Trả file HTML hoàn chỉnh kèm 3-4 dòng giải thích cách
+phối các utility class.</code></pre></figure>
+<h3 id="h-25-thc-hnh">Thực hành<a class="anchor" href="#h-25-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Dựng header ở trên, thay đổi vài giá trị để cảm nhận: <code>py-4</code> → <code>py-5</code>, <code>display-6</code> → <code>display-3</code>, slogan <code>d-none d-sm-block</code> → <code>d-none d-md-block</code>.</li><li>Dùng <code>bg-primary-subtle</code> + <code>text-primary-emphasis</code> làm một banner "Tuyển dụng" mini.</li><li>Gửi prompt cho AI, đối chiếu sự lựa chọn class của nó với bản của bạn.</li></ul>
+<h3 id="h-27-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-27-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Đã biết phối màu và khoảng cách — bài sau học bộ ba giao diện thông dụng nhất: Buttons, Badges và Alerts, dùng ngay cho nút "Đặt lịch" và thông báo form.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">10 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-utility-class--v-kh-b-qua-file-css">Utility class — vũ khí bỏ qua file CSS</a></li><li><a href="#h-5-spacing-m-p-v-thang-05">Spacing: m, p và thang 0–5</a></li><li><a href="#h-9-colors-bg-text-v-textbg">Colors: bg, text và text-bg</a></li><li><a href="#h-13-display-utilities-bttt-theo-mn-hnh">Display utilities: bật/tắt theo màn hình</a></li><li><a href="#h-17-typography-utilities">Typography utilities</a></li><li><a href="#h-20-p-dng-header-highland-hospital">Áp dụng: header Highland Hospital</a></li><li><a href="#h-23-prompt-mu-ai-dng-utilities-cho-header">Prompt mẫu: AI dùng utilities cho header</a></li><li><a href="#h-25-thc-hnh">Thực hành</a></li><li><a href="#h-27-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="07-bootstrap-grid-and-utilities-h-th-ng-lu-i-12-c-t.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Hệ thống lưới 12 cột</strong></span></a><a href="07-bootstrap-grid-and-utilities-buttons-badges-alerts.html" rel="next"><span><small>Bài sau</small><strong>Buttons, Badges & Alerts</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

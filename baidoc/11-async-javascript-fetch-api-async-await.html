@@ -1,0 +1,85 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fetch API & Async/Await | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-9.html">Chương 9</a> &rsaquo; Async JavaScript &rsaquo; Bài 1/5</p>
+<h1 class="lesson-title">Fetch API & Async/Await</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 1/5</span><span>Module: Async JavaScript</span><span>~4 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="fetch-api-amp-asyncawait">Fetch API &amp; Async/Await</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Hiểu <code>fetch</code> trả về <code>Promise</code> và vì sao gọi API bắt buộc phải xử lý bất đồng bộ</li><li>Viết đúng cú pháp <code>async</code> / <code>await</code> kết hợp <code>response.json()</code></li><li>Xử lý lỗi bằng <code>try/catch</code> để trang không crash khi API lỗi</li><li>Fetch danh sách lịch hẹn từ một API giả của Highland Hospital</li></ul>
+<h3 id="h-3-v-sao-cn-async-khi-gi-api">Vì sao cần async khi gọi API?<a class="anchor" href="#h-3-v-sao-cn-async-khi-gi-api" aria-label="Liên kết mục">#</a></h3>
+<p>Khi gọi API, dữ liệu phải đi qua mạng — có thể mất vài trăm mili giây tới vài giây. JavaScript chạy <strong>một luồng duy nhất</strong>: nếu nó ngồi chờ câu trả lời thì toàn bộ trang (cuộn chuột, gõ phím, bấm nút) đứng hình. Nên trình duyệt trả về ngay một <strong><code>Promise</code></strong> — "tờ phiếu hẹn" cho biết <em>sẽ có</em> dữ liệu hoặc lỗi trong tương lai — và code của bạn tiếp tục chạy tiếp.</p>
+<p><code>async</code>/<code>await</code> là cách viết gọn gàng để nói: "đợi tờ phiếu này được thanh toán rồi mới đi tiếp", mà không chặn trang:</p>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>async function loadAppointments() {
+  const response = await fetch('http://localhost:3000/appointments');
+  const appointments = await response.json();
+  return appointments;
+}</code></pre></figure>
+<p>Luật cú pháp quan trọng (AI hay quên, bạn phải nhớ):</p>
+<ul><li><code>await</code> <strong>chỉ dùng được bên trong hàm <code>async</code></strong> — nếu dùng ở ngoài sẽ báo lỗi cú pháp.</li><li>Hàm <code>async</code> <strong>luôn trả về một <code>Promise</code></strong> — chỗ gọi nó phải dùng <code>await</code> (trong hàm async khác) hoặc <code>.then()</code>.</li><li>Phải <code>await response.json()</code> — <code>fetch</code> xong mới có <em>header</em> của phản hồi, còn <em>thân dữ liệu</em> thì phải đọc tiếp.</li></ul>
+<h3 id="h-9-fetch-tr-v-g--v-cm-by-http-404">fetch trả về gì — và cạm bẫy "HTTP 404"<a class="anchor" href="#h-9-fetch-tr-v-g--v-cm-by-http-404" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>async function fetchAppointments() {
+  try {
+    const response = await fetch('http://localhost:3000/appointments');
+
+    // fetch KHÔNG ném lỗi khi server trả 404/500 — phải tự kiểm tra
+    if (!response.ok) {
+      throw new Error(`API trả lỗi ${response.status}`);
+    }
+
+    const appointments = await response.json();
+    renderAppointments(appointments);
+  } catch (error) {
+    console.error('Không tải được lịch hẹn:', error);
+  }
+}</code></pre></figure>
+<p>Điểm dễ trượt nhất: <code>fetch</code> chỉ <em>reject</em> khi <strong>mạng</strong> lỗi (mất mạng, sai địa chỉ). Server trả <code>404</code> hay <code>500</code> vẫn được tính là "thành công về mặt mạng" — nên bạn phải tự kiểm tra <code>response.ok</code> (true khi status 200–299) rồi tự ném lỗi.</p>
+<h3 id="h-12-trycatch--bt-li-trc-khi-n-lm-cht-trang">try/catch — bắt lỗi trước khi nó làm chết trang<a class="anchor" href="#h-12-trycatch--bt-li-trc-khi-n-lm-cht-trang" aria-label="Liên kết mục">#</a></h3>
+<p>Mọi thứ "đi ra ngoài" — mạng, server — đều có thể lỗi bất cứ lúc nào. Không có <code>try/catch</code>, một lỗi nhỏ trong <code>fetch</code> sẽ làm dừng toàn bộ script phía sau. Luồng chuẩn:</p>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>async function init() {
+  try {
+    const appointments = await fetchAppointments();
+    renderAppointments(appointments);
+  } catch (error) {
+    showErrorMessage('Không tải được dữ liệu. Vui lòng thử lại sau.');
+  }
+}
+
+init();</code></pre></figure>
+<p>Lưu ý: nếu bạn viết <code>async function</code> rồi gọi mà không <code>await</code>, lỗi sẽ rơi vào "unhandled promise rejection" và <code>try/catch</code> bên ngoài không bắt được — luôn <code>await</code> lời gọi ở nơi gọi.</p>
+<h3 id="h-16-prompt-ai-mu">Prompt AI mẫu<a class="anchor" href="#h-16-prompt-ai-mu" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Dự án Highland Hospital, JS thuần ES6+ chạy trong trình duyệt (không
+framework). Viết hàm async loadAppointments(): fetch GET
+"http://localhost:3000/appointments" (JSON Server), kiểm tra
+response.ok, trả về mảng appointment qua response.json(). Viết thêm
+hàm renderAppointments(list) đổ vào ul#appointment-list bằng createElement
++ textContent (KHÔNG dùng innerHTML). Ở ngoài cùng gọi trong try/catch,
+khi lỗi thì console.error. Giải thích 3 dòng vì sao phải async/await
+và vì sao phải kiểm tra response.ok.</code></pre></figure>
+<p>Chạy prompt rồi đọc từng dòng: nếu AI quên <code>response.ok</code>, quên <code>await</code>, hay lén dùng <code>innerHTML</code>, hãy tự sửa trước khi chạy.</p>
+<h3 id="h-19-thc-hnh">Thực hành<a class="anchor" href="#h-19-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<ol><li>Trong Console, gõ <code>fetch('https://jsonplaceholder.typicode.com/todos/1').then(r =&gt; r.json()).then(console.log)</code> để thấy Promise hoạt động.</li><li>Viết <code>loadAppointments()</code> theo prompt; thử mở tab Network → chọn Fetch/XHR để xem request <code>GET</code> và status <code>200</code>.</li><li>Đổi URL thành <code>http://localhost:3000/appointments-sai</code> và quan sát lỗi 404 — xác nhận code của bạn báo lỗi rõ ràng chứ không im lặng.</li><li>Chuẩn bị endpoint giả: bài kế tiếp sẽ dựng JSON Server để có dữ liệu thật để fetch.</li></ol>
+<h3 id="h-21-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-21-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p><code>fetch</code> giờ cần một cái đích thật để bắn tới — bài sau dựng mock REST API bằng JSON Server với các endpoint <code>/doctors</code> và <code>/appointments</code>.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">7 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-v-sao-cn-async-khi-gi-api">Vì sao cần async khi gọi API?</a></li><li><a href="#h-9-fetch-tr-v-g--v-cm-by-http-404">fetch trả về gì — và cạm bẫy "HTTP 404"</a></li><li><a href="#h-12-trycatch--bt-li-trc-khi-n-lm-cht-trang">try/catch — bắt lỗi trước khi nó làm chết trang</a></li><li><a href="#h-16-prompt-ai-mu">Prompt AI mẫu</a></li><li><a href="#h-19-thc-hnh">Thực hành</a></li><li><a href="#h-21-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="10-dom-and-events-lab-b-loc-bac-si-theo-chuyen-khoa.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Lab: bộ lọc bác sĩ theo chuyên khoa</strong></span></a><a href="11-async-javascript-mock-rest-api.html" rel="next"><span><small>Bài sau</small><strong>Mock REST API</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

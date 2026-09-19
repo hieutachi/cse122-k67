@@ -1,0 +1,58 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cấu trúc tài liệu web chuẩn | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-2.html">Chương 2</a> &rsaquo; HTML5 semantic &rsaquo; Bài 1/5</p>
+<h1 class="lesson-title">Cấu trúc tài liệu web chuẩn</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 1/5</span><span>Module: HTML5 semantic</span><span>~4 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="cu-trc-ti-liu-web-chun">Cấu trúc tài liệu web chuẩn</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Viết được khung tài liệu HTML5 hợp lệ: <code>&lt;!DOCTYPE html&gt;</code>, <code>lang</code>, <code>head</code>, <code>body</code></li><li>Hiểu nhiệm vụ của từng thẻ trong <code>&lt;head&gt;</code> và vì sao <code>viewport</code> quyết định responsive</li><li>Dựng được cấu trúc tối thiểu chuẩn cho dự án Highland Hospital</li></ul>
+<h3 id="h-3-khung-ti-thiu-ca-mi-trang-web">Khung tối thiểu của mọi trang web<a class="anchor" href="#h-3-khung-ti-thiu-ca-mi-trang-web" aria-label="Liên kết mục">#</a></h3>
+<p>Dù là Landing Page hay Admin Dashboard, mọi trang đều bắt đầu từ một khung duy nhất. Mở VS Code, tạo <code>index.html</code>, gõ <code>!</code> rồi Enter (Emmet) hoặc tự gõ khung bên dưới:</p>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="vi"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;Highland Hospital — Đặt lịch khám trực tuyến&lt;/title&gt;
+  &lt;meta name="description"
+        content="Highland Hospital: đặt lịch khám trực tuyến, tra cứu bác sĩ theo chuyên khoa và dịch vụ chăm sóc sức khoẻ."&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;!-- Toàn bộ nội dung trang sẽ nằm ở đây --&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre></figure>
+<h3 id="h-6-tng-dng-c-nhim-v-g">Từng dòng có nhiệm vụ gì<a class="anchor" href="#h-6-tng-dng-c-nhim-v-g" aria-label="Liên kết mục">#</a></h3>
+<ul><li><code>&lt;!DOCTYPE html&gt;</code> — tuyên bố đây là tài liệu HTML5, giúp trình duyệt chạy ở "chuẩn mode" thay vì "quirks mode" (chế độ bắt chước trình duyệt 20 năm trước, dễ vỡ layout). Luôn đặt ở dòng đầu tiên, không có gì phía trước nó.</li><li><code>&lt;html lang="vi"&gt;</code> — khai báo ngôn ngữ trang cho công cụ tìm kiếm, trình đọc màn hình và tính năng dịch tự động. Highland Hospital dùng tiếng Việt nên là <code>vi</code>; nếu có trang tiếng Anh thì đổi thành <code>en</code>.</li><li><code>&lt;meta charset="UTF-8"&gt;</code> — đảm bảo tiếng Việt có dấu (ă, â, ê, ô, ơ, ư) hiển thị đúng. Thiếu thẻ này, chữ "đặt lịch" có thể thành "Ä‘áº·t lá»‹ch".</li><li><code>&lt;meta name="viewport"&gt;</code> — nói với trình duyệt di động: lấy chiều rộng thật của màn hình thiết bị làm chiều rộng trang và tỉ lệ ban đầu là 1.0.</li><li><code>&lt;title&gt;</code> — hiện trên tab trình duyệt và là dòng đầu tiên của kết quả Google.</li><li><code>&lt;meta name="description"&gt;</code> — đoạn mô tả ngắn hiển thị dưới title trong kết quả tìm kiếm.</li></ul>
+<h3 id="h-8-v-sao-viewport-quyt-nh-responsive">Vì sao viewport quyết định responsive<a class="anchor" href="#h-8-v-sao-viewport-quyt-nh-responsive" aria-label="Liên kết mục">#</a></h3>
+<p>Không có thẻ viewport, điện thoại không hiểu trang đã responsive mà phóng to cả trang rộng 980px (chiều rộng giả định mặc định) để nhét vừa màn hình — chữ nhỏ xíu, người dùng phải pinch-to-zoom. Có thẻ viewport, CSS của bạn (bài các chương sau: media queries, <code>%</code>, <code>rem</code>, <code>fr</code>) mới áp lên đúng chiều rộng thật của thiết bị. Quy tắc: <strong>không có <code>viewport</code>, không có responsive</strong> — đây là thẻ dễ quên nhất nhưng lại là tiền đề của cả chương 6.</p>
+<h3 id="h-10-th-t-khuyn-ngh-trong-ltheadgt">Thứ tự khuyến nghị trong <code>&lt;head&gt;</code><a class="anchor" href="#h-10-th-t-khuyn-ngh-trong-ltheadgt" aria-label="Liên kết mục">#</a></h3>
+<p>Giữ một trật tự cố định để trang nào cũng giống trang nào: <code>charset</code> → <code>viewport</code> → <code>title</code> → <code>description</code> → sau đó đến CSS (bài sau) và font. Kiểm tra nhanh cấu trúc sau khi viết xong: nhấn F12, tab Elements — cú pháp sai (ví dụ quên đóng <code>&lt;/head&gt;</code>) thường khiến toàn bộ trang hiển thị lệch.</p>
+<h3 id="h-12-cu-trc-ti-thiu-chun-cho-highland-hospital">Cấu trúc tối thiểu chuẩn cho Highland Hospital<a class="anchor" href="#h-12-cu-trc-ti-thiu-chun-cho-highland-hospital" aria-label="Liên kết mục">#</a></h3>
+<p>Mỗi trang của dự án (trang chủ, <code>booking.html</code>, <code>admin.html</code>) dùng đúng khung trên với <code>title</code> và <code>description</code> riêng — đây là chỗ bắt đầu cấu trúc thư mục bài 05 sẽ đặt tên: <code>index.html</code>, <code>booking.html</code>, <code>admin.html</code> cùng thư mục <code>css/</code>, <code>js/</code>, <code>images/</code>.</p>
+<h3 id="h-14-thc-hnh">Thực hành<a class="anchor" href="#h-14-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<p>Tạo <code>index.html</code> cho Highland Hospital với khung tối thiểu: <code>lang="vi"</code>, title chứa tên bệnh viện, description 1–2 câu. Sau đó tạo tiếp <code>booking.html</code> và <code>admin.html</code> với title riêng (ví dụ "Đặt lịch khám — Highland Hospital"). Mở <code>index.html</code> bằng Live Server rồi dùng DevTools (biểu tượng điện thoại) — nếu trang co giãn theo đúng bề rộng màn hình thiết bị nghĩa là <code>viewport</code> đã hoạt động.</p>
+<h3 id="h-16-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-16-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Khung đã chuẩn, giờ ta điền nội dung bằng các thẻ có <em>ý nghĩa</em> — bài <em>Thẻ ngữ nghĩa &amp; SEO</em> giới thiệu <code>header</code>, <code>nav</code>, <code>main</code>, <code>section</code>, <code>article</code>, <code>aside</code>, <code>footer</code>.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">8 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-khung-ti-thiu-ca-mi-trang-web">Khung tối thiểu của mọi trang web</a></li><li><a href="#h-6-tng-dng-c-nhim-v-g">Từng dòng có nhiệm vụ gì</a></li><li><a href="#h-8-v-sao-viewport-quyt-nh-responsive">Vì sao viewport quyết định responsive</a></li><li><a href="#h-10-th-t-khuyn-ngh-trong-ltheadgt">Thứ tự khuyến nghị trong </a></li><li><a href="#h-12-cu-trc-ti-thiu-chun-cho-highland-hospital">Cấu trúc tối thiểu chuẩn cho Highland Hospital</a></li><li><a href="#h-14-thc-hnh">Thực hành</a></li><li><a href="#h-16-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="02-prompt-engineering-workshop-vi-t-prompt-c-t-giao-di-n.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Workshop: viết prompt cắt giao diện</strong></span></a><a href="03-html5-semantic-the-ng-nghia-seo.html" rel="next"><span><small>Bài sau</small><strong>Thẻ ngữ nghĩa & SEO</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

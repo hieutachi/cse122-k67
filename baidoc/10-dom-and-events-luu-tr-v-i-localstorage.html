@@ -1,0 +1,101 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lưu trữ với localStorage | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-8.html">Chương 8</a> &rsaquo; DOM & events &rsaquo; Bài 4/5</p>
+<h1 class="lesson-title">Lưu trữ với localStorage</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 4/5</span><span>Module: DOM & events</span><span>~4 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="lu-tr-vi-localstorage">Lưu trữ với localStorage</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Dùng <code>localStorage.setItem</code> / <code>getItem</code> / <code>removeItem</code> đúng cách</li><li>Lưu và đọc mảng object qua <code>JSON.stringify</code> / <code>JSON.parse</code></li><li>Hiểu vì sao <code>localStorage</code> là lựa chọn hợp lý cho dữ liệu lịch hẹn phía client</li><li>Viết luồng lưu – đọc – sửa danh sách <code>appointments</code> của Highland Hospital</li></ul>
+<h3 id="h-3-localstorage-l-g">localStorage là gì?<a class="anchor" href="#h-3-localstorage-l-g" aria-label="Liên kết mục">#</a></h3>
+<p><code>localStorage</code> là một "két sắt" nhỏ trình duyệt cấp riêng cho từng trang web: dữ liệu <strong>sống lâu dài</strong> theo tên miền — đóng tab, tắt máy, mở lại vẫn còn, cho tới khi bạn hoặc người dùng xoá. Giới hạn thường ~5MB, đủ cho vài trăm lịch hẹn JSON.</p>
+<p>Ba thao tác cốt lõi:</p>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>localStorage.setItem('ten-khoa', 'giá trị');   // lưu (ghi đè nếu đã có)
+const value = localStorage.getItem('ten-khoa'); // đọc — null nếu chưa tồn tại
+localStorage.removeItem('ten-khoa');            // xoá một khoá
+localStorage.clear();                           // xoá toàn bộ (cẩn thận khi dùng)</code></pre></figure>
+<p><strong>Chú ý:</strong> localStorage chỉ lưu được <strong>chuỗi</strong> (string). Lưu số <code>5</code> vào thì đọc ra là chuỗi <code>"5"</code>. Còn lưu mảng/object mà không qua JSON thì sẽ ra chuỗi vô nghĩa <code>"[object Object]"</code>.</p>
+<h3 id="h-8-lu-mng-bt-buc-qua-json">Lưu mảng: bắt buộc qua JSON<a class="anchor" href="#h-8-lu-mng-bt-buc-qua-json" aria-label="Liên kết mục">#</a></h3>
+<p>Mọi lịch hẹn của Highland Hospital là object:</p>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>const appointments = [
+  { id: 1, patientName: 'Trần Văn An', specialty: 'Tim mạch', date: '2025-06-20', time: '09:00' },
+];</code></pre></figure>
+<p>Để lưu được, ta <strong>mã hoá</strong> mảng thành chuỗi JSON, và khi đọc thì <strong>giải mã</strong> ngược lại:</p>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>// LƯU
+localStorage.setItem('appointments', JSON.stringify(appointments));
+
+// ĐỌC — luôn phòng trường hợp chưa có gì trong kho
+const raw = localStorage.getItem('appointments');
+const saved = raw ? JSON.parse(raw) : [];</code></pre></figure>
+<p>Một mẹo quan trọng khi làm việc với dữ liệu từ <code>localStorage</code>: nó nằm ngoài tầm kiểm soát của code bạn — người dùng có thể sửa tay, hoặc từ bản cũ để lại cấu trúc khác. <strong>Luôn kiểm tra trước khi dùng</strong>:</p>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>function loadAppointments() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem('appointments'));
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return []; // JSON hỏng → trả về danh sách trống thay vì làm crash trang
+  }
+}</code></pre></figure>
+<h3 id="h-15-v-sao-dng-localstorage-cho-lch-hn">Vì sao dùng localStorage cho lịch hẹn?<a class="anchor" href="#h-15-v-sao-dng-localstorage-cho-lch-hn" aria-label="Liên kết mục">#</a></h3>
+<p>Highland Hospital Web Portal <strong>chỉ có frontend</strong> (không server, không database — đã nói ở bài đầu khoá). Người dùng là lễ tân hoặc bệnh nhân trên <em>một máy</em>, và yêu cầu đặt ra là: đặt lịch xong, quay lại trang (kể cả ngày mai) vẫn thấy. <code>localStorage</code> trả lời đúng yêu cầu đó mà không cần backend. Khi dự án thật cần đồng bộ nhiều máy, bạn mới thay bằng API — và để làm được điều đó, mọi chỗ đang đụng <code>localStorage</code> phải gom về hai hàm <code>loadAppointments</code> / <code>saveAppointments</code> để sau này chỉ sửa một nơi.</p>
+<h3 id="h-17-lung-lu--c--sa">Luồng lưu – đọc – sửa<a class="anchor" href="#h-17-lung-lu--c--sa" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>const STORAGE_KEY = 'appointments';
+
+function saveAppointments(list) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+}
+
+function addAppointment(appointment) {
+  const list = loadAppointments();
+  appointment.id = Date.now();          // id tạm đủ dùng phía client
+  list.push(appointment);
+  saveAppointments(list);
+  return appointment;
+}
+
+function removeAppointment(id) {
+  // SỬA = đọc ra → lọc bỏ phần tử → ghi đè lại
+  const list = loadAppointments().filter((appt) =&gt; appt.id !== id);
+  saveAppointments(list);
+}
+
+function updateAppointment(id, changes) {
+  const list = loadAppointments().map((appt) =&gt;
+    appt.id === id ? { ...appt, ...changes } : appt
+  );
+  saveAppointments(list);
+}</code></pre></figure>
+<p>Toàn bộ triết lý gói trong một câu: <strong><code>localStorage</code> không sửa được "tại chỗ" — muốn sửa thì đọc nguyên danh sách, biến đổi bằng <code>filter</code>/<code>map</code>, rồi ghi đè lại.</strong> Nút xoá ở bài 02 (delegation) giờ chỉ cần gọi <code>removeAppointment(id)</code> rồi render lại là xong luồng xoá thật.</p>
+<h3 id="h-20-prompt-ai-mu">Prompt AI mẫu<a class="anchor" href="#h-20-prompt-ai-mu" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Dự án Highland Hospital (JS thuần ES6+), khoá localStorage "appointments"
+lưu mảng appointment: { id, patientName, specialty, date, time, status }.
+Viết 4 hàm tiêu chuẩn: loadAppointments (an toàn khi JSON hỏng, trả mảng),
+saveAppointments, addAppointment (tự sinh id bằng Date.now, mặc định
+status "pending"), updateAppointmentStatus(id, newStatus). Kèm ví dụ gọi
+thử 3 dòng ở cuối file để tôi test trên Console.</code></pre></figure>
+<h3 id="h-22-thc-hnh">Thực hành<a class="anchor" href="#h-22-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<ol><li>Mở Console DevTools → tab Application → Local Storage để quan sát dữ liệu trực tiếp.</li><li>Gõ thử: <code>localStorage.setItem('demo', JSON.stringify([1,2,3]))</code>, rồi đọc lại và <code>JSON.parse</code> — nhìn thấy sự khác biệt giữa chuỗi và mảng.</li><li>Viết bộ hàm theo prompt, thêm 2 lịch hẹn, tải lại trang (F5) và kiểm tra danh sách còn nguyên.</li><li>Sửa trạng thái một lịch hẹn bằng <code>updateAppointmentStatus</code>, quan sát giá trị trong tab Application thay đổi.</li></ol>
+<h3 id="h-24-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-24-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Đủ công cụ DOM + sự kiện + validate + lưu trữ rồi — bài Lab tiếp theo gộp tất cả thành tính năng thật đầu tiên: bộ lọc bác sĩ theo chuyên khoa.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">8 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-localstorage-l-g">localStorage là gì?</a></li><li><a href="#h-8-lu-mng-bt-buc-qua-json">Lưu mảng: bắt buộc qua JSON</a></li><li><a href="#h-15-v-sao-dng-localstorage-cho-lch-hn">Vì sao dùng localStorage cho lịch hẹn?</a></li><li><a href="#h-17-lung-lu--c--sa">Luồng lưu – đọc – sửa</a></li><li><a href="#h-20-prompt-ai-mu">Prompt AI mẫu</a></li><li><a href="#h-22-thc-hnh">Thực hành</a></li><li><a href="#h-24-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="10-dom-and-events-form-validation-phia-client.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Form Validation phía client</strong></span></a><a href="10-dom-and-events-lab-b-loc-bac-si-theo-chuyen-khoa.html" rel="next"><span><small>Bài sau</small><strong>Lab: bộ lọc bác sĩ theo chuyên khoa</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

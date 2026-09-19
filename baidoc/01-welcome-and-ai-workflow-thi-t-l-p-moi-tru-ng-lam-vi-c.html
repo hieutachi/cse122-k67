@@ -1,0 +1,58 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Thiết lập môi trường làm việc | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-1.html">Chương 1</a> &rsaquo; Nhập môn & AI workflow &rsaquo; Bài 4/5</p>
+<h1 class="lesson-title">Thiết lập môi trường làm việc</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 4/5</span><span>Module: Nhập môn & AI workflow</span><span>~3 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="thit-lp-mi-trng-lm-vic">Thiết lập môi trường làm việc</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Cài đặt và cấu hình VS Code với Live Server</li><li>Tạo cấu trúc thư mục chuẩn cho dự án Highland Hospital</li><li>Làm quen với Chrome DevTools — người bạn đồng hành của mọi bài sau</li></ul>
+<h3 id="h-3-bc-1-ci-vs-code-v-live-server">Bước 1: Cài VS Code và Live Server<a class="anchor" href="#h-3-bc-1-ci-vs-code-v-live-server" aria-label="Liên kết mục">#</a></h3>
+<ol><li>Tải VS Code từ trang chủ và cài đặt như ứng dụng thông thường.</li><li>Mở VS Code, vào tab <strong>Extensions</strong> (⌘⇧X), tìm <strong>Live Server</strong> (tác giả Ritwick Dey), cài đặt.</li><li>Mở một thư mục trống qua <strong>File → Open Folder</strong>. Đây sẽ là nơi chứa dự án.</li></ol>
+<p>Live Server làm một việc rất quan trọng: nó chạy một máy chủ nhỏ ngay trên máy bạn và <strong>tự tải lại trình duyệt mỗi khi bạn lưu file</strong>. Khi đến chương 11 học Fetch API, bạn sẽ hiểu vì sao không thể mở file HTML bằng cách double-click (giao thức <code>file://</code> chặn gọi API) — Live Server giải quyết việc đó từ bây giờ.</p>
+<h3 id="h-6-bc-2-cu-trc-th-mc-d-n">Bước 2: Cấu trúc thư mục dự án<a class="anchor" href="#h-6-bc-2-cu-trc-th-mc-d-n" aria-label="Liên kết mục">#</a></h3>
+<p>Tạo cấu trúc sau (dùng nút New Folder trong VS Code hoặc terminal):</p>
+<figure class="code-block"><figcaption>Code</figcaption><pre><code>highland-hospital/
+├── index.html          # Trang chủ — Landing Page
+├── booking.html        # Trang đặt lịch (xây từ chương 8)
+├── admin.html          # Admin Dashboard (xây từ chương 12)
+├── css/
+│   └── style.css       # CSS tự viết, nạp sau Bootstrap
+├── js/
+│   ├── data.js         # Dữ liệu mẫu bác sĩ, dịch vụ
+│   ├── main.js         # Logic trang chủ
+│   └── admin.js        # Logic dashboard
+└── assets/
+    └── images/         # Ảnh bác sĩ, banner</code></pre></figure>
+<p>Mỗi bài học từ giờ sẽ nói rõ "thêm vào file nào" — hãy giữ cấu trúc này nhất quán để prompt AI của bạn luôn chỉ đúng đường dẫn.</p>
+<h3 id="h-10-bc-3-file-html-ti-thiu-v-chy-th">Bước 3: File HTML tối thiểu và chạy thử<a class="anchor" href="#h-10-bc-3-file-html-ti-thiu-v-chy-th" aria-label="Liên kết mục">#</a></h3>
+<p>Tạo <code>index.html</code> với nội dung tối thiểu, sau đó <strong>click chuột phải vào file → Open with Live Server</strong>. Trình duyệt sẽ mở <code>http://127.0.0.1:5500/index.html</code>.</p>
+<h3 id="h-12-bc-4-lm-quen-chrome-devtools">Bước 4: Làm quen Chrome DevTools<a class="anchor" href="#h-12-bc-4-lm-quen-chrome-devtools" aria-label="Liên kết mục">#</a></h3>
+<p>Mở DevTools bằng <strong>⌥⌘I</strong> (hoặc click phải → Inspect). Bốn tab bạn dùng nhiều nhất:</p>
+<ul><li><strong>Elements</strong> — xem cây DOM và CSS đang áp dụng; tắt/bật style để thử nghiệm trước khi sửa file.</li><li><strong>Console</strong> — nơi in lỗi JavaScript và lệnh <code>console.log</code>; thử gõ JavaScript trực tiếp.</li><li><strong>Network</strong> — xem trình duyệt tải file nào, request API nào đang chạy; mở tab này khi học Fetch API.</li><li><strong>Device Toolbar</strong> (⌘⇧M) — mô phỏng màn hình điện thoại/máy tính bảng để kiểm tra responsive.</li></ul>
+<h3 id="h-15-thc-hnh">Thực hành<a class="anchor" href="#h-15-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<ol><li>Tạo đủ cấu trúc thư mục <code>highland-hospital/</code> như trên.</li><li>Viết <code>index.html</code> tối thiểu gồm <code>&lt;!DOCTYPE html&gt;</code>, thẻ <code>head</code> (có <code>meta viewport</code>) và một câu "Highland Hospital — đang xây dựng".</li><li>Mở bằng Live Server, rồi dùng Device Toolbar xem trang ở kích thước 375px và 1440px.</li><li>Hỏi AI: <em>"Tôi dùng VS Code + Live Server, chưa cài gì thêm. Extension nào giúp tự động format HTML/CSS khi lưu file?"</em> — cài extension được gợi ý và kiểm tra.</li></ol>
+<h3 id="h-17-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-17-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Môi trường đã sẵn sàng — bài cuối chương này giới thiệu dự án xuyên suốt Highland Hospital: ba trang web bạn sẽ xây và dữ liệu chúng dùng chung.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">7 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-bc-1-ci-vs-code-v-live-server">Bước 1: Cài VS Code và Live Server</a></li><li><a href="#h-6-bc-2-cu-trc-th-mc-d-n">Bước 2: Cấu trúc thư mục dự án</a></li><li><a href="#h-10-bc-3-file-html-ti-thiu-v-chy-th">Bước 3: File HTML tối thiểu và chạy thử</a></li><li><a href="#h-12-bc-4-lm-quen-chrome-devtools">Bước 4: Làm quen Chrome DevTools</a></li><li><a href="#h-15-thc-hnh">Thực hành</a></li><li><a href="#h-17-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="01-welcome-and-ai-workflow-ai-accelerated-workflow-4-bu-c.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>AI-Accelerated Workflow 4 bước</strong></span></a><a href="01-welcome-and-ai-workflow-d-an-xuyen-su-t-highland-hospital.html" rel="next"><span><small>Bài sau</small><strong>Dự án xuyên suốt: Highland Hospital</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

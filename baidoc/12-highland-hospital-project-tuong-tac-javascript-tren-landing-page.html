@@ -1,0 +1,198 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tương tác JavaScript trên Landing Page | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-9.html">Chương 9</a> &rsaquo; Dự án Highland Hospital &rsaquo; Bài 3/6</p>
+<h1 class="lesson-title">Tương tác JavaScript trên Landing Page</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 3/6</span><span>Module: Dự án Highland Hospital</span><span>~6 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="tng-tc-javascript-trn-landing-page">Tương tác JavaScript trên Landing Page</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Nối toàn bộ kiến thức đã học vào một trang thật: render dữ liệu, filter, sự kiện, modal</li><li>Render lưới bác sĩ từ mảng <code>doctors</code>; lọc theo chuyên khoa và tìm kiếm theo tên</li><li>Nút "Đặt lịch" trên mỗi card mở modal chứa form đặt lịch</li><li>Smooth scroll cho nav link; tránh lỗi kinh điển "script chạy trước DOM"</li></ul>
+<h3 id="h-3-d-liu-jsdatajs">Dữ liệu: js/data.js<a class="anchor" href="#h-3-d-liu-jsdatajs" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>// js/data.js — khai báo global để index.html, booking.html, admin.html cùng dùng
+const doctors = [
+  { id: 1, name: 'BS. Nguyễn Văn An',   specialty: 'Tim mạch',       experience: 15, avatar: 'img/doctor-1.jpg' },
+  { id: 2, name: 'TS.BS. Trần Thị Bích', specialty: 'Nội tổng quát', experience: 12, avatar: 'img/doctor-2.jpg' },
+  { id: 3, name: 'BS.CKII. Lê Minh Châu', specialty: 'Tim mạch',     experience: 20, avatar: 'img/doctor-3.jpg' },
+  { id: 4, name: 'ThS.BS. Phạm Quốc Dũng', specialty: 'Nhi khoa',    experience: 9,  avatar: 'img/doctor-4.jpg' },
+  { id: 5, name: 'BS. Hoàng Thu Hà',     specialty: 'Nội tổng quát', experience: 8,  avatar: 'img/doctor-5.jpg' },
+  { id: 6, name: 'BS. Võ Thành Nam',     specialty: 'Nhi khoa',      experience: 11, avatar: 'img/doctor-6.jpg' },
+];</code></pre></figure>
+<p>Trong <code>index.html</code> khai báo <strong><code>data.js</code> trước <code>main.js</code></strong> (script đặt cuối <code>&lt;body&gt;</code>): <code>&lt;script src="js/data.js"&gt;&lt;/script&gt;</code> rồi <code>&lt;script src="js/main.js"&gt;&lt;/script&gt;</code>.</p>
+<h3 id="h-6-li-kinh-in-script-chy-trc-dom">Lỗi kinh điển: script chạy trước DOM<a class="anchor" href="#h-6-li-kinh-in-script-chy-trc-dom" aria-label="Liên kết mục">#</a></h3>
+<p>Script chạy khi HTML chưa parse xong thì <code>document.getElementById('doctorGrid')</code> trả về <code>null</code> và <code>null.innerHTML</code> ném lỗi làm <strong>chết cả file JS</strong>. Hai cách chữa chuẩn:</p>
+<ol><li><strong><code>defer</code></strong> — đặt script trong <code>&lt;head&gt;</code>: trình duyệt tải song song, chỉ chạy sau khi DOM xong.</li><li><strong><code>DOMContentLoaded</code></strong> — bọc logic lại (script vẫn nên đặt cuối <code>&lt;body&gt;</code>):</li></ol>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>document.addEventListener('DOMContentLoaded', () =&gt; {
+  renderDoctors(doctors);
+  setupFilters();
+  setupBookingModal();
+});</code></pre></figure>
+<h3 id="h-10-render-li-bc-s">Render lưới bác sĩ<a class="anchor" href="#h-10-render-li-bc-s" aria-label="Liên kết mục">#</a></h3>
+<p>Hàm nhận một bác sĩ, trả về chuỗi HTML card — "component" đầu tiên của bạn:</p>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>// js/main.js
+function doctorCardHTML(d) {
+  return `
+    &lt;div class="col-md-6 col-lg-4"&gt;
+      &lt;article class="card h-100 border-0 shadow-sm"&gt;
+        &lt;img src="${d.avatar}" class="card-img-top" alt="Ảnh ${d.name}"&gt;
+        &lt;div class="card-body text-center"&gt;
+          &lt;h3 class="h5 fw-bold mb-1"&gt;${d.name}&lt;/h3&gt;
+          &lt;p class="text-secondary mb-2"&gt;${d.specialty} · ${d.experience} năm kinh nghiệm&lt;/p&gt;
+          &lt;button class="btn btn-outline-primary btn-sm rounded-pill px-3"
+                  data-bs-toggle="modal" data-bs-target="#bookingModal"
+                  data-doctor-name="${d.name}" data-doctor-id="${d.id}"&gt;Đặt lịch&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/article&gt;
+    &lt;/div&gt;`;
+}
+
+function renderDoctors(list) {
+  const grid = document.getElementById('doctorGrid');
+  grid.innerHTML = list.length
+    ? list.map(doctorCardHTML).join('')
+    : '&lt;p class="text-center text-secondary w-100 py-4"&gt;Không tìm thấy bác sĩ phù hợp.&lt;/p&gt;';
+}</code></pre></figure>
+<p>Ba điểm đáng học: thẻ <code>&lt;article&gt;</code> cho nội dung độc lập; <code>data-*</code> attribute mang dữ liệu từ card sang modal; <strong>luôn có trạng thái rỗng</strong> khi filter không ra gì.</p>
+<h3 id="h-14-filter-chuyn-khoa--tm-kim-theo-tn">Filter chuyên khoa + tìm kiếm theo tên<a class="anchor" href="#h-14-filter-chuyn-khoa--tm-kim-theo-tn" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;div class="container pb-4"&gt;
+  &lt;div class="row g-3 align-items-center justify-content-center"&gt;
+    &lt;div class="col-auto"&gt;
+      &lt;div class="btn-group" role="group" aria-label="Lọc bác sĩ theo chuyên khoa"&gt;
+        &lt;button class="btn btn-outline-primary active" data-specialty="all"&gt;Tất cả&lt;/button&gt;
+        &lt;button class="btn btn-outline-primary" data-specialty="Tim mạch"&gt;Tim mạch&lt;/button&gt;
+        &lt;button class="btn btn-outline-primary" data-specialty="Nội tổng quát"&gt;Nội tổng quát&lt;/button&gt;
+        &lt;button class="btn btn-outline-primary" data-specialty="Nhi khoa"&gt;Nhi khoa&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="col-auto"&gt;
+      &lt;input type="search" id="doctorSearch" class="form-control"
+             placeholder="Tìm theo tên bác sĩ…" aria-label="Tìm bác sĩ theo tên"&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre></figure>
+<p>Hai điều kiện gộp trong một <code>filter</code>, và mọi thay đổi chỉ cần gọi lại một hàm — <strong>một nguồn sự thật duy nhất</strong>:</p>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>let activeSpecialty = 'all';
+
+function setupFilters() {
+  const group = document.querySelector('.btn-group');
+  const searchInput = document.getElementById('doctorSearch');
+  group.addEventListener('click', (e) =&gt; {
+    const btn = e.target.closest('button'); // event delegation: 1 listener cho cả nhóm nút
+    if (!btn) return;
+    activeSpecialty = btn.dataset.specialty;
+    group.querySelectorAll('button').forEach(b =&gt; b.classList.remove('active'));
+    btn.classList.add('active');
+    applyFilters();
+  });
+  searchInput.addEventListener('input', applyFilters); // gõ đến đâu lọc đến đó
+}
+
+function applyFilters() {
+  const keyword = document.getElementById('doctorSearch').value.trim().toLowerCase();
+  const result = doctors.filter(d =&gt;
+    (activeSpecialty === 'all' || d.specialty === activeSpecialty) &amp;&amp;
+    (!keyword || d.name.toLowerCase().includes(keyword))
+  );
+  renderDoctors(result);
+}</code></pre></figure>
+<p>Sau này thêm chuyên khoa mới, chỉ cần thêm HTML — không đụng vào JS.</p>
+<h3 id="h-19-nt-t-lch-m-modal">Nút "Đặt lịch" mở modal<a class="anchor" href="#h-19-nt-t-lch-m-modal" aria-label="Liên kết mục">#</a></h3>
+<p>Modal dùng chung một cho mọi card. Bootstrap tự mở nhờ <code>data-bs-toggle</code>; ta chỉ điền tên bác sĩ vào form khi modal sắp hiện:</p>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;!-- index.html, trước &lt;script&gt; --&gt;
+&lt;div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true"&gt;
+  &lt;div class="modal-dialog"&gt;
+    &lt;div class="modal-content"&gt;
+      &lt;form id="quickBookingForm" novalidate&gt;
+        &lt;div class="modal-header"&gt;
+          &lt;h2 class="modal-title fs-5" id="bookingModalLabel"&gt;Đặt lịch khám nhanh&lt;/h2&gt;
+          &lt;button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"&gt;&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;div class="modal-body"&gt;
+          &lt;p class="text-secondary small mb-3" id="selectedDoctorNote"&gt;&lt;/p&gt;
+          &lt;div class="mb-3"&gt;
+            &lt;label for="patientName" class="form-label"&gt;Họ và tên&lt;/label&gt;
+            &lt;input type="text" class="form-control" id="patientName" required&gt;
+          &lt;/div&gt;
+          &lt;div class="mb-3"&gt;
+            &lt;label for="patientPhone" class="form-label"&gt;Số điện thoại&lt;/label&gt;
+            &lt;input type="tel" class="form-control" id="patientPhone" required&gt;
+          &lt;/div&gt;
+          &lt;div class="mb-3"&gt;
+            &lt;label for="bookingDate" class="form-label"&gt;Ngày khám&lt;/label&gt;
+            &lt;input type="date" class="form-control" id="bookingDate" required&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="modal-footer"&gt;
+          &lt;button type="button" class="btn btn-secondary" data-bs-dismiss="modal"&gt;Đóng&lt;/button&gt;
+          &lt;button type="submit" class="btn btn-primary"&gt;Xác nhận đặt lịch&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/form&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre></figure>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>function setupBookingModal() {
+  const modal = document.getElementById('bookingModal');
+  const note = document.getElementById('selectedDoctorNote');
+  modal.addEventListener('show.bs.modal', (e) =&gt; {
+    const btn = e.relatedTarget; // phần tử đã kích hoạt modal — đọc data-doctor-* từ đây
+    note.textContent = `Bạn đang đặt lịch với ${btn.dataset.doctorName}.`;
+    const hiddenId = document.createElement('input');
+    hiddenId.type = 'hidden';
+    hiddenId.name = 'doctorId';
+    hiddenId.value = btn.dataset.doctorId;
+    modal.querySelector('form').appendChild(hiddenId);
+  });
+  modal.querySelector('form').addEventListener('submit', (e) =&gt; {
+    e.preventDefault();
+    const name = document.getElementById('patientName').value.trim();
+    const phone = document.getElementById('patientPhone').value.trim();
+    const date = document.getElementById('bookingDate').value;
+    if (!name || !phone || !date) {
+      alert('Vui lòng điền đầy đủ họ tên, số điện thoại và ngày khám.');
+      return;
+    }
+    // booking.html sẽ lưu lịch hẹn vào localStorage — xử lý sâu ở chương đặt lịch
+    alert(`Cảm ơn ${name}! Chúng tôi sẽ gọi ${phone} để xác nhận lịch khám ngày ${date}.`);
+    bootstrap.Modal.getInstance(modal).hide();
+  });
+}</code></pre></figure>
+<p><code>show.bs.modal</code> là <strong>sự kiện Bootstrap</strong> (khác sự kiện DOM thường): bắn ra ngay trước khi modal hiện, và <code>e.relatedTarget</code> chính là nút đã mở modal.</p>
+<h3 id="h-24-smooth-scroll-cho-nav-link">Smooth scroll cho nav link<a class="anchor" href="#h-24-smooth-scroll-cho-nav-link" aria-label="Liên kết mục">#</a></h3>
+<p>CSS thuần là cách gọn nhất, không cần JS — đã thêm ở bài 02: <code>html { scroll-behavior: smooth; scroll-padding-top: 80px; }</code>.</p>
+<h3 id="h-26-prompt-ai-cho-bi-ny">Prompt AI cho bài này<a class="anchor" href="#h-26-prompt-ai-cho-bi-ny" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Tôi có trang web bệnh viện Highland Hospital bằng Bootstrap 5. Mảng doctors
+trong js/data.js mỗi phần tử có: id, name, specialty, experience, avatar.
+Trong index.html đã có &lt;div id="doctorGrid"&gt; trống và ô tìm kiếm #doctorSearch.
+Viết giúp js/main.js (ES6+, không thư viện ngoài):
+1. renderDoctors(list): render card bác sĩ dùng template literals, mỗi card có
+   nút "Đặt lịch" mang data-doctor-id và data-doctor-name để mở modal #bookingModal
+2. Lọc kết hợp: nút chuyên khoa (class .specialty-filter, data-specialty) + từ khoá
+   trong #doctorSearch (không phân biệt hoa thường)
+3. Không có kết quả thì hiện "Không tìm thấy bác sĩ phù hợp"
+4. Bọc trong DOMContentLoaded; dùng event delegation cho nhóm nút filter
+Kèm 3 lưu ý về lỗi người mới hay gặp.</code></pre></figure>
+<h3 id="h-28-thc-hnh">Thực hành<a class="anchor" href="#h-28-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<ol><li>Tạo <code>js/data.js</code> với 6–8 bác sĩ thuộc 3–4 chuyên khoa; khai báo trong <code>index.html</code> trước <code>main.js</code>.</li><li>Copy code mẫu, chạy và xác nhận: lưới render đủ; filter chuyên khoa và tìm kiếm tên hoạt động <strong>đồng thời</strong>; nút Đặt lịch mở modal có sẵn tên bác sĩ.</li><li>Gõ từ khoá vô nghĩa để kiểm tra trạng thái rỗng.</li><li>Cố tình đặt <code>&lt;script src="js/main.js"&gt;</code> trong <code>&lt;head&gt;</code> <strong>không</strong> <code>defer</code> — đọc lỗi Console, rồi sửa đúng.</li><li>Chạy prompt AI với yêu cầu riêng của bạn, đối chiếu với code mẫu, giải thích điểm khác nhau.</li></ol>
+<h3 id="h-30-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-30-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Bệnh nhân đã đặt được lịch — phía bệnh viện cần nơi quản lý. Sang bài <em>Xây Admin Dashboard</em>: metrics tính từ mảng <code>appointments</code>, bảng lịch hẹn có tìm kiếm, lọc, cập nhật trạng thái, lưu <code>localStorage</code>.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">10 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-d-liu-jsdatajs">Dữ liệu: js/data.js</a></li><li><a href="#h-6-li-kinh-in-script-chy-trc-dom">Lỗi kinh điển: script chạy trước DOM</a></li><li><a href="#h-10-render-li-bc-s">Render lưới bác sĩ</a></li><li><a href="#h-14-filter-chuyn-khoa--tm-kim-theo-tn">Filter chuyên khoa + tìm kiếm theo tên</a></li><li><a href="#h-19-nt-t-lch-m-modal">Nút "Đặt lịch" mở modal</a></li><li><a href="#h-24-smooth-scroll-cho-nav-link">Smooth scroll cho nav link</a></li><li><a href="#h-26-prompt-ai-cho-bi-ny">Prompt AI cho bài này</a></li><li><a href="#h-28-thc-hnh">Thực hành</a></li><li><a href="#h-30-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="12-highland-hospital-project-d-ng-landing-page-b-ng-bootstrap.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Dựng Landing Page bằng Bootstrap</strong></span></a><a href="12-highland-hospital-project-xay-admin-dashboard.html" rel="next"><span><small>Bài sau</small><strong>Xây Admin Dashboard</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

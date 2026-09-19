@@ -1,0 +1,78 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hình ảnh & Typography linh hoạt | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-6.html">Chương 6</a> &rsaquo; Responsive & animation &rsaquo; Bài 3/5</p>
+<h1 class="lesson-title">Hình ảnh & Typography linh hoạt</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 3/5</span><span>Module: Responsive & animation</span><span>~4 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="hnh-nh-amp-typography-linh-hot">Hình ảnh &amp; Typography linh hoạt</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Làm cho mọi hình ảnh co giãn theo container bằng <code>max-width: 100%</code> và <code>height: auto</code></li><li>Dùng <code>object-fit</code> / <code>object-position</code> để cắt ảnh đúng ý mà không méo</li><li>Viết typography linh hoạt bằng <code>clamp()</code> thay cho font-size cứng</li></ul>
+<h3 id="h-3-hai-th-phm-lm-v-layout-trn-mobile">Hai thủ phạm làm vỡ layout trên mobile<a class="anchor" href="#h-3-hai-th-phm-lm-v-layout-trn-mobile" aria-label="Liên kết mục">#</a></h3>
+<p>Khi một ảnh khai <code>width: 800px</code> cứng hoặc tiêu đề <code>font-size: 48px</code>, chúng không thể co lại khi viewport hẹp — kết quả là tràn ngang, kéo theo thanh cuộn ngang cả trang. Điều trị bằng hai ý tưởng: hình ảnh <strong>chảy theo container</strong>, chữ <strong>chảy theo viewport</strong>.</p>
+<h3 id="h-5-hnh-nh-linh-hot-maxwidth--height-auto">Hình ảnh linh hoạt: max-width + height auto<a class="anchor" href="#h-5-hnh-nh-linh-hot-maxwidth--height-auto" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>/* Đặt một lần ở đầu file, đúng cho mọi ảnh */
+img {
+  max-width: 100%;
+  height: auto;
+}</code></pre></figure>
+<p>Khác <code>width: 100%</code> (luôn căng bằng container, ảnh nhỏ bị phóng mờ), <code>max-width: 100%</code> cho phép ảnh <strong>giữ kích thước gốc khi còn chỗ</strong>, chỉ co xuống khi container hẹp hơn. <code>height: auto</code> giữ tỷ lệ, tránh ảnh bị bẹp.</p>
+<p>Với ảnh trang trí trong Hero Highland Hospital, bạn thường muốn ảnh <strong>lấp đầy một khung có sẵn</strong> thay vì đẩy layout theo kích thước của nó:</p>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>.doctor-photo {
+  width: 100%;
+  height: 240px;          /* khung cố định, đẹp cho lưới card */
+  object-fit: cover;      /* cắt phần thừa để lấp đầy, không méo */
+  object-position: center top; /* ưu tiên giữ vùng mặt (trên cùng) */
+  border-radius: 12px;
+}</code></pre></figure>
+<p>Phân biệt nhanh: <code>object-fit: cover</code> cắt ảnh để lấp khung (dùng khi ảnh minh hoạ); <code>object-fit: contain</code> thu ảnh cho vừa khung, phần thừa để trống (dùng khi ảnh là sơ đồ, logo cần nhìn đủ). <code>object-position</code> quyết định phần nào của ảnh được giữ lại khi bị cắt — với ảnh chân dung bác sĩ, luôn ưu tiên phần khuôn mặt.</p>
+<h3 id="h-11-typography-linh-hot-bng-clamp">Typography linh hoạt bằng clamp()<a class="anchor" href="#h-11-typography-linh-hot-bng-clamp" aria-label="Liên kết mục">#</a></h3>
+<p>Muốn tiêu đề to trên desktop, nhỏ trên mobile — nhưng không muốn viết ba lần font-size trong ba media query? Hàm <code>clamp()</code> gói cả ba giá trị vào một dòng:</p>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>.hero-title {
+  /* font-size: clamp(MIN, ƯU TIÊN, MAX) */
+  font-size: clamp(1.75rem, 5vw + 0.5rem, 3.5rem);
+}</code></pre></figure>
+<p>Đọc là: tối thiểu 1.75rem, lý tưởng 5vw + 0.5rem (co giãn theo viewport), tối đa 3.5rem. Với chữ, dùng <code>rem</code> cho hai đầu còn <code>vw</code> cho giá trị giữa — nếu để <code>vw</code> thuần (ví dụ <code>font-size: 6vw</code>), chữ sẽ phóng to vô hạn trên màn hình rộng và nhỏ không đọc nổi trên màn hình hẹp. <code>clamp()</code> chính là chiếc phanh hai đầu.</p>
+<p>Ví dụ một bộ chữ cho toàn trang Highland Hospital:</p>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>:root {
+  --fs-hero: clamp(1.9rem, 4.5vw + 0.6rem, 3.4rem); /* tiêu đề hero */
+  --fs-h2:   clamp(1.4rem, 2vw + 0.6rem, 2rem);     /* tiêu đề section */
+  --fs-body: clamp(1rem, 1vw + 0.6rem, 1.125rem);   /* thân bài */
+}
+
+.hero-title { font-size: var(--fs-hero); }
+.section-title { font-size: var(--fs-h2); }
+.hero-sub { font-size: var(--fs-body); }</code></pre></figure>
+<p><code>clamp()</code> cũng dùng tốt cho khoảng cách: <code>padding: clamp(1rem, 4vw, 3rem)</code> giúp các section "thở" đều trên mọi màn hình.</p>
+<h3 id="h-18-prompt-mu-sinh-b-typography-linh-hot">Prompt mẫu: sinh bộ typography linh hoạt<a class="anchor" href="#h-18-prompt-mu-sinh-b-typography-linh-hot" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Tôi đang dựng trang chủ Highland Hospital bằng CSS thuần. Nội dung:
+1 tiêu đề hero ngắn (có thể 2 dòng), 1 đoạn giới thiệu 2-3 dòng, tiêu đề
+section "Dịch vụ nổi bật", và chữ cho card dịch vụ.
+Hãy đề xuất hệ thống font-size bằng clamp() cho 4 cấp này: giá trị min phù
+hợp đọc trên iPhone (viewport 360px), max không vượt quá 3.5rem, giá trị
+giữa dùng vw. Trả kèm :root biến CSS. Giải thích một dòng cho mỗi cấp.</code></pre></figure>
+<h3 id="h-20-thc-hnh">Thực hành<a class="anchor" href="#h-20-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Thêm luật <code>img { max-width: 100%; height: auto; }</code> vào file CSS chung.</li><li>Với ảnh bác sĩ trong lưới Doctor Cards, cho mỗi ảnh khung <code>height: 240px</code> + <code>object-fit: cover</code> và thử đổi <code>object-position</code> để giữ khuôn mặt.</li><li>Thay toàn bộ <code>font-size</code> cứng trong Hero bằng biến <code>clamp()</code> trong <code>:root</code>.</li></ul>
+<h3 id="h-22-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-22-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Trang đã co giãn đúng trên mọi màn hình — bài sau thêm sức sống: chuyển động mượt với <code>transition</code>, <code>transform</code> và <code>@keyframes</code>, kèm tôn trọng người dùng thích chuyển động ít (<code>prefers-reduced-motion</code>).</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">7 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-hai-th-phm-lm-v-layout-trn-mobile">Hai thủ phạm làm vỡ layout trên mobile</a></li><li><a href="#h-5-hnh-nh-linh-hot-maxwidth--height-auto">Hình ảnh linh hoạt: max-width + height auto</a></li><li><a href="#h-11-typography-linh-hot-bng-clamp">Typography linh hoạt bằng clamp()</a></li><li><a href="#h-18-prompt-mu-sinh-b-typography-linh-hot">Prompt mẫu: sinh bộ typography linh hoạt</a></li><li><a href="#h-20-thc-hnh">Thực hành</a></li><li><a href="#h-22-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="06-responsive-and-animation-mobile-first-workflow.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Mobile-First Workflow</strong></span></a><a href="06-responsive-and-animation-transitions-animations.html" rel="next"><span><small>Bài sau</small><strong>Transitions & Animations</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

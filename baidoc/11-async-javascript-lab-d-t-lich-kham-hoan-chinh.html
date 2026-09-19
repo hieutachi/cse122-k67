@@ -1,0 +1,160 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lab: đặt lịch khám hoàn chỉnh | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-9.html">Chương 9</a> &rsaquo; Async JavaScript &rsaquo; Bài 5/5</p>
+<h1 class="lesson-title">Lab: đặt lịch khám hoàn chỉnh</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 5/5</span><span>Module: Async JavaScript</span><span>~5 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="lab-t-lch-khm-hon-chnh">Lab: đặt lịch khám hoàn chỉnh</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Nối toàn bộ kiến thức: DOM, sự kiện, validate, localStorage, fetch, async/await</li><li>Render bác sĩ từ mock API vào select của form đa bước</li><li>Submit hợp lệ → lưu appointment vào localStorage và hiện modal xác nhận</li><li>Tự kiểm tra bằng checklist hoàn thiện trước khi chuyển chương</li></ul>
+<h3 id="h-3-bi-ton">Bài toán<a class="anchor" href="#h-3-bi-ton" aria-label="Liên kết mục">#</a></h3>
+<p>Ghép các mảnh đã học thành một luồng duy nhất: trang mở → fetch bác sĩ từ JSON Server (có loading + lỗi) → người dùng điền form 3 bước (validate từng bước) → bấm Xác nhận → lịch hẹn lưu vào <code>localStorage</code> và modal báo thành công:</p>
+<figure class="code-block"><figcaption>Code</figcaption><pre><code>fetch /doctors ──► select "Bác sĩ" (bước 1)
+                        │
+ bước 1 → bước 2 (validate) → bước 3: xác nhận
+                        │
+              submit hợp lệ
+                        │
+ ┌──────────────────────┼──────────────────────┐
+ ▼                      ▼                      ▼
+saveAppointments    reset form → bước 1   modal "Đặt lịch thành công"
+(localStorage)</code></pre></figure>
+<h3 id="h-6-bc-1--kt-ni-api-v-form">Bước 1 — Kết nối API và form<a class="anchor" href="#h-6-bc-1--kt-ni-api-v-form" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>const state = { currentStep: 1, doctors: [], data: {
+  specialty: '', doctorId: null, patientName: '', phone: '', date: '', time: '',
+} };
+
+async function initBookingPage() {
+  try {
+    const response = await fetch('http://localhost:3000/doctors');
+    if (!response.ok) throw new Error(`Lỗi ${response.status}`);
+    populateDoctorSelect(await response.json());
+  } catch (error) {
+    console.warn('API chưa sẵn sàng, dùng dữ liệu mẫu:', error);
+    populateDoctorSelect(DOCTORS_FALLBACK);
+  }
+}
+
+function populateDoctorSelect(doctors) {
+  state.doctors = doctors;
+  const specialtySelect = document.querySelector('#bk-specialty');
+  specialtySelect.innerHTML = '&lt;option value=""&gt;— Chọn chuyên khoa —&lt;/option&gt;';
+  [...new Set(doctors.map((doc) =&gt; doc.specialty))].forEach((specialty) =&gt; {
+    const option = document.createElement('option');
+    option.value = specialty;
+    option.textContent = specialty;
+    specialtySelect.append(option);
+  });
+}
+
+function filterDoctorsBySpecialty(specialty) {
+  return state.doctors.filter((doc) =&gt; doc.specialty === specialty);
+}</code></pre></figure>
+<p>Handler <code>change</code> của <code>#bk-specialty</code> (bài đa bước) sẽ gọi <code>filterDoctorsBySpecialty</code> rồi đổ kết quả vào <code>#bk-doctor</code>. Còn <code>validateStep()</code> kế thừa nguyên luật của bài Form Validation nhưng chạy <strong>trên state</strong> (bài trước đã nêu) — giờ chỉ cần đảm bảo submit gọi nó trước khi lưu.</p>
+<h3 id="h-9-bc-2--submit-lu--modal-xc-nhn">Bước 2 — Submit: lưu + modal xác nhận<a class="anchor" href="#h-9-bc-2--submit-lu--modal-xc-nhn" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>const STORAGE_KEY = 'appointments';
+
+function loadAppointments() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];   // JSON hỏng → trả danh sách trống, không crash trang
+  }
+}
+
+const form = document.querySelector('#booking-form');
+
+form.addEventListener('submit', (event) =&gt; {
+  event.preventDefault();
+  if (!validateStep(state.currentStep)) return;   // phòng submit sớm
+
+  const doctor = state.doctors.find((doc) =&gt; doc.id === state.data.doctorId);
+  const appointment = {
+    id: Date.now(),
+    patientName: state.data.patientName,
+    phone: state.data.phone,
+    specialty: state.data.specialty,
+    doctorId: state.data.doctorId,
+    doctorName: doctor ? doctor.name : '',
+    date: state.data.date,
+    time: state.data.time,
+    status: 'pending',
+    createdAt: new Date().toISOString(),
+  };
+
+  // 1. lưu vào localStorage
+  const list = loadAppointments();
+  list.push(appointment);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+
+  // 2. hiện modal xác nhận (Bootstrap 5)
+  document.querySelector('#modal-confirm-name').textContent = appointment.patientName;
+  document.querySelector('#modal-confirm-detail').textContent =
+    `${appointment.specialty} — ${appointment.doctorName} — ${appointment.date} ${appointment.time}`;
+  bootstrap.Modal.getOrCreateInstance(
+    document.querySelector('#booking-success-modal')
+  ).show();
+
+  // 3. reset form về bước 1
+  form.reset();
+  state.data = { specialty: '', doctorId: null, patientName: '', phone: '', date: '', time: '' };
+  showStep(1);
+});</code></pre></figure>
+<p>HTML modal (đặt cuối <code>&lt;body&gt;</code>):</p>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;div class="modal fade" id="booking-success-modal" tabindex="-1"&gt;
+  &lt;div class="modal-dialog modal-dialog-centered"&gt;
+    &lt;div class="modal-content"&gt;
+      &lt;div class="modal-header"&gt;
+        &lt;h5 class="modal-title"&gt;✅ Đặt lịch thành công&lt;/h5&gt;
+        &lt;button type="button" class="btn-close" data-bs-dismiss="modal"&gt;&lt;/button&gt;
+      &lt;/div&gt;
+      &lt;div class="modal-body"&gt;
+        &lt;p class="mb-1"&gt;&lt;strong id="modal-confirm-name"&gt;&lt;/strong&gt;&lt;/p&gt;
+        &lt;p class="text-muted mb-0" id="modal-confirm-detail"&gt;&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class="modal-footer"&gt;
+        &lt;button type="button" class="btn btn-primary" data-bs-dismiss="modal"&gt;Đóng&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre></figure>
+<h3 id="h-13-prompt-ai-mu--prompt-tng-hp-c-lung">Prompt AI mẫu — prompt tổng hợp cả luồng<a class="anchor" href="#h-13-prompt-ai-mu--prompt-tng-hp-c-lung" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Dự án Highland Hospital (Bootstrap 5, JS thuần ES6+, tiếng Việt). Viết
+JS cho trang đặt lịch: (1) khi tải, fetch "http://localhost:3000/doctors"
+bằng async/await, kiểm tra response.ok, lỗi thì dùng mảng DOCTORS_FALLBACK,
+đổ chuyên khoa vào #bk-specialty và bác sĩ vào #bk-doctor; (2) form 3
+bước .step-panel với state { currentStep, doctors, data } và showStep();
+(3) validate từng bước khi bấm "Tiếp tục" dùng classList is-invalid;
+(4) submit lưu appointment { id: Date.now(), ...data, doctorName tra từ
+doctors, status: "pending" } vào localStorage "appointments" rồi hiện
+modal #booking-success-modal và reset form về bước 1. Chỉ render tên
+người bằng textContent, không innerHTML.</code></pre></figure>
+<h3 id="h-15-checklist-hon-thin">Checklist hoàn thiện<a class="anchor" href="#h-15-checklist-hon-thin" aria-label="Liên kết mục">#</a></h3>
+<ul><li><span class="task" aria-hidden="true">&#9744;</span> <code>#bk-specialty</code> và <code>#bk-doctor</code> có dữ liệu — thử cả hai trường hợp: JSON Server chạy / tắt</li><li><span class="task" aria-hidden="true">&#9744;</span> Đổi chuyên khoa → bác sĩ lọc đúng; không thể chọn bác sĩ khác khoa</li><li><span class="task" aria-hidden="true">&#9744;</span> Bấm Tiếp tục khi bước còn lỗi → bị chặn và có thông báo rõ ràng</li><li><span class="task" aria-hidden="true">&#9744;</span> Quay lại bước 1 → dữ liệu đã chọn vẫn còn (state giữ)</li><li><span class="task" aria-hidden="true">&#9744;</span> Bước 3 hiển thị đúng thông tin đã nhập (không có <code>[object Object]</code>)</li><li><span class="task" aria-hidden="true">&#9744;</span> Submit thành công → modal hiện; tab Application → Local Storage có bản ghi <code>appointments</code> mới</li><li><span class="task" aria-hidden="true">&#9744;</span> F5 tải lại → bản ghi vẫn còn trong localStorage (chương 12 Admin Dashboard sẽ đọc chúng)</li><li><span class="task" aria-hidden="true">&#9744;</span> Không có lỗi đỏ trong Console khi chạy đúng luồng</li></ul>
+<h3 id="h-17-thc-hnh">Thực hành<a class="anchor" href="#h-17-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<ol><li>Chạy lại toàn bộ luồng và đối chiếu checklist — mục nào chưa qua thì sửa ngay.</li><li>Đặt 2 lịch hẹn, mở <code>localStorage</code> quan sát cấu trúc dữ liệu lưu được.</li><li>Xoá tạm <code>db.json</code> để ép code rơi vào nhánh <code>DOCTORS_FALLBACK</code> — trang vẫn dùng được.</li><li>Chuẩn bị cho chương 12: gọi <code>loadAppointments()</code> trong Console và tự render thử — Admin Dashboard sẽ dùng chính dữ liệu này.</li></ol>
+<h3 id="h-19-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-19-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Luồng đặt lịch hoàn chỉnh đã chạy từ đầu tới cuối — chương 12 sẽ dựng Landing Page và Admin Dashboard, nơi mọi lịch hẹn bạn vừa lưu sẽ hiện lên để quản lý.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">8 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-bi-ton">Bài toán</a></li><li><a href="#h-6-bc-1--kt-ni-api-v-form">Bước 1 — Kết nối API và form</a></li><li><a href="#h-9-bc-2--submit-lu--modal-xc-nhn">Bước 2 — Submit: lưu + modal xác nhận</a></li><li><a href="#h-13-prompt-ai-mu--prompt-tng-hp-c-lung">Prompt AI mẫu — prompt tổng hợp cả luồng</a></li><li><a href="#h-15-checklist-hon-thin">Checklist hoàn thiện</a></li><li><a href="#h-17-thc-hnh">Thực hành</a></li><li><a href="#h-19-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="11-async-javascript-lu-ng-d-t-lich-da-bu-c.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Luồng đặt lịch đa bước</strong></span></a><a href="12-highland-hospital-project-t-ng-quan-d-an-phan-tich-figma.html" rel="next"><span><small>Bài sau</small><strong>Tổng quan dự án & phân tích Figma</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

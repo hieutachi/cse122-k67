@@ -1,0 +1,76 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Box Model | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-4.html">Chương 4</a> &rsaquo; CSS3 foundations &rsaquo; Bài 2/5</p>
+<h1 class="lesson-title">The Box Model</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 2/5</span><span>Module: CSS3 foundations</span><span>~4 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="the-box-model">The Box Model</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Nắm 4 lớp của mọi phần tử: content, padding, border, margin</li><li>Hiểu <code>box-sizing: border-box</code> và vì sao nên đặt toàn cục từ đầu</li><li>Giải thích được hiện tượng margin bị "nuốt" (margin collapse)</li><li>Dùng DevTools tab Computed để đọc kích thước thật khi layout lạ</li></ul>
+<h3 id="h-3-mi-th-trn-trang-u-l-mt-ci-hp">Mọi thứ trên trang đều là một cái hộp<a class="anchor" href="#h-3-mi-th-trn-trang-u-l-mt-ci-hp" aria-label="Liên kết mục">#</a></h3>
+<p>Trình duyệt không nhìn trang như "chữ và ảnh" mà như chồng các <strong>hộp chữ nhật</strong> lồng nhau. Mỗi hộp có bốn lớp tính từ trong ra:</p>
+<figure class="code-block"><figcaption>Code</figcaption><pre><code>┌──────────────────────────── margin (ngoài cùng, trong suốt) ──┐
+│  ┌──────────────────────── border ────────────────────────┐   │
+│  │  ┌──────────────────── padding ────────────────────┐   │   │
+│  │  │  ┌──────────────── content ────────────────┐    │   │   │
+│  │  │  │  chữ, ảnh, nội dung thật                 │    │   │   │
+│  │  │  └──────────────────────────────────────────┘    │   │   │
+│  │  └──────────────────────────────────────────────────┘   │   │
+│  └──────────────────────────────────────────────────────────┘   │
+└──────────────────────────────────────────────────────────────────┘</code></pre></figure>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>.doctor-card {
+  width: 300px;
+  padding: 24px;        /* đệm trong: đẩy content ra xa mép hộp */
+  border: 1px solid #e2e8f0;  /* viền: nhìn thấy được */
+  margin: 16px;         /* đẩy các hộp khác ra xa hộp này */
+  background: white;    /* background nằm dưới cả padding + border */
+}</code></pre></figure>
+<h3 id="h-7-boxsizing-borderbox--quy-c-t-u-tin-trong-mi-d-n">box-sizing: border-box — quy ước đặt đầu tiên trong mọi dự án<a class="anchor" href="#h-7-boxsizing-borderbox--quy-c-t-u-tin-trong-mi-d-n" aria-label="Liên kết mục">#</a></h3>
+<p>Mặc định (content-box), <code>width: 300px</code> chỉ là bề rộng của <strong>content</strong>; padding và border cộng thêm ra ngoài → hộp thực tế rộng <code>300 + 24×2 + 1×2 = 350px</code>. Hai cạnh nhau là 700px, vượt container 640px → vỡ layout.</p>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>*, *::before, *::after {
+  box-sizing: border-box;
+}</code></pre></figure>
+<p>Quy tắc trên nói: "mọi hộp, width đã bao gồm padding và border". Giờ <code>width: 300px</code> luôn là <strong>kích thước hiển thị thật</strong>, không còn phép cộng trừ bất ngờ. Đây là quy ước toàn ngành (Bootstrap, Tailwind đều đặt sẵn), hãy đặt ở dòng đầu CSS của bạn và không bao giờ bỏ đi.</p>
+<h3 id="h-11-margin-collapse--hai-l-gp-nhau-ri-bin-mt-mt-ci">Margin collapse — hai lề "gặp nhau" rồi biến mất một cái<a class="anchor" href="#h-11-margin-collapse--hai-l-gp-nhau-ri-bin-mt-mt-ci" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;section class="services"&gt;&lt;h2&gt;Dịch vụ&lt;/h2&gt;&lt;/section&gt;
+&lt;section class="doctors"&gt;&lt;h2&gt;Đội ngũ bác sĩ&lt;/h2&gt;&lt;/section&gt;</code></pre></figure>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>h2 { margin: 32px 0; }</code></pre></figure>
+<p>Theo trực giác, khoảng cách giữa hai tiêu đề là <code>32 + 32 = 64px</code>. Thực tế chỉ còn <strong>32px</strong>: theo chiều dọc, hai margin liền kề <strong>gộp lại</strong> lấy giá trị lớn hơn (không cộng). Điều tương tự xảy ra khi margin con "chui qua" cha không có border/padding — cha trượt xuống dù bạn không đặt margin cho nó.</p>
+<p>Cách xử lý thực dụng cho người mới:</p>
+<ul><li>Ưu tiên <strong>padding</strong> cho khoảng cách bên trong section, <strong>margin</strong> chỉ cho khoảng cách giữa các khối độc lập.</li><li>Tránh đặt margin dọc hai bên cho phần tử kề nhau; hãy nghĩ "mỗi hộp chỉ đẩy một lần" (ví dụ chỉ đặt <code>margin-bottom</code>).</li><li>Khi cần cha tách hẳn khỏi con theo Box Model, thêm <code>padding: 1px</code> hoặc <code>display: flow-root</code> cho cha.</li></ul>
+<h3 id="h-17-prompt-mu--dng-ai-c-layout-l-qua-computed">Prompt mẫu — dùng AI đọc layout lạ qua Computed<a class="anchor" href="#h-17-prompt-mu--dng-ai-c-layout-l-qua-computed" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Hero section Highland Hospital của tôi bị cách xa thanh nav ~40px
+dù tôi không đặt margin nào. Đây là CSS hiện tại:
+
+.hero { padding-top: 0; }
+h1 { margin: 24px 0; }
+
+Trong DevTools tab Computed tôi thấy .hero cao 0px nhưng chữ vẫn
+hiện. Hãy giải thích theo Box Model (margin collapse giữa h1 và
+.hero) và cho cách sửa tối giản, không dùng !important.</code></pre></figure>
+<h3 id="h-19-thc-hnh">Thực hành<a class="anchor" href="#h-19-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<ol><li>Mở trang Highland Hospital (HTML chương 3 + CSS bạn viết), tạo <code>.doctor-card</code> với <code>width: 280px; padding: 20px; border: 1px solid …; margin: 16px</code>. Đo bằng DevTools xem hộp rộng bao nhiêu trước và sau khi đặt <code>box-sizing: border-box</code>.</li><li>Chuột phải một thẻ bác sĩ → Inspect → tab <strong>Computed</strong>: đọc <code>width</code>, <code>padding</code>, <code>border</code>, <code>margin</code>; tô màu từng vùng ở tab <strong>Layout</strong> để thấy 4 lớp Box Model hiển thị trực quan.</li><li>Dựng hai <code>&lt;h2&gt;</code> liền nhau trong cùng section, cho mỗi cái <code>margin: 30px 0</code>, đo khoảng cách thật. Rồi đổi sang <code>margin-bottom: 30px</code> ở phần tử trên — ghi lại sự khác biệt.</li><li>Cố tình làm vỡ layout (width cố định + padding) để tự trải nghiệm, rồi sửa bằng <code>box-sizing</code>.</li></ol>
+<h3 id="h-21-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-21-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Đã kiểm soát được kích thước từng hộp, giờ đến lúc "mặc" cho hộp đó bộ nhận diện thương hiệu: màu sắc, chữ và biến CSS dùng chung cho cả bệnh viện.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">7 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-mi-th-trn-trang-u-l-mt-ci-hp">Mọi thứ trên trang đều là một cái hộp</a></li><li><a href="#h-7-boxsizing-borderbox--quy-c-t-u-tin-trong-mi-d-n">box-sizing: border-box — quy ước đặt đầu tiên trong mọi dự án</a></li><li><a href="#h-11-margin-collapse--hai-l-gp-nhau-ri-bin-mt-mt-ci">Margin collapse — hai lề "gặp nhau" rồi biến mất một cái</a></li><li><a href="#h-17-prompt-mu--dng-ai-c-layout-l-qua-computed">Prompt mẫu — dùng AI đọc layout lạ qua Computed</a></li><li><a href="#h-19-thc-hnh">Thực hành</a></li><li><a href="#h-21-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="04-css3-foundations-css-selectors-specificity.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>CSS Selectors & Specificity</strong></span></a><a href="04-css3-foundations-mau-s-c-typography-css-variables.html" rel="next"><span><small>Bài sau</small><strong>Màu sắc, Typography & CSS Variables</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

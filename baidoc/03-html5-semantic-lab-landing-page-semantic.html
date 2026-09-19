@@ -1,0 +1,93 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lab: Landing Page semantic | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-3.html">Chương 3</a> &rsaquo; HTML5 semantic &rsaquo; Bài 5/5</p>
+<h1 class="lesson-title">Lab: Landing Page semantic</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 5/5</span><span>Module: HTML5 semantic</span><span>~5 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="lab-landing-page-semantic">Lab: Landing Page semantic</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Dùng AI dựng toàn bộ khung semantic trang chủ Highland Hospital trong một lượt</li><li>Đọc hiểu và đánh dấu từng vùng bằng comment HTML như một senior dev</li><li>Kiểm tra trang bằng checklist thay vì "nhìn là thấy ổn"</li></ul>
+<p>Đây là bài tổng hợp của chương: áp dụng đồng thời khung tài liệu (bài 01), thẻ ngữ nghĩa (bài 02), và một chút media từ bài 04. CSS chỉ cần tối thiểu để dễ nhìn — trọng tâm là <strong>cấu trúc HTML</strong>.</p>
+<h3 id="h-4-bc-1--dng-khung-bng-ai">Bước 1 — Dựng khung bằng AI<a class="anchor" href="#h-4-bc-1--dng-khung-bng-ai" aria-label="Liên kết mục">#</a></h3>
+<p>Dán prompt bên dưới vào Gemini/Claude/ChatGPT. Prompt này gom đủ 5 thành phần đã học ở chương 2:</p>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Bối cảnh: tôi đang dựng trang chủ Highland Hospital (web bệnh viện, đặt
+lịch khám trực tuyến). Đây là bước dựng khung HTML semantic, chưa có CSS.
+Nhiệm vụ: dựng toàn bộ trang chủ gồm 6 vùng theo thứ tự —
+(1) header + nav 4 mục: Trang chủ, Bác sĩ, Đặt lịch, Liên hệ;
+(2) hero với h1 "Chăm sóc sức khoẻ chủ động cùng Highland", đoạn mô tả
+và 2 nút (Đặt lịch khám, Xem chuyên khoa);
+(3) section "Dịch vụ nổi bật" — 6 dịch vụ: Khám tổng quát, Tim mạch, Nhi
+khoa, Xét nghiệm, Chẩn đoán hình ảnh, Phục hồi chức năng;
+(4) section "Đội ngũ bác sĩ" — 3 article: mỗi article có h3 tên bác sĩ,
+chuyên khoa, số năm kinh nghiệm;
+(5) section "Đánh giá" — 2 lời nhận xét của bệnh nhân;
+(6) footer: tên bệnh viện, địa chỉ, hotline, bản quyền.
+Ràng buộc: HTML semantic — header+nav, main bọc toàn bộ 4 khu vực giữa,
+section riêng cho từng chủ đề, article cho mỗi bác sĩ; đúng một h1;
+heading các section là h2; nội dung placeholder tiếng Việt ngắn; thêm
+comment HTML &lt;!-- tên vùng --&gt; trước mỗi vùng; không dùng thuộc tính
+style; không CSS; class tiền tố hh-.
+Định dạng: một khối HTML duy nhất.</code></pre></figure>
+<h3 id="h-7-bc-2--c-v-nh-du-tng-vng">Bước 2 — Đọc và đánh dấu từng vùng<a class="anchor" href="#h-7-bc-2--c-v-nh-du-tng-vng" aria-label="Liên kết mục">#</a></h3>
+<p>Code AI trả về <strong>chưa phải là của bạn</strong> cho tới khi bạn đọc hiểu từng dòng. Mở file trong VS Code và tự trả lời bằng miệng cho từng vùng:</p>
+<ul><li><code>header</code> chứa <code>nav</code> — vì sao menu nằm trong <code>nav</code>, còn logo để ngoài? (nav chỉ chứa liên kết điều hướng; logo là thương hiệu.)</li><li>Vì sao 4 khu vực giữa (hero, dịch vụ, bác sĩ, đánh giá) nằm trong <code>main</code>, còn footer để ngoài? (main là nội dung chính duy nhất; footer là thông tin chung của trang.)</li><li>Vì sao mỗi bác sĩ là <code>article</code> thay vì <code>div</code>? (thẻ bác sĩ tự đứng riêng được — độc lập như một bài viết nhỏ.)</li><li>Vì sao các nút dùng <code>&lt;a href&gt;</code> thay vì <code>&lt;button&gt;</code>? (chúng điều hướng sang trang khác.)</li></ul>
+<p>Comment HTML AI thêm vào đã giúp bạn định vị; giờ hãy <strong>tự viết thêm</strong> comment của riêng bạn cho từng vùng theo lối senior dev: một dòng ghi rõ <em>vùng này là gì và chương sau sẽ thêm gì vào</em>.</p>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;!-- ===== HEADER + NAV =====
+     Chương 8 sẽ thay bằng Bootstrap Navbar có nút hamburger cho mobile --&gt;
+&lt;header class="hh-header"&gt;
+  &lt;a class="hh-logo" href="index.html"&gt;Highland Hospital&lt;/a&gt;
+  &lt;nav aria-label="Điều hướng chính"&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href="index.html"&gt;Trang chủ&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href="#doctors"&gt;Bác sĩ&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href="booking.html"&gt;Đặt lịch&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href="#contact"&gt;Liên hệ&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/nav&gt;
+&lt;/header&gt;
+
+&lt;main&gt;
+  &lt;!-- ===== HERO ===== Chương 6 sẽ làm hero này responsive --&gt;
+  &lt;section class="hh-hero"&gt;
+    &lt;h1&gt;Chăm sóc sức khoẻ chủ động cùng Highland&lt;/h1&gt;
+    &lt;p&gt;Đội ngũ bác sĩ giàu kinh nghiệm, đặt lịch khám chỉ trong 2 phút.&lt;/p&gt;
+    &lt;a class="hh-btn hh-btn--primary" href="booking.html"&gt;Đặt lịch khám&lt;/a&gt;
+    &lt;a class="hh-btn hh-btn--outline" href="#services"&gt;Xem chuyên khoa&lt;/a&gt;
+  &lt;/section&gt;
+  &lt;!-- ...các section dịch vụ, bác sĩ, đánh giá... --&gt;
+&lt;/main&gt;
+
+&lt;footer&gt;
+  &lt;!-- Chương 4-5 sẽ dàn cột này bằng Flexbox --&gt;
+  &lt;p&gt;© 2025 Highland Hospital. Hotline: 1900 1234.&lt;/p&gt;
+&lt;/footer&gt;</code></pre></figure>
+<p>Chú ý <code>aria-label="Điều hướng chính"</code> trên <code>nav</code> — khi trang có nhiều hơn một <code>nav</code>, label giúp phân biệt. Đây là chi tiết accessibility nhỏ mà AI hay bỏ, bạn cần tự kiểm và thêm.</p>
+<h3 id="h-13-bc-3--chy-checklist-kim-tra">Bước 3 — Chạy checklist kiểm tra<a class="anchor" href="#h-13-bc-3--chy-checklist-kim-tra" aria-label="Liên kết mục">#</a></h3>
+<p>Mở trang bằng Live Server, dùng DevTools (F12) và chạy Lighthouse (tab Lighthouse → Generate report). Tự chấm:</p>
+<ul><li><span class="task" aria-hidden="true">&#9744;</span> Có đúng một <code>h1</code>, các section đều có <code>h2</code>, không nhảy bậc heading?</li><li><span class="task" aria-hidden="true">&#9744;</span> <code>main</code> chứa đúng nội dung chính; <code>footer</code> nằm ngoài <code>main</code>?</li><li><span class="task" aria-hidden="true">&#9744;</span> Mỗi <code>img</code> đều có <code>alt</code> mô tả thật (không phải "ảnh bác sĩ")?</li><li><span class="task" aria-hidden="true">&#9744;</span> Mọi link trong <code>nav</code> đều trỏ tới đích tồn tại (<code>#doctors</code>, <code>booking.html</code>)?</li><li><span class="task" aria-hidden="true">&#9744;</span> Không còn <code>&lt;div&gt;</code> nào "trá hình" heading — mọi tiêu đề là thẻ heading thật?</li><li><span class="task" aria-hidden="true">&#9744;</span> Lighthouse Accessibility/SEO đạt ít nhất 90?</li></ul>
+<h3 id="h-16-thc-hnh">Thực hành<a class="anchor" href="#h-16-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<p>Làm đủ 3 bước trên cho trang chủ của bạn: dán prompt → đọc hiểu và tự thêm comment từng vùng → chạy checklist. Nếu một mục checklist trượt, viết prompt sửa <em>một</em> lỗi đó (vòng lặp từng bước nhỏ, bài 01 chương 2) rồi chạy lại Lighthouse xác nhận điểm tăng.</p>
+<h3 id="h-18-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-18-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Khung semantic đã vững; từ chương sau khung đó bắt đầu "mặc áo" bằng CSS3 — mở đầu là <em>CSS Selectors &amp; Specificity</em> để hiểu vì sao vài dòng CSS thắng, vài dòng khác bị bỏ qua.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">6 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-4-bc-1--dng-khung-bng-ai">Bước 1 — Dựng khung bằng AI</a></li><li><a href="#h-7-bc-2--c-v-nh-du-tng-vng">Bước 2 — Đọc và đánh dấu từng vùng</a></li><li><a href="#h-13-bc-3--chy-checklist-kim-tra">Bước 3 — Chạy checklist kiểm tra</a></li><li><a href="#h-16-thc-hnh">Thực hành</a></li><li><a href="#h-18-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="03-html5-semantic-bang-bi-u-da-phuong-ti-n.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Bảng biểu & đa phương tiện</strong></span></a><a href="04-css3-foundations-css-selectors-specificity.html" rel="next"><span><small>Bài sau</small><strong>CSS Selectors & Specificity</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

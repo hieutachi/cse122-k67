@@ -1,0 +1,82 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Prompt cho JavaScript | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-1.html">Chương 1</a> &rsaquo; Prompt engineering cho frontend &rsaquo; Bài 3/5</p>
+<h1 class="lesson-title">Prompt cho JavaScript</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 3/5</span><span>Module: Prompt engineering cho frontend</span><span>~4 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="prompt-cho-javascript">Prompt cho JavaScript</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Mô tả dữ liệu vào/ra rõ ràng để AI viết đúng hàm</li><li>Nêu rõ DOM API được phép dùng để tránh code lạ</li><li>Yêu cầu được code không dependency, tách hàm thuần và hàm render</li></ul>
+<h3 id="h-3-javascript-d-sai-v-thiu-hp-ng">JavaScript dễ sai vì thiếu "hợp đồng"<a class="anchor" href="#h-3-javascript-d-sai-v-thiu-hp-ng" aria-label="Liên kết mục">#</a></h3>
+<p>Lỗi JS thường không hiện ra màn hình mà nằm trong console. Lý do phổ biến nhất khiến AI viết sai JS: bạn mô tả dữ liệu mơ hồ, còn AI tự bịa hình dạng (shape) của object — viết xong là lỗi <code>undefined</code>. Với JS, prompt phải nêu <strong>dữ liệu vào, dữ liệu ra và cách nối với DOM</strong> — như một hợp đồng giữa bạn và AI.</p>
+<h3 id="h-5-4-iu-phi-ni-trong-mi-prompt-js">4 điều phải nói trong mọi prompt JS<a class="anchor" href="#h-5-4-iu-phi-ni-trong-mi-prompt-js" aria-label="Liên kết mục">#</a></h3>
+<ol><li><strong>Dữ liệu vào</strong>: dán thẳng mảng/object mẫu thật thay vì mô tả bằng lời — AI nhìn được field nào tồn tại, tránh tự bịa tên field.</li><li><strong>Dữ liệu ra</strong>: hàm trả về gì — mảng mới? chuỗi HTML? hay cập nhật thẳng DOM?</li><li><strong>DOM API được phép</strong>: <code>querySelector</code>, template literals, <code>map</code>/<code>filter</code>/<code>join</code>, <code>addEventListener</code>. Cấm <code>document.write</code>, cấm jQuery, cấm import thư viện.</li><li><strong>Cấu trúc hàm</strong>: tách hàm <em>thuần</em> (chỉ tính toán trên dữ liệu, không đụng DOM) khỏi hàm <em>render</em> (đụng DOM). Logic sạch thì test được, và sau này đổi giao diện không phải viết lại logic.</li></ol>
+<p>Dữ liệu bác sĩ dùng chung trong khoá học:</p>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>const doctors = [
+  { id: 1, name: 'BS. Nguyễn Thị Hương', specialty: 'Tim mạch', experience: 12 },
+  { id: 2, name: 'BS. Trần Văn Minh', specialty: 'Nội tổng hợp', experience: 8 },
+  { id: 3, name: 'BS. Lê Thu Trang', specialty: 'Nhi khoa', experience: 15 },
+];</code></pre></figure>
+<h3 id="h-9-prompt-mu-render-danh-sch--lc-theo-chuyn-khoa">Prompt mẫu: render danh sách + lọc theo chuyên khoa<a class="anchor" href="#h-9-prompt-mu-render-danh-sch--lc-theo-chuyn-khoa" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Bối cảnh: Trang chủ Highland Hospital, JavaScript ES6+ thuần, không
+framework, không thư viện ngoài.
+Dữ liệu vào: mảng doctors —
+[{ id: 1, name: 'BS. Nguyễn Thị Hương', specialty: 'Tim mạch', experience: 12 },
+ { id: 2, name: 'BS. Trần Văn Minh', specialty: 'Nội tổng hợp', experience: 8 },
+ { id: 3, name: 'BS. Lê Thu Trang', specialty: 'Nhi khoa', experience: 15 }]
+Nhiệm vụ: (1) Hàm renderDoctors(items) đổ mảng vào &lt;ul id="doctor-list"&gt;,
+mỗi bác sĩ một &lt;li&gt; hiện tên, chuyên khoa, số năm kinh nghiệm.
+(2) Hàm filterBySpecialty(doctors, keyword) lọc theo specialty, không
+phân biệt hoa thường, trả về mảng mới.
+Ràng buộc: ES6+; chỉ dùng querySelector, template literals, map, filter,
+join; không thêm dependency; không sửa mảng gốc; hàm thuần và hàm render
+tách riêng.
+Định dạng: một khối code duy nhất, có chú thích ngắn từng hàm.</code></pre></figure>
+<p>Kết quả đúng chuẩn sẽ tương tự:</p>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>const list = document.querySelector('#doctor-list');
+
+function filterBySpecialty(doctors, keyword) {
+  const kw = keyword.trim().toLowerCase();
+  return doctors.filter((doc) =&gt; doc.specialty.toLowerCase().includes(kw));
+}
+
+function renderDoctors(items) {
+  list.innerHTML = items
+    .map((doc) =&gt; `
+      &lt;li&gt;
+        &lt;h3&gt;${doc.name}&lt;/h3&gt;
+        &lt;p&gt;Chuyên khoa: ${doc.specialty} · ${doc.experience} năm kinh nghiệm&lt;/p&gt;
+      &lt;/li&gt;`)
+    .join('');
+}
+
+renderDoctors(doctors);</code></pre></figure>
+<p>Đọc kỹ ba điểm: <code>filterBySpecialty</code> là hàm thuần (nhận mảng, trả mảng mới, không đụng DOM); <code>renderDoctors</code> chỉ đụng DOM; và <code>map().join('')</code> dựng toàn bộ chuỗi trước khi gán <code>innerHTML</code> <strong>một lần</strong> — không bao giờ gán <code>innerHTML</code> bên trong vòng lặp.</p>
+<h3 id="h-14-thm-v-d-gi-hm-khi-cn-chc-lung">Thêm "ví dụ gọi hàm" khi cần chắc luồng<a class="anchor" href="#h-14-thm-v-d-gi-hm-khi-cn-chc-lung" aria-label="Liên kết mục">#</a></h3>
+<p>Khi muốn AI hiểu đúng cách các hàm nối với nhau, thêm dòng cuối prompt: <em>"Cuối code, gọi <code>renderDoctors(filterBySpecialty(doctors, 'tim'))</code> và chú thích kết quả mong đợi."</em> Yêu cầu AI nói ra kết quả mong đợi là cách rẻ nhất để phát hiện nó hiểu sai dữ liệu.</p>
+<h3 id="h-16-thc-hnh">Thực hành<a class="anchor" href="#h-16-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<p>Bổ sung vào mảng <code>doctors</code> field <code>room</code> (kiểu chuỗi, ví dụ <code>"P.302"</code>) rồi viết prompt yêu cầu AI hiển thị thêm số phòng vào mỗi <code>&lt;li&gt;</code> <strong>trong khi giữ nguyên hai hàm cũ</strong>. Chạy thử với keyword <code>"nhi"</code> — kết quả chỉ còn bác sĩ Nhi khoa — và mở Console xác nhận không có lỗi.</p>
+<h3 id="h-18-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-18-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Code đã chạy mà hiển thị vẫn sai là tình huống khác hẳn — bài <em>Prompt cho Debug</em> sẽ dạy công thức dán code + hiện tượng + thứ tự nguyên nhân khả dĩ.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">7 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-javascript-d-sai-v-thiu-hp-ng">JavaScript dễ sai vì thiếu "hợp đồng"</a></li><li><a href="#h-5-4-iu-phi-ni-trong-mi-prompt-js">4 điều phải nói trong mọi prompt JS</a></li><li><a href="#h-9-prompt-mu-render-danh-sch--lc-theo-chuyn-khoa">Prompt mẫu: render danh sách + lọc theo chuyên khoa</a></li><li><a href="#h-14-thm-v-d-gi-hm-khi-cn-chc-lung">Thêm "ví dụ gọi hàm" khi cần chắc luồng</a></li><li><a href="#h-16-thc-hnh">Thực hành</a></li><li><a href="#h-18-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="02-prompt-engineering-prompt-cho-html-css.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Prompt cho HTML & CSS</strong></span></a><a href="02-prompt-engineering-prompt-cho-debug.html" rel="next"><span><small>Bài sau</small><strong>Prompt cho Debug</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

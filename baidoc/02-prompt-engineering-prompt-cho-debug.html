@@ -1,0 +1,80 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Prompt cho Debug | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-1.html">Chương 1</a> &rsaquo; Prompt engineering cho frontend &rsaquo; Bài 4/5</p>
+<h1 class="lesson-title">Prompt cho Debug</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 4/5</span><span>Module: Prompt engineering cho frontend</span><span>~4 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="prompt-cho-debug">Prompt cho Debug</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Viết được prompt debug theo công thức: code + hiện tượng + thứ tự nguyên nhân</li><li>Yêu cầu AI giải thích trước khi sửa để tránh vá mù</li><li>Kiểm chứng nguyên nhân bằng DevTools trước khi áp dụng bản sửa</li></ul>
+<h3 id="h-3-b-li-sa-gip-l-prompt-hng-nht">"Bị lỗi, sửa giúp" là prompt hỏng nhất<a class="anchor" href="#h-3-b-li-sa-gip-l-prompt-hng-nht" aria-label="Liên kết mục">#</a></h3>
+<p>Gửi cả file kèm câu "nó bị lỗi, sửa giúp" thì AI sẽ đoán. Có khi đúng, có khi sửa nhầm chỗ và tạo thêm lỗi mới. Debug hiệu quả bắt đầu từ việc <strong>bạn mô tả được hiện tượng</strong> — hiện tượng chính là dữ liệu đầu vào của mọi phán đoán, của cả AI lẫn bạn.</p>
+<h3 id="h-5-cng-thc-prompt-debug-3-phn">Công thức prompt debug 3 phần<a class="anchor" href="#h-5-cng-thc-prompt-debug-3-phn" aria-label="Liên kết mục">#</a></h3>
+<ol><li><strong>Code tối thiểu</strong>: chỉ dán phần liên quan (HTML của modal + CSS + dòng JS khởi tạo). Không dán cả dự án; nếu lỗi nằm rải rác, nói rõ "đây là file A, phần còn lại nằm ở file B dòng 12".</li><li><strong>Hiện tượng</strong>: mô tả <em>thấy gì</em> và <em>đã thử gì</em> — ví dụ: "Trên iPhone SE (375px), modal mở ra tràn khỏi màn hình bên phải, nút đóng nằm ngoài tầm nhìn. Desktop không sao."</li><li><strong>Thứ tự nguyên nhân khả dĩ</strong>: tự liệt kê 2–3 nghi vấn xếp theo khả năng xảy ra, và yêu cầu AI phân tích <strong>đúng theo thứ tự đó</strong>. Việc này ép bạn nghĩ trước; AI nói đúng trọng tâm thay vì lan man.</li></ol>
+<p>Luôn kết thúc bằng: <em>"Trước khi đưa code sửa, hãy giải thích nguyên nhân bằng 2–3 câu."</em> Nếu lời giải thích không khớp hiện tượng bạn thấy thì đừng áp dụng bản sửa.</p>
+<h3 id="h-8-prompt-mu-modal-v-trn-mobile">Prompt mẫu: modal vỡ trên mobile<a class="anchor" href="#h-8-prompt-mu-modal-v-trn-mobile" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Code: Tôi dùng Bootstrap 5 qua CDN. Modal "hủy lịch hẹn" nằm bên trong
+&lt;section&gt; của trang Admin, section này có overflow-x: hidden. HTML modal
+viết đúng cú pháp Bootstrap (data-bs-toggle, data-bs-target).
+Hiện tượng: trên màn hình &lt;= 480px, khi mở modal, lớp phủ và hộp modal
+bị lệch, nội dung không cuộn được, nút Đóng nằm ngoài màn hình. Desktop
+bình thường.
+Thứ tự nguyên nhân khả dĩ của tôi:
+1. Modal bị kẹt trong phần tử cha có overflow/transform nên bị cắt.
+2. CSS của tôi (style.css) ghi đè position/width của .modal.
+3. JavaScript không khởi tạo được do lỗi ở nơi khác.
+Yêu cầu: phân tích theo đúng thứ tự trên, xác định nguyên nhân có khả
+năng nhất, giải thích ngắn gọn rồi mới đưa bản sửa tối thiểu.</code></pre></figure>
+<p>Nguyên nhân số 1 là thủ phạm kinh điển: modal Bootstrap dùng <code>position: fixed</code>, nhưng khi nằm trong phần tử cha có <code>transform</code>, <code>filter</code>, <code>overflow</code> hay <code>contain</code>, nó bị "bẫy" vào phần tử đó và vỡ layout. Sửa chuẩn: đưa modal ra làm con trực tiếp của <code>&lt;body&gt;</code>:</p>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;body&gt;
+  &lt;!-- Toàn bộ trang Admin --&gt;
+
+  &lt;!-- Modal đặt ngay dưới &lt;body&gt;, không nằm trong section nào --&gt;
+  &lt;div class="modal fade" id="cancelModal" tabindex="-1"
+       aria-labelledby="cancelModalLabel" aria-hidden="true"&gt;
+    &lt;div class="modal-dialog"&gt;
+      &lt;div class="modal-content"&gt;
+        &lt;div class="modal-header"&gt;
+          &lt;h2 class="modal-title fs-5" id="cancelModalLabel"&gt;Huỷ lịch hẹn?&lt;/h2&gt;
+          &lt;button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"&gt;&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;div class="modal-body"&gt;
+          Lịch hẹn của bệnh nhân sẽ bị xoá. Hành động này không thể hoàn tác.
+        &lt;/div&gt;
+        &lt;div class="modal-footer"&gt;
+          &lt;button type="button" class="btn btn-secondary" data-bs-dismiss="modal"&gt;Giữ lịch&lt;/button&gt;
+          &lt;button type="button" class="btn btn-danger" id="confirmCancel"&gt;Xác nhận huỷ&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;</code></pre></figure>
+<p>Nếu vẫn lỗi, chuyển sang nghi vấn 2 và 3 rồi kiểm chứng bằng DevTools: tab Elements chọn <code>.modal</code> xem computed <code>position</code> có còn <code>fixed</code> không; tab Console xem có lỗi đỏ xuất hiện trước lúc mở modal không.</p>
+<h3 id="h-13-mo-chia-i--khoanh-vng">Mẹo: chia đôi để khoanh vùng<a class="anchor" href="#h-13-mo-chia-i--khoanh-vng" aria-label="Liên kết mục">#</a></h3>
+<p>Lỗi "cả trang" thường không cần AI phân tích 500 dòng. Tự khoanh vùng trước: comment nửa file, xem lỗi còn không, rồi chỉ dán nửa có lỗi vào prompt. Prompt ngắn + đúng trọng tâm luôn cho kết quả tốt hơn prompt dài + mơ hồ.</p>
+<h3 id="h-15-thc-hnh">Thực hành<a class="anchor" href="#h-15-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<p>Cố tình tạo lỗi: bọc modal "Xác nhận đặt lịch" của bạn trong một <code>&lt;div style="transform: translateX(0)"&gt;</code>. Mở ở chế độ thiết bị mobile (DevTools, biểu tượng chiếc điện thoại), ghi lại hiện tượng, rồi viết prompt debug theo công thức 3 phần và đối chiếu với bản sửa AI trả về.</p>
+<h3 id="h-17-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-17-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Đã đủ công cụ viết prompt cho cả dựng mới lẫn sửa lỗi; bài cuối chương — <em>Workshop: viết prompt cắt giao diện</em> — sẽ ép bạn thực hành cả ba loại trên ba tình huống thật.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">7 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-b-li-sa-gip-l-prompt-hng-nht">"Bị lỗi, sửa giúp" là prompt hỏng nhất</a></li><li><a href="#h-5-cng-thc-prompt-debug-3-phn">Công thức prompt debug 3 phần</a></li><li><a href="#h-8-prompt-mu-modal-v-trn-mobile">Prompt mẫu: modal vỡ trên mobile</a></li><li><a href="#h-13-mo-chia-i--khoanh-vng">Mẹo: chia đôi để khoanh vùng</a></li><li><a href="#h-15-thc-hnh">Thực hành</a></li><li><a href="#h-17-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="02-prompt-engineering-prompt-cho-javascript.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Prompt cho JavaScript</strong></span></a><a href="02-prompt-engineering-workshop-vi-t-prompt-c-t-giao-di-n.html" rel="next"><span><small>Bài sau</small><strong>Workshop: viết prompt cắt giao diện</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

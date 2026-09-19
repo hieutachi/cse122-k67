@@ -1,0 +1,93 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cards & List groups | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-7.html">Chương 7</a> &rsaquo; Bootstrap components &rsaquo; Bài 2/5</p>
+<h1 class="lesson-title">Cards & List groups</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 2/5</span><span>Module: Bootstrap components</span><span>~4 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="cards-amp-list-groups">Cards &amp; List groups</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Dựng <code>card</code> với header/body/footer, ảnh trên (<code>card-img-top</code>), tiêu đề, text và nút</li><li>Sắp xếp nhiều card bằng <code>card-group</code> và lưới <code>row-cols-*</code></li><li>Dùng <code>list-group</code> và <code>list-group-flush</code> cho danh sách gọn gàng</li><li>Hoàn thiện card bác sĩ Highland Hospital: ảnh, badge chuyên khoa, nút đặt lịch</li></ul>
+<h3 id="h-3-gii-phu-mt-card">Giải phẫu một card<a class="anchor" href="#h-3-gii-phu-mt-card" aria-label="Liên kết mục">#</a></h3>
+<p>Card là hộp nội dung gồm các phần tuỳ chọn <code>.card-header</code>, <code>.card-body</code>, <code>.card-footer</code>. Class <code>card-img-top</code> đặt ảnh tràn ngang phía trên:</p>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;div class="card" style="width: 20rem;"&gt;
+  &lt;img src="assets/images/doctor-01.jpg" class="card-img-top" alt="Bác sĩ Nguyễn Minh Anh"&gt;
+  &lt;div class="card-body"&gt;
+    &lt;h5 class="card-title"&gt;BS.CKI Nguyễn Minh Anh&lt;/h5&gt;
+    &lt;p class="card-text"&gt;Hơn 12 năm kinh nghiệm Nội tổng hợp, từng công tác tại Bệnh viện Bạch Mai.&lt;/p&gt;
+    &lt;a href="booking.html" class="btn btn-primary"&gt;Đặt lịch khám&lt;/a&gt;
+  &lt;/div&gt;
+  &lt;div class="card-footer text-body-secondary"&gt;Khoa Nội tổng hợp&lt;/div&gt;
+&lt;/div&gt;</code></pre></figure>
+<ul><li><code>card-title</code> / <code>card-text</code> chỉ định font trong card (không bắt buộc nhưng nên dùng)</li><li>Card tự rộng theo nội dung; muốn kiểm soát chiều rộng thì thêm CSS hoặc class width như ví dụ trên</li></ul>
+<h3 id="h-7-ghp-badge-vo-card">Ghép badge vào card<a class="anchor" href="#h-7-ghp-badge-vo-card" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;span class="badge text-bg-success"&gt;Còn lịch hôm nay&lt;/span&gt;</code></pre></figure>
+<p>Badge (đã học ở chương 7) đặt cạnh tiêu đề giúp người dùng nắm trạng thái trong nửa giây.</p>
+<h3 id="h-10-cardgroup-vs-li-rowcols">card-group vs lưới row-cols<a class="anchor" href="#h-10-cardgroup-vs-li-rowcols" aria-label="Liên kết mục">#</a></h3>
+<ul><li><code>card-group</code>: các card dính liền nhau, cùng chiều cao, chỉ nằm trên một hàng</li><li>Lưới <code>row-cols-*</code>: card nằm trong cột, có gutter và tự xuống hàng ở từng breakpoint</li></ul>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4"&gt;
+  &lt;div class="col"&gt;
+    &lt;div class="card h-100"&gt;
+      &lt;!-- nội dung card 1 --&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;!-- col cho card 2, 3... --&gt;
+&lt;/div&gt;</code></pre></figure>
+<p><code>h-100</code> bảo đảm mọi card trong cùng một hàng cao bằng nhau dù nội dung dài ngắn khác nhau — chi tiết hay bị bỏ quên nhất.</p>
+<h3 id="h-14-card-bc-s-hon-chnh">Card bác sĩ hoàn chỉnh<a class="anchor" href="#h-14-card-bc-s-hon-chnh" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;div class="col"&gt;
+  &lt;div class="card h-100 shadow-sm"&gt;
+    &lt;img src="assets/images/doctor-02.jpg" class="card-img-top" alt="Bác sĩ Lê Hoàng Nam"&gt;
+    &lt;div class="card-body"&gt;
+      &lt;div class="d-flex justify-content-between align-items-start mb-2"&gt;
+        &lt;h5 class="card-title mb-0"&gt;BS.CKI Lê Hoàng Nam&lt;/h5&gt;
+        &lt;span class="badge text-bg-info"&gt;Tim mạch&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;p class="card-text text-body-secondary"&gt;Chuyên can thiệp tim mạch, 15 năm kinh nghiệm.&lt;/p&gt;
+      &lt;p class="fw-semibold mb-3"&gt;Giá khám: 500.000đ&lt;/p&gt;
+      &lt;a href="booking.html" class="btn btn-outline-primary w-100"&gt;Đặt lịch khám&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre></figure>
+<p>Badge được xếp cùng dòng với tiêu đề nhờ <code>d-flex justify-content-between</code> — flexbox chương 5 giờ phát huy tác dụng ngay trong component.</p>
+<h3 id="h-17-list-group--dng-khi-no">List group — dùng khi nào<a class="anchor" href="#h-17-list-group--dng-khi-no" aria-label="Liên kết mục">#</a></h3>
+<p><code>list-group</code> hợp cho danh sách đồng nhất: giờ làm việc, danh sách khoa, câu hỏi thường gặp. <code>list-group-flush</code> bỏ viền ngoài và bo góc để danh sách "ăn khớp" vào trong card:</p>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;ul class="list-group list-group-flush"&gt;
+  &lt;li class="list-group-item d-flex justify-content-between"&gt;
+    &lt;span&gt;Khám tổng quát&lt;/span&gt; &lt;strong&gt;08:00–17:00&lt;/strong&gt;
+  &lt;/li&gt;
+  &lt;li class="list-group-item d-flex justify-content-between"&gt;
+    &lt;span&gt;Cấp cứu&lt;/span&gt; &lt;strong&gt;24/7&lt;/strong&gt;
+  &lt;/li&gt;
+  &lt;li class="list-group-item d-flex justify-content-between"&gt;
+    &lt;span&gt;Hotline&lt;/span&gt; &lt;strong&gt;1900 636 636&lt;/strong&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;</code></pre></figure>
+<h3 id="h-20-prompt-mu">Prompt mẫu<a class="anchor" href="#h-20-prompt-mu" aria-label="Liên kết mục">#</a></h3>
+<aside class="prompt-card"><span class="prompt-chip">Prompt mẫu</span><p><strong>Prompt gửi Gemini/Claude/ChatGPT:</strong> Website Highland Hospital dùng Bootstrap 5 CDN. Hãy viết section "Đội ngũ bác sĩ" hiển thị 6 bác sĩ dạng card: ảnh, tên, badge chuyên khoa, số năm kinh nghiệm, giá khám và nút "Đặt lịch khám". Dùng lưới <code>row-cols-1 row-cols-md-2 row-cols-lg-3 g-4</code>, mỗi card phải có <code>h-100</code> và <code>shadow-sm</code>. Đừng tự bịa dữ liệu: trước khi viết code, hãy hỏi tôi danh sách 6 bác sĩ (tên, chuyên khoa, kinh nghiệm, giá, ảnh).</p></aside>
+<p>Mẹo quan trọng của bài này: <strong>cho AI dữ liệu thật thay vì để nó bịa</strong>. Prompt trên chủ động yêu cầu AI hỏi lại dữ liệu — bạn đang giữ phần phán đoán (bước 1 của Workflow) trước khi giao phần sản xuất (bước 2).</p>
+<h3 id="h-23-thc-hnh">Thực hành<a class="anchor" href="#h-23-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<ol><li>Dựng section 3 card bác sĩ trong <code>doctors.html</code> theo mẫu hoàn chỉnh ở trên.</li><li>Đổi <code>row-cols-lg-3</code> → <code>row-cols-lg-4</code>, quan sát thay đổi trên màn hình rộng.</li><li>Bỏ <code>h-100</code> để thấy card lệch chiều cao khi nội dung dài ngắn khác nhau.</li><li>Đặt <code>list-group-flush</code> giờ làm việc vào body hoặc footer của một card.</li><li>Chạy prompt mẫu với AI, đọc hiểu từng dòng code trả về rồi mới dùng.</li></ol>
+<h3 id="h-25-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-25-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Đã có cách trưng bày thông tin; bài sau giải quyết phần hay gây lúng túng nhất — dựng form đặt lịch khám có validation ngay trong Bootstrap.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">9 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-gii-phu-mt-card">Giải phẫu một card</a></li><li><a href="#h-7-ghp-badge-vo-card">Ghép badge vào card</a></li><li><a href="#h-10-cardgroup-vs-li-rowcols">card-group vs lưới row-cols</a></li><li><a href="#h-14-card-bc-s-hon-chnh">Card bác sĩ hoàn chỉnh</a></li><li><a href="#h-17-list-group--dng-khi-no">List group — dùng khi nào</a></li><li><a href="#h-20-prompt-mu">Prompt mẫu</a></li><li><a href="#h-23-thc-hnh">Thực hành</a></li><li><a href="#h-25-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="08-bootstrap-components-navbar-navigation.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Navbar & Navigation</strong></span></a><a href="08-bootstrap-components-bootstrap-forms-validation.html" rel="next"><span><small>Bài sau</small><strong>Bootstrap Forms & Validation</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

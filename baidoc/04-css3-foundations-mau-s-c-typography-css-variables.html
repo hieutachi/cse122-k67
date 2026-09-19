@@ -1,0 +1,87 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Màu sắc, Typography & CSS Variables | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-4.html">Chương 4</a> &rsaquo; CSS3 foundations &rsaquo; Bài 3/5</p>
+<h1 class="lesson-title">Màu sắc, Typography & CSS Variables</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 3/5</span><span>Module: CSS3 foundations</span><span>~4 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="mu-sc-typography-amp-css-variables">Màu sắc, Typography &amp; CSS Variables</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Đọc và viết màu bằng hex, rgb, hsl</li><li>Chọn font hệ thống, đặt cỡ chữ bằng <code>rem</code> và <code>line-height</code> hợp lý</li><li>Dùng CSS Custom Properties (<code>:root</code>, <code>var()</code>) cho design token</li><li>Xây bộ token màu y tế của Highland Hospital</li></ul>
+<h3 id="h-3-ba-cch-vit-mu--dng-sao-cho-ng-ng-cnh">Ba cách viết màu — dùng sao cho đúng ngữ cảnh<a class="anchor" href="#h-3-ba-cch-vit-mu--dng-sao-cho-ng-ng-cnh" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>/* HEX — gọn, phổ biến nhất khi copy từ Figma */
+.color-primary { background: #0d6efd; }
+
+/* rgb — dễ thêm độ trong suốt bằng kênh alpha */
+.overlay { background: rgba(13, 110, 253, 0.12); }
+
+/* hsl — trực quan nhất khi cần pha biến thể */
+/* hue=210 (xanh), saturation=95%, lightness=53% */
+.color-primary { background: hsl(210, 95%, 53%); }
+.color-primary-light { background: hsl(210, 95%, 90%); } /* chỉ sửa lightness */</code></pre></figure>
+<p>Với HSL, một màu "nhạt hơn" chỉ là tăng <code>lightness</code> — không cần đoán mã hex. Đây là lý do nhiều hệ thống token hiện đại định nghĩa màu bằng HSL/HWB rồi sinh biến thể.</p>
+<h3 id="h-6-typography--nn-tng-ca-cm-gic-chuyn-nghip">Typography — nền tảng của cảm giác "chuyên nghiệp"<a class="anchor" href="#h-6-typography--nn-tng-ca-cm-gic-chuyn-nghip" aria-label="Liên kết mục">#</a></h3>
+<p>Hệ font <strong>hệ thống</strong> tải tức thì, không tốn request, và trông tự nhiên trên từng máy:</p>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto,
+               "Helvetica Neue", Arial, sans-serif;
+  font-size: 1rem;          /* 1rem = 16px mặc định trình duyệt */
+  line-height: 1.6;         /* không đơn vị → nhân với cỡ chữ */
+}</code></pre></figure>
+<p>Quy tắc vàng của khoá học: <strong>cỡ chữ luôn bằng <code>rem</code></strong> (phụ thuộc root, không phụ thuộc cha → người dùng phóng to chữ trình duyệt thì trang vẫn co giãn đúng), và <code>line-height</code> <strong>không viết đơn vị</strong> — <code>1.6</code> luôn tỷ lệ với cỡ chữ hiện tại, không bao giờ bị lệch khi đổi font-size.</p>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>h1 { font-size: 3rem; line-height: 1.15; }  /* tiêu đề Hero */
+h2 { font-size: 2rem; line-height: 1.25; }
+h3 { font-size: 1.5rem; line-height: 1.3; }
+p  { font-size: 1rem; line-height: 1.7; }   /* văn bản dài thoáng hơn */</code></pre></figure>
+<h3 id="h-11-css-custom-properties--b-nh-ca-giao-din">CSS Custom Properties — bộ nhớ của giao diện<a class="anchor" href="#h-11-css-custom-properties--b-nh-ca-giao-din" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>:root {
+  --hh-primary: #0b6bcb;        /* xanh dương y tế chủ đạo */
+  --hh-primary-dark: #08549e;
+  --hh-accent: #14b8a6;         /* xanh ngọc cho nút hành động */
+  --hh-white: #ffffff;
+  --hh-gray-50: #f8fafc;        /* nền nhạt xen kẽ */
+  --hh-gray-500: #64748b;       /* chữ phụ */
+  --hh-gray-900: #0f172a;       /* chữ chính */
+  --hh-space: 1rem;             /* bước nhịp khoảng cách */
+}</code></pre></figure>
+<p>Biến CSS không phải "hằng số" của preprocessor — chúng <strong>sống trong trình duyệt</strong>, kế thừa theo cây DOM và đổi được lúc runtime. Khai báo ở <code>:root</code> (tức phần tử gốc <code>&lt;html&gt;</code>) để mọi phần tử con đều thấy. Khi dùng:</p>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>.btn-primary {
+  background: var(--hh-primary);
+  color: var(--hh-white);
+  padding: calc(var(--hh-space) * 0.75) var(--hh-space);
+}</code></pre></figure>
+<p><code>var(--hh-primary, #0b6bcb)</code> có thêm <strong>fallback</strong>: nếu biến chưa được định nghĩa (ví dụ copy CSS ra ngoài), màu dự phòng được dùng — trang không bao giờ mất màu.</p>
+<p>Lợi ích lớn nhất: đổi thương hiệu chỉ cần sửa <strong>một dòng</strong> trong <code>:root</code>, và làm nền cho dark mode (chương 6) bằng cách ghi đè biến theo media query.</p>
+<h3 id="h-17-prompt-mu--nh-ai-xy-b-token-chun">Prompt mẫu — nhờ AI xây bộ token chuẩn<a class="anchor" href="#h-17-prompt-mu--nh-ai-xy-b-token-chun" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Tôi cần bộ design token màu cho website bệnh viện Highland
+Hospital: chủ đạo xanh dương y tế, trắng, các bậc xám. Hãy sinh:
+1) bảng 12 màu dạng CSS custom properties trong :root (primary,
+primary-dark, primary-light, accent, success, warning, danger +
+các bậc gray), 2) mỗi màu kèm hex, 3) gợi ý cặp chữ/nền đạt tỷ lệ
+tương phản WCAG AA cho văn bản chính và phụ. Đừng viết CSS khác
+ngoài khối :root.</code></pre></figure>
+<h3 id="h-19-thc-hnh">Thực hành<a class="anchor" href="#h-19-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<ol><li>Tạo file <code>tokens.css</code> với <code>:root</code> chứa tối thiểu 10 biến màu + 3 biến khoảng cách của Highland Hospital.</li><li>Style lại trang Landing Page của bạn: body dùng font hệ thống, <code>line-height: 1.6</code>; h1–h3 cỡ <code>rem</code> theo nhịp nêu trên.</li><li>Viết class <code>.btn-primary</code> dùng <code>var(--hh-primary)</code> và một class <code>.text-muted</code> dùng <code>var(--hh-gray-500)</code>. Thử đổi giá trị biến trong <code>:root</code> — cả trang phải đổi màu theo mà không sửa chỗ khác.</li><li>Mở DevTools → tab Elements, chọn <code>&lt;html&gt;</code>, xem danh sách biến CSS trong panel Styles; thử ghi đè <code>--hh-primary</code> ngay tại đó để thấy hiệu ứng runtime.</li></ol>
+<h3 id="h-21-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-21-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Đã có màu và chữ "đúng chuẩn", câu hỏi tiếp theo hiển nhiên: kích thước ghi bằng đơn vị nào để trang co giãn đúng ý — rem, %, vh, vw...?</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">7 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-ba-cch-vit-mu--dng-sao-cho-ng-ng-cnh">Ba cách viết màu — dùng sao cho đúng ngữ cảnh</a></li><li><a href="#h-6-typography--nn-tng-ca-cm-gic-chuyn-nghip">Typography — nền tảng của cảm giác "chuyên nghiệp"</a></li><li><a href="#h-11-css-custom-properties--b-nh-ca-giao-din">CSS Custom Properties — bộ nhớ của giao diện</a></li><li><a href="#h-17-prompt-mu--nh-ai-xy-b-token-chun">Prompt mẫu — nhờ AI xây bộ token chuẩn</a></li><li><a href="#h-19-thc-hnh">Thực hành</a></li><li><a href="#h-21-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="04-css3-foundations-the-box-model.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>The Box Model</strong></span></a><a href="04-css3-foundations-don-vi-do-trong-css.html" rel="next"><span><small>Bài sau</small><strong>Đơn vị đo trong CSS</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

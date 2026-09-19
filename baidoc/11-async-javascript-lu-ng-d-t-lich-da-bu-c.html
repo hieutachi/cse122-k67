@@ -1,0 +1,140 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Luồng đặt lịch đa bước | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-9.html">Chương 9</a> &rsaquo; Async JavaScript &rsaquo; Bài 4/5</p>
+<h1 class="lesson-title">Luồng đặt lịch đa bước</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 4/5</span><span>Module: Async JavaScript</span><span>~4 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="lung-t-lch-a-bc">Luồng đặt lịch đa bước</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Chia form dài thành 3 bước: dịch vụ+bác sĩ → thông tin bệnh nhân+thời gian → xác nhận</li><li>Quản lý trạng thái bằng object <code>state</code> và biến <code>currentStep</code></li><li>Điều hướng Tiếp tục / Quay lại có kiểm soát giữa các bước</li><li>Hiển thị tiến trình bằng progress indicator Bootstrap</li></ul>
+<h3 id="h-3-v-sao-chia-bc">Vì sao chia bước?<a class="anchor" href="#h-3-v-sao-chia-bc" aria-label="Liên kết mục">#</a></h3>
+<p>Form đặt lịch gom hết vào một trang sẽ dài và dễ bỏ sót. Chia 3 bước giúp người dùng chỉ tập trung một việc mỗi lần, và bạn <strong>validate từng bước</strong> trước khi cho đi tiếp — bắt lỗi sớm, không để tới cuối mới "nổ" hàng loạt.</p>
+<h3 id="h-5-cu-trc-html-3-panel--progress">Cấu trúc HTML: 3 panel + progress<a class="anchor" href="#h-5-cu-trc-html-3-panel--progress" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;ol class="progress-indicator mb-4"&gt;
+  &lt;li class="step active" data-step="1"&gt;1. Chọn dịch vụ&lt;/li&gt;
+  &lt;li class="step" data-step="2"&gt;2. Thông tin &amp; lịch&lt;/li&gt;
+  &lt;li class="step" data-step="3"&gt;3. Xác nhận&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="progress mb-4" style="height: 6px;"&gt;
+  &lt;div id="progress-bar" class="progress-bar" style="width: 33%"&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;form id="booking-form" novalidate&gt;
+  &lt;section class="step-panel" data-panel="1"&gt;
+    &lt;h2 class="h5 mb-3"&gt;Chọn dịch vụ khám&lt;/h2&gt;
+    &lt;div class="mb-3"&gt;&lt;label class="form-label"&gt;Chuyên khoa&lt;/label&gt;
+      &lt;select id="bk-specialty" class="form-select"&gt;&lt;/select&gt;&lt;/div&gt;
+    &lt;div class="mb-3"&gt;&lt;label class="form-label"&gt;Bác sĩ&lt;/label&gt;
+      &lt;select id="bk-doctor" class="form-select"&gt;&lt;/select&gt;&lt;/div&gt;
+    &lt;button type="button" class="btn btn-primary" data-action="next"&gt;Tiếp tục&lt;/button&gt;
+  &lt;/section&gt;
+
+  &lt;section class="step-panel d-none" data-panel="2"&gt;
+    &lt;h2 class="h5 mb-3"&gt;Thông tin bệnh nhân&lt;/h2&gt;
+    &lt;!-- #bk-name, #bk-phone, #bk-date, #bk-time --&gt;
+    &lt;button type="button" class="btn btn-outline-secondary" data-action="prev"&gt;Quay lại&lt;/button&gt;
+    &lt;button type="button" class="btn btn-primary" data-action="next"&gt;Tiếp tục&lt;/button&gt;
+  &lt;/section&gt;
+
+  &lt;section class="step-panel d-none" data-panel="3"&gt;
+    &lt;h2 class="h5 mb-3"&gt;Xác nhận thông tin&lt;/h2&gt;
+    &lt;dl id="bk-summary" class="row"&gt;&lt;/dl&gt;
+    &lt;button type="button" class="btn btn-outline-secondary" data-action="prev"&gt;Quay lại&lt;/button&gt;
+    &lt;button type="submit" class="btn btn-success"&gt;Xác nhận đặt lịch&lt;/button&gt;
+  &lt;/section&gt;
+&lt;/form&gt;</code></pre></figure>
+<p>Progress indicator chỉ là danh sách 3 thẻ có <code>data-step</code>; thanh <code>.progress-bar</code> đổi <code>width</code> theo bước hiện tại.</p>
+<h3 id="h-8-state-mt-object-gi-ton-b-d-liu">State: một object giữ toàn bộ dữ liệu<a class="anchor" href="#h-8-state-mt-object-gi-ton-b-d-liu" aria-label="Liên kết mục">#</a></h3>
+<p>Gom mọi dữ liệu người dùng chọn/gõ vào object <code>state</code> — panel ẩn/hiện nhưng dữ liệu luôn nằm đây, không nằm trong DOM:</p>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>const state = { currentStep: 1, data: {
+  specialty: '', doctorId: null, patientName: '', phone: '', date: '', time: '',
+} };
+const TOTAL_STEPS = 3;
+
+function showStep(step) {
+  state.currentStep = step;
+  document.querySelectorAll('.step-panel').forEach((panel) =&gt; {
+    panel.classList.toggle('d-none', Number(panel.dataset.panel) !== step);
+  });
+  document.querySelectorAll('.progress-indicator .step').forEach((el) =&gt; {
+    el.classList.toggle('active', Number(el.dataset.step) === step);
+  });
+  document.querySelector('#progress-bar').style.width = `${(step / TOTAL_STEPS) * 100}%`;
+  if (step === 3) renderSummary();   // bước cuối: vẽ lại phần xác nhận từ state
+}</code></pre></figure>
+<h3 id="h-11-iu-hng-ghi-state--validate-ri-mi-chuyn-bc">Điều hướng: ghi state + validate rồi mới chuyển bước<a class="anchor" href="#h-11-iu-hng-ghi-state--validate-ri-mi-chuyn-bc" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>document.querySelector('#booking-form').addEventListener('click', (event) =&gt; {
+  const button = event.target.closest('button[data-action]');
+  if (!button) return;
+  const action = button.dataset.action;
+  if (action === 'next' &amp;&amp; !validateStep(state.currentStep)) return; // chặn ở đây
+  const next = action === 'next' ? state.currentStep + 1 : state.currentStep - 1;
+  if (next &gt;= 1 &amp;&amp; next &lt;= TOTAL_STEPS) showStep(next);
+});
+
+const form = document.querySelector('#booking-form');
+form.querySelector('#bk-specialty').addEventListener('change', (e) =&gt; {
+  state.data.specialty = e.target.value;
+  state.data.doctorId = null;              // đổi khoa → reset bác sĩ đã chọn
+});
+form.querySelector('#bk-name').addEventListener('input', (e) =&gt; {
+  state.data.patientName = e.target.value.trim();
+});
+// ... tương tự cho #bk-phone, #bk-date, #bk-time</code></pre></figure>
+<p><code>validateStep(step)</code> tái dùng đúng luật bài Form Validation nhưng chạy <strong>trên state</strong> (tên ≥ 2 ký tự, phone hợp lệ, ngày không quá khứ, đã chọn bác sĩ), trả <code>true/false</code> — bài Lab tới sẽ viết bản hoàn chỉnh.</p>
+<h3 id="h-14-bc-xc-nhn-ch-c-state-render-bng-textcontent">Bước xác nhận: chỉ đọc state, render bằng textContent<a class="anchor" href="#h-14-bc-xc-nhn-ch-c-state-render-bng-textcontent" aria-label="Liên kết mục">#</a></h3>
+<p>Bước 3 hiển thị tên bệnh nhân — <strong>dữ liệu người dùng</strong> — nên chỉ dùng <code>createElement</code> + <code>textContent</code>, không qua <code>innerHTML</code> (bài DOM đã cảnh báo XSS):</p>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>function renderSummary() {
+  const summary = document.querySelector('#bk-summary');
+  summary.innerHTML = '';    // sạch bản vẽ cũ
+  const rows = [
+    ['Chuyên khoa', state.data.specialty],
+    ['Bác sĩ', state.data.doctorId ? `Bác sĩ #${state.data.doctorId}` : '—'],
+    ['Bệnh nhân', state.data.patientName],
+    ['Ngày khám', state.data.date],
+    ['Giờ khám', state.data.time],
+  ];
+  for (const [label, value] of rows) {
+    const dt = document.createElement('dt');
+    const dd = document.createElement('dd');
+    dt.textContent = label;
+    dd.textContent = value;
+    summary.append(dt, dd);
+  }
+}</code></pre></figure>
+<h3 id="h-17-prompt-ai-mu">Prompt AI mẫu<a class="anchor" href="#h-17-prompt-ai-mu" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Dự án Highland Hospital, JS thuần ES6+, Bootstrap 5. Tôi có 3 section
+.step-panel (1: chọn chuyên khoa+bác sĩ, 2: tên/điện thoại/ngày/giờ,
+3: xác nhận). Viết: object state { currentStep, data }; showStep(step)
+ẩn/hiện panel, cập nhật .progress-bar width và .step active; delegation
+click trên form xử lý button[data-action="next|prev"] — trước khi next
+chạy validateStep(step) trả boolean (name ≥ 2, phone hợp lệ, ngày không
+quá khứ, đã chọn specialty + doctor); bước 3 render tóm tắt bằng
+createElement + textContent. Kèm 5 dòng giải thích vì sao dữ liệu phải
+nằm trong state thay vì đọc từ DOM khi chuyển bước.</code></pre></figure>
+<h3 id="h-19-thc-hnh">Thực hành<a class="anchor" href="#h-19-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<ol><li>Dựng 3 panel theo HTML mẫu (tạm dùng dữ liệu tĩnh cho select bác sĩ).</li><li>Viết <code>state</code> + <code>showStep</code> + delegation điều hướng; kiểm tra bấm Tiếp tục không qua bước còn lỗi.</li><li>Nhập bước 1, đi tiếp rồi <strong>Quay lại</strong> — giá trị còn nguyên (vì nằm trong state).</li><li>Quan sát progress bar chạy 33% → 66% → 100% theo từng bước.</li></ol>
+<h3 id="h-21-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-21-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Ba bước đã chạy — bài Lab cuối chương nối toàn bộ: render bác sĩ từ mock API, validate từng bước, lưu lịch hẹn vào localStorage và hiện modal xác nhận thành công.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">9 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-v-sao-chia-bc">Vì sao chia bước?</a></li><li><a href="#h-5-cu-trc-html-3-panel--progress">Cấu trúc HTML: 3 panel + progress</a></li><li><a href="#h-8-state-mt-object-gi-ton-b-d-liu">State: một object giữ toàn bộ dữ liệu</a></li><li><a href="#h-11-iu-hng-ghi-state--validate-ri-mi-chuyn-bc">Điều hướng: ghi state + validate rồi mới chuyển bước</a></li><li><a href="#h-14-bc-xc-nhn-ch-c-state-render-bng-textcontent">Bước xác nhận: chỉ đọc state, render bằng textContent</a></li><li><a href="#h-17-prompt-ai-mu">Prompt AI mẫu</a></li><li><a href="#h-19-thc-hnh">Thực hành</a></li><li><a href="#h-21-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="11-async-javascript-loading-error-states.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Loading & Error states</strong></span></a><a href="11-async-javascript-lab-d-t-lich-kham-hoan-chinh.html" rel="next"><span><small>Bài sau</small><strong>Lab: đặt lịch khám hoàn chỉnh</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

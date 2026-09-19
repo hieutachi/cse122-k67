@@ -1,0 +1,115 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Arrow functions & Destructuring | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-8.html">Chương 8</a> &rsaquo; JavaScript cơ bản &rsaquo; Bài 2/5</p>
+<h1 class="lesson-title">Arrow functions & Destructuring</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 2/5</span><span>Module: JavaScript cơ bản</span><span>~4 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="arrow-functions-amp-destructuring">Arrow functions &amp; Destructuring</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Viết hàm gọn bằng arrow function và hiểu return ngầm (implicit return)</li><li>Biết khi nào KHÔNG dùng arrow function (làm method của object)</li><li>Lấy dữ liệu ra khỏi object/array bằng destructuring; trải/phần còn lại với rest/spread</li><li>Trích xuất thông tin bác sĩ từ object dữ liệu</li></ul>
+<h3 id="h-3-arrow-function--c-php-v-return-ngm">Arrow function — cú pháp và return ngầm<a class="anchor" href="#h-3-arrow-function--c-php-v-return-ngm" aria-label="Liên kết mục">#</a></h3>
+<p>So sánh hai cách viết cùng một hàm:</p>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>// Cú pháp hàm thường (function declaration)
+function doctorFullName(doctor) {
+  return `${doctor.title} ${doctor.name}`;
+}
+
+// Arrow function — dạng đầy đủ
+const doctorFullName = (doctor) =&gt; {
+  return `${doctor.title} ${doctor.name}`;
+};
+
+// Arrow function — dạng ngắn: bỏ {} và return (return ngầm)
+const doctorFullName = (doctor) =&gt; `${doctor.title} ${doctor.name}`;</code></pre></figure>
+<p>Luật dạng ngắn:</p>
+<ul><li>Một tham số thì bỏ được cả cặp ngoặc: <code>doctor =&gt; ...</code></li><li>Thân hàm chỉ <strong>một biểu thức</strong> mới bỏ được <code>{}</code> + <code>return</code> — biểu thức đó chính là giá trị trả về</li><li>Muốn trả object ở dạng ngắn phải bọc ngoặc: <code>(a, b) =&gt; ({ sum: a + b })</code>, nếu không <code>{}</code> bị hiểu là thân hàm</li></ul>
+<h3 id="h-8-khi-no-khng-dng-arrow">Khi nào KHÔNG dùng arrow<a class="anchor" href="#h-8-khi-no-khng-dng-arrow" aria-label="Liên kết mục">#</a></h3>
+<p>Arrow function <strong>không có <code>this</code> của riêng nó</strong> — nó mượn <code>this</code> từ nơi được viết. Vì vậy không dùng arrow làm method của object:</p>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>const booking = {
+  patient: 'Nguyễn Văn An',
+  specialty: 'Tim mạch',
+  // ❌ Sai: this ở đây không trỏ vào booking
+  describe: () =&gt; `${this.patient} khám ${this.specialty}`,
+  // ✅ Đúng: dùng hàm thường để this trỏ vào booking
+  describe() {
+    return `${this.patient} khám ${this.specialty}`;
+  },
+};
+console.log(booking.describe());</code></pre></figure>
+<p>Nhớ gọn: <strong>method của object dùng hàm thường; callback, hàm ngắn, hàm dựng sẵn trong pipeline dùng arrow.</strong></p>
+<h3 id="h-12-destructuring-object">Destructuring object<a class="anchor" href="#h-12-destructuring-object" aria-label="Liên kết mục">#</a></h3>
+<p>Thay vì lặp đi lặp lại <code>doctor.name</code>, <code>doctor.specialty</code>, tách thẳng ra biến:</p>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>const doctor = {
+  id: 'D001',
+  name: 'BS.CKI Nguyễn Minh Anh',
+  specialty: 'Nội tổng hợp',
+  experience: 12,
+  fee: 500000,
+};
+
+const { name, specialty, fee } = doctor;
+console.log(name);       // BS.CKI Nguyễn Minh Anh
+console.log(specialty);  // Nội tổng hợp
+
+// Đổi tên biến và đặt giá trị mặc định
+const { name: fullName, phone = 'Chưa cập nhật' } = doctor;
+console.log(fullName, phone);</code></pre></figure>
+<p>Rất hợp với tham số hàm — chỉ lấy đúng thứ hàm cần:</p>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>function renderDoctorCard({ name, specialty, experience }) {
+  return `${name} — ${specialty} (${experience} năm)`;
+}
+console.log(renderDoctorCard(doctor));</code></pre></figure>
+<h3 id="h-17-destructuring-array">Destructuring array<a class="anchor" href="#h-17-destructuring-array" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>const services = ['Nội tổng hợp', 'Tim mạch', 'Nhi khoa'];
+const [first, second] = services;
+console.log(first, second); // Nội tổng hợp Tim mạch
+
+// Bỏ qua phần tử bằng dấu phẩy trống
+const [, , third] = services;
+console.log(third); // Nhi khoa</code></pre></figure>
+<h3 id="h-19-rest-v-spread">Rest và Spread<a class="anchor" href="#h-19-rest-v-spread" aria-label="Liên kết mục">#</a></h3>
+<p>Ba dấu chấm <code>...</code> đảm nhận hai vai trò tuỳ chỗ đứng:</p>
+<ul><li><strong>Rest</strong> gom phần còn lại khi <em>đứng ở phía nhận</em> (khai báo, tham số)</li><li><strong>Spread</strong> trải một mảng/object khi <em>đứng ở phía nguồn</em> (lời gọi, literal)</li></ul>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>// Rest: gom phần còn lại
+const [firstService, ...others] = services;
+console.log(others); // ['Tim mạch', 'Nhi khoa']
+
+const { id, ...doctorInfo } = doctor; // bỏ id, giữ phần còn lại
+console.log(doctorInfo);
+
+// Spread: trải mảng — sao chép rồi thêm phần tử
+const departments = [...services, 'Răng hàm mặt'];
+console.log(departments);
+
+// Spread: trộn object — ghi đè bằng dữ liệu mới
+const updatedDoctor = { ...doctor, fee: 650000 };
+console.log(updatedDoctor.fee); // 650000 — doctor gốc không đổi</code></pre></figure>
+<p>Spread giúp <strong>không sửa dữ liệu gốc</strong> — thói quen quan trọng khi dữ liệu bác sĩ về sau được chia sẻ giữa nhiều phần của trang.</p>
+<h3 id="h-24-prompt-mu">Prompt mẫu<a class="anchor" href="#h-24-prompt-mu" aria-label="Liên kết mục">#</a></h3>
+<aside class="prompt-card"><span class="prompt-chip">Prompt mẫu</span><p><strong>Prompt gửi Gemini/Claude/ChatGPT:</strong> Tôi đang học ES6+ cho dự án Highland Hospital. Cho tôi ví dụ: (1) một hàm bình thường và arrow function tương đương, rồi giải thích khi nào được bỏ <code>return</code>; (2) một object <code>doctor</code> và dùng destructuring để lấy <code>name</code>, <code>specialty</code>, <code>fee</code> kèm giá trị mặc định cho <code>phone</code>; (3) minh hoạ spread để tạo object <code>doctor</code> mới có <code>fee</code> tăng 10% mà không sửa object gốc; (4) chỉ ra lỗi khi dùng arrow function làm method của object. Giải thích từng ví dụ như dạy người mới.</p></aside>
+<h3 id="h-26-thc-hnh">Thực hành<a class="anchor" href="#h-26-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<ol><li>Viết arrow function <code>formatFee(fee)</code> trả về <code>fee.toLocaleString('vi-VN') + 'đ'</code>.</li><li>Dùng destructuring lấy <code>name</code>, <code>specialty</code>, <code>experience</code> từ object bác sĩ của bài trước và in ra console.</li><li>Tạo <code>updatedDoctor = { ...doctor, fee: 600000 }</code>; kiểm tra <code>doctor.fee</code> không đổi.</li><li>Viết một method <code>getLabel()</code> kiểu hàm thường cho object <code>booking</code> và gọi thử.</li><li>Chạy prompt mẫu với AI và đối chiếu cách giải thích của bạn với của nó.</li></ol>
+<h3 id="h-28-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-28-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Đã viết được hàm gọn và lấy dữ liệu ra ngoài; bài sau học bộ công cụ mạnh nhất của mảng — <code>map</code>, <code>filter</code>, <code>find</code>, <code>reduce</code> — để xử lý cả danh sách bác sĩ.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">9 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-arrow-function--c-php-v-return-ngm">Arrow function — cú pháp và return ngầm</a></li><li><a href="#h-8-khi-no-khng-dng-arrow">Khi nào KHÔNG dùng arrow</a></li><li><a href="#h-12-destructuring-object">Destructuring object</a></li><li><a href="#h-17-destructuring-array">Destructuring array</a></li><li><a href="#h-19-rest-v-spread">Rest và Spread</a></li><li><a href="#h-24-prompt-mu">Prompt mẫu</a></li><li><a href="#h-26-thc-hnh">Thực hành</a></li><li><a href="#h-28-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="09-javascript-basics-let-const-template-literals.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>let/const & Template Literals</strong></span></a><a href="09-javascript-basics-array-methods-c-t-loi.html" rel="next"><span><small>Bài sau</small><strong>Array Methods cốt lõi</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

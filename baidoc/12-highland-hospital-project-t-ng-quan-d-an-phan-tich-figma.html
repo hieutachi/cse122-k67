@@ -1,0 +1,108 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tổng quan dự án & phân tích Figma | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-9.html">Chương 9</a> &rsaquo; Dự án Highland Hospital &rsaquo; Bài 1/6</p>
+<h1 class="lesson-title">Tổng quan dự án & phân tích Figma</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 1/6</span><span>Module: Dự án Highland Hospital</span><span>~6 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="tng-quan-d-n-amp-phn-tch-figma">Tổng quan dự án &amp; phân tích Figma</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Nắm được bức tranh toàn cảnh dự án Highland Hospital: 3 trang, dữ liệu dùng chung, mục tiêu người dùng của từng trang</li><li>Biết cách đọc bản thiết kế (Figma) như một lập trình viên: bóc tách vùng, liệt kê component, liệt kê trạng thái</li><li>Viết được một <strong>đặc tả cắt giao diện</strong> (spec) cho từng vùng để làm prompt đầu vào cho AI</li><li>Cài đặt cấu trúc thư mục chuẩn cho cả dự án</li></ul>
+<h3 id="h-3-d-n--y-l-g">Dự án ở đây là gì<a class="anchor" href="#h-3-d-n--y-l-g" aria-label="Liên kết mục">#</a></h3>
+<p>Highland Hospital là một bệnh viện tư nhân giả định. Web Portal của bệnh viện gồm <strong>3 trang nối nhau bằng 1 nguồn dữ liệu</strong>, đúng kiểu một sản phẩm thật:</p>
+<div class="table-card"><table><thead><tr><th>Trang</th><th>Người dùng</th><th>Mục tiêu chính</th><th>Trang này dạy gì</th></tr></thead><tbody><tr><td><code>index.html</code> — Landing Page</td><td>Bệnh nhân mới</td><td>Ấn tượng, tin tưởng, bấm "Đặt lịch"</td><td>HTML semantic, Bootstrap, render động</td></tr><tr><td><code>booking.html</code> — Đặt lịch khám</td><td>Bệnh nhân đã chọn bác sĩ</td><td>Điền form, chọn chuyên khoa + bác sĩ, nhận xác nhận</td><td>Form, Validation, luồng dữ liệu</td></tr><tr><td><code>admin.html</code> — Admin Dashboard</td><td>Lễ tân / quản lý</td><td>Xem metrics, duyệt lịch hẹn</td><td>Data table, filter, CRUD, localStorage</td></tr></tbody></table></div>
+<p>Điểm mấu chốt: <strong>lịch hẹn do bệnh nhân tạo ở trang đặt lịch phải xuất hiện trong bảng của Admin</strong> và ngược lại. Vì khoá học không dùng server, cả hai trang đọc–ghi cùng một mảng <code>appointments</code> lưu trong <code>localStorage</code> — chính là lý do bài 10.04 dạy <code>localStorage</code> rất sâu.</p>
+<h3 id="h-7-c-bn-thit-k-nh-th-no">Đọc bản thiết kế như thế nào<a class="anchor" href="#h-7-c-bn-thit-k-nh-th-no" aria-label="Liên kết mục">#</a></h3>
+<p>Bạn có thể nhận thiết kế dưới dạng file Figma (bản xem được miễn phí), ảnh PNG hay chỉ là một đoạn mô tả. Dù nguồn nào, quy trình bóc tách luôn 3 bước:</p>
+<h4 id="bc-1--bc-tch-vng-section-ca-tng-trang">Bước 1 — Bóc tách vùng (section) của từng trang</h4>
+<p>Landing Page gồm các vùng điển hình:</p>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Landing Page
+├── 1. Navbar            (logo, menu, nút "Đặt lịch" — cố định trên cùng)
+├── 2. Hero              (headline, câu giới thiệu, nút CTA, ảnh)
+├── 3. Stats / Trust bar (số năm, số bệnh nhân, số bác sĩ)
+├── 4. Services          (6 thẻ: Khám tổng quát, Nội soi, Xét nghiệm…)
+├── 5. Doctors           (lưới 4–8 bác sĩ, mỗi thẻ: ảnh, tên, chuyên khoa, nút Đặt lịch)
+├── 6. Testimonials      (đánh giá bệnh nhân — nhớ để dạng dữ liệu để render sau)
+├── 7. CTA band          (tấm nền màu kêu gọi đặt lịch ngay)
+└── 8. Footer            (liên hệ, giờ làm việc, link nhanh)</code></pre></figure>
+<p>Mẹo: mỗi vùng trên thiết kế thường được <code>frame</code> riêng trong Figma. Tên frame chính là tên section bạn sẽ dùng làm <code>id</code> để cho <code>&lt;nav&gt;</code> neo tới (<code>#services</code>, <code>#doctors</code>…).</p>
+<h4 id="bc-2--lit-k-component-v-trng-thi-ca-chng">Bước 2 — Liệt kê component và trạng thái của chúng</h4>
+<p>Component là "bộ phận lặp lại" trong thiết kế. Mỗi component phải liệt kê kèm <strong>trạng thái</strong>: thiết kế chỉ vẽ 1 trạng thái, còn người code phải tự bổ sung phần còn lại.</p>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Component: Doctor Card
+- Ảnh bác sĩ (vẽ placeholder khi thiếu ảnh)
+- Tên + học hàm/học vị
+- Chuyên khoa (badge màu)
+- Trạng thái: Rảnh / Kín lịch
+- Nút "Đặt lịch"
+- Trạng thái tương tác: hover nâng bóng, focus viền, card mờ khi bác sĩ kín lịch
+
+Component: Appointment Row (trong Admin)
+- Bệnh nhân, chuyên khoa, bác sĩ, giờ khám
+- Badge trạng thái: chờ duyệt (vàng) / xác nhận (xanh) / huỷ (đỏ) / hoàn thành (xám)
+- Nút "Xác nhận" / "Huỷ" / "Xoá"
+- Trạng thái: dòng mới chưa đọc nền nhạt, đã duyệt bỏ highlight</code></pre></figure>
+<h4 id="bc-3--vit-c-t-ct-giao-din-cho-tng-vng">Bước 3 — Viết đặc tả cắt giao diện cho từng vùng</h4>
+<p>Một đặc tả tốt trả lời 4 câu: <strong>vùng này gồm gì, dữ liệu lấy ở đâu, tương tác ra sao, responsive thế nào</strong>. Đây là khuôn mẫu để dùng lại cho mọi vùng:</p>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Vùng: Hero (Landing Page)
+- Nội dung: headline + 1 câu giới thiệu + 2 nút (Đặt lịch ngay → #booking,
+  Xem bác sĩ → #doctors) + ảnh minh hoạ
+- Layout: desktop chia 2 cột (chữ trái, ảnh phải); mobile (&lt; 768px) xếp dọc,
+  ảnh xuống dưới và thu nhỏ
+- Màu: nền gradient xanh dương (#0d6efd → #0a58ca), chữ trắng
+- Khoảng cách: padding block 80px desktop / 48px mobile
+- Dữ liệu: tĩnh trong HTML (không render bằng JS)</code></pre></figure>
+<h3 id="h-19-prompt-ai-phn-tch-thit-k">Prompt AI phân tích thiết kế<a class="anchor" href="#h-19-prompt-ai-phn-tch-thit-k" aria-label="Liên kết mục">#</a></h3>
+<p>Bạn có thể cho AI xem trực tiếp ảnh thiết kế (Gemini, ChatGPT) hoặc mô tả chi tiết (cả ba). Prompt chuẩn hoá bên dưới dùng được với mọi công cụ:</p>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Bạn là senior frontend developer. Tôi có bản thiết kế trang chủ của bệnh viện
+Highland Hospital (file/ảnh kèm theo). Hãy phân tích giúp tôi:
+
+1. Bóc tách thành các vùng (hero, services, doctors, testimonials, footer...)
+2. Với mỗi vùng: cho biết layout dự kiến (1/2/3 cột), component bên trong,
+   và gợi ý thẻ HTML semantic nên dùng (header, main, section, article...)
+3. Liệt kê toàn bộ component lặp lại (card, button, badge...) kèm các trạng thái
+   cần code (default, hover, focus, disabled, empty)
+4. Nêu bảng màu và font chữ chính, kèm mã hex và cỡ chữ ước lượng
+5. Chỉ ra những chỗ thiết kế chưa nói rõ mà tôi phải tự quyết định
+   (chẳng hạn ảnh chưa có, text quá dài, trạng thái trống)
+
+Trả lời ngắn gọn theo từng vùng, đừng viết code — tôi sẽ viết code ở bước sau.</code></pre></figure>
+<h3 id="h-22-cu-trc-th-mc-d-n">Cấu trúc thư mục dự án<a class="anchor" href="#h-22-cu-trc-th-mc-d-n" aria-label="Liên kết mục">#</a></h3>
+<p>Tạo trong workspace của bạn (thư mục làm việc của khoá học) cây thư mục sau — đây sẽ là "bộ xương" bạn dùng cho các bài 02 → 06:</p>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>highland-hospital/
+├── index.html        # Landing Page
+├── booking.html      # Trang đặt lịch khám
+├── admin.html        # Admin Dashboard
+├── css/
+│   └── style.css     # Tuỳ biến Bootstrap + biến màu của Highland
+├── js/
+│   ├── main.js       # Logic Landing Page (render bác sĩ, modal…)
+│   ├── booking.js    # Logic trang đặt lịch
+│   ├── admin.js      # Logic Admin Dashboard
+│   └── data.js       # Dữ liệu mẫu: doctors, testimonials, appointments
+└── img/              # Hình ảnh của dự án</code></pre></figure>
+<p>Nguyên tắc đặt tên: file HTML theo trang, file JS theo trang nó phục vụ, còn <code>data.js</code> dùng chung cho tất cả — vì <strong>cả ba trang cùng một nguồn dữ liệu</strong>.</p>
+<h3 id="h-26-thc-hnh">Thực hành<a class="anchor" href="#h-26-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<ol><li>Dùng Figma (hoặc bất kỳ ảnh chụp website bệnh viện nào) và tự bóc tách 3 trang của Highland theo 3 bước ở trên; ghi kết quả vào file <code>SPEC.md</code> trong thư mục dự án.</li><li>Tạo đúng cây thư mục ở trên (có thể gõ lệnh <code>mkdir -p highland-hospital/{css,js,img}</code>).</li><li>Mở VS Code, cài extension <strong>Live Server</strong> nếu chưa có — bài sau sẽ cần nó để mở <code>index.html</code>.</li><li>Chạy prompt phân tích thiết kế ở trên với ảnh bạn chọn; đối chiếu phần trả lời của AI với bản tự phân tích của bạn, ghi lại điểm khác nhau.</li><li>Viết đặc tả cắt giao diện cho 3 vùng: <code>services</code>, <code>doctors</code>, <code>testimonials</code>.</li></ol>
+<h3 id="h-28-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-28-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Bạn đã có bản đồ thiết kế và spec từng vùng — giờ dựng toàn bộ Landing Page bằng Bootstrap 5: navbar, hero, lưới services, lưới bác sĩ và footer, trong bài <em>Dựng Landing Page bằng Bootstrap</em>.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">7 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-d-n--y-l-g">Dự án ở đây là gì</a></li><li><a href="#h-7-c-bn-thit-k-nh-th-no">Đọc bản thiết kế như thế nào</a></li><li><a href="#h-19-prompt-ai-phn-tch-thit-k">Prompt AI phân tích thiết kế</a></li><li><a href="#h-22-cu-trc-th-mc-d-n">Cấu trúc thư mục dự án</a></li><li><a href="#h-26-thc-hnh">Thực hành</a></li><li><a href="#h-28-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="11-async-javascript-lab-d-t-lich-kham-hoan-chinh.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Lab: đặt lịch khám hoàn chỉnh</strong></span></a><a href="12-highland-hospital-project-d-ng-landing-page-b-ng-bootstrap.html" rel="next"><span><small>Bài sau</small><strong>Dựng Landing Page bằng Bootstrap</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

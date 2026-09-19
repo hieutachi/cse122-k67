@@ -1,0 +1,111 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Form Validation phía client | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-8.html">Chương 8</a> &rsaquo; DOM & events &rsaquo; Bài 3/5</p>
+<h1 class="lesson-title">Form Validation phía client</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 3/5</span><span>Module: DOM & events</span><span>~4 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="form-validation-pha-client">Form Validation phía client</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Hiểu giới hạn của <code>required</code> thuần HTML5 và vì sao phải validate bằng JavaScript</li><li>Viết hàm kiểm tra định dạng email, số điện thoại, field bắt buộc</li><li>Hiển thị lỗi cạnh field bằng Bootstrap <code>is-invalid</code> / <code>is-valid</code></li><li>Dựng luồng validate cho form đặt lịch khám Highland Hospital</li></ul>
+<h3 id="h-3-v-sao-khng-ch-da-vo-html5-required">Vì sao không chỉ dựa vào HTML5 required<a class="anchor" href="#h-3-v-sao-khng-ch-da-vo-html5-required" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;input type="email" required&gt;</code></pre></figure>
+<p>HTML5 <code>required</code> và <code>type="email"</code> chặn được form gửi đi, nhưng <strong>chưa đủ</strong>:</p>
+<ul><li>Trình duyệt tự hiện bong bóng lỗi — bạn không kiểm soát nội dung, ngôn ngữ, vị trí, style.</li><li>Bệnh nhân gõ <code>abc@def</code> vẫn "hợp lệ" với HTML5 dù không phải email liên hệ được.</li><li>Không tách được luồng kiểm tra riêng để tái dùng cho form đa bước (chương 11).</li><li>Validation phải là <strong>tầng logic của riêng bạn</strong>: bạn quyết định "hợp lệ" là gì và hiển thị lỗi đúng ngôn ngữ, đúng chỗ bạn muốn.</li></ul>
+<h3 id="h-7-lung-validate-chun-thu-thp--kim-tra--hin-th">Luồng validate chuẩn: thu thập → kiểm tra → hiển thị<a class="anchor" href="#h-7-lung-validate-chun-thu-thp--kim-tra--hin-th" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>const form = document.querySelector('#booking-form');
+
+form.addEventListener('submit', (event) =&gt; {
+  event.preventDefault();                     // 1. chặn reload
+
+  const values = {
+    name: form.querySelector('#patient-name').value.trim(),
+    phone: form.querySelector('#patient-phone').value.trim(),
+    email: form.querySelector('#patient-email').value.trim(),
+  };
+  const errors = validate(values);            // 2. chạy mọi luật
+
+  if (Object.keys(errors).length &gt; 0) {
+    showErrors(errors);                       // 3. còn lỗi → tô đỏ + báo
+    return;
+  }
+  console.log('Hợp lệ — tiến hành đặt lịch:', values);
+});
+
+function validate({ name, phone, email }) {
+  const errors = {};
+  if (name.length &lt; 2) errors.name = 'Vui lòng nhập họ tên (tối thiểu 2 ký tự).';
+
+  if (phone === '') errors.phone = 'Vui lòng nhập số điện thoại.';
+  else if (!/^(0|\+84)\d{9,10}$/.test(phone.replace(/[\s.-]/g, '')))
+    errors.phone = 'Số điện thoại không hợp lệ (VD: 0912 345 678).';
+
+  if (email === '') errors.email = 'Vui lòng nhập email.';
+  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email))
+    errors.email = 'Email không đúng định dạng (VD: benh-nhan@example.com).';
+
+  return errors;
+}</code></pre></figure>
+<p>Cách viết này tách ba việc: lấy dữ liệu, kiểm tra (hàm thuần, không đụng DOM — dễ test, dễ tái dùng), hiển thị lỗi.</p>
+<h3 id="h-10-hin-th-li-cnh-field-vi-bootstrap">Hiển thị lỗi cạnh field với Bootstrap<a class="anchor" href="#h-10-hin-th-li-cnh-field-vi-bootstrap" aria-label="Liên kết mục">#</a></h3>
+<p>Bootstrap có sẵn cơ chế: class <code>is-invalid</code> trên input tô viền đỏ, <code>.invalid-feedback</code> đặt <strong>ngay sau</strong> input sẽ hiện thông báo:</p>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>function showErrors(errors) {
+  // reset form về trạng thái sạch trước khi vẽ lỗi mới
+  form.querySelectorAll('.is-invalid').forEach((el) =&gt; el.classList.remove('is-invalid'));
+
+  for (const [fieldName, message] of Object.entries(errors)) {
+    const input = form.querySelector(`#${fieldName}`);
+    if (!input) continue;
+    input.classList.add('is-invalid');                 // viền đỏ
+    const feedback = input.nextElementSibling;         // div.invalid-feedback
+    if (feedback) feedback.textContent = message;      // ghi lỗi đúng chỗ
+  }
+}</code></pre></figure>
+<p>HTML tương ứng trong form:</p>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;div class="mb-3"&gt;
+  &lt;label for="patient-email" class="form-label"&gt;Email&lt;/label&gt;
+  &lt;input type="email" class="form-control" id="patient-email"&gt;
+  &lt;div class="invalid-feedback"&gt;Email không hợp lệ&lt;/div&gt;
+&lt;/div&gt;</code></pre></figure>
+<p>Có thể thêm <code>is-valid</code> + <code>.valid-feedback</code> với dấu tích xanh khi field hợp lệ — nhưng đừng tô xanh khi người dùng chưa gõ gì; chỉ tô sau khi họ rời field (<code>blur</code>) hoặc sau submit.</p>
+<blockquote><p>Mẹo UX: đừng hét lỗi trong lúc người dùng đang gõ dở. Luồng hay dùng: <strong>validate lần đầu khi submit → về sau validate lại mỗi lần <code>input</code></strong> để lỗi tự biến mất khi sửa đúng.</p></blockquote>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>form.querySelectorAll('input').forEach((input) =&gt; {
+  input.addEventListener('input', () =&gt; {
+    if (input.classList.contains('is-invalid')) {
+      input.classList.remove('is-invalid');   // gõ lại là xoá trạng thái lỗi cũ
+    }
+  });
+});</code></pre></figure>
+<h3 id="h-18-prompt-ai-mu">Prompt AI mẫu<a class="anchor" href="#h-18-prompt-ai-mu" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Form đặt lịch Highland Hospital (Bootstrap 5, JS thuần ES6+, tiếng Việt):
+các field #patient-name, #patient-phone, #patient-email, #appointment-date.
+Viết JS validate: name ≥ 2 ký tự; phone Việt Nam hợp lệ (10-11 số, đầu 0
+hoặc +84); email đúng định dạng; ngày khám là hôm nay hoặc tương lai.
+Hiển thị lỗi tiếng Việt cạnh field bằng .is-invalid + .invalid-feedback,
+xoá lỗi khi người dùng gõ lại, chặn submit nếu còn lỗi. Không dùng HTML5
+required làm nguồn kiểm tra chính.</code></pre></figure>
+<h3 id="h-20-thc-hnh">Thực hành<a class="anchor" href="#h-20-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<ol><li>Dựng form đặt lịch (có từ chương 8), thêm 4 field như trên kèm <code>.invalid-feedback</code>.</li><li>Viết <code>validate()</code> + <code>showErrors()</code> và nối vào sự kiện <code>submit</code>.</li><li>Thử: submit form trống, gõ email sai, chọn ngày quá khứ — quan sát lỗi hiện đúng chỗ.</li><li>Mở DevTools → tab Network, kiểm tra trang <strong>không bị reload</strong> sau khi submit.</li></ol>
+<h3 id="h-22-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-22-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Dữ liệu hợp lệ rồi thì lưu vào đâu để lần mở lại trang vẫn còn? Bài sau — localStorage, nơi Highland Hospital cất danh sách lịch hẹn.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">7 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-v-sao-khng-ch-da-vo-html5-required">Vì sao không chỉ dựa vào HTML5 required</a></li><li><a href="#h-7-lung-validate-chun-thu-thp--kim-tra--hin-th">Luồng validate chuẩn: thu thập → kiểm tra → hiển thị</a></li><li><a href="#h-10-hin-th-li-cnh-field-vi-bootstrap">Hiển thị lỗi cạnh field với Bootstrap</a></li><li><a href="#h-18-prompt-ai-mu">Prompt AI mẫu</a></li><li><a href="#h-20-thc-hnh">Thực hành</a></li><li><a href="#h-22-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="10-dom-and-events-event-handling-delegation.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Event Handling & Delegation</strong></span></a><a href="10-dom-and-events-luu-tr-v-i-localstorage.html" rel="next"><span><small>Bài sau</small><strong>Lưu trữ với localStorage</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

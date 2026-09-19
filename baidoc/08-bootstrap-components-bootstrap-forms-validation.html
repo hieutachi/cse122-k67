@@ -1,0 +1,100 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bootstrap Forms & Validation | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-7.html">Chương 7</a> &rsaquo; Bootstrap components &rsaquo; Bài 3/5</p>
+<h1 class="lesson-title">Bootstrap Forms & Validation</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 3/5</span><span>Module: Bootstrap components</span><span>~4 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="bootstrap-forms-amp-validation">Bootstrap Forms &amp; Validation</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Tạo form đúng chuẩn Bootstrap: <code>form-control</code>, <code>form-label</code>, <code>form-select</code>, <code>form-check</code></li><li>Gộp label và input gọn gàng bằng <code>input-group</code> và floating labels</li><li>Bật validation phía client bằng class <code>was-validated</code> + thông báo <code>invalid-feedback</code></li><li>Dựng form đặt lịch khám Highland Hospital validate họ tên, email, số điện thoại, ngày khám, chuyên khoa</li></ul>
+<h3 id="h-3-form-chun-bootstrap">Form chuẩn Bootstrap<a class="anchor" href="#h-3-form-chun-bootstrap" aria-label="Liên kết mục">#</a></h3>
+<p>Mọi input text đều khoác <code>form-control</code> để Bootstrap căn chiều cao, viền và trạng thái focus đồng bộ. Mỗi ô có một <code>label</code> đi kèm bằng class <code>form-label</code>:</p>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;div class="mb-3"&gt;
+  &lt;label for="fullName" class="form-label"&gt;Họ và tên&lt;/label&gt;
+  &lt;input type="text" class="form-control" id="fullName" placeholder="VD: Nguyễn Văn An"&gt;
+&lt;/div&gt;</code></pre></figure>
+<ul><li><code>for</code> ở label trỏ đúng <code>id</code> ở input — bấm vào label là con trỏ nhảy vào ô (tốt cho accessibility)</li><li><code>mb-3</code> tạo khoảng cách dọc giữa các trường</li></ul>
+<h3 id="h-7-cc-trng-cn-li">Các trường còn lại<a class="anchor" href="#h-7-cc-trng-cn-li" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;div class="mb-3"&gt;
+  &lt;label for="email" class="form-label"&gt;Email&lt;/label&gt;
+  &lt;input type="email" class="form-control" id="email" placeholder="an.nguyen@email.com"&gt;
+&lt;/div&gt;
+
+&lt;div class="mb-3"&gt;
+  &lt;label for="phone" class="form-label"&gt;Số điện thoại&lt;/label&gt;
+  &lt;input type="tel" class="form-control" id="phone" placeholder="0901 234 567"&gt;
+&lt;/div&gt;
+
+&lt;div class="mb-3"&gt;
+  &lt;label for="specialty" class="form-label"&gt;Chuyên khoa&lt;/label&gt;
+  &lt;select class="form-select" id="specialty"&gt;
+    &lt;option value=""&gt;-- Chọn chuyên khoa --&lt;/option&gt;
+    &lt;option&gt;Nội tổng hợp&lt;/option&gt;
+    &lt;option&gt;Tim mạch&lt;/option&gt;
+    &lt;option&gt;Nhi khoa&lt;/option&gt;
+    &lt;option&gt;Răng hàm mặt&lt;/option&gt;
+  &lt;/select&gt;
+&lt;/div&gt;
+
+&lt;div class="mb-3"&gt;
+  &lt;label for="apptDate" class="form-label"&gt;Ngày khám&lt;/label&gt;
+  &lt;input type="date" class="form-control" id="apptDate"&gt;
+&lt;/div&gt;</code></pre></figure>
+<p>Dropdown dùng <code>form-select</code> thay vì <code>form-control</code>. <code>input[type=date]</code> hiện date picker của trình duyệt — thử bấm vào ô để xem.</p>
+<h3 id="h-10-floating-labels--tit-kim-din-tch">Floating labels — tiết kiệm diện tích<a class="anchor" href="#h-10-floating-labels--tit-kim-din-tch" aria-label="Liên kết mục">#</a></h3>
+<p>Label nằm lơ lửng bên trong ô và trượt lên khi bạn nhập:</p>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;div class="form-floating mb-3"&gt;
+  &lt;input type="text" class="form-control" id="floatingName" placeholder="Họ và tên"&gt;
+  &lt;label for="floatingName"&gt;Họ và tên&lt;/label&gt;
+&lt;/div&gt;</code></pre></figure>
+<p>Lưu ý: với floating label, <strong>placeholder bắt buộc phải có</strong> dù hiển thị trống, vì nó được dùng làm "chỗ ngồi" cho label; và thứ tự input phải đứng trước label.</p>
+<h3 id="h-14-input-group--tin-thu-t-cho--nhp">Input group — tiền tố/hậu tố cho ô nhập<a class="anchor" href="#h-14-input-group--tin-thu-t-cho--nhp" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;div class="input-group mb-3"&gt;
+  &lt;span class="input-group-text"&gt;📞&lt;/span&gt;
+  &lt;input type="tel" class="form-control" id="phoneGroup" placeholder="Số điện thoại"&gt;
+&lt;/div&gt;</code></pre></figure>
+<p>Hữu ích khi muốn thêm icon, đơn vị tiền tệ hay nút vào ngay trong ô.</p>
+<h3 id="h-17-validation-wasvalidated--invalidfeedback">Validation: <code>was-validated</code> + <code>invalid-feedback</code><a class="anchor" href="#h-17-validation-wasvalidated--invalidfeedback" aria-label="Liên kết mục">#</a></h3>
+<p>Bootstrap có sẵn kiểu đỏ/xanh cho trạng thái hợp lệ, nhưng chỉ hiển thị khi form khoác class <code>was-validated</code> — bạn bật class này từ JavaScript khi người dùng bấm nút gửi (chương 9–10 sẽ làm kỹ). Ô bắt buộc cần thêm <code>required</code>:</p>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;form class="row g-3 needs-validation" id="bookingForm" novalidate&gt;
+  &lt;div class="col-md-6"&gt;
+    &lt;label for="name" class="form-label"&gt;Họ và tên&lt;/label&gt;
+    &lt;input type="text" class="form-control" id="name" required&gt;
+    &lt;div class="invalid-feedback"&gt;Vui lòng nhập họ và tên.&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;!-- các trường khác: email, phone, specialty, date --&gt;
+  &lt;div class="col-12"&gt;
+    &lt;button type="submit" class="btn btn-primary"&gt;Xác nhận đặt lịch&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/form&gt;</code></pre></figure>
+<p>Cơ chế:</p>
+<ul><li><code>novalidate</code> tắt tooltip mặc định của trình duyệt để Bootstrap tự lo</li><li><code>required</code> (hoặc <code>pattern</code>/<code>min</code>/<code>max</code>) là ràng buộc thật; Bootstrap chỉ tô màu</li><li>Khi ô lỗi: hiện <code>.invalid-feedback</code>; ô đúng: <code>:valid</code> tự tô xanh nhờ CSS của Bootstrap</li><li><code>row g-3</code> + <code>col-md-6</code> giúp hai trường nằm cạnh nhau trên màn hình lớn, chồng nhau trên mobile — grid chương 7 phối hợp với form</li></ul>
+<p>Ví dụ email định dạng sai: <code>type="email"</code> + <code>required</code> đủ để Bootstrap báo lỗi; với số điện thoại bạn có thể thêm <code>pattern="[0-9]{10,11}"</code>.</p>
+<h3 id="h-23-prompt-mu">Prompt mẫu<a class="anchor" href="#h-23-prompt-mu" aria-label="Liên kết mục">#</a></h3>
+<aside class="prompt-card"><span class="prompt-chip">Prompt mẫu</span><p><strong>Prompt gửi Gemini/Claude/ChatGPT:</strong> Tôi đang xây form đặt lịch khám cho website Highland Hospital bằng Bootstrap 5. Viết form có các trường: họ và tên (text, required), email (email, required), số điện thoại Việt Nam (tel, pattern 10–11 chữ số, required), chuyên khoa (form-select, required), ngày khám (date, required), và nút submit "Xác nhận đặt lịch". Mỗi trường phải có label, invalid-feedback tiếng Việt tương ứng; form dùng class <code>needs-validation</code> và <code>novalidate</code>, sẵn sàng bật <code>was-validated</code> bằng JavaScript sau này. Dùng grid hai cột trên desktop.</p></aside>
+<h3 id="h-25-thc-hnh">Thực hành<a class="anchor" href="#h-25-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<ol><li>Tạo <code>booking.html</code>, dựng form đặt lịch với các class đã học và <code>invalid-feedback</code> tiếng Việt cho từng trường.</li><li>Tạm thêm class <code>was-validated</code> vào thẻ <code>&lt;form&gt;</code> (sửa tay trong DevTools) rồi bấm nút submit để xem trạng thái lỗi/đúng.</li><li>Thử điền email sai định dạng, số điện thoại thiếu số — quan sát thông báo.</li><li>Chuyển một trường sang floating label và một trường sang input-group.</li><li>Chạy prompt mẫu với AI, so sánh cấu trúc grid và feedback với bản của bạn.</li></ol>
+<h3 id="h-27-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-27-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Form đã "biết" báo lỗi; bài sau làm nó trở nên sống động hơn với Modal xác nhận, Offcanvas cho bộ lọc và Accordion cho phần FAQ.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">9 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-form-chun-bootstrap">Form chuẩn Bootstrap</a></li><li><a href="#h-7-cc-trng-cn-li">Các trường còn lại</a></li><li><a href="#h-10-floating-labels--tit-kim-din-tch">Floating labels — tiết kiệm diện tích</a></li><li><a href="#h-14-input-group--tin-thu-t-cho--nhp">Input group — tiền tố/hậu tố cho ô nhập</a></li><li><a href="#h-17-validation-wasvalidated--invalidfeedback">Validation: </a></li><li><a href="#h-23-prompt-mu">Prompt mẫu</a></li><li><a href="#h-25-thc-hnh">Thực hành</a></li><li><a href="#h-27-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="08-bootstrap-components-cards-list-groups.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Cards & List groups</strong></span></a><a href="08-bootstrap-components-modal-offcanvas-accordion.html" rel="next"><span><small>Bài sau</small><strong>Modal, Offcanvas & Accordion</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bonus — Lab: Từ Figma đến Bootstrap trong một phiên làm việc | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-9.html">Chương 9</a> &rsaquo; Bonus: Figma → Bootstrap &rsaquo; Bài 3/3</p>
+<h1 class="lesson-title">Bonus — Lab: Từ Figma đến Bootstrap trong một phiên làm việc</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 3/3</span><span>Module: Bonus: Figma → Bootstrap</span><span>~4 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="bonus--lab-t-figma-n-bootstrap-trong-mt-phin-lm-vic">Bonus — Lab: Từ Figma đến Bootstrap trong một phiên làm việc</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Phối hợp trọn vẹn hai khung prompt chuẩn (phân tích Figma → sinh code Bootstrap) vào một quy trình</li><li>Tự đánh giá được chất lượng prompt và chất lượng code AI trả về</li><li>Hoàn thành một section hoàn chỉnh của Highland Hospital từ thiết kế đến HTML chạy được</li></ul>
+<h3 id="h-3-nhim-v">Nhiệm vụ<a class="anchor" href="#h-3-nhim-v" aria-label="Liên kết mục">#</a></h3>
+<p>Chọn <strong>một</strong> trong ba section sau của trang chủ Highland Hospital:</p>
+<ol><li><strong>Hero</strong> — nền gradient hoặc ảnh, tiêu đề lớn, mô tả, 2 nút CTA.</li><li><strong>Services</strong> — 6 thẻ dịch vụ, icon, tiêu đề, mô tả.</li><li><strong>Testimonials</strong> — 3 đánh giá bệnh nhân (ảnh, tên, sao, nhận xét).</li></ol>
+<p>Nếu bạn có thiết kế Figma thật thì dùng luôn; nếu không, hãy tự vẽ đặc tả chi tiết (có thể nhờ AI vẽ mô tả trước).</p>
+<h3 id="h-7-quy-trnh-5-bc">Quy trình 5 bước<a class="anchor" href="#h-7-quy-trnh-5-bc" aria-label="Liên kết mục">#</a></h3>
+<h4 id="bc-1--phn-tch-khung-prompt-bi-01">Bước 1 — Phân tích (khung prompt bài 01)</h4>
+<p>Dán ảnh/mô tả thiết kế + khung prompt phân tích 5 mục. <strong>Kiểm tra</strong> số cột, khoảng cách, trạng thái; sửa những gì AI ước lượng sai.</p>
+<h4 id="bc-2--sinh-code-khung-prompt-bi-02">Bước 2 — Sinh code (khung prompt bài 02)</h4>
+<p>Dán đặc tả đã sửa + khung prompt sinh code Bootstrap. Nhận HTML section.</p>
+<h4 id="bc-3--phn-tch-code-analyze--bc-3-ca-workflow">Bước 3 — Phân tích code (Analyze — bước 3 của workflow)</h4>
+<p>Với từng dòng code nhận được, trả lời:</p>
+<ul><li>Vì sao dùng <code>col-md-6</code> mà không phải <code>col-6</code>? <em>(tránh 2 cột dồn trên màn hình hẹp)</em></li><li>Vì sao cần <code>h-100</code> trên card? <em>(đồng chiều cao khi nội dung lệch)</em></li><li>Vì sao nút CTA chính là <code>&lt;a&gt;</code> điều hướng mà không phải <code>&lt;button&gt;</code>? <em>(vì nó dẫn sang booking.html)</em></li><li>Nếu có class lạ, hỏi AI giải thích trước khi giữ lại.</li></ul>
+<h4 id="bc-4--refine">Bước 4 — Refine</h4>
+<p>Kiểm tra ở 375px/768px/1440px bằng Device Toolbar. Liệt kê tối đa <strong>3</strong> vấn đề ưu tiên, yêu cầu AI sửa từng vấn đề với prompt chỉ đích danh (không "sửa giúp tất cả").</p>
+<h4 id="bc-5--ghi-li-prompt--dng">Bước 5 — Ghi lại prompt đã dùng</h4>
+<p>Dán prompt cuối cùng (bản đã sửa) vào cuối file <code>templates/prompt-templates.md</code> hoặc file ghi chú riêng — đây là tài sản bạn giữ lại sau khoá học.</p>
+<h3 id="h-19-checklist-nh-gi-prompt-ca-bn">Checklist đánh giá prompt của bạn<a class="anchor" href="#h-19-checklist-nh-gi-prompt-ca-bn" aria-label="Liên kết mục">#</a></h3>
+<div class="table-card"><table><thead><tr><th>Tiêu chí</th><th>Câu hỏi tự kiểm tra</th></tr></thead><tbody><tr><td>Bối cảnh</td><td>Prompt có nói rõ dự án Highland Hospital + stack (Bootstrap 5.3, tiếng Việt)?</td></tr><tr><td>Cụ thể</td><td>Có đưa design token / số cột / breakpoint / trạng thái, hay để AI tự đoán?</td></tr><tr><td>Ràng buộc</td><td>Có cấm CSS riêng, inline style, yêu cầu thẻ semantic, heading đúng bậc?</td></tr><tr><td>Định dạng đầu ra</td><td>Có yêu cầu "chỉ trả HTML section, không giải thích"?</td></tr><tr><td>Vòng lặp sửa</td><td>Khi sai, bạn có yêu cầu sửa đúng điểm thay vì viết lại toàn bộ?</td></tr></tbody></table></div>
+<p>Nếu trả lời "không" từ 2 câu trở lên, hãy sửa prompt rồi chạy lại — đó chính là lúc bạn học nhanh nhất.</p>
+<h3 id="h-22-nh-gi-code-ai-tr-v">Đánh giá code AI trả về<a class="anchor" href="#h-22-nh-gi-code-ai-tr-v" aria-label="Liên kết mục">#</a></h3>
+<p>Code đạt yêu cầu khi:</p>
+<ul><li>Không có inline style, không có CSS riêng thừa (trừ chỗ đánh dấu CUSTOM có lý do).</li><li>Grid mobile-first, đủ breakpoint, card có <code>h-100</code>, ảnh có <code>alt</code>.</li><li>Heading đúng bậc; nút CTA dùng <code>&lt;a&gt;</code> hoặc <code>&lt;button&gt;</code> đúng vai trò.</li><li>Mở Live Server: hiển thị khớp thiết kế ở cả 3 kích thước, không tràn ngang.</li></ul>
+<h3 id="h-25-nu-kt--u">Nếu kẹt ở đâu<a class="anchor" href="#h-25-nu-kt--u" aria-label="Liên kết mục">#</a></h3>
+<ul><li><strong>AI sinh code sai quá nhiều</strong> → quay lại bước 1: đặc tả của bạn chưa đủ rõ, hãy bổ sung số cột/khoảng cách/trạng thái trước khi đổ lỗi cho AI.</li><li><strong>Không biết class Bootstrap nào</strong> → hỏi AI kèm bối cảnh: "Tôi cần [mô tả], class Bootstrap 5 nào phù hợp? Cho 2 phương án kèm ví dụ."</li><li><strong>Section chạy nhưng xấu</strong> → đừng sửa code mù; chụp màn hình, dán kèm câu hỏi: "So với đặc tả, chỗ nào lệch? Sửa tối thiểu để khớp."</li></ul>
+<h3 id="h-27-kt-thc-module">Kết thúc module<a class="anchor" href="#h-27-kt-thc-module" aria-label="Liên kết mục">#</a></h3>
+<p>Bạn vừa chạy trọn một phiên <strong>từ Figma đến Bootstrap</strong> đúng quy trình 4 bước của khoá học: Define (phân tích) → Draft (sinh code) → Analyze (đọc hiểu) → Refine (sửa đúng điểm). Lặp lại quy trình này ở mọi section, bạn sẽ cắt cả một trang chủ Highland Hospital trong thời gian rất ngắn mà vẫn hiểu từng dòng code — đó chính là cách Senior Frontend Developer làm việc với AI.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">7 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-nhim-v">Nhiệm vụ</a></li><li><a href="#h-7-quy-trnh-5-bc">Quy trình 5 bước</a></li><li><a href="#h-19-checklist-nh-gi-prompt-ca-bn">Checklist đánh giá prompt của bạn</a></li><li><a href="#h-22-nh-gi-code-ai-tr-v">Đánh giá code AI trả về</a></li><li><a href="#h-25-nu-kt--u">Nếu kẹt ở đâu</a></li><li><a href="#h-27-kt-thc-module">Kết thúc module</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="13-bonus-prompt-engineering-frontend-bonus-sinh-code-bootstrap-5-t-d-c-ta-figma.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Bonus — Sinh code Bootstrap 5 từ đặc tả Figma</strong></span></a><a href="index.html"><span><small>Hoàn thành</small><strong>Về danh sách bài</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

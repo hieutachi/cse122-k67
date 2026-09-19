@@ -1,0 +1,117 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lab: dựng Hero section | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-4.html">Chương 4</a> &rsaquo; CSS3 foundations &rsaquo; Bài 5/5</p>
+<h1 class="lesson-title">Lab: dựng Hero section</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 5/5</span><span>Module: CSS3 foundations</span><span>~4 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="lab-dng-hero-section">Lab: dựng Hero section</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Vận dụng toàn bộ chương 4 vào một sản phẩm thật: Hero Highland Hospital</li><li>Thực hành vòng lặp AI-Accelerated: prompt AI → nhận nháp → đọc hiểu → tinh chỉnh tay</li><li>Đọc và giải thích được từng dòng CSS trong kết quả cuối cùng</li></ul>
+<h3 id="h-3-bi-cnh-amp-rng-buc">Bối cảnh &amp; ràng buộc<a class="anchor" href="#h-3-bi-cnh-amp-rng-buc" aria-label="Liên kết mục">#</a></h3>
+<p>Hero là khung hình đầu tiên bệnh nhân thấy: nền gradient xanh y tế (hoặc ảnh), tiêu đề lớn, mô tả ngắn, nút CTA "Đặt lịch khám". Yêu cầu lab: HTML semantic, CSS thuần viết tay, áp dụng Box Model + <code>box-sizing</code>, đơn vị <code>rem</code>/<code>%</code>/<code>vh</code>, màu lấy từ CSS Variables.</p>
+<h3 id="h-5-bc-1--html-dng-khung-trc">Bước 1 — HTML: dựng khung trước<a class="anchor" href="#h-5-bc-1--html-dng-khung-trc" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;main&gt;
+  &lt;section class="hero"&gt;
+    &lt;div class="hero__content"&gt;
+      &lt;p class="hero__eyebrow"&gt;Highland Hospital · 25 năm đồng hành&lt;/p&gt;
+      &lt;h1 class="hero__title"&gt;Chăm sóc sức khỏe&lt;br&gt;cho cả gia đình bạn&lt;/h1&gt;
+      &lt;p class="hero__subtitle"&gt;Đội ngũ 120+ bác sĩ chuyên khoa đầu ngành,
+        đặt lịch khám trực tuyến trong 2 phút.&lt;/p&gt;
+      &lt;div class="hero__actions"&gt;
+        &lt;a href="#booking" class="btn btn--primary"&gt;Đặt lịch khám&lt;/a&gt;
+        &lt;a href="#doctors" class="btn btn--ghost"&gt;Xem đội ngũ bác sĩ&lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+&lt;/main&gt;</code></pre></figure>
+<p>(Đoạn trên nằm trong file <code>index.html</code> chuẩn bạn dựng ở chương 3 — nhớ giữ <code>&lt;!DOCTYPE html&gt;</code>, <code>&lt;meta name="viewport"&gt;</code> và liên kết file CSS.)</p>
+<h3 id="h-8-bc-2--prompt-ai-ly-bn-nhp">Bước 2 — Prompt AI lấy bản nháp<a class="anchor" href="#h-8-bc-2--prompt-ai-ly-bn-nhp" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Bạn là senior frontend developer. Dựng CSS cho Hero section bệnh
+viện Highland Hospital với HTML đính kèm (class: .hero,
+.hero__content, .hero__title...). Ràng buộc:
+- Nền linear-gradient xanh dương y tế, không cần ảnh
+- Chữ trắng; tiêu đề ~3rem; mô tả ~1.125rem, độ trong suốt 90%
+- min-height 100vh, nội dung căn giữa theo chiều dọc
+- Nút .btn--primary nền trắng chữ xanh, .btn--ghost viền trắng mờ
+- Dùng box-sizing border-box, đơn vị rem/%, màu qua biến
+var(--hh-*); trả về CSS KÈM chú thích tiếng Việt từng dòng.</code></pre></figure>
+<h3 id="h-10-bc-3--css-kt-qu-amp-c-tng-dng">Bước 3 — CSS kết quả &amp; đọc từng dòng<a class="anchor" href="#h-10-bc-3--css-kt-qu-amp-c-tng-dng" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>*, *::before, *::after { box-sizing: border-box; }
+:root {
+  --hh-primary: #0b6bcb;
+  --hh-primary-dark: #08549e;
+  --hh-white: #ffffff;
+}
+.hero {
+  min-height: 100vh;                 /* chiếm trọn màn hình đầu */
+  display: flex;                     /* bật flex để căn giữa dọc */
+  align-items: center;               /* content nằm giữa theo chiều dọc */
+  padding: 4rem 1.5rem;              /* tránh chạm mép trên mobile */
+  background: linear-gradient(135deg, var(--hh-primary) 0%, var(--hh-primary-dark) 100%);
+  color: var(--hh-white);
+}
+.hero__content { max-width: 640px; } /* dòng chữ không quá dài */
+.hero__eyebrow {
+  font-size: 0.875rem;
+  letter-spacing: 0.12em;            /* chữ in hoa cách dãn */
+  text-transform: uppercase;
+  opacity: 0.85;                     /* phụ so với tiêu đề */
+  margin-bottom: 1rem;
+}
+.hero__title {
+  font-size: clamp(2.25rem, 6vw, 3.5rem);  /* co giãn giữa hai cận */
+  line-height: 1.15;
+  margin-bottom: 1.5rem;
+}
+.hero__subtitle {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  opacity: 0.9;
+  margin-bottom: 2rem;               /* Box Model: đẩy khối nút xuống */
+}
+.hero__actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+.btn {
+  display: inline-block;
+  padding: 0.8rem 1.75rem;           /* Box Model: hộp bấm thoải mái */
+  border-radius: 999px;              /* hình viên thuốc */
+  font-size: 1rem;
+  text-decoration: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.btn--primary { background: var(--hh-white); color: var(--hh-primary); }
+.btn--ghost {
+  border: 1px solid rgba(255, 255, 255, 0.5);  /* viền mờ, không fill */
+  color: var(--hh-white);
+}
+.btn:hover { transform: translateY(-2px); }     /* phản hồi nhẹ khi trỏ */</code></pre></figure>
+<p>Ba chi tiết đáng nhớ: (1) <code>clamp(2.25rem, 6vw, 3.5rem)</code> cho cỡ chữ co giãn giữa hai cận — chương 6 sẽ đào sâu; (2) nút CTA nền trắng là điểm tương phản duy nhất để mắt dừng đúng chỗ thiết kế muốn; (3) khoảng cách dọc chỉ đặt một chiều (<code>margin-bottom</code>) — tránh margin collapse đã học.</p>
+<h3 id="h-13-bc-4--tinh-chnh-bng-cu-hi-ng">Bước 4 — Tinh chỉnh bằng câu hỏi đúng<a class="anchor" href="#h-13-bc-4--tinh-chnh-bng-cu-hi-ng" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Hero của tôi trên iPhone vẫn thừa khoảng trống phía dưới và chữ
+eyebrow bị xuống dòng. CSS hiện tại: [dán]. Hãy chỉ ra vấn đề
+thuộc đơn vị hay spacing nào và đề xuất tối đa 3 dòng sửa.</code></pre></figure>
+<h3 id="h-15-thc-hnh">Thực hành<a class="anchor" href="#h-15-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<ol><li>Tự viết prompt mô tả hero <em>bằng lời của bạn</em> (nền ảnh thay gradient, tiêu đề khác), nhận CSS từ AI rồi áp 4 bước: Define → Draft → Analyze → Refine.</li><li>Đối chiếu code AI trả về với code mẫu; tô highlight chỗ chưa hiểu và hỏi AI giải thích.</li><li>DevTools: tab Computed của <code>.btn--primary</code> có đúng <code>border-box</code> không? Đổi <code>--hh-primary</code> trong <code>:root</code> → cả hero đổi màu.</li><li>Kéo cửa sổ xuống 320px: chữ có tràn, nút có chồng nhau không? Sửa bằng <code>flex-wrap</code> và <code>clamp</code>.</li></ol>
+<h3 id="h-17-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-17-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Hero đã đứng vững — nhưng để căn giữa nó bạn mới chạm tay vào Flexbox. Chương 5 bắt đầu với Flexbox căn bản: trục chính, trục chéo và cách dàn thanh nav cùng hàng nút CTA.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">8 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-bi-cnh-amp-rng-buc">Bối cảnh &amp; ràng buộc</a></li><li><a href="#h-5-bc-1--html-dng-khung-trc">Bước 1 — HTML: dựng khung trước</a></li><li><a href="#h-8-bc-2--prompt-ai-ly-bn-nhp">Bước 2 — Prompt AI lấy bản nháp</a></li><li><a href="#h-10-bc-3--css-kt-qu-amp-c-tng-dng">Bước 3 — CSS kết quả &amp; đọc từng dòng</a></li><li><a href="#h-13-bc-4--tinh-chnh-bng-cu-hi-ng">Bước 4 — Tinh chỉnh bằng câu hỏi đúng</a></li><li><a href="#h-15-thc-hnh">Thực hành</a></li><li><a href="#h-17-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="04-css3-foundations-don-vi-do-trong-css.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Đơn vị đo trong CSS</strong></span></a><a href="05-css-layout-flexbox-can-ban.html" rel="next"><span><small>Bài sau</small><strong>Flexbox căn bản</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

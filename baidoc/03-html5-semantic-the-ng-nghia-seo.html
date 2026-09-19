@@ -1,0 +1,56 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Thẻ ngữ nghĩa & SEO | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-2.html">Chương 2</a> &rsaquo; HTML5 semantic &rsaquo; Bài 2/5</p>
+<h1 class="lesson-title">Thẻ ngữ nghĩa & SEO</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 2/5</span><span>Module: HTML5 semantic</span><span>~4 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="th-ng-ngha-amp-seo">Thẻ ngữ nghĩa &amp; SEO</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Phân biệt thẻ ngữ nghĩa với <code>&lt;div&gt;</code> và biết dùng khi nào</li><li>Nắm 7 thẻ cấu trúc chính và thứ bậc heading <code>h1</code>–<code>h6</code></li><li>Hiểu vì sao semantic giúp SEO và accessibility, và nhờ AI dựng khung đúng</li></ul>
+<h3 id="h-3-ltdivgt-khng-sai-nhng-khng-ni-g"><code>&lt;div&gt;</code> không sai, nhưng không nói gì<a class="anchor" href="#h-3-ltdivgt-khng-sai-nhng-khng-ni-g" aria-label="Liên kết mục">#</a></h3>
+<p><code>&lt;div&gt;</code> giống một chiếc hộp trung tính — trình duyệt, Google và trình đọc màn hình đều không biết trong đó là gì. Nếu cả trang chỉ toàn <code>&lt;div&gt;</code>, máy móc phải <em>đoán</em> đâu là menu, đâu là nội dung chính, đâu là chân trang. Còn với thẻ ngữ nghĩa, mọi thứ được khai báo rõ ràng:</p>
+<div class="table-card"><table><thead><tr><th>Thẻ</th><th>Ý nghĩa</th><th>Trong Highland Hospital</th></tr></thead><tbody><tr><td><code>&lt;header&gt;</code></td><td>Phần đầu trang hoặc đầu một khu vực</td><td>Logo + số hotline + menu đăng nhập</td></tr><tr><td><code>&lt;nav&gt;</code></td><td>Khối liên kết điều hướng chính</td><td>Trang chủ · Bác sĩ · Đặt lịch · Liên hệ</td></tr><tr><td><code>&lt;main&gt;</code></td><td>Nội dung chính duy nhất của trang</td><td>Hero + dịch vụ + danh sách bác sĩ</td></tr><tr><td><code>&lt;section&gt;</code></td><td>Nhóm nội dung có cùng chủ đề, thường kèm heading</td><td>"Dịch vụ nổi bật", "Đội ngũ bác sĩ"</td></tr><tr><td><code>&lt;article&gt;</code></td><td>Nội dung độc lập, tự đứng riêng được</td><td>Một bài tin sức khoẻ, một thẻ bác sĩ</td></tr><tr><td><code>&lt;aside&gt;</code></td><td>Nội dung phụ bên cạnh nội dung chính</td><td>Khối tin khuyến mãi, banner phụ</td></tr><tr><td><code>&lt;footer&gt;</code></td><td>Chân trang</td><td>Bản quyền, liên kết, địa chỉ bệnh viện</td></tr></tbody></table></div>
+<p>Quy tắc chọn nhanh: cứ hỏi <em>"khối này có ý nghĩa gì với người đọc?"</em> — có thì dùng thẻ ngữ nghĩa, chỉ dùng <code>&lt;div&gt;</code> khi thực sự là hộp trang trí/layout thuần (bài sau sẽ học grid).</p>
+<h3 id="h-7-th-bc-heading--mt-trang-mt-h1">Thứ bậc heading — một trang một <code>h1</code><a class="anchor" href="#h-7-th-bc-heading--mt-trang-mt-h1" aria-label="Liên kết mục">#</a></h3>
+<p>Heading tạo nên "mục lục" của trang cho cả Google lẫn người dùng trình đọc màn hình:</p>
+<ul><li>Mỗi trang đúng <strong>một</strong> <code>&lt;h1&gt;</code> — với Highland Hospital, <code>index.html</code> có h1 là câu chào chính của hero, không phải logo.</li><li>Đi xuống theo thứ tự: <code>h1</code> → <code>h2</code> (tên từng section) → <code>h3</code> (tên từng bác sĩ/dịch vụ) → <code>h4</code> nếu cần chi tiết hơn.</li><li>Không nhảy cóc (<code>h1</code> rồi <code>h4</code>) và không dùng heading để làm chữ to — cỡ chữ là việc của CSS. Trình đọc màn hình cho phép người dùng nhảy giữa các heading để dò nội dung; thứ bậc rối đồng nghĩa mục lục rối.</li></ul>
+<h3 id="h-10-vai-tr-vi-seo-v-accessibility">Vai trò với SEO và accessibility<a class="anchor" href="#h-10-vai-tr-vi-seo-v-accessibility" aria-label="Liên kết mục">#</a></h3>
+<ul><li><strong>SEO</strong>: Google ưu tiên hiểu cấu trúc. Trang semantic giúp nó xác định nội dung chính, trích đoạn hiển thị và ngữ cảnh — đồng thời là nền để thẻ <code>&lt;meta&gt;</code> ở bài 01 phát huy tác dụng.</li><li><strong>Accessibility</strong>: trình đọc màn hình (screen reader) thông báo "điều hướng", "nội dung chính", "chân trang" để người khiếm thị nhảy tới thẳng phần cần đọc. Thẻ semantic còn hỗ trợ landmark-based navigation có sẵn trong nhiều trình duyệt.</li></ul>
+<p>Kiểm chứng nhanh trên trang của bạn: cài extension <strong>WAVE</strong> hoặc mở Lighthouse (F12 → tab Lighthouse → chạy Accessibility/SEO) để thấy AI/điểm trừ khi thiếu heading hoặc dùng <code>&lt;div&gt;</code> cho vùng điều hướng.</p>
+<h3 id="h-13-prompt-mu-dng-khung-semantic-cho-trang-ch">Prompt mẫu: dựng khung semantic cho trang chủ<a class="anchor" href="#h-13-prompt-mu-dng-khung-semantic-cho-trang-ch" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Bối cảnh: Trang chủ Highland Hospital — web bệnh viện có các khu vực:
+điều hướng, hero, dịch vụ, bác sĩ, đánh giá, footer. Dự án HTML5 thuần,
+chưa có CSS.
+Nhiệm vụ: dựng khung HTML semantic của cả trang chủ, nội dung các khu
+vực chỉ cần placeholder tiếng Việt ngắn.
+Ràng buộc: dùng đúng thẻ — header+nav cho phần đầu, main bọc hero và
+các section, article cho từng thẻ bác sĩ, footer cho chân trang; đúng
+một h1; heading các section là h2; class tiền tố hh-.
+Định dạng: một khối HTML duy nhất kèm chú thích HTML &lt;!-- tên khu vực --&gt;
+trước mỗi vùng.</code></pre></figure>
+<h3 id="h-15-thc-hnh">Thực hành<a class="anchor" href="#h-15-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<p>So sánh: viết thủ công phần header của trang chủ bằng toàn <code>&lt;div&gt;</code>, rồi viết lại bằng <code>header &gt; nav &gt; ul &gt; li &gt; a</code> cho 4 mục (Trang chủ, Bác sĩ, Đặt lịch, Liên hệ). Mở Lighthouse chạy mục SEO và Accessibility cho cả hai phiên bản, ghi lại chênh lệch — đó là giá trị của semantic bằng điểm số thực tế.</p>
+<h3 id="h-17-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-17-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Trang chủ đã có khung; khi người dùng muốn đặt lịch, họ cần điền thông tin — bài <em>Forms &amp; các kiểu Input hiện đại</em> dạy cách dựng form chuẩn.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">6 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-7-th-bc-heading--mt-trang-mt-h1">Thứ bậc heading — một trang một </a></li><li><a href="#h-10-vai-tr-vi-seo-v-accessibility">Vai trò với SEO và accessibility</a></li><li><a href="#h-13-prompt-mu-dng-khung-semantic-cho-trang-ch">Prompt mẫu: dựng khung semantic cho trang chủ</a></li><li><a href="#h-15-thc-hnh">Thực hành</a></li><li><a href="#h-17-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="03-html5-semantic-c-u-truc-tai-li-u-web-chu-n.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Cấu trúc tài liệu web chuẩn</strong></span></a><a href="03-html5-semantic-forms-cac-ki-u-input-hi-n-dai.html" rel="next"><span><small>Bài sau</small><strong>Forms & các kiểu Input hiện đại</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lab: Hero responsive | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-6.html">Chương 6</a> &rsaquo; Responsive & animation &rsaquo; Bài 5/5</p>
+<h1 class="lesson-title">Lab: Hero responsive</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 5/5</span><span>Module: Responsive & animation</span><span>~4 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="lab-hero-responsive">Lab: Hero responsive</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Dựng Hero Highland Hospital chạy tốt trên mobile / tablet / desktop</li><li>Áp dụng đồng bộ mobile-first, <code>clamp()</code> và hiệu ứng chuyển động đã học</li><li>Tự kiểm tra theo checklist và review code do AI sinh ra</li></ul>
+<h3 id="h-3-yu-cu-thc-hin">Yêu cầu thực hiện<a class="anchor" href="#h-3-yu-cu-thc-hin" aria-label="Liên kết mục">#</a></h3>
+<p>Tạo <code>hero-responsive.html</code> (CSS trong thẻ <code>&lt;style&gt;</code> cho gọn) đáp ứng đủ các mốc:</p>
+<ul><li><strong>Mobile (&lt; 768px)</strong>: nền gradient xanh dương đậm phủ kín; tiêu đề dùng <code>clamp()</code>; nút CTA "Đặt lịch khám" màu trắng, chữ xanh, <strong>toàn chiều rộng</strong> — ngón tay bấm vừa; ẩn ảnh minh hoạ (hoặc đưa xuống cuối); padding trái/phải ≥ 1.25rem.</li><li><strong>Tablet (≥ 768px)</strong>: nội dung vào cột trung tâm tối đa 720px; nút CTA thu về vừa nội dung; ảnh xuất hiện dưới chữ.</li><li><strong>Desktop (≥ 992px)</strong>: bố trí 2 cột — chữ trái, ảnh phải; thêm nút phụ "Xem danh sách bác sĩ" (kiểu viền); ảnh dùng <code>object-fit: cover</code> trong khung có bo góc.</li></ul>
+<p>Điểm tự đánh giá: trang phải <strong>đẹp sẵn ở 360px mà không cần bất kỳ media query nào chạy</strong>, các media query chỉ làm cho bố cục rộng ra. Hãy tự viết trước 10 phút rồi mới dùng prompt hỗ trợ — theo phương pháp đã học.</p>
+<h3 id="h-7-prompt-mu-dng-hero-vi-ai">Prompt mẫu: dựng Hero với AI<a class="anchor" href="#h-7-prompt-mu-dng-hero-vi-ai" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Dựng Hero cho trang chủ Highland Hospital, website bệnh viện đặt lịch
+khám. Viết một file HTML hoàn chỉnh, CSS thuần trong &lt;style&gt;, KHÔNG
+dùng framework. Bố cục mobile-first:
+- Mobile: nền gradient tuyến tính từ #0d6efd đến #0a58ca, chữ trắng.
+  Tiêu đề "Chăm sóc sức khỏe toàn diện cho gia đình bạn" dùng clamp(),
+  đoạn mô tả ngắn, nút chính "Đặt lịch khám" nền trắng chữ xanh chiếm
+  toàn bộ chiều rộng, cao tối thiểu 52px, border-radius 8px. Ẩn ảnh.
+- 768px trở lên: nội dung trong cột tối đa 720px canh giữa, nút co theo
+  nội dung, hiện ảnh minh hoạ dưới chữ.
+- 992px trở lên: 2 cột flex — text trái, ảnh phải chiếm 50%; ảnh trong
+  khung object-fit: cover, border-radius 16px; thêm nút phụ kiểu outline
+  "Xem danh sách bác sĩ".
+Thêm hiệu ứng: hero content fade + slide lên khi tải trang, kèm khối
+prefers-reduced-motion. Dùng class semantic. Mỗi khối CSS kèm 1 dòng
+giải thích.</code></pre></figure>
+<p>Nhận kết quả, bạn vẫn phải kiểm tra kỹ ba điểm AI hay làm sai: (1) tiêu đề gõ tiếng Việt có sai dấu không, (2) có lén thêm màu/class không có trong yêu cầu, (3) cột giữa 720px có áp dụng đúng từ mốc 768px không.</p>
+<h3 id="h-10-checklist-t-kim-tra">Checklist tự kiểm tra<a class="anchor" href="#h-10-checklist-t-kim-tra" aria-label="Liên kết mục">#</a></h3>
+<div class="table-card"><table><thead><tr><th>#</th><th>Hạng mục</th><th>Cách kiểm tra</th></tr></thead><tbody><tr><td>1</td><td>Không thanh cuộn ngang</td><td>Kéo cửa sổ từ 320px đến 1400px, cuộn ngang phải không xuất hiện</td></tr><tr><td>2</td><td>Mobile đẹp sẵn</td><td>Ở 360px, không cần media query nào cũng thấy rõ tiêu đề + nút</td></tr><tr><td>3</td><td>Nút CTA to trên mobile</td><td>Ở &lt; 768px: nút chiếm trọn chiều ngang, cao ≥ 52px, dễ bấm</td></tr><tr><td>4</td><td>Tiêu đề linh hoạt</td><td>Thay đổi viewport liên tục, chữ to nhỏ mượt, không tràn, không nhỏ quá 1.5rem</td></tr><tr><td>5</td><td>Layout "nhảy" đúng mốc</td><td>Mở DevTools Responsive, layout đổi đúng tại 768px và 992px</td></tr><tr><td>6</td><td>Ảnh không méo</td><td>Desktop: ảnh lấp khung đẹp, không bẹp, mặt bác sĩ / ảnh minh hoạ không bị cắt sai</td></tr><tr><td>7</td><td>Hover hoạt động</td><td>Nút: đổi màu + nhấc lên; card/ảnh: scale nhẹ — chuyển động mượt</td></tr><tr><td>8</td><td>Giảm chuyển động</td><td>DevTools → Rendering → emulate <code>prefers-reduced-motion: reduce</code>: hiệu ứng phải tắt</td></tr></tbody></table></div>
+<h3 id="h-12-phn-tch-code-mu-on-quan-trng-nht">Phân tích code mẫu (đoạn quan trọng nhất)<a class="anchor" href="#h-12-phn-tch-code-mu-on-quan-trng-nht" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>@media (min-width: 992px) {
+  .hero-inner {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    max-width: 1140px;
+  }
+  .hero-text { flex: 1; }
+  .hero-media { flex: 1; }
+}</code></pre></figure>
+<p>Vì sao <code>flex: 1</code> cho cả hai cột mà không khai <code>width: 50%</code>? <code>flex: 1</code> nghĩa là "cả hai được chia phần còn lại bằng nhau" — không cần cộng trừ cho vừa <code>gap</code> 3rem, trình duyệt tự làm. Còn <code>max-width: 1140px</code> thay vì <code>width: 100%</code> giữ cho cột không bị giãn vô hạn trên màn hình siêu rộng — trang luôn có chiều ngang đọc thoải mái.</p>
+<h3 id="h-15-thc-hnh">Thực hành<a class="anchor" href="#h-15-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<ol><li>Tự viết <code>hero-responsive.html</code> trước (giới hạn 10 phút).</li><li>Gửi prompt cho AI, đối chiếu, sửa bản của bạn bằng những ý hay hơn từ bản AI.</li><li>Chạy hết 8 mục trong checklist trên chính file của mình.</li></ol>
+<h3 id="h-17-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-17-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Hero đã responsive bằng CSS thuần — từ Chương 7 trở đi ta dựng lại toàn bộ trang bằng Bootstrap 5, bắt đầu với cài đặt framework qua CDN.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">7 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-yu-cu-thc-hin">Yêu cầu thực hiện</a></li><li><a href="#h-7-prompt-mu-dng-hero-vi-ai">Prompt mẫu: dựng Hero với AI</a></li><li><a href="#h-10-checklist-t-kim-tra">Checklist tự kiểm tra</a></li><li><a href="#h-12-phn-tch-code-mu-on-quan-trng-nht">Phân tích code mẫu (đoạn quan trọng nhất)</a></li><li><a href="#h-15-thc-hnh">Thực hành</a></li><li><a href="#h-17-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="06-responsive-and-animation-transitions-animations.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Transitions & Animations</strong></span></a><a href="07-bootstrap-grid-and-utilities-cai-d-t-bootstrap-5.html" rel="next"><span><small>Bài sau</small><strong>Cài đặt Bootstrap 5</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

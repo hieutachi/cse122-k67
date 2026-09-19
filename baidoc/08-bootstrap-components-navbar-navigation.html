@@ -1,0 +1,93 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Navbar & Navigation | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-7.html">Chương 7</a> &rsaquo; Bootstrap components &rsaquo; Bài 1/5</p>
+<h1 class="lesson-title">Navbar & Navigation</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 1/5</span><span>Module: Bootstrap components</span><span>~4 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="navbar-amp-navigation">Navbar &amp; Navigation</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Dựng thanh điều hướng responsive bằng <code>navbar</code> + <code>navbar-expand-lg</code> của Bootstrap 5</li><li>Hiểu vai trò của <code>navbar-brand</code>, <code>navbar-toggler</code>, <code>nav-link</code> và class <code>active</code></li><li>Nhớ đưa bundle JavaScript Bootstrap vào trang để hamburger hoạt động</li><li>Xây navbar Highland Hospital: logo, Trang chủ, Dịch vụ, Bác sĩ, Liên hệ, nút Đặt lịch</li></ul>
+<h3 id="h-3-skeleton-ca-trang-c-bootstrap">Skeleton của trang có Bootstrap<a class="anchor" href="#h-3-skeleton-ca-trang-c-bootstrap" aria-label="Liên kết mục">#</a></h3>
+<p>Ở chương 7 bạn đã quen hai dòng nhúng. Nhắc lại vì chương này bài nào cũng cần:</p>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;!doctype html&gt;
+&lt;html lang="vi"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+  &lt;title&gt;Highland Hospital&lt;/title&gt;
+  &lt;link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;!-- nội dung trang --&gt;
+
+  &lt;!-- bundle JS: bắt buộc cho toggler, modal, offcanvas, accordion... --&gt;
+  &lt;script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre></figure>
+<p>CSS đặt trong <code>&lt;head&gt;</code>, bundle JS đặt cuối <code>&lt;body&gt;</code>.</p>
+<h3 id="h-7-navbar-highland-hospital-hon-chnh">Navbar Highland Hospital hoàn chỉnh<a class="anchor" href="#h-7-navbar-highland-hospital-hon-chnh" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top"&gt;
+  &lt;div class="container"&gt;
+    &lt;a class="navbar-brand fw-bold text-primary" href="index.html"&gt;
+      🏥 Highland Hospital
+    &lt;/a&gt;
+    &lt;button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#mainNav" aria-controls="mainNav"
+            aria-expanded="false" aria-label="Mở menu điều hướng"&gt;
+      &lt;span class="navbar-toggler-icon"&gt;&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;div class="collapse navbar-collapse" id="mainNav"&gt;
+      &lt;ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center"&gt;
+        &lt;li class="nav-item"&gt;
+          &lt;a class="nav-link active" aria-current="page" href="index.html"&gt;Trang chủ&lt;/a&gt;
+        &lt;/li&gt;
+        &lt;li class="nav-item"&gt;&lt;a class="nav-link" href="services.html"&gt;Dịch vụ&lt;/a&gt;&lt;/li&gt;
+        &lt;li class="nav-item"&gt;&lt;a class="nav-link" href="doctors.html"&gt;Bác sĩ&lt;/a&gt;&lt;/li&gt;
+        &lt;li class="nav-item"&gt;&lt;a class="nav-link" href="contact.html"&gt;Liên hệ&lt;/a&gt;&lt;/li&gt;
+        &lt;li class="nav-item ms-lg-3 mt-2 mt-lg-0"&gt;
+          &lt;a class="btn btn-primary px-3" href="booking.html"&gt;Đặt lịch&lt;/a&gt;
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;</code></pre></figure>
+<p>Đọc từng class:</p>
+<ul><li><code>navbar-expand-lg</code>: từ màn hình <code>lg</code> (≥992px) trở lên các link hiện ngang; nhỏ hơn thì thu gọn sau nút hamburger. Đổi thành <code>md</code>/<code>xl</code> sẽ dịch điểm gãy.</li><li><code>navbar-brand</code>: logo + tên thương hiệu.</li><li><code>navbar-toggler</code>: nút hamburger; hai attribute quyết định là <code>data-bs-toggle="collapse"</code> và <code>data-bs-target="#mainNav"</code> trỏ đúng <code>id</code> của khối menu — cơ chế này cần bundle JS.</li><li><code>navbar-collapse</code>: vùng menu thu-gọn-được.</li><li><code>nav-link active</code>: class <code>active</code> làm nổi mục đang mở; nên đi kèm <code>aria-current="page"</code> cho trình đọc màn hình.</li><li><code>ms-auto</code>: đẩy nhóm link sát lề phải.</li><li>Nút "Đặt lịch" là lời gọi hành động (CTA) nên dùng <code>btn btn-primary</code>, không phải <code>nav-link</code>, để nổi bật.</li><li><code>sticky-top</code>: thanh dính phía trên khi cuộn trang.</li></ul>
+<h3 id="h-11-navtabs--dng-khi-no">nav-tabs — dùng khi nào<a class="anchor" href="#h-11-navtabs--dng-khi-no" aria-label="Liên kết mục">#</a></h3>
+<p><code>nav-tabs</code> không phải menu đầu trang mà là tab <strong>trong nội dung</strong> (ví dụ trang chi tiết khoa phòng):</p>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;ul class="nav nav-tabs"&gt;
+  &lt;li class="nav-item"&gt;&lt;a class="nav-link active" href="#"&gt;Thông tin chung&lt;/a&gt;&lt;/li&gt;
+  &lt;li class="nav-item"&gt;&lt;a class="nav-link" href="#"&gt;Quy trình khám&lt;/a&gt;&lt;/li&gt;
+  &lt;li class="nav-item"&gt;&lt;a class="nav-link" href="#"&gt;Bảo hiểm &amp; chi phí&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</code></pre></figure>
+<h3 id="h-14-v-sao-hamburger-khng-chy">Vì sao hamburger không chạy?<a class="anchor" href="#h-14-v-sao-hamburger-khng-chy" aria-label="Liên kết mục">#</a></h3>
+<p>90% trường hợp là thiếu bundle JS, hoặc <code>data-bs-target</code> không khớp <code>id</code> của khối menu. Kiểm tra theo đúng thứ tự đó. Thử xoá dòng <code>&lt;script&gt;</code> rồi bấm hamburger — bạn sẽ thấy không có gì xảy ra; đó là cách nhớ bài học này lâu nhất.</p>
+<h3 id="h-16-prompt-mu">Prompt mẫu<a class="anchor" href="#h-16-prompt-mu" aria-label="Liên kết mục">#</a></h3>
+<aside class="prompt-card"><span class="prompt-chip">Prompt mẫu</span><p><strong>Prompt gửi Gemini/Claude/ChatGPT:</strong> Bạn là senior frontend developer. Tôi đang xây website Highland Hospital bằng Bootstrap 5 (CDN, có sẵn <code>bootstrap.bundle.min.js</code>). Hãy tạo navbar: logo kèm tên "Highland Hospital" bên trái; các link Trang chủ / Dịch vụ / Bác sĩ / Liên hệ; nút "Đặt lịch khám" dạng <code>btn btn-primary</code> bên phải. Dùng <code>navbar-expand-lg</code> để trên màn hình nhỏ thu gọn thành hamburger, mục Trang chủ <code>active</code>, thanh <code>sticky-top</code>. Trả về đủ thẻ <code>&lt;link&gt;</code> CSS và <code>&lt;script&gt;</code> bundle JS. Giải thích ngắn vai trò của <code>data-bs-toggle</code> và <code>data-bs-target</code>.</p></aside>
+<p>Trước khi hỏi AI, hãy tự phân tích (bước 1 của Workflow): menu gồm mấy mục? Mục nào active? Có nút CTA không? Điểm gãy nào? Bạn nói càng rõ, code nhận về càng ít phải sửa.</p>
+<h3 id="h-19-thc-hnh">Thực hành<a class="anchor" href="#h-19-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<ol><li>Tạo <code>navbar.html</code> với skeleton CDN, dán navbar ở trên, mở bằng Live Server.</li><li>Kéo cửa sổ hẹp dưới 992px, bấm hamburger kiểm tra menu xổ xuống.</li><li>Xoá dòng <code>&lt;script&gt;</code> bundle rồi bấm hamburger lần nữa — ghi lại hiện tượng và nguyên nhân.</li><li>Đổi <code>navbar-expand-lg</code> → <code>navbar-expand-md</code>, quan sát điểm gãy thay đổi.</li><li>Chạy prompt mẫu với AI và so sánh với code của bạn.</li></ol>
+<h3 id="h-21-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-21-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Navbar đã xong; bài sau dựng khối nội dung phong phú nhất của trang — Cards và List group — để trưng bày đội ngũ bác sĩ Highland Hospital.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">8 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-skeleton-ca-trang-c-bootstrap">Skeleton của trang có Bootstrap</a></li><li><a href="#h-7-navbar-highland-hospital-hon-chnh">Navbar Highland Hospital hoàn chỉnh</a></li><li><a href="#h-11-navtabs--dng-khi-no">nav-tabs — dùng khi nào</a></li><li><a href="#h-14-v-sao-hamburger-khng-chy">Vì sao hamburger không chạy?</a></li><li><a href="#h-16-prompt-mu">Prompt mẫu</a></li><li><a href="#h-19-thc-hnh">Thực hành</a></li><li><a href="#h-21-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="07-bootstrap-grid-and-utilities-lab-services-section.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Lab: Services section</strong></span></a><a href="08-bootstrap-components-cards-list-groups.html" rel="next"><span><small>Bài sau</small><strong>Cards & List groups</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lab: FAQ & đặt lịch tĩnh | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-7.html">Chương 7</a> &rsaquo; Bootstrap components &rsaquo; Bài 5/5</p>
+<h1 class="lesson-title">Lab: FAQ & đặt lịch tĩnh</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 5/5</span><span>Module: Bootstrap components</span><span>~5 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="lab-faq-amp-t-lch-tnh">Lab: FAQ &amp; đặt lịch tĩnh</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Ghép toàn bộ component đã học — navbar, accordion, form, modal — vào một trang đặt lịch thống nhất</li><li>Phân biệt rõ phần "tĩnh" (component chạy bằng bundle JS) và phần "động" (submit form — để dành chương 10)</li><li>Luyện Workflow 4 bước trên một đoạn trang hoàn chỉnh: phân tích → prompt AI → thấu hiểu → tinh chỉnh</li></ul>
+<h3 id="h-3-bc-tranh-ca-trang-bookinghtml">Bức tranh của trang booking.html<a class="anchor" href="#h-3-bc-tranh-ca-trang-bookinghtml" aria-label="Liên kết mục">#</a></h3>
+<p>Trang <code>booking.html</code> sẽ gồm năm khối xếp dọc:</p>
+<div class="table-card"><table><thead><tr><th>Khu vực</th><th>Component</th><th>Trạng thái</th></tr></thead><tbody><tr><td>Thanh navbar</td><td><code>navbar navbar-expand-lg</code></td><td>chạy ngay</td></tr><tr><td>Tiêu đề + mô tả</td><td><code>page-header</code> có <code>breadcrumb</code></td><td>tĩnh</td></tr><tr><td>Form đặt lịch</td><td>form + <code>needs-validation</code></td><td>nhìn được lỗi khi bật <code>was-validated</code></td></tr><tr><td>FAQ</td><td><code>accordion</code></td><td>chạy ngay</td></tr><tr><td>Footer</td><td><code>bg-dark text-white</code></td><td>tĩnh</td></tr></tbody></table></div>
+<p>Phần <strong>chưa</strong> làm ở bài này: bắt sự kiện submit để lấy dữ liệu và hiện modal xác nhận — đó là JavaScript thật sự, bắt đầu từ chương 9. Bài này đặt modal sẵn trong trang để kiểm tra nút mở thủ công.</p>
+<h3 id="h-7-cu-trc--xut">Cấu trúc đề xuất<a class="anchor" href="#h-7-cu-trc--xut" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;main class="py-5 bg-light"&gt;
+  &lt;div class="container"&gt;
+    &lt;div class="row g-4"&gt;
+      &lt;div class="col-lg-7"&gt;
+        &lt;!-- &lt;h2&gt; + form đặt lịch --&gt;
+      &lt;/div&gt;
+      &lt;div class="col-lg-5"&gt;
+        &lt;!-- card giờ khám (list-group-flush) --&gt;
+        &lt;!-- accordion FAQ ngắn --&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/main&gt;</code></pre></figure>
+<p>Bố cục hai cột: <code>col-lg-7</code> (form) + <code>col-lg-5</code> (FAQ) là lựa chọn hợp lý trên desktop, tự chồng dọc trên mobile. Phân chia kiểu này là <strong>quyết định layout của bạn</strong> — AI không nên quyết thay.</p>
+<h3 id="h-10-yu-cu-ti-thiu-ca-lab">Yêu cầu tối thiểu của lab<a class="anchor" href="#h-10-yu-cu-ti-thiu-ca-lab" aria-label="Liên kết mục">#</a></h3>
+<ol><li>Nhúng đủ CSS <code>&lt;link&gt;</code> và bundle <code>&lt;script&gt;</code> Bootstrap 5</li><li>Navbar có mục <code>Đặt lịch</code> đang <code>active</code></li><li>Form gồm họ tên, email, số điện thoại, ngày khám, chuyên khoa — mỗi ô có <code>invalid-feedback</code> tiếng Việt; form mang <code>needs-validation</code> + <code>novalidate</code></li><li>Accordion FAQ ít nhất 3 câu hỏi</li><li>Modal xác nhận đặt lịch (nội dung mẫu) mở được bằng nút bấm thử</li></ol>
+<h3 id="h-12-khung-code-gi">Khung code gợi ý<a class="anchor" href="#h-12-khung-code-gi" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;main class="py-5 bg-light"&gt;
+  &lt;div class="container"&gt;
+    &lt;h2 class="mb-1"&gt;Đặt lịch khám&lt;/h2&gt;
+    &lt;p class="text-body-secondary mb-4"&gt;Điền thông tin bên dưới, bệnh viện sẽ gọi xác nhận trong 24 giờ.&lt;/p&gt;
+
+    &lt;div class="row g-4"&gt;
+      &lt;div class="col-lg-7"&gt;
+        &lt;form class="row g-3 needs-validation bg-white p-4 rounded-3 shadow-sm" id="bookingForm" novalidate&gt;
+          &lt;div class="col-md-6"&gt;
+            &lt;label for="fullName" class="form-label"&gt;Họ và tên&lt;/label&gt;
+            &lt;input type="text" class="form-control" id="fullName" required&gt;
+            &lt;div class="invalid-feedback"&gt;Vui lòng nhập họ và tên.&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;!-- col-md-6: email, phone, specialty, date — làm tiếp theo bài 03 --&gt;
+          &lt;div class="col-12 d-flex gap-2"&gt;
+            &lt;button type="submit" class="btn btn-primary px-4"&gt;Xác nhận đặt lịch&lt;/button&gt;
+            &lt;button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#confirmModal"&gt;
+              Xem modal thử
+            &lt;/button&gt;
+          &lt;/div&gt;
+        &lt;/form&gt;
+      &lt;/div&gt;
+
+      &lt;div class="col-lg-5"&gt;
+        &lt;div class="card mb-4 shadow-sm"&gt;
+          &lt;div class="card-header fw-semibold"&gt;Giờ khám các khoa&lt;/div&gt;
+          &lt;ul class="list-group list-group-flush"&gt;
+            &lt;li class="list-group-item d-flex justify-content-between"&gt;&lt;span&gt;Khám theo yêu cầu&lt;/span&gt;&lt;strong&gt;07:30–17:00&lt;/strong&gt;&lt;/li&gt;
+            &lt;li class="list-group-item d-flex justify-content-between"&gt;&lt;span&gt;Cấp cứu&lt;/span&gt;&lt;strong&gt;24/7&lt;/strong&gt;&lt;/li&gt;
+          &lt;/ul&gt;
+        &lt;/div&gt;
+        &lt;!-- accordion FAQ + modal confirmModal đặt ngay trước &lt;/body&gt; --&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/main&gt;</code></pre></figure>
+<p>Nhận xét nhanh: nút "Xem modal thử" chỉ phục vụ kiểm tra trong lab; khi có JavaScript (chương 10), nút này biến mất và chính nút submit sẽ mở modal với dữ liệu thật của form.</p>
+<h3 id="h-15-prompt-mu">Prompt mẫu<a class="anchor" href="#h-15-prompt-mu" aria-label="Liên kết mục">#</a></h3>
+<aside class="prompt-card"><span class="prompt-chip">Prompt mẫu</span><p><strong>Prompt gửi Gemini/Claude/ChatGPT:</strong> Bạn là senior frontend developer. Tôi đang dựng trang đặt lịch cho website Highland Hospital (Bootstrap 5 CDN, bundle JS đã có). Hãy tạo cấu trúc HTML: hai cột trong container — bên trái (<code>col-lg-7</code>) là form đặt lịch: họ tên, email, số điện thoại (pattern 10–11 số), ngày khám, chuyên khoa (form-select), mỗi trường có invalid-feedback tiếng Việt; form dùng <code>needs-validation</code> <code>novalidate</code>, chưa cần JavaScript submit. Bên phải (<code>col-lg-5</code>) là accordion FAQ 3–4 câu về đặt lịch khám. Thêm modal xác nhận mở được bằng nút thử. Trước khi viết, đừng tự bịa nội dung: dùng những câu hỏi và thông tin bệnh viện tôi đưa cho bạn.</p></aside>
+<h3 id="h-17-phn-tch-code-ai-tr-v">Phân tích code AI trả về<a class="anchor" href="#h-17-phn-tch-code-ai-tr-v" aria-label="Liên kết mục">#</a></h3>
+<p>Khi nhận code từ AI, đọc theo thứ tự để không bỏ sót:</p>
+<ol><li><code>id</code> của các input có khớp <code>for</code> của label và <code>data-bs-target</code> của nút không</li><li>Mỗi <code>invalid-feedback</code> nằm <strong>cùng cấp</strong> với input của nó (con của cùng một <code>div</code> bọc)</li><li><code>novalidate</code> còn nguyên trên thẻ <code>&lt;form&gt;</code> — đừng để AI xoá vì "cho đẹp"</li><li>Accordion có <code>data-bs-parent</code> trỏ đúng id của accordion</li><li>Script bundle nằm cuối <code>&lt;body&gt;</code></li></ol>
+<h3 id="h-20-thc-hnh">Thực hành<a class="anchor" href="#h-20-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<ol><li>Tự phân tích yêu cầu (bước 1) rồi viết <code>booking.html</code> từ các bài 01–04, chưa mở AI.</li><li>Mở bằng Live Server, kiểm tra: navbar thu gọn, accordion mở một panel một, modal mở/đóng, nút submit chưa làm gì (đúng như thiết kế).</li><li>Thêm <code>was-validated</code> tạm thời vào form (qua DevTools) và bấm submit trống để xem toàn bộ thông báo lỗi.</li><li>Chạy prompt mẫu với AI, so sánh với bản tay của bạn, sửa những chỗ AI làm tốt hơn.</li><li>Ghi lại danh sách những thứ "tĩnh đã xong" và "động còn thiếu" — nó là kế hoạch cho chương 10.</li></ol>
+<h3 id="h-22-tiu-ch-chm-nhanh">Tiêu chí chấm nhanh<a class="anchor" href="#h-22-tiu-ch-chm-nhanh" aria-label="Liên kết mục">#</a></h3>
+<p>Trang của bạn hoàn thành tốt khi trả lời được "có" cho cả năm câu:</p>
+<ol><li>Kéo cửa sổ hẹp: navbar có thu gọn thành hamburger và mở ra được?</li><li>Accordion FAQ mỗi lần chỉ mở một panel (nhờ <code>data-bs-parent</code>)?</li><li>Modal mở từ nút "Xem modal thử" và đóng bằng nút ×, nút "Chỉnh sửa" hay bấm ra ngoài?</li><li>Bấm submit khi form trống: form tĩnh <strong>chưa</strong> báo lỗi (chưa có JS), đúng như thiết kế của bài này?</li><li>Không có lỗi đỏ nào trong Console DevTools?</li></ol>
+<p>Trả lời "không" ở câu nào thì quay lại đúng bài tương ứng: câu 1 → bài 01, câu 3 → bài 04.</p>
+<h3 id="h-26-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-26-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Giao diện tĩnh của chương 8 đã trọn vẹn; từ bài sau chúng ta rẽ sang JavaScript ES6+ — bắt đầu bằng <code>let</code>/<code>const</code> và template literals để biến dữ liệu bác sĩ thành chuỗi HTML.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">10 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-bc-tranh-ca-trang-bookinghtml">Bức tranh của trang booking.html</a></li><li><a href="#h-7-cu-trc--xut">Cấu trúc đề xuất</a></li><li><a href="#h-10-yu-cu-ti-thiu-ca-lab">Yêu cầu tối thiểu của lab</a></li><li><a href="#h-12-khung-code-gi">Khung code gợi ý</a></li><li><a href="#h-15-prompt-mu">Prompt mẫu</a></li><li><a href="#h-17-phn-tch-code-ai-tr-v">Phân tích code AI trả về</a></li><li><a href="#h-20-thc-hnh">Thực hành</a></li><li><a href="#h-22-tiu-ch-chm-nhanh">Tiêu chí chấm nhanh</a></li><li><a href="#h-26-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="08-bootstrap-components-modal-offcanvas-accordion.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Modal, Offcanvas & Accordion</strong></span></a><a href="09-javascript-basics-let-const-template-literals.html" rel="next"><span><small>Bài sau</small><strong>let/const & Template Literals</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

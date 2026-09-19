@@ -1,0 +1,60 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dự án xuyên suốt: Highland Hospital | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-1.html">Chương 1</a> &rsaquo; Nhập môn & AI workflow &rsaquo; Bài 5/5</p>
+<h1 class="lesson-title">Dự án xuyên suốt: Highland Hospital</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 5/5</span><span>Module: Nhập môn & AI workflow</span><span>~3 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="d-n-xuyn-sut-highland-hospital">Dự án xuyên suốt: Highland Hospital</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Hiểu rõ ba trang web bạn sẽ xây trong khoá học</li><li>Nắm dữ liệu mẫu dùng chung giữa các trang</li><li>Biết mỗi chương đóng góp phần nào vào dự án cuối cùng</li></ul>
+<h3 id="h-3-bnh-vin-highland-l-ai">Bệnh viện Highland là ai?<a class="anchor" href="#h-3-bnh-vin-highland-l-ai" aria-label="Liên kết mục">#</a></h3>
+<p>Highland Hospital là một bệnh viện đa khoa hư cấu. Trang web của bệnh viện cần giải quyết ba việc thật:</p>
+<ol><li><strong>Giới thiệu</strong> — bệnh nhân tiềm năng xem bệnh viện cung cấp dịch vụ gì, có những bác sĩ nào, người khác đánh giá ra sao.</li><li><strong>Đặt lịch</strong> — bệnh nhân chọn chuyên khoa, chọn bác sĩ, chọn ngày giờ và điền thông tin liên hệ.</li><li><strong>Quản lý</strong> — nhân viên bệnh viện xem danh sách lịch hẹn, tìm kiếm, lọc theo trạng thái, xác nhận hoặc huỷ lịch.</li></ol>
+<h3 id="h-6-ba-trang-bn-s-xy">Ba trang bạn sẽ xây<a class="anchor" href="#h-6-ba-trang-bn-s-xy" aria-label="Liên kết mục">#</a></h3>
+<div class="table-card"><table><thead><tr><th>Trang</th><th>File</th><th>Xây ở chương</th><th>Nội dung chính</th></tr></thead><tbody><tr><td>Landing Page</td><td><code>index.html</code></td><td>3–8 (tĩnh), 9–10 (động)</td><td>Navbar, Hero, dịch vụ, danh sách bác sĩ có bộ lọc, đánh giá, footer</td></tr><tr><td>Trang đặt lịch</td><td><code>booking.html</code></td><td>8 (form tĩnh), 11 (luồng đa bước)</td><td>Form 3 bước: chọn dịch vụ/bác sĩ → thông tin bệnh nhân → xác nhận</td></tr><tr><td>Admin Dashboard</td><td><code>admin.html</code></td><td>12</td><td>4 thẻ thống kê, bảng lịch hẹn có tìm kiếm + lọc trạng thái + cập nhật</td></tr></tbody></table></div>
+<h3 id="h-8-d-liu-mu-dng-chung">Dữ liệu mẫu dùng chung<a class="anchor" href="#h-8-d-liu-mu-dng-chung" aria-label="Liên kết mục">#</a></h3>
+<p>Cả ba trang làm việc trên cùng một bộ dữ liệu. Ở chương 9 bạn sẽ đưa nó vào <code>js/data.js</code>:</p>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>// js/data.js
+const doctors = [
+  { id: 1, name: "BS. Nguyễn Văn An", specialty: "Nội tổng hợp", experience: 12, fee: 300000, avatar: "assets/images/doctor-1.jpg" },
+  { id: 2, name: "BS. Trần Thị Bình", specialty: "Nhi khoa", experience: 9, fee: 250000, avatar: "assets/images/doctor-2.jpg" },
+  { id: 3, name: "BS. Lê Hoàng Cường", specialty: "Tim mạch", experience: 15, fee: 400000, avatar: "assets/images/doctor-3.jpg" },
+  { id: 4, name: "BS. Phạm Minh Dung", specialty: "Da liễu", experience: 7, fee: 220000, avatar: "assets/images/doctor-4.jpg" }
+];
+
+const appointments = []; // { id, patientName, phone, specialty, doctorName, date, time, status }</code></pre></figure>
+<p>Trạng thái lịch hẹn dùng bốn giá trị xuyên suốt: <code>chờ xác nhận</code>, <code>đã xác nhận</code>, <code>đã hoàn thành</code>, <code>đã huỷ</code>. Ở chương 10–11, <code>appointments</code> chuyển từ mảng trong bộ nhớ sang <code>localStorage</code> và mock API.</p>
+<h3 id="h-12-mi-chng-ng-gp-g">Mỗi chương đóng góp gì<a class="anchor" href="#h-12-mi-chng-ng-gp-g" aria-label="Liên kết mục">#</a></h3>
+<ul><li><strong>Chương 3–4</strong>: khung HTML semantic và CSS cho Hero + Services.</li><li><strong>Chương 5–6</strong>: lưới Doctor Cards và responsive toàn trang.</li><li><strong>Chương 7–8</strong>: dựng lại Landing bằng Bootstrap, form đặt lịch tĩnh.</li><li><strong>Chương 9–10</strong>: render bác sĩ từ dữ liệu, bộ lọc chuyên khoa, lưu lịch hẹn.</li><li><strong>Chương 11</strong>: gọi mock API, luồng đặt lịch đa bước.</li><li><strong>Chương 12</strong>: lắp ráp Landing + Admin Dashboard hoàn chỉnh và deploy.</li></ul>
+<h3 id="h-14-mt-prompt-khi-ng-d-n">Một prompt khởi động dự án<a class="anchor" href="#h-14-mt-prompt-khi-ng-d-n" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Tôi bắt đầu dự án frontend "Highland Hospital" — website bệnh viện đặt lịch khám.
+Dùng HTML5 semantic + CSS3 + Bootstrap 5 CDN + JavaScript ES6+ thuần, không framework.
+Tôi cần tạo index.html với cấu trúc rỗng gồm navbar, hero, services, doctors, testimonials,
+booking CTA và footer — mỗi vùng là một &lt;section&gt; có id và comment HTML đánh dấu.
+Hãy trả về toàn bộ nội dung file index.html, chưa cần nội dung chi tiết, chỉ khung + class Bootstrap hợp lệ.</code></pre></figure>
+<h3 id="h-16-thc-hnh">Thực hành<a class="anchor" href="#h-16-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<ol><li>Tạo thư mục <code>highland-hospital/</code> (nếu chưa có từ bài trước) và file <code>js/data.js</code> với mảng <code>doctors</code> 6 bác sĩ và <code>appointments</code> rỗng.</li><li>Chạy prompt khởi động ở trên, dán kết quả vào <code>index.html</code>, mở Live Server và xem khung trang.</li><li>Mở bài tiếp theo để bắt đầu chương 2 — nơi bạn học viết những prompt tốt hơn prompt vừa dùng.</li></ol>
+<h3 id="h-18-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-18-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Khung trang đầu tiên đã hiện trên trình duyệt — chương 2 dạy bạn viết prompt đủ tốt để biến khung đó thành giao diện thật, bắt đầu từ giải phẫu một prompt.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">8 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-bnh-vin-highland-l-ai">Bệnh viện Highland là ai?</a></li><li><a href="#h-6-ba-trang-bn-s-xy">Ba trang bạn sẽ xây</a></li><li><a href="#h-8-d-liu-mu-dng-chung">Dữ liệu mẫu dùng chung</a></li><li><a href="#h-12-mi-chng-ng-gp-g">Mỗi chương đóng góp gì</a></li><li><a href="#h-14-mt-prompt-khi-ng-d-n">Một prompt khởi động dự án</a></li><li><a href="#h-16-thc-hnh">Thực hành</a></li><li><a href="#h-18-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="01-welcome-and-ai-workflow-thi-t-l-p-moi-tru-ng-lam-vi-c.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Thiết lập môi trường làm việc</strong></span></a><a href="02-prompt-engineering-giai-ph-u-m-t-prompt-t-t.html" rel="next"><span><small>Bài sau</small><strong>Giải phẫu một prompt tốt</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

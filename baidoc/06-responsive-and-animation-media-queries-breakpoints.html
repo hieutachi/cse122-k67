@@ -1,0 +1,79 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Media Queries & Breakpoints | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-6.html">Chương 6</a> &rsaquo; Responsive & animation &rsaquo; Bài 1/5</p>
+<h1 class="lesson-title">Media Queries & Breakpoints</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 1/5</span><span>Module: Responsive & animation</span><span>~5 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="media-queries-amp-breakpoints">Media Queries &amp; Breakpoints</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Hiểu cú pháp <code>@media</code> với <code>min-width</code> / <code>max-width</code> — hai hướng điều khiển ngược nhau</li><li>Nắm bốn breakpoints 576 / 768 / 992 / 1200 px và vì sao chúng phổ biến</li><li>Dùng AI sinh media query từ mô tả, rồi tự kiểm chứng bằng DevTools</li></ul>
+<h3 id="h-3-vn--ca-css-mt-kch-thc">Vấn đề của CSS "một kích thước"<a class="anchor" href="#h-3-vn--ca-css-mt-kch-thc" aria-label="Liên kết mục">#</a></h3>
+<p>Bạn vừa dựng xong Hero Highland Hospital cho màn hình desktop: dòng tiêu đề to bên trái, ảnh minh hoạ bên phải. Thu cửa sổ xuống 360px — bề ngang một chiếc điện thoại thật — chữ vẫn 3rem, ảnh vẫn chiếm nửa màn hình, và trang vỡ ngay trước mắt.</p>
+<p>Media query cho phép bạn nói với trình duyệt: <em>"khi viewport rộng ít nhất 768px, hãy áp dụng các luật này"</em>. Một file CSS vì thế trở thành nhiều tầng quy tắc được bật theo kích thước màn hình — nền tảng của Responsive Web Design.</p>
+<h3 id="h-6-c-php-media">Cú pháp @media<a class="anchor" href="#h-6-c-php-media" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>/* Mặc định cho mọi màn hình */
+.service-list {
+  display: block;
+}
+
+/* Chỉ áp dụng khi viewport rộng TỪ 768px trở lên */
+@media (min-width: 768px) {
+  .service-list {
+    display: flex;
+    gap: 1.5rem;
+  }
+}
+
+/* Chỉ áp dụng khi viewport hẹp DƯỚI 992px */
+@media (max-width: 991.98px) {
+  .hero-image {
+    display: none; /* giấu ảnh lớn trên tablet dọc */
+  }
+}</code></pre></figure>
+<p>Hai hướng viết ngược nghĩa nhau:</p>
+<ul><li><code>@media (min-width: 768px)</code> — "từ 768px trở lên": luật có hiệu lực khi viewport đạt mức tối thiểu.</li><li><code>@media (max-width: 991.98px)</code> — "dưới 992px": luật hết hiệu lực khi viewport vượt quá mốc. Con số lẻ <code>.98</code> giúp mốc này không đè lên mốc <code>992px</code> kế bên.</li></ul>
+<p>Ngoài ra có thể kết hợp nhiều điều kiện, ví dụ <code>@media (min-width: 768px) and (orientation: landscape)</code> — ít khi cần nhưng biết để dùng khi gặp.</p>
+<h3 id="h-11-bn-breakpoints-ph-bin">Bốn breakpoints phổ biến<a class="anchor" href="#h-11-bn-breakpoints-ph-bin" aria-label="Liên kết mục">#</a></h3>
+<p>Bảng dưới chính là bộ breakpoints mặc định của Bootstrap 5 — cũng là bộ giá trị được dùng rộng rãi nhất vì phần lớn thiết bị hiện hành nằm gọn trong bốn nhóm sau:</p>
+<div class="table-card"><table><thead><tr><th>Breakpoint</th><th>Ký hiệu</th><th>Viewport</th><th>Thường tương ứng</th></tr></thead><tbody><tr><td>Small</td><td><code>sm</code></td><td>≥ 576px</td><td>điện thoại nằm ngang, tablet dọc</td></tr><tr><td>Medium</td><td><code>md</code></td><td>≥ 768px</td><td>tablet</td></tr><tr><td>Large</td><td><code>lg</code></td><td>≥ 992px</td><td>laptop, desktop nhỏ</td></tr><tr><td>Extra large</td><td><code>xl</code></td><td>≥ 1200px</td><td>desktop lớn</td></tr></tbody></table></div>
+<p>Đừng áp dụng máy móc: breakpoint đúng là nơi <strong>nội dung bắt đầu vỡ</strong>. Chạy trang, kéo dần cửa sổ, chỗ nào cột chữ chen nhau hay ảnh tràn thì đặt media query đúng chỗ đó — con số trong bảng chỉ là điểm khởi đầu hợp lý.</p>
+<h3 id="h-15-v-tr-media-query-trong-file-css">Vị trí media query trong file CSS<a class="anchor" href="#h-15-v-tr-media-query-trong-file-css" aria-label="Liên kết mục">#</a></h3>
+<p>CSS là thác đổ (cascade): cùng độ ưu tiên, luật viết sau thắng. Vì vậy media query thường đặt <strong>cuối file hoặc cuối từng nhóm component</strong>, và nên viết selector có độ đặc hiệu (specificity) bằng bản gốc thay vì nhồi thêm class chỉ để "mạnh hơn".</p>
+<h3 id="h-17-prompt-mu-nh-ai-sinh-media-query-t-m-t">Prompt mẫu: nhờ AI sinh media query từ mô tả<a class="anchor" href="#h-17-prompt-mu-nh-ai-sinh-media-query-t-m-t" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Tôi đang dựng Hero trang chủ Highland Hospital (website bệnh viện đặt lịch
+khám). Trên mobile: nền gradient phủ kín, tiêu đề 1.8rem căn trái, nút
+"Đặt lịch khám" màu xanh dương chiếm toàn chiều rộng. Từ 768px: nội dung
+vào khung trung tâm tối đa 720px, nút tự co theo nội dung. Từ 992px: bố
+trí 2 cột — chữ trái, ảnh phải — tiêu đề 3rem.
+Viết CSS cho các class .hero, .hero-title, .hero-cta theo đúng mô tả,
+dùng media query min-width. Không thêm hiệu ứng chưa được yêu cầu.</code></pre></figure>
+<p>Mẹo để prompt phát huy tác dụng: nêu rõ <strong>tên class, kết quả hiển thị ở từng mốc</strong>, và <strong>cấm AI sáng tác thêm</strong>. Nhận kết quả xong đừng dán thẳng vào file — đọc từng dòng xem có đúng ý đồ của bạn không, đúng tinh thần bước 3 "Phân tích &amp; Thấu hiểu sâu".</p>
+<h3 id="h-20-kim-tra-bng-devtools-responsive-mode">Kiểm tra bằng DevTools Responsive Mode<a class="anchor" href="#h-20-kim-tra-bng-devtools-responsive-mode" aria-label="Liên kết mục">#</a></h3>
+<ol><li>Mở trang Hero, bấm <code>F12</code> rồi <code>Ctrl+Shift+M</code> (macOS: <code>Cmd+Shift+M</code>) để bật thanh thiết bị.</li><li>Chọn một thiết bị sẵn có như iPhone SE (375px), rồi kéo mép cửa sổ lần lượt qua 576 / 768 / 992 / 1200 — quan sát layout "nhảy" đúng lúc nào.</li><li>Trong Chrome mới, tab <strong>Media queries</strong> (cạnh Console) vẽ mỗi query thành một thanh màu; kéo thanh để thấy chính xác phạm vi viewport của từng luật.</li></ol>
+<p>Nếu trang chỉ nhảy ở 992px dù bạn khai mốc 768px, rất có thể luật bị đặt sai vị trí hoặc specificity thấp hơn luật gốc — quay lại kiểm tra hai mục vừa rồi.</p>
+<h3 id="h-23-thc-hnh">Thực hành<a class="anchor" href="#h-23-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Lấy Hero đã dựng ở Chương 4, thêm media query <code>min-width</code> cho các mốc 768px, 992px và 1200px.</li><li>Ở mốc 768px, ép nội dung hero vào cột trung tâm tối đa 720px bằng <code>margin: 0 auto</code>.</li><li>Gửi HTML của hero kèm yêu cầu "thêm media query sao cho không vỡ layout ở 360px" cho AI, rồi tự kiểm chứng bằng Responsive Mode.</li></ul>
+<h3 id="h-25-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-25-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Đã biết cách bật/tắt luật theo màn hình — bài sau sẽ đảo ngược thứ tự làm việc: viết CSS cho mobile trước rồi mới phóng to dần bằng <code>min-width</code>, tức Mobile-First Workflow.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">9 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-vn--ca-css-mt-kch-thc">Vấn đề của CSS "một kích thước"</a></li><li><a href="#h-6-c-php-media">Cú pháp @media</a></li><li><a href="#h-11-bn-breakpoints-ph-bin">Bốn breakpoints phổ biến</a></li><li><a href="#h-15-v-tr-media-query-trong-file-css">Vị trí media query trong file CSS</a></li><li><a href="#h-17-prompt-mu-nh-ai-sinh-media-query-t-m-t">Prompt mẫu: nhờ AI sinh media query từ mô tả</a></li><li><a href="#h-20-kim-tra-bng-devtools-responsive-mode">Kiểm tra bằng DevTools Responsive Mode</a></li><li><a href="#h-23-thc-hnh">Thực hành</a></li><li><a href="#h-25-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="05-css-layout-lab-lu-i-doctor-cards.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Lab: lưới Doctor Cards</strong></span></a><a href="06-responsive-and-animation-mobile-first-workflow.html" rel="next"><span><small>Bài sau</small><strong>Mobile-First Workflow</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

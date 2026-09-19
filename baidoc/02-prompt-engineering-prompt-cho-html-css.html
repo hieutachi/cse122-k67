@@ -1,0 +1,72 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Prompt cho HTML & CSS | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-1.html">Chương 1</a> &rsaquo; Prompt engineering cho frontend &rsaquo; Bài 2/5</p>
+<h1 class="lesson-title">Prompt cho HTML & CSS</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 2/5</span><span>Module: Prompt engineering cho frontend</span><span>~4 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="prompt-cho-html-amp-css">Prompt cho HTML &amp; CSS</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Yêu cầu được AI viết HTML semantic đúng cấu trúc mong muốn</li><li>Truyền khoảng cách và màu sắc bằng con số cụ thể: rem, mã hex, design token</li><li>Nhận diện và chặn các chỗ AI hay tự bịa: spacing, font, tên class</li></ul>
+<h3 id="h-3-ai-ba-nhiu-nht--khong-cch-v-mu">AI bịa nhiều nhất ở khoảng cách và màu<a class="anchor" href="#h-3-ai-ba-nhiu-nht--khong-cch-v-mu" aria-label="Liên kết mục">#</a></h3>
+<p>AI không nhìn thấy màn hình của bạn. Khi bạn nói "cho đẹp một chút", nó chọn padding <code>80px</code> hay <code>8px</code> đều như nhau. Với HTML/CSS, nguyên tắc số một là: <strong>chỗ nào bạn không nói con số, AI tự quyết</strong> — và bạn sẽ phải sửa lại hết. Hãy nói bằng con số.</p>
+<h3 id="h-5-design-token-ca-highland-hospital">Design token của Highland Hospital<a class="anchor" href="#h-5-design-token-ca-highland-hospital" aria-label="Liên kết mục">#</a></h3>
+<p>Để mọi prompt và mọi section khớp nhau, khoá học dùng bộ token thống nhất (chương 4 sẽ học khai báo bằng CSS Variables):</p>
+<div class="table-card"><table><thead><tr><th>Token</th><th>Giá trị</th><th>Dùng cho</th></tr></thead><tbody><tr><td><code>hh-teal</code></td><td><code>#0f766e</code></td><td>nút chính, điểm nhấn, link</td></tr><tr><td><code>hh-teal-dark</code></td><td><code>#134e4a</code></td><td>hover, footer</td></tr><tr><td><code>hh-bg-soft</code></td><td><code>#f0fdfa</code></td><td>nền các section so le</td></tr><tr><td><code>hh-slate</code></td><td><code>#0f172a</code></td><td>chữ tiêu đề</td></tr><tr><td><code>hh-gray</code></td><td><code>#475569</code></td><td>chữ thân</td></tr><tr><td><code>hh-border</code></td><td><code>#e2e8f0</code></td><td>viền, đường kẻ</td></tr><tr><td>Spacing cơ bản</td><td>bội số của <code>0.5rem</code></td><td>padding, gap, margin</td></tr></tbody></table></div>
+<p>Khi viết prompt, nhắc cả tên token lẫn giá trị hex. Muốn đổi thương hiệu về sau chỉ cần sửa ở một chỗ duy nhất.</p>
+<h3 id="h-9-cch-yu-cu-html-semantic">Cách yêu cầu HTML semantic<a class="anchor" href="#h-9-cch-yu-cu-html-semantic" aria-label="Liên kết mục">#</a></h3>
+<p>Đừng nói "viết một cái khối có ảnh". Nói rõ cấu trúc và ý nghĩa từng vùng:</p>
+<ul><li>Yêu cầu đúng thẻ: <code>section</code>, <code>article</code>, <code>figure</code>, <code>ul/li</code> cho nhóm lặp lại.</li><li>Yêu cầu tên class có nghĩa, nhất quán (khoá học dùng tiền tố <code>hh-</code>: <code>hh-doctor-card</code>, <code>hh-btn-primary</code>).</li><li>Yêu cầu <em>"không thêm phần tử nào ngoài danh sách tôi liệt kê"</em> nếu muốn kiểm soát tuyệt đối — AI rất hay "hào phóng" chèn thêm content.</li></ul>
+<h3 id="h-12-prompt-mu-dng-hero-section">Prompt mẫu: dựng Hero section<a class="anchor" href="#h-12-prompt-mu-dng-hero-section" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Bối cảnh: Landing Page Highland Hospital (web bệnh viện), HTML5 + CSS
+thuần, chưa có framework. Đang dựng phần đầu trang chủ.
+Nhiệm vụ: Dựng hero section gồm: (1) tiêu đề h1 "Chăm sóc sức khoẻ chủ
+động cùng Highland", (2) đoạn mô tả 1–2 câu, (3) nút chính "Đặt lịch
+khám" trỏ booking.html và nút phụ "Xem chuyên khoa", (4) ảnh minh hoạ.
+Ràng buộc: HTML semantic (section &gt; div &gt; h1/p/a); class tiền tố hh-;
+không dùng Bootstrap; không thêm nội dung ngoài mô tả trên.
+Giao diện: nền trắng; tiêu đề màu #0f172a (hh-slate); chữ thân #475569;
+nút chính nền #0f766e (hh-teal), chữ trắng, bo góc 8px, padding
+0.75rem 1.5rem; nút phụ chỉ viền 1px #e2e8f0; khoảng cách giữa các khối
+trong hero là bội số của 1rem; hero padding 4rem 0.
+Định dạng: trả HTML và CSS thành hai khối riêng, không giải thích dài.</code></pre></figure>
+<p>Kết quả nhận về có dạng (lược bớt) — hãy đọc kỹ từng dòng trước khi dùng:</p>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;section class="hh-hero"&gt;
+  &lt;div class="hh-hero__content"&gt;
+    &lt;h1&gt;Chăm sóc sức khoẻ chủ động cùng Highland&lt;/h1&gt;
+    &lt;p&gt;Đội ngũ bác sĩ giàu kinh nghiệm, đặt lịch khám trong 2 phút.&lt;/p&gt;
+    &lt;a class="hh-btn hh-btn--primary" href="booking.html"&gt;Đặt lịch khám&lt;/a&gt;
+  &lt;/div&gt;
+  &lt;figure class="hh-hero__media"&gt;
+    &lt;img src="images/hero-doctor.jpg" alt="Bác sĩ Highland đang tư vấn cho bệnh nhân" width="640" height="420"&gt;
+  &lt;/figure&gt;
+&lt;/section&gt;</code></pre></figure>
+<p>Hai nút điều hướng sang trang khác nên dùng <code>&lt;a&gt;</code> mang class nút, không phải <code>&lt;button&gt;</code> — <code>&lt;button&gt;</code> chỉ dành cho hành động trong trang (mở modal, submit form).</p>
+<h3 id="h-17-chn-ai-ba-khong-cch-ngay-trong-prompt">Chặn AI bịa khoảng cách ngay trong prompt<a class="anchor" href="#h-17-chn-ai-ba-khong-cch-ngay-trong-prompt" aria-label="Liên kết mục">#</a></h3>
+<p>Thêm một trong các câu ràng buộc sau khi cần:</p>
+<ul><li>"Chỉ dùng rem, mọi khoảng cách là bội số của 0.5rem."</li><li>"Không thêm margin/padding vào phần tôi không yêu cầu."</li><li>"Không tự thêm font-family lạ; dùng hệ font mặc định của hệ thống."</li></ul>
+<h3 id="h-20-thc-hnh">Thực hành<a class="anchor" href="#h-20-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<p>Viết lại prompt hero ở trên theo lời của bạn nhưng cho <strong>Services section</strong>: 6 dịch vụ (Khám tổng quát, Tim mạch, Nhi khoa, Xét nghiệm, Chẩn đoán hình ảnh, Phục hồi chức năng) xếp lưới 3 cột, mỗi ô có icon, tên và mô tả một câu. Chạy prompt rồi mở trình duyệt: khoảng cách cột có đều như bạn yêu cầu không? Có dịch vụ nào bị AI thêm vào không?</p>
+<h3 id="h-22-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-22-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Đã làm chủ prompt cho phần nhìn; phần hành vi sẽ được xử lý trong bài <em>Prompt cho JavaScript</em> — cách mô tả dữ liệu vào/ra để AI viết đúng hàm.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">8 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-ai-ba-nhiu-nht--khong-cch-v-mu">AI bịa nhiều nhất ở khoảng cách và màu</a></li><li><a href="#h-5-design-token-ca-highland-hospital">Design token của Highland Hospital</a></li><li><a href="#h-9-cch-yu-cu-html-semantic">Cách yêu cầu HTML semantic</a></li><li><a href="#h-12-prompt-mu-dng-hero-section">Prompt mẫu: dựng Hero section</a></li><li><a href="#h-17-chn-ai-ba-khong-cch-ngay-trong-prompt">Chặn AI bịa khoảng cách ngay trong prompt</a></li><li><a href="#h-20-thc-hnh">Thực hành</a></li><li><a href="#h-22-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="02-prompt-engineering-giai-ph-u-m-t-prompt-t-t.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Giải phẫu một prompt tốt</strong></span></a><a href="02-prompt-engineering-prompt-cho-javascript.html" rel="next"><span><small>Bài sau</small><strong>Prompt cho JavaScript</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

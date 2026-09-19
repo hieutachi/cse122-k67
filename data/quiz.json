@@ -1,0 +1,49 @@
+{
+ "chapters": {
+  "1": [
+   {"q": "Trong mô hình client – server, trình duyệt (browser) đóng vai trò gì?", "opts": ["Client gửi HTTP request và render phản hồi", "Server lưu trữ dữ liệu", "Cổng kết nối mạng", "Hệ điều hành"], "a": 0},
+   {"q": "HTTP request – response nghĩa là gì?", "opts": ["Trình duyệt gửi yêu cầu, server trả về phản hồi (HTML/CSS/JS)", "Server chủ động đẩy dữ liệu mỗi giây", "Giao thức nén ảnh", "Cú pháp CSS"], "a": 0},
+   {"q": "Công cụ nào giúp xem từng request/response thực tế trong Chrome?", "opts": ["DevTools – tab Network", "Tab Elements", "Paint", "Task Manager"], "a": 0}
+  ],
+  "2": [
+   {"q": "Thẻ nào dùng để chèn ảnh vào trang web?", "opts": ["<img>", "<image>", "<pic>", "<photo>"], "a": 0},
+   {"q": "Thẻ <a> (anchor) dùng để làm gì?", "opts": ["Tạo liên kết chuyển hướng", "Chèn video", "Tạo bảng", "Định dạng chữ đậm"], "a": 0},
+   {"q": "Đường dẫn 'https://site.com/logo.png' là loại đường dẫn nào?", "opts": ["Tuyệt đối (absolute)", "Tương đối (relative)", "Nội bộ CSS", "Thuộc tính alt"], "a": 0}
+  ],
+  "3": [
+   {"q": "Phần tử nào dùng để thu thập dữ liệu nhập từ người dùng?", "opts": ["<form> cùng <input>, <select>, <textarea>", "<table>", "<div>", "<header>"], "a": 0},
+   {"q": "Thuộc tính method của form thường nhận giá trị nào?", "opts": ["GET hoặc POST", "UP hoặc DOWN", "SEND", "FAST"], "a": 0},
+   {"q": "iframe dùng để làm gì?", "opts": ["Nhúng trang khác vào trang hiện tại", "Tạo danh sách", "Đổi màu nền", "Chạy server-side code"], "a": 0}
+  ],
+  "4": [
+   {"q": "Có bao nhiêu cách nhúng CSS vào trang HTML?", "opts": ["3: inline, internal (thẻ style), external (file .css)", "1: chỉ external", "2: inline và external", "5"], "a": 0},
+   {"q": "Selector nào có độ ưu tiên (specificity) cao nhất trong 3 loại dưới đây?", "opts": ["#id", ".class", "tag (p, h1…)", "Như nhau"], "a": 0},
+   {"q": "Thứ tự đúng của Box Model từ trong ra ngoài là?", "opts": ["content → padding → border → margin", "margin → border → padding → content", "border → content → margin → padding", "padding → margin → content → border"], "a": 0}
+  ],
+  "5": [
+   {"q": "Flexbox phù hợp nhất cho loại layout nào?", "opts": ["Một chiều (hàng hoặc cột)", "Lưới hai chiều phức tạp", "Chỉ in ấn", "Chỉ animation"], "a": 0},
+   {"q": "CSS Grid khác Flexbox ở điểm nào?", "opts": ["Grid bố cục hai chiều (hàng + cột) cùng lúc", "Grid chỉ dùng cho chữ", "Grid không responsive", "Grid thay thế JavaScript"], "a": 0},
+   {"q": "position: absolute định vị phần tử dựa vào điều gì?", "opts": ["Tổ tiên gần nhất có position khác static", "Luôn là thẻ body", "Kích thước font", "Màu nền"], "a": 0}
+  ],
+  "6": [
+   {"q": "Media query nào áp dụng cho màn hình nhỏ hơn 720px?", "opts": ["@media (max-width: 720px)", "@media (min-width: 720px)", "@media screen-720", "@width(720)"], "a": 0},
+   {"q": "Tiếp cận mobile-first nghĩa là gì?", "opts": ["Viết CSS cho mobile trước, sau đó mở rộng cho màn lớn", "Chỉ làm app mobile", "Ẩn hết nội dung trên desktop", "Dùng ảnh nhỏ hơn"], "a": 0},
+   {"q": "Transition trong CSS dùng để làm gì?", "opts": ["Tạo hiệu ứng chuyển đổi mượt giữa các giá trị thuộc tính", "Chuyển trang", "Tải dữ liệu", "Nén file"], "a": 0}
+  ],
+  "7": [
+   {"q": "Trong Bootstrap, lớp nào tạo nút chính (primary)?", "opts": ["btn btn-primary", "button main", "btn main-color", "primary-btn"], "a": 0},
+   {"q": "Hệ thống lưới Bootstrap chia dòng thành bao nhiêu cột?", "opts": ["12", "10", "16", "8"], "a": 0},
+   {"q": "Component nào phù hợp để hiện hộp thoại xác nhận?", "opts": ["Modal", "Card", "Badge", "Spinner"], "a": 0}
+  ],
+  "8": [
+   {"q": "Khác biệt chính giữa let/const và var?", "opts": ["let/const có phạm vi khối (block scope)", "var nhanh hơn", "let chỉ dùng trong class", "const không lưu số"], "a": 0},
+   {"q": "document.querySelector('#demoBtn') chọn phần tử nào?", "opts": ["Phần tử có id='demoBtn'", "Tất cả class demoBtn", "Thẻ đầu tiên trên trang", "Không chọn gì"], "a": 0},
+   {"q": "addEventListener('click', fn) làm gì?", "opts": ["Gắn hàm fn chạy khi phần tử được click", "Gọi fn ngay lập tức", "Xóa sự kiện click", "Đổi màu nút"], "a": 0}
+  ],
+  "9": [
+   {"q": "async/await dùng để làm gì?", "opts": ["Viết code bất đồng bộ dễ đọc hơn callback/promise chain", "Tăng tốc CPU", "Nén dữ liệu", "Vẽ biểu đồ"], "a": 0},
+   {"q": "fetch() trả về kiểu dữ liệu nào?", "opts": ["Promise", "String", "DOM node", "CSS rule"], "a": 0},
+   {"q": "Trước khi deploy, nên kiểm tra gì với API thật?", "opts": ["Xử lý trạng thái loading và error", "Chỉ cần build được", "Ẩn console", "Xóa CSS"], "a": 0}
+  ]
+ }
+}

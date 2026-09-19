@@ -4,17 +4,26 @@
 <meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
-<link rel="stylesheet" href="../assets/css/style.css?v=20260919b">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
 </head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
 <header class="topbar"><div class="wrap">
 <div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
-<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
-</div></header><main class="wrap">
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main">
 <h1>Chương 2. HTML cơ bản: cấu trúc, văn bản, liên kết, ảnh</h1><p class="meta">Tài liệu HTML5, heading, paragraph, thẻ a, img, đường dẫn tuyệt đối/tương đối.</p>
 <nav><a href="index.html">&#8592; Mục lục Ebook</a></nav>
 
+<div class="note">Bài giảng gốc liên quan: <a class="tag" href="../slides/bai.html#bai1">Bài 1</a> <a class="tag" href="../slides/bai.html#bai2">Bài 2</a> <a class="tag" href="../baidoc/index.html#ch2">Bài đọc upstream &#8594;</a></div>
+<div class="quiz-panel" id="quiz" data-chapter="2"><h3>Tự kiểm tra nhanh – Chương 2</h3><div id="quiz-body"><p class="meta">Đang tải câu hỏi…</p></div></div>
 <div class="sec-head"><h2>Slide trực quan của chương</h2><span class="meta">20 ảnh &#8226; click để xem lớn</span></div>
 <div class="slide-grid"><figure><img loading="lazy" src="../assets/img/trucquan/2.1.jpg" alt="Slide 2.1.jpg"><figcaption>2.1</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/2.10.jpg" alt="Slide 2.10.jpg"><figcaption>2.10</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/2.11.jpg" alt="Slide 2.11.jpg"><figcaption>2.11</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/2.12.jpg" alt="Slide 2.12.jpg"><figcaption>2.12</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/2.13.jpg" alt="Slide 2.13.jpg"><figcaption>2.13</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/2.14.jpg" alt="Slide 2.14.jpg"><figcaption>2.14</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/2.15.jpg" alt="Slide 2.15.jpg"><figcaption>2.15</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/2.16.jpg" alt="Slide 2.16.jpg"><figcaption>2.16</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/2.17.jpg" alt="Slide 2.17.jpg"><figcaption>2.17</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/2.18.jpg" alt="Slide 2.18.jpg"><figcaption>2.18</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/2.19.jpg" alt="Slide 2.19.jpg"><figcaption>2.19</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/2.2.jpg" alt="Slide 2.2.jpg"><figcaption>2.2</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/2.20.jpg" alt="Slide 2.20.jpg"><figcaption>2.20</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/2.3.jpg" alt="Slide 2.3.jpg"><figcaption>2.3</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/2.4.jpg" alt="Slide 2.4.jpg"><figcaption>2.4</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/2.5.jpg" alt="Slide 2.5.jpg"><figcaption>2.5</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/2.6.jpg" alt="Slide 2.6.jpg"><figcaption>2.6</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/2.7.jpg" alt="Slide 2.7.jpg"><figcaption>2.7</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/2.8.jpg" alt="Slide 2.8.jpg"><figcaption>2.8</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/2.9.jpg" alt="Slide 2.9.jpg"><figcaption>2.9</figcaption></figure></div>
 <div class="ebook-nav"><a href="chuong-1.html">&#8592; Chương trước</a><a href="chuong-3.html">Chương sau &#8594;</a></div>
-</main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span></div><script src="../assets/js/app.js?v=20260919b"></script></footer></body></html>
+</main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

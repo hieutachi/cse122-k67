@@ -1,0 +1,100 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Buttons, Badges & Alerts | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-6.html">Chương 6</a> &rsaquo; Bootstrap grid & utilities &rsaquo; Bài 4/5</p>
+<h1 class="lesson-title">Buttons, Badges & Alerts</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 4/5</span><span>Module: Bootstrap grid & utilities</span><span>~4 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="buttons-badges-amp-alerts">Buttons, Badges &amp; Alerts</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Dựng nút đủ biến thể: <code>btn btn-primary</code>, <code>btn-outline-*</code>, <code>btn-lg</code>/<code>btn-sm</code>, trạng thái <code>disabled</code></li><li>Gắn <code>badge</code> để đánh dấu trạng thái "Mới", "Sắp hết chỗ", "Đã xác nhận"</li><li>Tạo <code>alert</code> thông báo success/danger/warning có thể đóng được</li><li>Áp dụng cả ba vào luồng "Đặt lịch khám" của Highland Hospital</li></ul>
+<h3 id="h-3-buttons-mt-class-nn-v-s-bin-th">Buttons: một class nền, vô số biến thể<a class="anchor" href="#h-3-buttons-mt-class-nn-v-s-bin-th" aria-label="Liên kết mục">#</a></h3>
+<p>Mọi nút Bootstrap bắt đầu bằng <code>btn</code>, rồi thêm màu và kích thước (có cả <code>btn-lg</code>, <code>btn-sm</code>):</p>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;button class="btn btn-primary"&gt;Đặt lịch khám&lt;/button&gt;
+&lt;button class="btn btn-outline-primary"&gt;Xem bác sĩ&lt;/button&gt;
+&lt;button class="btn btn-success"&gt;Xác nhận lịch hẹn&lt;/button&gt;
+&lt;button class="btn btn-danger"&gt;Hủy lịch hẹn&lt;/button&gt;
+&lt;button class="btn btn-primary" disabled&gt;Đang xử lý…&lt;/button&gt;
+&lt;a class="btn btn-outline-success" href="tel:19001234"&gt;Gọi hotline&lt;/a&gt;</code></pre></figure>
+<p>Quy tắc phối màu theo ý nghĩa — rất quan trọng với sản phẩm y tế: <code>primary</code> cho hành động chính (một trang chỉ nên có <strong>một</strong> nút chính); <code>outline-*</code> cho hành động phụ; <code>success</code>/<code>danger</code>/<code>warning</code> cho kết quả xác nhận/hủy/đang chờ; <code>disabled</code> kèm <code>aria-disabled="true"</code> nếu là thẻ <code>&lt;a&gt;</code>. Lưu ý <code>&lt;a class="btn ..."&gt;</code> cũng hiện như nút — dùng khi hành động là điều hướng, còn <code>&lt;button&gt;</code> cho gửi form hay chạy JavaScript.</p>
+<h3 id="h-7-badges-nhn-trng-thi-nh">Badges: nhãn trạng thái nhỏ<a class="anchor" href="#h-7-badges-nhn-trng-thi-nh" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;h2&gt;
+  Dịch vụ nổi bật
+  &lt;span class="badge text-bg-primary"&gt;6 dịch vụ&lt;/span&gt;
+&lt;/h2&gt;
+&lt;span class="badge text-bg-success"&gt;Còn chỗ&lt;/span&gt;
+&lt;span class="badge text-bg-warning"&gt;Sắp kín&lt;/span&gt;
+&lt;span class="badge text-bg-danger"&gt;Hết chỗ&lt;/span&gt;</code></pre></figure>
+<p><code>text-bg-*</code> tự lo tương phản chữ/nền; <code>rounded-pill</code> biến badge thành viên thuốc tròn; ghép <code>position-relative</code>/<code>absolute</code> để badge bám góc nút như thông báo chưa đọc:</p>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;button class="btn btn-primary position-relative"&gt;
+  Tin nhắn
+  &lt;span class="badge text-bg-danger rounded-pill position-absolute top-0 start-100 translate-middle"&gt;3&lt;/span&gt;
+&lt;/button&gt;</code></pre></figure>
+<h3 id="h-11-alerts-thng-bo--ng-c">Alerts: thông báo + đóng được<a class="anchor" href="#h-11-alerts-thng-bo--ng-c" aria-label="Liên kết mục">#</a></h3>
+<p>Alert là hộp thông báo; muốn có nút đóng thì thêm <code>alert-dismissible</code> (cần JS bundle đã cài ở bài đầu chương):</p>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;div class="alert alert-success" role="alert"&gt;
+  &lt;strong&gt;Thành công!&lt;/strong&gt; Lịch khám của bạn đã được ghi nhận.
+&lt;/div&gt;
+
+&lt;div class="alert alert-danger" role="alert"&gt;
+  &lt;strong&gt;Lỗi:&lt;/strong&gt; số điện thoại chưa đúng định dạng.
+&lt;/div&gt;
+
+&lt;div class="alert alert-warning alert-dismissible fade show" role="alert"&gt;
+  &lt;strong&gt;Lưu ý:&lt;/strong&gt; đến trước giờ hẹn 15 phút để làm thủ tục.
+  &lt;button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Đóng"&gt;&lt;/button&gt;
+&lt;/div&gt;</code></pre></figure>
+<p><code>role="alert"</code> cho trình đọc màn hình biết đây là thông báo quan trọng. Nút <code>.btn-close</code> có <code>data-bs-dismiss="alert"</code> — bấm X là alert biến mất nhờ <code>bootstrap.bundle.min.js</code>; thiếu script thì nút X không hoạt động.</p>
+<h3 id="h-15-v-d-tng-hp-khu-t-lch">Ví dụ tổng hợp: khu đặt lịch<a class="anchor" href="#h-15-v-d-tng-hp-khu-t-lch" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;section class="container py-5"&gt;
+  &lt;div class="row justify-content-center"&gt;
+    &lt;div class="col-md-8 col-lg-6"&gt;
+      &lt;h2 class="mb-4"&gt;Đặt lịch khám&lt;/h2&gt;
+      &lt;!-- Alert giả lập form lỗi (thường do JS sinh động) --&gt;
+      &lt;div class="alert alert-danger alert-dismissible fade show" role="alert"&gt;
+        Vui lòng điền đầy đủ họ tên và số điện thoại.
+        &lt;button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Đóng"&gt;&lt;/button&gt;
+      &lt;/div&gt;
+      &lt;p class="mb-4"&gt;
+        Gói khám tổng quát
+        &lt;span class="badge text-bg-success"&gt;Còn chỗ hôm nay&lt;/span&gt;
+      &lt;/p&gt;
+      &lt;button class="btn btn-primary btn-lg w-100 mb-2"&gt;Đặt lịch ngay&lt;/button&gt;
+      &lt;button class="btn btn-outline-primary w-100"&gt;So sánh các gói khám&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre></figure>
+<p>Chú ý <code>w-100</code>: nút chính chiếm trọn cột trên màn hình hẹp — cùng ý tưởng "CTA to trên mobile" của Hero Chương 6; nút phụ outline đặt dưới để mắt chỉ thấy một hành động chính.</p>
+<h3 id="h-18-prompt-mu-ai-dng-khu-t-lch">Prompt mẫu: AI dựng khu đặt lịch<a class="anchor" href="#h-18-prompt-mu-ai-dng-khu-t-lch" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Dùng Bootstrap 5 dựng khu "Đặt lịch khám" cho Highland Hospital trong
+.container: bên trái (col-lg-7) là form họ tên, số điện thoại, chọn
+chuyên khoa, nút submit btn-primary btn-lg; bên phải (col-lg-5) là card
+tóm tắt gói khám gồm badge "Còn chỗ" màu success và một alert-warning
+có nút đóng nhắc mang CCCD khi đến khám. Chỉ dùng class Bootstrap, thêm
+data-bs-dismiss cho alert. Giải thích ngắn vì sao chọn từng biến thể
+button/badge/alert.</code></pre></figure>
+<h3 id="h-20-thc-hnh">Thực hành<a class="anchor" href="#h-20-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Dựng lại khu đặt lịch ở ví dụ tổng hợp; bấm thử nút X trên alert xem có đóng được không.</li><li>Tạo ba badge trạng thái lịch hẹn ("Còn chỗ"/"Sắp kín"/"Hết chỗ") và đổi màu đúng ngữ nghĩa.</li><li>Gửi prompt cho AI, đối chiếu và sửa phần AI chọn sai biến thể.</li></ul>
+<h3 id="h-22-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-22-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Đã rành nút, badge, alert — bài Lab tới ráp nối toàn bộ kỹ năng Bootstrap (lưới + utilities) để dựng section "Dịch vụ khám" của Highland Hospital.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">8 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-buttons-mt-class-nn-v-s-bin-th">Buttons: một class nền, vô số biến thể</a></li><li><a href="#h-7-badges-nhn-trng-thi-nh">Badges: nhãn trạng thái nhỏ</a></li><li><a href="#h-11-alerts-thng-bo--ng-c">Alerts: thông báo + đóng được</a></li><li><a href="#h-15-v-d-tng-hp-khu-t-lch">Ví dụ tổng hợp: khu đặt lịch</a></li><li><a href="#h-18-prompt-mu-ai-dng-khu-t-lch">Prompt mẫu: AI dựng khu đặt lịch</a></li><li><a href="#h-20-thc-hnh">Thực hành</a></li><li><a href="#h-22-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="07-bootstrap-grid-and-utilities-spacing-colors-typography-utilities.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Spacing, Colors & Typography utilities</strong></span></a><a href="07-bootstrap-grid-and-utilities-lab-services-section.html" rel="next"><span><small>Bài sau</small><strong>Lab: Services section</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

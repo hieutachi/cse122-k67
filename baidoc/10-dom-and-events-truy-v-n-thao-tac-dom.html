@@ -1,0 +1,82 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Truy vấn & thao tác DOM | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-8.html">Chương 8</a> &rsaquo; DOM & events &rsaquo; Bài 1/5</p>
+<h1 class="lesson-title">Truy vấn & thao tác DOM</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 1/5</span><span>Module: DOM & events</span><span>~4 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="truy-vn-amp-thao-tc-dom">Truy vấn &amp; thao tác DOM</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Biết cây DOM là gì và đọc cấu trúc trang qua DevTools → tab Elements</li><li>Truy vấn phần tử với <code>document.querySelector</code> / <code>querySelectorAll</code></li><li>Phân biệt <code>textContent</code> và <code>innerHTML</code> — và vì sao <code>innerHTML</code> dễ dính XSS</li><li>Tạo phần tử mới bằng <code>createElement</code> + <code>append</code>, đổi class bằng <code>classList</code></li></ul>
+<h3 id="h-3-cy-dom-html-sau-khi-trnh-duyt-dch">Cây DOM: HTML sau khi trình duyệt "dịch"<a class="anchor" href="#h-3-cy-dom-html-sau-khi-trnh-duyt-dch" aria-label="Liên kết mục">#</a></h3>
+<p>Trình duyệt không làm việc với file <code>.html</code> thô mà dựng thành một cây đối tượng gọi là <strong>DOM (Document Object Model)</strong>. Mỗi thẻ, mỗi đoạn text là một <em>node</em> trong cây. Khi JavaScript gõ <code>document.querySelector(...)</code>, bạn đang đi tìm một node trong cái cây đó.</p>
+<p>Hãy mở trang Highland Hospital, bấm <strong>F12 → tab Elements</strong>. Bạn thấy chính xác cây DOM đang chạy, kể cả những phần tử do JavaScript thêm vào sau khi tải. Muốn "nhìn thấy" cái code mà JS đang thao tác, DevTools Elements là công cụ số một.</p>
+<h3 id="h-6-truy-vn-phn-t">Truy vấn phần tử<a class="anchor" href="#h-6-truy-vn-phn-t" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>// Trả về PHẦN TỬ ĐẦU TIÊN khớp — hoặc null nếu không có
+const heroTitle = document.querySelector('.hero h1');
+const bookBtn = document.querySelector('#btn-book-appointment');
+
+// Trả về NodeList (giống mảng) — tất cả phần tử khớp
+const doctorCards = document.querySelectorAll('.doctor-card');
+const allInputs = document.querySelectorAll('.booking-form input');</code></pre></figure>
+<p>Tham số là <strong>CSS selector</strong> — đúng cú pháp bạn đã học ở chương CSS: <code>#id</code>, <code>.class</code>, <code>tag</code>, <code>.card .btn</code>, v.v. <code>querySelectorAll</code> trả về <code>NodeList</code>; muốn dùng <code>map</code>/<code>filter</code> thì chuyển qua mảng: <code>[...doctorCards].map(card =&gt; card.dataset.id)</code>.</p>
+<h3 id="h-9-textcontent-vs-innerhtml--khc-nhau-mt-tri-mt-vc">textContent vs innerHTML — khác nhau một trời một vực<a class="anchor" href="#h-9-textcontent-vs-innerhtml--khc-nhau-mt-tri-mt-vc" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>const card = document.querySelector('.doctor-card');
+
+// textContent: thay NỘI DUNG CHỮ — an toàn, không phân tích HTML
+card.querySelector('.doctor-name').textContent = 'BS. Nguyễn Thu Hà';
+
+// innerHTML: phân tích CHUỖI NHƯ HTML — tiện nhưng rất nguy hiểm
+card.querySelector('.doctor-bio').innerHTML = '&lt;strong&gt;Tim mạch&lt;/strong&gt; can thiệp';</code></pre></figure>
+<p>Quy tắc vàng của frontend:</p>
+<blockquote><p><strong>Không bao giờ nối dữ liệu người dùng vào <code>innerHTML</code>.</strong> Nếu một bệnh nhân nhập tên là <code>&lt;img src=x onerror="alert(1)"&gt;</code> và bạn chèn thẳng vào <code>innerHTML</code>, trình duyệt sẽ <em>chạy</em> đoạn mã đó — đó là tấn công <strong>XSS</strong>. Dữ liệu từ form, từ API, từ <code>localStorage</code> đều coi là "người dùng", phải gán bằng <code>textContent</code> hoặc tạo phần tử thật.</p></blockquote>
+<p>Lý do đơn giản: <code>textContent</code> chỉ đặt chữ, trình duyệt không bao giờ hiểu chuỗi đó thành thẻ hay sự kiện.</p>
+<h3 id="h-14-classlist--bttt-class-nh-bt-cng-tc">classList — bật/tắt class như bật công tắc<a class="anchor" href="#h-14-classlist--bttt-class-nh-bt-cng-tc" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>const section = document.querySelector('#doctors-section');
+section.classList.add('bg-light');        // thêm
+section.classList.remove('bg-light');     // gỡ
+section.classList.toggle('d-none');       // có thì gỡ, không có thì thêm
+console.log(section.classList.contains('bg-light')); // true/false</code></pre></figure>
+<p><code>toggle</code> cực kỳ hợp với trạng thái: hiện/ẩn filter, active menu, card được chọn.</p>
+<h3 id="h-17-createelement--append--dng-phn-t-bng-code">createElement + append — dựng phần tử bằng code<a class="anchor" href="#h-17-createelement--append--dng-phn-t-bng-code" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>// Tạo badge "Mới" gắn lên card bác sĩ
+const badge = document.createElement('span');
+badge.className = 'badge text-bg-success position-absolute top-0 start-0 m-2';
+badge.textContent = 'Nhận bệnh mới';
+
+const cardBody = document.querySelector('.doctor-card .card-body');
+cardBody.append(badge);   // append: thêm node (có thể nhiều node, kể cả chuỗi text)</code></pre></figure>
+<p>Đây là cách <strong>an toàn</strong> để dựng nội dung động — không qua trung gian chuỗi HTML, nên không có đường nào cho XSS chui vào.</p>
+<h3 id="h-20-prompt-ai-mu">Prompt AI mẫu<a class="anchor" href="#h-20-prompt-ai-mu" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Dự án Highland Hospital (Bootstrap 5 + JS thuần ES6+).
+Tôi có section #doctors-section chứa nhiều thẻ .doctor-card, mỗi card có
+.badge-status trống. Viết JS: dùng querySelectorAll lấy tất cả card, đọc
+data-status trên card ("available" | "busy"), rồi với card available thì
+dùng classList.add + textContent để gắn badge xanh "Có thể đặt lịch",
+card busy gắn badge xám "Đang khám". KHÔNG dùng innerHTML. Giải thích từng dòng ngắn gọn.</code></pre></figure>
+<p>Chạy prompt, đọc kỹ code AI sinh ra, rồi tự sửa nếu thấy nó lách qua <code>innerHTML</code>.</p>
+<h3 id="h-23-thc-hnh">Thực hành<a class="anchor" href="#h-23-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<ol><li>Mở Landing Page của bạn, F12 → Elements, tìm thẻ chứa danh sách bác sĩ và đếm xem có bao nhiêu <code>.card</code> con.</li><li>Trong Console, tự gõ: lấy <code>h1</code> đầu trang, đổi <code>textContent</code>, rồi <code>classList.add</code> một class làm nó đổi màu.</li><li>Viết hàm <code>addAvailabilityBadge()</code> dùng đúng mẫu prompt ở trên và gắn vào một card giả lập có <code>data-status="busy"</code> để kiểm chứng.</li></ol>
+<h3 id="h-25-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-25-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Phần tử đã truy vấn được rồi — giờ đến phần khiến trang "sống": học cách bắt sự kiện click, submit, scroll và kỹ thuật Event Delegation trong bài kế tiếp.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">9 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-cy-dom-html-sau-khi-trnh-duyt-dch">Cây DOM: HTML sau khi trình duyệt "dịch"</a></li><li><a href="#h-6-truy-vn-phn-t">Truy vấn phần tử</a></li><li><a href="#h-9-textcontent-vs-innerhtml--khc-nhau-mt-tri-mt-vc">textContent vs innerHTML — khác nhau một trời một vực</a></li><li><a href="#h-14-classlist--bttt-class-nh-bt-cng-tc">classList — bật/tắt class như bật công tắc</a></li><li><a href="#h-17-createelement--append--dng-phn-t-bng-code">createElement + append — dựng phần tử bằng code</a></li><li><a href="#h-20-prompt-ai-mu">Prompt AI mẫu</a></li><li><a href="#h-23-thc-hnh">Thực hành</a></li><li><a href="#h-25-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="09-javascript-basics-lab-render-danh-sach-bac-si.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Lab: render danh sách bác sĩ</strong></span></a><a href="10-dom-and-events-event-handling-delegation.html" rel="next"><span><small>Bài sau</small><strong>Event Handling & Delegation</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Đơn vị đo trong CSS | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-4.html">Chương 4</a> &rsaquo; CSS3 foundations &rsaquo; Bài 4/5</p>
+<h1 class="lesson-title">Đơn vị đo trong CSS</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 4/5</span><span>Module: CSS3 foundations</span><span>~4 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="n-v-o-trong-css">Đơn vị đo trong CSS</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Phân biệt đơn vị tuyệt đối và tương đối: px, %, rem, em, vh, vw, vmin, vmax</li><li>Biết quy tắc chọn đơn vị: rem cho chữ, % cho width, vh cho chiều cao màn hình</li><li>Dựng hero full-screen Highland Hospital với đơn vị đúng</li></ul>
+<h3 id="h-3-nhn-nhanh-cc-n-v">Nhìn nhanh các đơn vị<a class="anchor" href="#h-3-nhn-nhanh-cc-n-v" aria-label="Liên kết mục">#</a></h3>
+<div class="table-card"><table><thead><tr><th>Đơn vị</th><th>Tương đối với</th><th>Dùng khi</th></tr></thead><tbody><tr><td><code>px</code></td><td>điểm ảnh (tuyệt đối)</td><td>viền, bóng đổ, bán kính bo góc, kích thước tối thiểu</td></tr><tr><td><code>rem</code></td><td>font-size của <code>:root</code> (16px)</td><td>cỡ chữ, khoảng cách lớn</td></tr><tr><td><code>em</code></td><td>font-size của <strong>phần tử cha</strong></td><td>padding theo cỡ chữ cục bộ, <code>max-width</code> của chữ</td></tr><tr><td><code>%</code></td><td>thuộc tính cùng loại của cha</td><td>width, height của layout</td></tr><tr><td><code>vh</code> / <code>vw</code></td><td>1% chiều cao / rộng viewport</td><td>hero full-screen, overlay toàn màn</td></tr><tr><td><code>vmin</code> / <code>vmax</code></td><td>1% cạnh nhỏ / cạnh lớn của viewport</td><td>hình vuông luôn vừa màn hình</td></tr></tbody></table></div>
+<h3 id="h-5-quy-tc-quyt-nh--hi-n-nn-ph-thuc-vo-g">Quy tắc quyết định — hỏi "nó nên phụ thuộc vào gì?"<a class="anchor" href="#h-5-quy-tc-quyt-nh--hi-n-nn-ph-thuc-vo-g" aria-label="Liên kết mục">#</a></h3>
+<p><strong>Chữ → <code>rem</code>.</strong> Nếu đổi cỡ chữ gốc (<code>html { font-size: 18px }</code>) hoặc người dùng phóng to chữ, toàn bộ hệ chữ co giãn theo — layout giữ tỷ lệ. <code>px</code> cho font-size là cách nhanh nhất để phá vỡ accessibility.</p>
+<p><strong>Bề rộng layout → <code>%</code>.</strong> <code>width: 100%</code> luôn là "vừa khít cha", không bao giờ tràn ra ngoài ở màn hình bất kỳ. <code>max-width: 1100px</code> chặn dòng chữ quá dài trên màn hình lớn:</p>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>.container {
+  width: 100%;            /* co giãn theo màn hình */
+  max-width: 1100px;      /* nhưng không quá 1100px */
+  margin-inline: auto;    /* căn giữa */
+}</code></pre></figure>
+<p><strong><code>em</code> dùng có chủ đích</strong> — thường cho padding "tự co" theo cỡ chữ của chính phần tử:</p>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>.btn { font-size: 1rem; padding: 0.6em 1.4em; }</code></pre></figure>
+<p>Nút to hơn (font-size 1.25rem) tự có padding to tương ứng mà không cần viết lại.</p>
+<h3 id="h-12-hero-fullscreen--n-v-cho-chiu-cao">Hero full-screen — đơn vị cho chiều cao<a class="anchor" href="#h-12-hero-fullscreen--n-v-cho-chiu-cao" aria-label="Liên kết mục">#</a></h3>
+<p>Hero Highland Hospital nên lấp gần hết màn hình đầu tiên:</p>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>.hero {
+  min-height: 100vh;      /* tối thiểu bằng chiều cao viewport */
+  display: flex;
+  align-items: center;    /* nội dung nằm giữa theo chiều dọc */
+  padding: clamp(4rem, 10vh, 8rem) 1rem;  /* thoáng trên mobile */
+}</code></pre></figure>
+<p>Vì sao <code>min-height: 100vh</code> chứ không <code>height: 100vh</code>? Với <code>height</code> cứng, nội dung dài hơn viewport sẽ <strong>tràn</strong>; <code>min-height</code> cho phép hero nở thêm khi cần — điều gần như luôn xảy ra trên điện thoại nhỏ. <code>100vh</code> có nhược điểm nhỏ trên mobile (thanh địa chỉ trình duyệt), ta sẽ xử lý bằng <code>100dvh</code> khi học Responsive ở chương 6.</p>
+<p>So sánh nhanh cho vùng nội dung:</p>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>/* SAI về ý đồ: cứng 80% màn hình — nội dung dài sẽ tràn */
+.hero-content { height: 80vh; }
+
+/* ĐÚNG: nội dung tự quyết chiều cao, chỉ căn giữa theo chiều dọc */
+.hero-content { margin-block: auto; }</code></pre></figure>
+<h3 id="h-18-prompt-mu--hi-ai-chn-n-v">Prompt mẫu — hỏi AI chọn đơn vị<a class="anchor" href="#h-18-prompt-mu--hi-ai-chn-n-v" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Tôi đang dựng hero Highland Hospital: nền gradient, tiêu đề 1 dòng,
+mô tả 2 dòng, 2 nút CTA. Tôi băn khoăn đơn vị cho: cỡ chữ h1,
+padding của .hero, khoảng cách giữa mô tả và nút, chiều cao hero.
+Hãy đưa ra từng thuộc tính kèm đơn vị đề xuất (rem/em/%/vh/clamp),
+giải thích vì sao, và cảnh báo trường hợp nào sẽ vỡ trên mobile.
+Trả lời bằng bảng, không cần viết toàn bộ CSS.</code></pre></figure>
+<h3 id="h-20-thc-hnh">Thực hành<a class="anchor" href="#h-20-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<ol><li>Đặt <code>html { font-size: 16px }</code> rồi lần lượt thử <code>html { font-size: 20px }</code> — quan sát toàn bộ trang co giãn vì mọi kích thước đều <code>rem</code>.</li><li>Tạo vùng <code>.hero</code> với <code>min-height: 100vh</code>, nền xanh <code>var(--hh-primary)</code>, tiêu đề <code>3rem</code>, đoạn mô tả <code>1.125rem</code>, nút CTA có padding <code>em</code>.</li><li>Thêm một phần tử <code>.full-bleed-banner { width: 100vw; }</code> và đặt nó trong container có padding — ghi lại hiện tượng tràn ngang; sửa lại bằng cách dùng <code>width: 100%</code> bên trong.</li><li>Mở DevTools, thay đổi giá trị đơn vị của <code>.hero</code> (100vh → 100% → 60vh) và ghi nhận khác biệt khi kéo cửa sổ nhỏ lại.</li></ol>
+<h3 id="h-22-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-22-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Đủ kiến thức nền để làm sản phẩm đầu tiên ra "sản phẩm thật": Lab dựng Hero section hoàn chỉnh cho Highland Hospital, gộp Box Model, màu, token và đơn vị vào một file CSS sạch.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">7 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-nhn-nhanh-cc-n-v">Nhìn nhanh các đơn vị</a></li><li><a href="#h-5-quy-tc-quyt-nh--hi-n-nn-ph-thuc-vo-g">Quy tắc quyết định — hỏi "nó nên phụ thuộc vào gì?"</a></li><li><a href="#h-12-hero-fullscreen--n-v-cho-chiu-cao">Hero full-screen — đơn vị cho chiều cao</a></li><li><a href="#h-18-prompt-mu--hi-ai-chn-n-v">Prompt mẫu — hỏi AI chọn đơn vị</a></li><li><a href="#h-20-thc-hnh">Thực hành</a></li><li><a href="#h-22-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="04-css3-foundations-mau-s-c-typography-css-variables.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Màu sắc, Typography & CSS Variables</strong></span></a><a href="04-css3-foundations-lab-d-ng-hero-section.html" rel="next"><span><small>Bài sau</small><strong>Lab: dựng Hero section</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lab: lưới Doctor Cards | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-5.html">Chương 5</a> &rsaquo; CSS Layout &rsaquo; Bài 5/5</p>
+<h1 class="lesson-title">Lab: lưới Doctor Cards</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 5/5</span><span>Module: CSS Layout</span><span>~4 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="lab-li-doctor-cards">Lab: lưới Doctor Cards</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Dựng lưới 4 card bác sĩ Highland Hospital bằng Grid + Flexbox phối hợp</li><li>Responsive tự nhiên không cần media query nhờ <code>auto-fit</code>/<code>minmax</code></li><li>Chạy vòng lặp AI: prompt → nháp → đọc hiểu từng dòng → tinh chỉnh</li><li>Hoàn thiện sản phẩm gộp toàn bộ Chương 4 + 5</li></ul>
+<h3 id="h-3-bi-cnh">Bối cảnh<a class="anchor" href="#h-3-bi-cnh" aria-label="Liên kết mục">#</a></h3>
+<p>Vùng "Đội ngũ bác sĩ" là nơi bệnh nhân chọn người khám — card cần rõ: ảnh, tên, chuyên khoa, kinh nghiệm và nút "Đặt lịch". Yêu cầu: 4 cột desktop, tự co xuống 1 cột trên mobile, card cùng hàng đồng chiều cao, nút luôn bám đáy.</p>
+<h3 id="h-5-bc-1--html-mt-card-chun-lp-bn-ln">Bước 1 — HTML: một card chuẩn, lặp bốn lần<a class="anchor" href="#h-5-bc-1--html-mt-card-chun-lp-bn-ln" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;section id="doctors" class="doctors"&gt;
+  &lt;h2 class="doctors__title"&gt;Đội ngũ bác sĩ&lt;/h2&gt;
+  &lt;p class="doctors__intro"&gt;Chuyên gia đầu ngành, đồng hành cùng bạn ở mọi giai đoạn.&lt;/p&gt;
+  &lt;div class="doctors-grid"&gt;
+    &lt;article class="doctor-card"&gt;
+      &lt;img src="img/doctor-nguyen-minh-anh.jpg" alt="BS. Nguyễn Minh Anh" class="doctor-card__avatar"&gt;
+      &lt;h3 class="doctor-card__name"&gt;BS. Nguyễn Minh Anh&lt;/h3&gt;
+      &lt;p class="doctor-card__specialty"&gt;Tim mạch can thiệp&lt;/p&gt;
+      &lt;p class="doctor-card__experience"&gt;15 năm kinh nghiệm · Bệnh viện Chợ Rẫy&lt;/p&gt;
+      &lt;a href="#booking" class="btn doctor-card__btn"&gt;Đặt lịch khám&lt;/a&gt;
+    &lt;/article&gt;
+    &lt;!-- Lặp thêm 3 card: BS. Trần Lan Hương (Nhi), BS. Lê Quốc Bảo (Thần kinh),
+         BS. Phạm Thu Ngân (Sản phụ khoa) — cùng cấu trúc --&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre></figure>
+<p><code>alt</code> mô tả đúng bác sĩ (không phải "ảnh 1") — vừa tốt cho SEO vừa đúng accessibility. Nút để trong thẻ <code>&lt;a&gt;</code> vì trỏ tới vùng đặt lịch (chưa có hành động JS).</p>
+<h3 id="h-8-bc-2--prompt-ai">Bước 2 — Prompt AI<a class="anchor" href="#h-8-bc-2--prompt-ai" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Bạn là senior frontend developer. Dựng CSS cho vùng danh sách bác
+sĩ Highland Hospital (HTML đính kèm, class: .doctors-grid,
+.doctor-card, .doctor-card__avatar...). Ràng buộc:
+- Grid lưới card: auto-fit + minmax(240px, 1fr), gap 1.5rem
+- Card: nền trắng, bo góc, đổ bóng nhẹ, hover nâng lên 4px
+- Avatar: ảnh vuông bo tròn 50%, căn giữa, width 96px
+- Trong card dùng flex column; tên 1.25rem, specialty màu xanh
+chủ đạo var(--hh-primary), experience xám nhỏ
+- Nút luôn bám đáy card dù nội dung dài ngắn khác nhau
+- Responsive tự nhiên, KHÔNG dùng media query
+Trả CSS kèm chú thích tiếng Việt từng dòng, chỉ rõ dòng nào tạo
+responsive.</code></pre></figure>
+<h3 id="h-10-bc-3--css-kt-qu-amp-phn-tch-tng-dng">Bước 3 — CSS kết quả &amp; phân tích từng dòng<a class="anchor" href="#h-10-bc-3--css-kt-qu-amp-phn-tch-tng-dng" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>.doctors-grid {
+  display: grid;                                   /* chuyển sang chế độ lưới */
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;                                     /* khoảng cách đều 2 chiều */
+}</code></pre></figure>
+<p>Dòng thần kỳ: <code>auto-fit</code> bảo trình duyệt <strong>tự đếm</strong> xem bao nhiêu cột 240px vừa container; đủ chỗ 4 cột thì hiện 4, màn hình hẹp còn 1 cột thì tự xuống — toàn bộ responsive không cần một media query nào.</p>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>.doctor-card {
+  display: flex;               /* trong mỗi ô là flex một chiều dọc */
+  flex-direction: column;
+  align-items: center;         /* avatar, tên, nút... căn giữa ngang */
+  text-align: center;
+  padding: 1.5rem;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.doctor-card:hover {
+  transform: translateY(-4px);                     /* hover: card nhấc lên */
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.12);
+}
+.doctor-card__avatar {
+  width: 96px; height: 96px;                       /* hộp vuông cố định */
+  border-radius: 50%;                              /* bo tròn như ảnh đại diện */
+  object-fit: cover;                               /* ảnh cắt gọn, không méo */
+  margin-bottom: 1rem;
+}
+.doctor-card__name { font-size: 1.25rem; margin-bottom: 0.25rem; }
+.doctor-card__specialty { color: var(--hh-primary); font-weight: 600; margin-bottom: 0.5rem; }
+.doctor-card__experience {
+  color: var(--hh-gray-500);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+.doctor-card__btn { margin-top: auto; }            /* đẩy nút xuống đáy card */</code></pre></figure>
+<p>Cơ chế "nút bám đáy": card là flex column; <code>margin-top: auto</code> trên nút ngốn toàn bộ khoảng trống phía trên nó, nên dù phần kinh nghiệm ngắn hay dài, mọi nút trong cùng hàng đều <strong>thẳng hàng ở đáy</strong> (nhờ các card cùng chiều cao do <code>align-items: stretch</code> mặc định của Grid).</p>
+<h3 id="h-15-bc-4--tinh-chnh-bng-ai">Bước 4 — Tinh chỉnh bằng AI<a class="anchor" href="#h-15-bc-4--tinh-chnh-bng-ai" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Lưới doctor cards của tôi trên máy bàn hiện 3 cột thay vì 4 vì
+container max-width 1100px. Đây là CSS [dán]. Tôi muốn đúng 4 cột
+trên màn hình ≥ 1200px mà vẫn giữ auto-fit cho màn hình nhỏ hơn.
+Đề xuất cách sửa ngắn nhất và giải thích vì sao minmax(240px,1fr)
+lại tạo ra 3 cột trong container này.</code></pre></figure>
+<h3 id="h-17-thc-hnh">Thực hành<a class="anchor" href="#h-17-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<ol><li>Dựng đủ 4 card bác sĩ theo HTML mẫu (tự chọn ảnh placeholder hoặc dùng ảnh màu đơn giản), áp CSS từng dòng như trên.</li><li>Kéo cửa sổ từ 320px → 1400px và ghi lại số cột hiển thị ở từng bề rộng; tìm bề rộng đúng lúc 4 cột → 3 cột và đối chiếu với <code>minmax(240px, 1fr)</code>.</li><li>Xóa <code>margin-top: auto</code> ở nút rồi thêm lại — quan sát đáy card lệch thế nào.</li><li>Chạy lại prompt ở Bước 2 với thay đổi nhỏ (card nền gradient, avatar có viền xanh) và review code AI trả về theo 4 bước của workflow.</li></ol>
+<h3 id="h-19-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-19-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Grid đã giúp card tự xuống hàng — nhưng đó mới là responsive "tự nhiên". Chương 6 chính thức hóa Responsive Web Design: media queries, breakpoints và Mobile-First workflow để làm chủ mọi kích thước màn hình.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">8 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-bi-cnh">Bối cảnh</a></li><li><a href="#h-5-bc-1--html-mt-card-chun-lp-bn-ln">Bước 1 — HTML: một card chuẩn, lặp bốn lần</a></li><li><a href="#h-8-bc-2--prompt-ai">Bước 2 — Prompt AI</a></li><li><a href="#h-10-bc-3--css-kt-qu-amp-phn-tch-tng-dng">Bước 3 — CSS kết quả &amp; phân tích từng dòng</a></li><li><a href="#h-15-bc-4--tinh-chnh-bng-ai">Bước 4 — Tinh chỉnh bằng AI</a></li><li><a href="#h-17-thc-hnh">Thực hành</a></li><li><a href="#h-19-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="05-css-layout-chon-flexbox-hay-grid.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Chọn Flexbox hay Grid</strong></span></a><a href="06-responsive-and-animation-media-queries-breakpoints.html" rel="next"><span><small>Bài sau</small><strong>Media Queries & Breakpoints</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

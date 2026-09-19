@@ -1,0 +1,112 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Modal, Offcanvas & Accordion | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-7.html">Chương 7</a> &rsaquo; Bootstrap components &rsaquo; Bài 4/5</p>
+<h1 class="lesson-title">Modal, Offcanvas & Accordion</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 4/5</span><span>Module: Bootstrap components</span><span>~4 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="modal-offcanvas-amp-accordion">Modal, Offcanvas &amp; Accordion</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Hiểu cơ chế mở/đóng component tương tác: <code>data-bs-toggle</code>, <code>data-bs-target</code>, <code>data-bs-dismiss</code></li><li>Dựng modal xác nhận đặt lịch với <code>modal-dialog-centered</code></li><li>Dùng offcanvas làm menu mobile / drawer bộ lọc</li><li>Dựng accordion FAQ bệnh viện — và nhớ: tất cả cần bundle JavaScript</li></ul>
+<h3 id="h-3-ba-component-mt-c-ch">Ba component, một cơ chế<a class="anchor" href="#h-3-ba-component-mt-c-ch" aria-label="Liên kết mục">#</a></h3>
+<p>Modal (hộp thoại), offcanvas (bảng trượt vào từ cạnh màn hình) và accordion (dàn ô xếp/nếp) là các component <strong>có hành vi</strong>, khác với card hay navbar tĩnh. Mọi component dạng này đều được điều khiển bằng cặp attribute:</p>
+<ul><li><code>data-bs-toggle</code> khai báo loại component sẽ bật (collapse, modal, offcanvas)</li><li><code>data-bs-target</code>/<code>data-bs-href</code> trỏ tới <code>id</code> của phần tử cần mở</li><li><code>data-bs-dismiss</code> đóng component: <code>data-bs-dismiss="modal"</code> hoặc <code>"offcanvas"</code></li></ul>
+<p>Nếu các thẻ sau không hoạt động, 99% là thiếu dòng <code>&lt;script src="...bootstrap.bundle.min.js"&gt;&lt;/script&gt;</code> cuối <code>&lt;body&gt;</code>.</p>
+<h3 id="h-7-modal-xc-nhn-t-lch">Modal xác nhận đặt lịch<a class="anchor" href="#h-7-modal-xc-nhn-t-lch" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;!-- Nút mở modal --&gt;
+&lt;button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal"&gt;
+  Xác nhận đặt lịch
+&lt;/button&gt;
+
+&lt;!-- Modal --&gt;
+&lt;div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true"&gt;
+  &lt;div class="modal-dialog modal-dialog-centered"&gt;
+    &lt;div class="modal-content"&gt;
+      &lt;div class="modal-header"&gt;
+        &lt;h5 class="modal-title" id="confirmModalLabel"&gt;Xác nhận thông tin&lt;/h5&gt;
+        &lt;button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"&gt;&lt;/button&gt;
+      &lt;/div&gt;
+      &lt;div class="modal-body"&gt;
+        &lt;p&gt;Bạn Nguyễn Văn An sẽ khám chuyên khoa &lt;strong&gt;Tim mạch&lt;/strong&gt; lúc &lt;strong&gt;09:00 – 12/12/2025&lt;/strong&gt;.&lt;/p&gt;
+        &lt;p class="mb-0 text-body-secondary"&gt;Bệnh viện sẽ gọi điện xác nhận trước 1 ngày.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class="modal-footer"&gt;
+        &lt;button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"&gt;Chỉnh sửa&lt;/button&gt;
+        &lt;button type="button" class="btn btn-primary"&gt;Hoàn tất&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre></figure>
+<ul><li><code>modal-dialog-centered</code>: hộp thoại canh giữa màn hình theo cả hai trục</li><li><code>fade</code> tạo hiệu ứng mờ dần khi mở</li><li>Cấu trúc chuẩn: <code>modal-dialog</code> → <code>modal-content</code> → <code>modal-header</code> / <code>modal-body</code> / <code>modal-footer</code></li><li>Chương 10 bạn sẽ lấp dòng chữ trong <code>modal-body</code> bằng JavaScript để hiển thị đúng thông tin người dùng vừa nhập</li></ul>
+<h3 id="h-10-offcanvas--menu-mobile-v-drawer-b-lc">Offcanvas — menu mobile và drawer bộ lọc<a class="anchor" href="#h-10-offcanvas--menu-mobile-v-drawer-b-lc" aria-label="Liên kết mục">#</a></h3>
+<p>Offcanvas là bảng trượt vào từ một cạnh, thường dùng cho menu mobile thay hamburger hoặc bộ lọc tạm trú:</p>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;button class="btn btn-outline-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#filterDrawer"&gt;
+  Bộ lọc bác sĩ
+&lt;/button&gt;
+
+&lt;div class="offcanvas offcanvas-end" tabindex="-1" id="filterDrawer" aria-labelledby="filterDrawerLabel"&gt;
+  &lt;div class="offcanvas-header"&gt;
+    &lt;h5 class="offcanvas-title" id="filterDrawerLabel"&gt;Bộ lọc&lt;/h5&gt;
+    &lt;button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Đóng"&gt;&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div class="offcanvas-body"&gt;
+    &lt;p class="fw-semibold"&gt;Chuyên khoa&lt;/p&gt;
+    &lt;div class="form-check"&gt;
+      &lt;input class="form-check-input" type="checkbox" id="specCardio"&gt;
+      &lt;label class="form-check-label" for="specCardio"&gt;Tim mạch&lt;/label&gt;
+    &lt;/div&gt;
+    &lt;div class="form-check"&gt;
+      &lt;input class="form-check-input" type="checkbox" id="specNeuro"&gt;
+      &lt;label class="form-check-label" for="specNeuro"&gt;Thần kinh&lt;/label&gt;
+    &lt;/div&gt;
+    &lt;!-- thêm tuỳ chọn... --&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre></figure>
+<p>Hướng trượt do class quyết định: <code>offcanvas-start</code> (trái), <code>offcanvas-end</code> (phải), <code>offcanvas-top</code>, <code>offcanvas-bottom</code>.</p>
+<h3 id="h-14-accordion-faq">Accordion FAQ<a class="anchor" href="#h-14-accordion-faq" aria-label="Liên kết mục">#</a></h3>
+<p>Accordion là nhóm các <code>collapse</code> mà mỗi lần chỉ mở một panel; panel đang mở tự đóng khi mở panel khác:</p>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;div class="accordion" id="faqAccordion"&gt;
+  &lt;div class="accordion-item"&gt;
+    &lt;h2 class="accordion-header"&gt;
+      &lt;button class="accordion-button" type="button" data-bs-toggle="collapse"
+              data-bs-target="#faq1" aria-expanded="true" aria-controls="faq1"&gt;
+        Bệnh viện có nhận bảo hiểm y tế không?
+      &lt;/button&gt;
+    &lt;/h2&gt;
+    &lt;div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion"&gt;
+      &lt;div class="accordion-body"&gt;
+        Highland Hospital có liên kết với hơn 30 hãng bảo hiểm và áp dụng bảo hiểm y tế cho dịch vụ khám chữa bệnh nội trú.
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;!-- lặp lại accordion-item cho các câu hỏi khác --&gt;
+&lt;/div&gt;</code></pre></figure>
+<p>Lưu ý:</p>
+<ul><li><code>accordion-collapse collapse</code> nằm trong mỗi item; thêm <code>show</code> cho item mở mặc định</li><li><code>data-bs-parent="#faqAccordion"</code> là thứ ràng buộc "mỗi lần chỉ mở một panel"</li><li>Nút mở đặt trong <code>accordion-header</code>, dùng <code>accordion-button</code> để có mũi tên +/-</li></ul>
+<h3 id="h-19-prompt-mu">Prompt mẫu<a class="anchor" href="#h-19-prompt-mu" aria-label="Liên kết mục">#</a></h3>
+<aside class="prompt-card"><span class="prompt-chip">Prompt mẫu</span><p><strong>Prompt gửi Gemini/Claude/ChatGPT:</strong> Website Highland Hospital dùng Bootstrap 5 (có sẵn bundle JS). Tôi cần hai thứ: (1) accordion FAQ 5 câu hỏi tiếng Việt thường gặp tại bệnh viện (giờ khám, đặt lịch online, bảo hiểm, kết quả xét nghiệm, cấp cứu) — chỉ cần viết câu hỏi và câu trả lời một hai câu; (2) modal xác nhận đặt lịch hiện tên bệnh nhân, chuyên khoa, ngày giờ khám với hai nút "Chỉnh sửa" (đóng modal) và "Hoàn tất". Giải thích ngắn vai trò của <code>data-bs-target</code> và <code>data-bs-parent</code>.</p></aside>
+<h3 id="h-21-thc-hnh">Thực hành<a class="anchor" href="#h-21-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<ol><li>Tạo <code>modal.html</code> với nút mở modal xác nhận đặt lịch ở trên; bấm "Chỉnh sửa" thấy modal đóng.</li><li>Bấm ngoài vùng modal (vùng đen mờ) để thấy modal tự đóng — hành vi mặc định của Bootstrap.</li><li>Dựng <code>faq.html</code> với accordion 5 câu; bỏ <code>data-bs-parent</code> ở một item và quan sát khác biệt.</li><li>Tạo drawer bộ lọc bằng offcanvas <code>offcanvas-start</code> và thử đổi hướng trượt.</li><li>Chạy prompt mẫu với AI, đọc hiểu code trả về theo từng class.</li></ol>
+<h3 id="h-23-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-23-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Có đủ component lắp ráp rồi; bài Lab tới dồn toàn bộ FAQ accordion và form đặt lịch (chưa có JS submit) vào một trang Highland Hospital thống nhất.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">8 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-ba-component-mt-c-ch">Ba component, một cơ chế</a></li><li><a href="#h-7-modal-xc-nhn-t-lch">Modal xác nhận đặt lịch</a></li><li><a href="#h-10-offcanvas--menu-mobile-v-drawer-b-lc">Offcanvas — menu mobile và drawer bộ lọc</a></li><li><a href="#h-14-accordion-faq">Accordion FAQ</a></li><li><a href="#h-19-prompt-mu">Prompt mẫu</a></li><li><a href="#h-21-thc-hnh">Thực hành</a></li><li><a href="#h-23-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="08-bootstrap-components-bootstrap-forms-validation.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Bootstrap Forms & Validation</strong></span></a><a href="08-bootstrap-components-lab-faq-d-t-lich-tinh.html" rel="next"><span><small>Bài sau</small><strong>Lab: FAQ & đặt lịch tĩnh</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

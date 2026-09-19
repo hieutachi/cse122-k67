@@ -1,0 +1,57 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Giải phẫu một prompt tốt | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-1.html">Chương 1</a> &rsaquo; Prompt engineering cho frontend &rsaquo; Bài 1/5</p>
+<h1 class="lesson-title">Giải phẫu một prompt tốt</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 1/5</span><span>Module: Prompt engineering cho frontend</span><span>~4 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="gii-phu-mt-prompt-tt">Giải phẫu một prompt tốt</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Nắm được 5 thành phần khiến một prompt dựng ra giao diện đúng như ý</li><li>Biết chuẩn bị gì trước khi viết prompt và kiểm tra gì sau khi nhận code</li><li>Thoát thói quen "hỏi lại cả câu" bằng vòng lặp cải thiện từng bước nhỏ</li></ul>
+<h3 id="h-3-prompt-ti-bt-ngun-t-thiu-thng-tin">Prompt tồi bắt nguồn từ thiếu thông tin<a class="anchor" href="#h-3-prompt-ti-bt-ngun-t-thiu-thng-tin" aria-label="Liên kết mục">#</a></h3>
+<p>Hỏi AI <em>"Viết giúp hero section cho trang bệnh viện"</em> thì bạn nhận code chạy được nhưng màu sắc bịa đại, khoảng cách tuỳ hứng, tên class vô nghĩa và gần như chắc chắn lệch design. Không phải AI kém — là bạn chưa đưa cho nó thông tin. Nguyên tắc xuyên suốt khoá học: <strong>viết prompt như đang giao việc cho một đồng nghiệp mới vào dự án</strong>.</p>
+<h3 id="h-5-5-thnh-phn-ca-mt-prompt-tt">5 thành phần của một prompt tốt<a class="anchor" href="#h-5-5-thnh-phn-ca-mt-prompt-tt" aria-label="Liên kết mục">#</a></h3>
+<div class="table-card"><table><thead><tr><th>#</th><th>Thành phần</th><th>Trả lời câu hỏi</th><th>Ví dụ cho Highland Hospital</th></tr></thead><tbody><tr><td>1</td><td><strong>Bối cảnh</strong></td><td>Tôi đang làm gì, dự án nào, cho ai?</td><td>"Đang dựng Landing Page của Highland Hospital — web bệnh viện có đặt lịch khám, thuần HTML5 + CSS, chưa dùng framework."</td></tr><tr><td>2</td><td><strong>Nhiệm vụ</strong></td><td>Tôi muốn AI làm việc cụ thể gì?</td><td>"Dựng khối HTML cho khu vực danh sách bác sĩ gồm 6 thẻ."</td></tr><tr><td>3</td><td><strong>Ràng buộc</strong></td><td>Giới hạn công nghệ, phong cách, nội dung?</td><td>"Chỉ HTML semantic, không CSS, không Bootstrap; class tiền tố <code>hh-</code>; chữ tiếng Việt."</td></tr><tr><td>4</td><td><strong>Giao diện / Dữ liệu</strong></td><td>Bám theo design token hoặc dữ liệu nào?</td><td>"Nút chính dùng màu <code>#0f766e</code>; mỗi bác sĩ gồm tên, chuyên khoa, số năm kinh nghiệm."</td></tr><tr><td>5</td><td><strong>Định dạng đầu ra</strong></td><td>Tôi muốn nhận lại dạng gì?</td><td>"Một khối code duy nhất kèm 3 dòng giải thích cấu trúc."</td></tr></tbody></table></div>
+<p>Bốn mục đầu là <em>thông tin bạn phải có sẵn</em>; mục 5 là <em>cách bạn muốn nhận kết quả</em>. Thiếu mục nào, AI sẽ tự bịa mục đó.</p>
+<h3 id="h-8-trc-khi-vit-prompt">Trước khi viết prompt<a class="anchor" href="#h-8-trc-khi-vit-prompt" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Đã mở đúng file cần sửa và phóng to bản thiết kế/mô tả cần dựng chưa?</li><li>Đã tự thử làm khoảng 10 phút chưa? Khoảng cách giữa bản tự làm và bản AI trả về là bài học nhanh nhất bạn có được (bài 1 chương 1 đã nói điều này).</li><li>Viết mục tiêu thành một câu: <em>"Tôi muốn AI tạo ra cái gì để tôi dùng được ngay?"</em></li></ul>
+<h3 id="h-10-sau-khi-nhn-kt-qu">Sau khi nhận kết quả<a class="anchor" href="#h-10-sau-khi-nhn-kt-qu" aria-label="Liên kết mục">#</a></h3>
+<p>Đừng dán code vào file rồi commit. Làm đủ workflow bước 3–4: đọc từng dòng, chạy thử trong trình duyệt, rồi mới nói chuyện tiếp với AI. Khi thấy sai, chỉ ra <strong>vị trí và hiện tượng cụ thể</strong>, đừng nói chung chung "vẫn không đúng" — AI không nhìn thấy màn hình của bạn.</p>
+<h3 id="h-12-vng-lp-ci-thin-tng-bc-nh">Vòng lặp cải thiện từng bước nhỏ<a class="anchor" href="#h-12-vng-lp-ci-thin-tng-bc-nh" aria-label="Liên kết mục">#</a></h3>
+<p>Mỗi lượt chỉ sửa <strong>một</strong> điểm, kiểm tra xong mới chuyển điểm kế tiếp:</p>
+<ol><li>"Giữ nguyên khối code vừa trả, đổi màu nút từ <code>#0f766e</code> sang <code>#134e4a</code>." — một thay đổi, dễ kiểm chứng.</li><li>"Giờ tăng khoảng cách giữa tiêu đề và đoạn mô tả lên gấp đôi." — đã chắc chắn bước 1 đúng mới làm tiếp.</li></ol>
+<p>Hỏi kiểu "sửa lại cho đẹp hơn" là bắt AI đoán mò; hỏi kiểu "sửa mục nào, thành giá trị nào" thì mỗi vòng lặp đều tiến một bước có kiểm soát.</p>
+<h3 id="h-16-prompt-mu-mt-prompt--5-thnh-phn">Prompt mẫu: một prompt đủ 5 thành phần<a class="anchor" href="#h-16-prompt-mu-mt-prompt--5-thnh-phn" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Bối cảnh: Tôi đang dựng trang chủ Highland Hospital bằng HTML5 + CSS
+thuần, chưa dùng framework.
+Nhiệm vụ: Dựng khối hero gồm câu slogan, đoạn mô tả, nút "Đặt lịch khám".
+Ràng buộc: HTML semantic + CSS trong một file; không thêm nội dung
+ngoài những gì tôi mô tả.
+Giao diện: nền trắng; chữ tiêu đề màu #0f172a; nút nền #0f766e, chữ
+trắng, bo góc 8px, padding 0.75rem 1.5rem; khoảng cách nội dung theo rem.
+Định dạng: trả về HTML rồi đến CSS, mỗi phần một khối code riêng.</code></pre></figure>
+<h3 id="h-18-thc-hnh">Thực hành<a class="anchor" href="#h-18-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<p>Lấy yêu cầu "đặt lịch khám" của Highland Hospital và viết một prompt đủ 5 thành phần để AI dựng form đặt lịch. Tự chấm: prompt có cho AI biết trường nào bắt buộc, có mấy bước, và màu nhấn nào không?</p>
+<h3 id="h-20-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-20-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Hai thành phần dễ khiến AI "bịa" nhất — khoảng cách và màu sắc — sẽ được xử lý trong bài <em>Prompt cho HTML &amp; CSS</em>.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">9 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-prompt-ti-bt-ngun-t-thiu-thng-tin">Prompt tồi bắt nguồn từ thiếu thông tin</a></li><li><a href="#h-5-5-thnh-phn-ca-mt-prompt-tt">5 thành phần của một prompt tốt</a></li><li><a href="#h-8-trc-khi-vit-prompt">Trước khi viết prompt</a></li><li><a href="#h-10-sau-khi-nhn-kt-qu">Sau khi nhận kết quả</a></li><li><a href="#h-12-vng-lp-ci-thin-tng-bc-nh">Vòng lặp cải thiện từng bước nhỏ</a></li><li><a href="#h-16-prompt-mu-mt-prompt--5-thnh-phn">Prompt mẫu: một prompt đủ 5 thành phần</a></li><li><a href="#h-18-thc-hnh">Thực hành</a></li><li><a href="#h-20-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="01-welcome-and-ai-workflow-d-an-xuyen-su-t-highland-hospital.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Dự án xuyên suốt: Highland Hospital</strong></span></a><a href="02-prompt-engineering-prompt-cho-html-css.html" rel="next"><span><small>Bài sau</small><strong>Prompt cho HTML & CSS</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

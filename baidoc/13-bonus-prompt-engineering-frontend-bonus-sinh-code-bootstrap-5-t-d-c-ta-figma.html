@@ -1,0 +1,89 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bonus — Sinh code Bootstrap 5 từ đặc tả Figma | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-9.html">Chương 9</a> &rsaquo; Bonus: Figma → Bootstrap &rsaquo; Bài 2/3</p>
+<h1 class="lesson-title">Bonus — Sinh code Bootstrap 5 từ đặc tả Figma</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 2/3</span><span>Module: Bonus: Figma → Bootstrap</span><span>~4 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="bonus--sinh-code-bootstrap-5-t-c-t-figma">Bonus — Sinh code Bootstrap 5 từ đặc tả Figma</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Biết khung prompt chuẩn biến đặc tả giao diện thành code Bootstrap 5 dùng được ngay</li><li>Nắm các ràng buộc quan trọng (design token, responsive, semantic, không CSS thừa)</li><li>Phân biệt "prompt sinh code tốt" và "prompt sinh code phải sửa nhiều"</li></ul>
+<h3 id="h-3-t-c-t-n-code">Từ đặc tả đến code<a class="anchor" href="#h-3-t-c-t-n-code" aria-label="Liên kết mục">#</a></h3>
+<p>Bài trước bạn đã có đặc tả 5 mục từ khung phân tích Figma. Bài này dạy cách dán đặc tả đó vào một khung prompt sinh code — với các ràng buộc giúp AI không tự bịa.</p>
+<h3 id="h-5-khung-prompt-chun-sinh-code-bootstrap">Khung prompt chuẩn sinh code Bootstrap<a class="anchor" href="#h-5-khung-prompt-chun-sinh-code-bootstrap" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Bạn là Senior Frontend Developer. Dựa vào ĐẶC TẢ bên dưới, sinh code HTML hoàn chỉnh
+cho một section, dùng Bootstrap 5.3 (CDN). Tuân thủ tuyệt đối:
+
+1. THẺ NGỮ NGHĨA: chọn thẻ đúng vai trò (section/article/header/footer...);
+   heading đúng bậc (h2 cho section, h3 cho card bên trong).
+2. GRID: container → row → col; mobile-first: col-12 mặc định, tăng dần col-md-*, col-lg-*;
+   gutter dùng g-*; không dùng inline style.
+3. DESIGN TOKEN: màu dùng --hh-primary #0f766e, --hh-dark #0f172a, --hh-light #f0fdfa,
+   --hh-border #e2e8f0, --hh-muted #475569; chữ/background bằng class Bootstrap
+   (text-*, bg-*, border-*) hoặc CSS biến khi cần.
+4. KHÔNG VIẾT CSS RIÊNG: nếu phải override, đánh dấu bằng comment "CUSTOM" kèm lý do.
+5. TRẠNG THÁI: khai báo đủ hover/focus/disabled; input có is-invalid + invalid-feedback.
+6. NỘI DUNG: dùng nội dung tiếng Việt mẫu hợp lý cho bệnh viện; ảnh dùng placeholder
+   https://placehold.co/600x400/0f766e/white?text=... với alt mô tả.
+7. ĐẦU RA: chỉ trả về mã HTML của section, có comment HTML đánh dấu từng khối,
+   KHÔNG giải thích, KHÔNG bọc toàn bộ bằng code block nếu không cần.
+
+ĐẶC TẢ:
+[mục 1–5 ở bài 01, hoặc mô tả chi tiết section của bạn]</code></pre></figure>
+<h3 id="h-7-v-d-sinh-section-doctors-t-c-t">Ví dụ: sinh section Doctors từ đặc tả<a class="anchor" href="#h-7-v-d-sinh-section-doctors-t-c-t" aria-label="Liên kết mục">#</a></h3>
+<p>Đặc tả: <em>"Section danh sách bác sĩ, nền --hh-light. Hàng 4 cột trên desktop (col-lg-4 = 3 cột với container rộng? — đúng: dùng col-xl-3 cho 4 cột), card gồm ảnh, tên, chuyên khoa, badge kinh nghiệm, nút Đặt lịch full-width. Hover: card nổi lên nhẹ, nút chuyển màu đậm hơn."</em></p>
+<p>Sau khi dán khung chuẩn + đặc tả, code AI trả về thường có dạng:</p>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;!-- ===== DOCTORS SECTION ===== --&gt;
+&lt;section class="py-5 bg-light" id="doctors"&gt;
+  &lt;div class="container"&gt;
+    &lt;h2 class="text-center mb-4"&gt;Đội ngũ bác sĩ&lt;/h2&gt;
+    &lt;div class="row g-4"&gt;
+      &lt;!-- Card bác sĩ --&gt;
+      &lt;div class="col-12 col-md-6 col-xl-3"&gt;
+        &lt;article class="card h-100 shadow-sm border-0"&gt;
+          &lt;img src="https://placehold.co/600x400/0f766e/white?text=BS.+Nguy%E1%BB%85n+V%C4%83n+An" class="card-img-top" alt="BS. Nguyễn Văn An"&gt;
+          &lt;div class="card-body text-center"&gt;
+            &lt;h3 class="h5 card-title"&gt;BS. Nguyễn Văn An&lt;/h3&gt;
+            &lt;p class="card-text text-muted mb-2"&gt;Nội tổng hợp&lt;/p&gt;
+            &lt;span class="badge text-bg-primary mb-3"&gt;12 năm kinh nghiệm&lt;/span&gt;
+            &lt;div class="d-grid"&gt;
+              &lt;a href="booking.html" class="btn btn-primary"&gt;Đặt lịch&lt;/a&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/article&gt;
+      &lt;/div&gt;
+      &lt;!-- ...lặp lại cho các bác sĩ khác... --&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre></figure>
+<h4 id="phn-tch-code-va-nhn--4-im-phi-kim-tra">Phân tích code vừa nhận — 4 điểm phải kiểm tra</h4>
+<ol><li><strong>Số cột</strong>: hàng 4 cột phải là <code>col-xl-3</code> (12/4) hoặc <code>col-lg-3</code>; nếu AI trả <code>col-lg-4</code> nghĩa là 3 cột — sai đặc tả.</li><li><strong><code>h-100</code></strong>: có trên card để các card cùng chiều cao dù tên bác sĩ dài ngắn khác nhau.</li><li><strong><code>d-grid</code></strong>: bọc nút để nút full-width — đúng chuẩn, không cần CSS riêng.</li><li><strong>Badge màu</strong>: <code>text-bg-primary</code> tự đảm bảo contrast — không nên tự đổi màu chữ.</li></ol>
+<p>Nếu thiếu một trong bốn điểm, đừng sửa tay vội — hãy yêu cầu AI sửa đúng điểm đó (bước Refine):</p>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Giữ nguyên toàn bộ cấu trúc. Sửa 2 điểm: (1) hàng card phải đúng 4 cột trên desktop
+nên dùng col-xl-3; (2) thêm h-100 vào card và d-grid quanh nút Đặt lịch.
+Chỉ trả về phần đã sửa.</code></pre></figure>
+<h3 id="h-15-thc-hnh">Thực hành<a class="anchor" href="#h-15-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<ol><li>Lấy đặc sả bạn đã viết ở bài 01 (hoặc tự viết đặc tả 3 câu cho một section).</li><li>Dán khung prompt chuẩn + đặc tả vào AI, nhận code HTML.</li><li>Kiểm tra code theo 4 điểm ở trên; nếu sai, dùng prompt sửa điểm cụ thể (không yêu cầu viết lại toàn bộ).</li><li>Dán code vào file HTML có sẵn Bootstrap CDN, mở Live Server kiểm tra ở 375px/768px/1440px.</li></ol>
+<h3 id="h-17-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-17-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Bài cuối module: một lab tổng hợp — cắt cả một trang con (hoặc toàn bộ trang chủ) từ thiết kế bằng đúng hai khung prompt đã học, kèm checklist đánh giá chất lượng prompt của bạn.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">6 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-t-c-t-n-code">Từ đặc tả đến code</a></li><li><a href="#h-5-khung-prompt-chun-sinh-code-bootstrap">Khung prompt chuẩn sinh code Bootstrap</a></li><li><a href="#h-7-v-d-sinh-section-doctors-t-c-t">Ví dụ: sinh section Doctors từ đặc tả</a></li><li><a href="#h-15-thc-hnh">Thực hành</a></li><li><a href="#h-17-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="13-bonus-prompt-engineering-frontend-bonus-phan-tich-giao-di-n-figma-b-ng-prompt-chu-n.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Bonus — Phân tích giao diện Figma bằng Prompt chuẩn</strong></span></a><a href="13-bonus-prompt-engineering-frontend-bonus-lab-t-figma-d-n-bootstrap-trong-m-t-phien-lam-vi-c.html" rel="next"><span><small>Bài sau</small><strong>Bonus — Lab: Từ Figma đến Bootstrap trong một phiên làm việc</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

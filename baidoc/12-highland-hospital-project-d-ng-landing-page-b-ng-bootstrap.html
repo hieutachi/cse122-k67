@@ -1,0 +1,171 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dựng Landing Page bằng Bootstrap | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-9.html">Chương 9</a> &rsaquo; Dự án Highland Hospital &rsaquo; Bài 2/6</p>
+<h1 class="lesson-title">Dựng Landing Page bằng Bootstrap</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 2/6</span><span>Module: Dự án Highland Hospital</span><span>~6 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="dng-landing-page-bng-bootstrap">Dựng Landing Page bằng Bootstrap</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Dựng hoàn chỉnh Landing Page Highland Hospital bằng Bootstrap 5 CDN, theo spec đã viết ở bài 01</li><li>Tổ chức mã nguồn đúng vai trò: cấu trúc trong <code>index.html</code>, style trong <code>css/style.css</code>, logic trong <code>js/main.js</code></li><li>Biết viết prompt AI dựng từng section, và <strong>review code AI sinh ra</strong> theo chuẩn semantic</li></ul>
+<h3 id="h-3-bootstrap-t-cdn">Bootstrap từ CDN<a class="anchor" href="#h-3-bootstrap-t-cdn" aria-label="Liên kết mục">#</a></h3>
+<p>Ba dòng CSS trong <code>&lt;head&gt;</code> và một cặp <code>&lt;script&gt;</code> cuối <code>&lt;body&gt;</code> là đủ — grid lẫn component tương tác (navbar collapse, modal, carousel) đều chạy, vì <code>bootstrap.bundle.min.js</code> đã gộp sẵn Popper:</p>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="vi"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+  &lt;title&gt;Highland Hospital — Chăm sóc sức khoẻ tận tâm&lt;/title&gt;
+  &lt;link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"&gt;
+  &lt;link rel="stylesheet" href="css/style.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;!-- Dựng dần từng vùng bên dưới --&gt;
+  &lt;script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"&gt;&lt;/script&gt;
+  &lt;script src="js/main.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre></figure>
+<h3 id="h-6-b-xng-semantic">Bộ xương semantic<a class="anchor" href="#h-6-b-xng-semantic" aria-label="Liên kết mục">#</a></h3>
+<p>Khung trang dùng thẻ semantic; vùng nào có trong navbar thì gán <code>id</code> để neo: <code>&lt;header&gt;&lt;nav&gt;</code> → <code>&lt;main&gt;</code> gồm các <code>&lt;section id="hero|services|doctors|testimonials"&gt;</code> → <code>&lt;footer&gt;</code>.</p>
+<p>Vì navbar <code>fixed-top</code> che mất đầu nội dung, thêm vào <code>css/style.css</code>:</p>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>body { padding-top: 72px; } /* chiều cao navbar */
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }</code></pre></figure>
+<p><code>scroll-padding-top</code> bù navbar khi neo tới <code>#doctors</code> — thiếu nó, tiêu đề section sẽ bị navbar che mất.</p>
+<h3 id="h-11-bc-1--navbar">Bước 1 — Navbar<a class="anchor" href="#h-11-bc-1--navbar" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;nav class="navbar navbar-expand-lg bg-white shadow-sm fixed-top"&gt;
+  &lt;div class="container"&gt;
+    &lt;a class="navbar-brand fw-bold text-primary" href="index.html"&gt;🏥 Highland Hospital&lt;/a&gt;
+    &lt;button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu"
+            aria-controls="navMenu" aria-expanded="false" aria-label="Mở menu điều hướng"&gt;
+      &lt;span class="navbar-toggler-icon"&gt;&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;div class="collapse navbar-collapse" id="navMenu"&gt;
+      &lt;ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center"&gt;
+        &lt;li class="nav-item"&gt;&lt;a class="nav-link" href="#hero"&gt;Trang chủ&lt;/a&gt;&lt;/li&gt;
+        &lt;li class="nav-item"&gt;&lt;a class="nav-link" href="#services"&gt;Dịch vụ&lt;/a&gt;&lt;/li&gt;
+        &lt;li class="nav-item"&gt;&lt;a class="nav-link" href="#doctors"&gt;Bác sĩ&lt;/a&gt;&lt;/li&gt;
+        &lt;li class="nav-item"&gt;&lt;a class="nav-link" href="#testimonials"&gt;Đánh giá&lt;/a&gt;&lt;/li&gt;
+        &lt;li class="nav-item ms-lg-3 mt-2 mt-lg-0"&gt;&lt;a class="btn btn-primary rounded-pill px-4" href="booking.html"&gt;Đặt lịch khám&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;</code></pre></figure>
+<p>Điểm cần review: <code>data-bs-target</code> khớp <code>id</code> của khối collapse; hamburger có đủ <code>aria-*</code>; nút CTA là <code>&lt;a&gt;</code> điều hướng chứ không phải <code>&lt;button&gt;</code>.</p>
+<h3 id="h-14-bc-2--hero">Bước 2 — Hero<a class="anchor" href="#h-14-bc-2--hero" aria-label="Liên kết mục">#</a></h3>
+<p>Hero static chia 2 cột (chữ trái – ảnh phải), tự xếp dọc trên mobile nhờ lưới 12 cột — đủ tốt cho dự án; carousel chỉ thêm hiệu ứng, không thêm giá trị nội dung:</p>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;section id="hero" class="bg-primary bg-gradient text-white py-5"&gt;
+  &lt;div class="container py-lg-5"&gt;
+    &lt;div class="row align-items-center g-5"&gt;
+      &lt;div class="col-lg-6"&gt;
+        &lt;h1 class="display-5 fw-bold lh-sm"&gt;Chăm sóc sức khoẻ &lt;br class="d-none d-lg-block"&gt;bạn đáng nhận&lt;/h1&gt;
+        &lt;p class="lead mt-3 text-white-50"&gt;Highland Hospital quy tụ 120+ bác sĩ chuyên khoa đầu ngành — đặt lịch khám trực tuyến chỉ trong 2 phút.&lt;/p&gt;
+        &lt;div class="d-flex flex-wrap gap-3 mt-4"&gt;
+          &lt;a href="booking.html" class="btn btn-light btn-lg rounded-pill px-4"&gt;Đặt lịch ngay&lt;/a&gt;
+          &lt;a href="#doctors" class="btn btn-outline-light btn-lg rounded-pill px-4"&gt;Xem bác sĩ&lt;/a&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="col-lg-6 text-center"&gt;
+        &lt;img src="img/hospital-hero.jpg" alt="Sảnh chính bệnh viện Highland" class="img-fluid rounded-4 shadow-lg"&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre></figure>
+<h3 id="h-17-bc-3--services-bng-card">Bước 3 — Services bằng Card<a class="anchor" href="#h-17-bc-3--services-bng-card" aria-label="Liên kết mục">#</a></h3>
+<p>Lưới <code>row g-4</code>, mỗi card trong cột <code>col-md-6 col-lg-4</code> (1 cột mobile → 2 tablet → 3 desktop). Viết tay 6 card một lần để thấy rõ HTML; bài 03 sẽ thay bằng vòng lặp JS:</p>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;section id="services" class="py-5"&gt;
+  &lt;div class="container"&gt;
+    &lt;div class="text-center mb-5"&gt;
+      &lt;span class="badge bg-primary-subtle text-primary mb-2"&gt;Dịch vụ&lt;/span&gt;
+      &lt;h2 class="fw-bold"&gt;Dịch vụ y tế toàn diện&lt;/h2&gt;
+    &lt;/div&gt;
+    &lt;div class="row g-4"&gt;
+      &lt;!-- Lặp lại khối cột dưới cho 6 dịch vụ: Khám tổng quát, Nội soi tiêu hoá,
+           Xét nghiệm, Chẩn đoán hình ảnh, Tim mạch, Răng hàm mặt --&gt;
+      &lt;div class="col-md-6 col-lg-4"&gt;
+        &lt;article class="card h-100 border-0 shadow-sm"&gt;
+          &lt;div class="card-body p-4"&gt;
+            &lt;h3 class="h5 fw-bold"&gt;🩺 Khám tổng quát&lt;/h3&gt;
+            &lt;p class="card-text text-secondary"&gt;Gói khám sức khoẻ định kỳ đầy đủ xét nghiệm cho cá nhân và doanh nghiệp.&lt;/p&gt;
+            &lt;a href="booking.html" class="stretched-link text-decoration-none"&gt;Đặt lịch →&lt;/a&gt;
+          &lt;/div&gt;
+        &lt;/article&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre></figure>
+<p><code>stretched-link</code> cho phép bấm vào <strong>bất kỳ đâu trên card</strong> đều kích hoạt link.</p>
+<h3 id="h-21-bc-4--doctors-amp-testimonials">Bước 4 — Doctors &amp; Testimonials<a class="anchor" href="#h-21-bc-4--doctors-amp-testimonials" aria-label="Liên kết mục">#</a></h3>
+<p>Doctors để sẵn <code>&lt;div id="doctorGrid" class="row g-4"&gt;</code> <strong>trống</strong> — bài 03 sẽ render vào đây. Testimonials cùng kiểu <code>row g-4</code> với 3 card nội dung đánh giá bệnh nhân:</p>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;section id="doctors" class="py-5 bg-light"&gt;
+  &lt;div class="container"&gt;
+    &lt;div class="text-center mb-5"&gt;
+      &lt;span class="badge bg-primary-subtle text-primary mb-2"&gt;Đội ngũ&lt;/span&gt;
+      &lt;h2 class="fw-bold"&gt;Bác sĩ chuyên khoa&lt;/h2&gt;
+    &lt;/div&gt;
+    &lt;div id="doctorGrid" class="row g-4"&gt;&lt;/div&gt; &lt;!-- JS sẽ render doctor-card vào đây --&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre></figure>
+<h3 id="h-24-bc-5--footer">Bước 5 — Footer<a class="anchor" href="#h-24-bc-5--footer" aria-label="Liên kết mục">#</a></h3>
+<p>Ba cột: giới thiệu + giờ làm việc, link nhanh, liên hệ:</p>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;footer class="bg-dark text-white-50 py-5"&gt;
+  &lt;div class="container"&gt;
+    &lt;div class="row g-4"&gt;
+      &lt;div class="col-lg-4"&gt;
+        &lt;h2 class="h5 text-white fw-bold"&gt;🏥 Highland Hospital&lt;/h2&gt;
+        &lt;p class="mt-3"&gt;Hệ thống y tế tư nhân với 20 năm kinh nghiệm, 3 cơ sở tại TP.HCM.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class="col-lg-4"&gt;
+        &lt;h2 class="h5 text-white fw-bold"&gt;Giờ làm việc&lt;/h2&gt;
+        &lt;ul class="list-unstyled mt-3"&gt;
+          &lt;li&gt;Thứ 2 – Thứ 6: 7:00 – 20:00&lt;/li&gt;
+          &lt;li&gt;Thứ 7: 7:00 – 17:00&lt;/li&gt;
+          &lt;li&gt;Chủ nhật &amp; lễ: cấp cứu 24/7&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/div&gt;
+      &lt;div class="col-lg-4"&gt;
+        &lt;h2 class="h5 text-white fw-bold"&gt;Liên hệ&lt;/h2&gt;
+        &lt;address class="mt-3 mb-1"&gt;12 Nguyễn Du, Quận 1, TP.HCM&lt;/address&gt;
+        &lt;p class="mb-0"&gt;📞 1900 1234 · ✉️ hello@highlandhospital.vn&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/footer&gt;</code></pre></figure>
+<h3 id="h-27-prompt-ai-dng-tng-section">Prompt AI dựng từng section<a class="anchor" href="#h-27-prompt-ai-dng-tng-section" aria-label="Liên kết mục">#</a></h3>
+<p>Đặc tả viết ở bài 01 nhét thẳng vào prompt sẽ cho sản phẩm khớp ý ngay lần đầu:</p>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Dựng section "Doctors" bằng Bootstrap 5 cho website bệnh viện Highland Hospital,
+dùng tiếng Việt cho nội dung hiển thị. Yêu cầu:
+1. Section id="doctors", nền bg-light, badge "Đội ngũ" + h2
+2. Bên trong là &lt;div id="doctorGrid" class="row g-4"&gt; TRỐNG — tôi sẽ render bằng JS
+3. Giải thích ngắn vai trò từng class dùng tới (col, g-4, bg-light...)
+4. KHÔNG dùng inline style, KHÔNG viết JS
+Chỉ trả về HTML của section, kèm 3 dòng lưu ý responsive cho người mới.</code></pre></figure>
+<p>Chạy prompt này cho từng vùng (hero, services, doctors, testimonials, footer), ghép vào <code>index.html</code>. Sau mỗi lần nhận code AI: đọc từng dòng trước khi giữ — quy tắc bất biến của khoá học.</p>
+<h3 id="h-31-t-review-semantic">Tự review semantic<a class="anchor" href="#h-31-t-review-semantic" aria-label="Liên kết mục">#</a></h3>
+<p>Mở DevTools (F12) và tự kiểm tra:</p>
+<ul><li>✅ Đúng <strong>một</strong> <code>&lt;header&gt;</code>, <strong>một</strong> <code>&lt;main&gt;</code>, <strong>một</strong> <code>&lt;footer&gt;</code> toàn trang; mỗi vùng là <code>&lt;section&gt;</code> có heading bên trong</li><li>✅ Chỉ <strong>một</strong> <code>h1</code> (trong hero); tiêu đề khác dùng <code>h2</code>/<code>h3</code> đúng cấp; mọi ảnh có <code>alt</code> mô tả nội dung</li><li>✅ Link "Đặt lịch" trỏ <code>booking.html</code>; link nav neo đúng <code>id</code>; dưới 992px navbar thu gọn thành hamburger, không tràn ngang</li></ul>
+<p>Dán toàn bộ <code>&lt;body&gt;</code> cho AI với lời nhắc <em>"tìm lỗi semantic và lỗi lồng thẻ"</em> cũng được — nhưng tự review trước vẫn nhanh và nhớ lâu hơn.</p>
+<h3 id="h-35-thc-hnh">Thực hành<a class="anchor" href="#h-35-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<ol><li>Tạo <code>index.html</code> hoàn chỉnh theo đúng 5 bước; thay nội dung 6 services + 3 testimonials bằng nội dung riêng của bạn.</li><li>Tạo <code>css/style.css</code>: biến màu riêng của Highland + hiệu ứng card hover nổi bóng nhẹ.</li><li>Mở bằng Live Server, duyệt từng vùng ở desktop và mobile (chế độ responsive trong DevTools).</li><li>Chạy prompt AI cho 2 vùng bạn chưa tự làm, review và giữ lại phần đạt chuẩn.</li><li>Chạy checklist review semantic và sửa hết lỗi tìm được.</li></ol>
+<h3 id="h-37-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-37-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Trang đã tĩnh và đẹp — giờ làm nó "sống": render bác sĩ từ mảng dữ liệu, lọc chuyên khoa, và nút Đặt lịch mở modal, trong bài <em>Tương tác JavaScript trên Landing Page</em>.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">12 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-bootstrap-t-cdn">Bootstrap từ CDN</a></li><li><a href="#h-6-b-xng-semantic">Bộ xương semantic</a></li><li><a href="#h-11-bc-1--navbar">Bước 1 — Navbar</a></li><li><a href="#h-14-bc-2--hero">Bước 2 — Hero</a></li><li><a href="#h-17-bc-3--services-bng-card">Bước 3 — Services bằng Card</a></li><li><a href="#h-21-bc-4--doctors-amp-testimonials">Bước 4 — Doctors &amp; Testimonials</a></li><li><a href="#h-24-bc-5--footer">Bước 5 — Footer</a></li><li><a href="#h-27-prompt-ai-dng-tng-section">Prompt AI dựng từng section</a></li><li><a href="#h-31-t-review-semantic">Tự review semantic</a></li><li><a href="#h-35-thc-hnh">Thực hành</a></li><li><a href="#h-37-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="12-highland-hospital-project-t-ng-quan-d-an-phan-tich-figma.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Tổng quan dự án & phân tích Figma</strong></span></a><a href="12-highland-hospital-project-tuong-tac-javascript-tren-landing-page.html" rel="next"><span><small>Bài sau</small><strong>Tương tác JavaScript trên Landing Page</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

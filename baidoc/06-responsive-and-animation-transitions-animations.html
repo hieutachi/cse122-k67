@@ -1,0 +1,96 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Transitions & Animations | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-6.html">Chương 6</a> &rsaquo; Responsive & animation &rsaquo; Bài 4/5</p>
+<h1 class="lesson-title">Transitions & Animations</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 4/5</span><span>Module: Responsive & animation</span><span>~4 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="transitions-amp-animations">Transitions &amp; Animations</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Làm chủ <code>transition</code> để hover của nút và card mượt mà</li><li>Dùng <code>transform</code> (scale/translate) thay cho thay đổi gây giật layout</li><li>Viết animation bằng <code>@keyframes</code> và tôn trọng <code>prefers-reduced-motion</code></li></ul>
+<h3 id="h-3-phn-bit-transition-v-animation">Phân biệt transition và animation<a class="anchor" href="#h-3-phn-bit-transition-v-animation" aria-label="Liên kết mục">#</a></h3>
+<p><strong>Transition</strong> chuyển đổi <em>giữa hai trạng thái</em> (bình thường ↔ hover), tự kích hoạt khi trạng thái đổi — không cần code thêm. <strong>Animation</strong> là chuỗi chuyển động <em>tự chạy nhiều bước</em> qua <code>@keyframes</code>, có thể lặp vô hạn hay chạy một lần khi phần tử xuất hiện.</p>
+<h3 id="h-5-transition-cho-nt-v-card">Transition cho nút và card<a class="anchor" href="#h-5-transition-cho-nt-v-card" aria-label="Liên kết mục">#</a></h3>
+<p>Cú pháp đầy đủ: <code>transition: &lt;thuộc tính&gt; &lt;thời gian&gt; &lt;hàm thời gian&gt; &lt;độ trễ&gt;</code>. Nên liệt kê thuộc tính cụ thể thay vì <code>transition: all</code> để tránh hiệu ứng phụ ngoài ý muốn:</p>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>.btn-book {
+  background-color: #0d6efd;
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.btn-book:hover {
+  background-color: #0a58ca;
+  transform: translateY(-2px);   /* nhấc nhẹ lên */
+  box-shadow: 0 6px 14px rgba(13, 110, 253, 0.35);
+}
+
+.btn-book:active {
+  transform: translateY(0);      /* bấm xuống lại */
+}</code></pre></figure>
+<p>Đừng transition <code>width</code>, <code>margin</code>, <code>top</code>... — mỗi thay đổi của chúng buộc trình duyệt tính lại layout (reflow) nên chuyển động giật. <code>transform</code> và <code>opacity</code> chạy trên lớp đồ hoạ riêng nên luôn mượt — ưu tiên hai thuộc tính này. Card bác sĩ áp dụng cùng nguyên tắc:</p>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>.doctor-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+.doctor-card:hover { transform: scale(1.03); box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12); }</code></pre></figure>
+<p>Bốn hàm thời gian thông dụng: <code>ease</code> (mặc định, tự nhiên), <code>linear</code> (đều — hợp chuyển động xoay/vô hạn), <code>ease-in</code> (nhanh dần), <code>ease-out</code> (chậm dần).</p>
+<h3 id="h-11-keyframes-v-animation">@keyframes và animation<a class="anchor" href="#h-11-keyframes-v-animation" aria-label="Liên kết mục">#</a></h3>
+<p>Animation gồm khung hình <code>@keyframes</code> mô tả các trạng thái và luật <code>animation</code> gắn khung hình vào phần tử:</p>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.hero-content { animation: fadeInUp 0.6s ease-out both; }</code></pre></figure>
+<p>Viết tắt <code>animation: fadeInUp 0.6s ease-out both</code> gồm: tên khung hình, thời gian, hàm thời gian, và <code>both</code> — giữ trạng thái <code>from</code> khi chưa chạy và <code>to</code> khi kết thúc, chống "nháy" nội dung hiện lên sớm. Có thể thêm <code>delay</code>, <code>infinite</code>, <code>alternate</code>:</p>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.5); }
+  50%      { box-shadow: 0 0 0 12px rgba(220, 53, 69, 0); }
+}
+
+.badge-hotline { animation: pulse 2s ease-in-out infinite; } /* "nhịp đập" cho hotline */</code></pre></figure>
+<p>Khác <code>transition</code> (chỉ hai trạng thái), <code>@keyframes</code> cho nhiều cột mốc: <code>0%</code> → <code>50%</code> → <code>100%</code>.</p>
+<h3 id="h-17-tn-trng-prefersreducedmotion">Tôn trọng prefers-reduced-motion<a class="anchor" href="#h-17-tn-trng-prefersreducedmotion" aria-label="Liên kết mục">#</a></h3>
+<p>Nhiều người (rối loạn tiền đình, nhạy cảm thị giác) bật giảm chuyển động trên hệ điều hành. Bệnh viện phục vụ cả người cao tuổi — khối sau là thói quen chuyên nghiệp, không phải phụ kiện:</p>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}</code></pre></figure>
+<h3 id="h-20-prompt-mu-sinh-animation-cho-hero">Prompt mẫu: sinh animation cho Hero<a class="anchor" href="#h-20-prompt-mu-sinh-animation-cho-hero" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Trang chủ Highland Hospital: khi trang tải, tôi muốn tiêu đề "Chăm sóc
+sức khỏe toàn diện cho gia đình bạn" và nút "Đặt lịch khám ngay" xuất
+hiện nhẹ nhàng: mờ dần + trượt lên từ 24px, tiêu đề chạy trước nút
+0.15s. Nút hover dịch lên 2px và đổ bóng, khi bấm về vị trí cũ. Viết
+CSS thuần (không framework) cho .hero-title và .btn-book: dùng
+@keyframes fadeInUp, transition cho nút, kèm khối prefers-reduced-motion
+tắt toàn bộ hiệu ứng.</code></pre></figure>
+<h3 id="h-22-thc-hnh">Thực hành<a class="anchor" href="#h-22-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Thêm hover cho nút "Đặt lịch khám" (đổi màu + <code>translateY(-2px)</code>) và card bác sĩ (<code>scale(1.03)</code>).</li><li>Thêm <code>fadeInUp</code> cho <code>.hero-content</code>, thử <code>delay: 0.15s</code> cho nút để tiêu đề xuất hiện trước.</li><li>Chèn khối <code>prefers-reduced-motion</code>; kiểm tra bằng DevTools → Rendering → <em>Emulate prefers-reduced-motion: reduce</em>.</li><li>Gửi prompt cho AI, đối chiếu bản AI viết với bản bạn tự làm, ghi lại điểm khác biệt.</li></ul>
+<h3 id="h-24-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-24-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Đủ công cụ cho một trang đẹp và sống động trên mọi màn hình — bài Lab tới gói tất cả lại: dựng Hero Highland Hospital chạy tốt trên 3 kích thước thiết bị với checklist tự kiểm tra.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">8 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-phn-bit-transition-v-animation">Phân biệt transition và animation</a></li><li><a href="#h-5-transition-cho-nt-v-card">Transition cho nút và card</a></li><li><a href="#h-11-keyframes-v-animation">@keyframes và animation</a></li><li><a href="#h-17-tn-trng-prefersreducedmotion">Tôn trọng prefers-reduced-motion</a></li><li><a href="#h-20-prompt-mu-sinh-animation-cho-hero">Prompt mẫu: sinh animation cho Hero</a></li><li><a href="#h-22-thc-hnh">Thực hành</a></li><li><a href="#h-24-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="06-responsive-and-animation-hinh-anh-typography-linh-hoat.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Hình ảnh & Typography linh hoạt</strong></span></a><a href="06-responsive-and-animation-lab-hero-responsive.html" rel="next"><span><small>Bài sau</small><strong>Lab: Hero responsive</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

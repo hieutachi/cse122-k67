@@ -1,0 +1,109 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Loading & Error states | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-9.html">Chương 9</a> &rsaquo; Async JavaScript &rsaquo; Bài 3/5</p>
+<h1 class="lesson-title">Loading & Error states</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 3/5</span><span>Module: Async JavaScript</span><span>~3 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="loading-amp-error-states">Loading &amp; Error states</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Nắm nguyên tắc: mọi thao tác tải dữ liệu có 3 trạng thái — loading, thành công, lỗi</li><li>Hiển thị spinner bằng Bootstrap <code>spinner-border</code>, nâng cao với skeleton</li><li>Xử lý lỗi bằng <code>try/catch</code> + alert Bootstrap kèm nút <strong>Retry</strong></li><li>Không bao giờ để giao diện "treo" im lặng trong lúc chờ hay khi lỗi</li></ul>
+<h3 id="h-3-v-sao-khng-c--giao-din-im-lng">Vì sao không được để giao diện im lặng?<a class="anchor" href="#h-3-v-sao-khng-c--giao-din-im-lng" aria-label="Liên kết mục">#</a></h3>
+<p>Gọi API mất thời gian — nếu chỉ render khi có dữ liệu, người dùng nhìn vào <strong>vùng trống rỗng</strong> và không biết: đang tải? treo? lỗi? Quy ước chuyên nghiệp: mỗi vùng dữ liệu luôn ở một trong ba trạng thái rõ ràng:</p>
+<div class="table-card"><table><thead><tr><th>Trạng thái</th><th>Giao diện</th><th>Khi nào</th></tr></thead><tbody><tr><td><strong>Loading</strong></td><td>spinner / skeleton</td><td>đang chờ API</td></tr><tr><td><strong>Success</strong></td><td>nội dung thật</td><td>có dữ liệu</td></tr><tr><td><strong>Error</strong></td><td>alert + nút retry</td><td>fetch thất bại</td></tr></tbody></table></div>
+<h3 id="h-6-trng-thi-loading">Trạng thái Loading<a class="anchor" href="#h-6-trng-thi-loading" aria-label="Liên kết mục">#</a></h3>
+<p>Bootstrap có sẵn spinner chỉ với một thẻ:</p>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;div id="doctors-loading" class="text-center py-4"&gt;
+  &lt;div class="spinner-border text-primary" role="status"&gt;
+    &lt;span class="sr-only"&gt;Đang tải…&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;p class="text-muted mt-2 mb-0"&gt;Đang tải danh sách bác sĩ…&lt;/p&gt;
+&lt;/div&gt;</code></pre></figure>
+<p>Bật/tắt bằng <code>classList</code> (đã học ở bài DOM):</p>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>const loadingBox = document.querySelector('#doctors-loading');
+const container = document.querySelector('#doctors-container');
+loadingBox.classList.remove('d-none');     // bật spinner trước khi gọi API
+container.classList.add('d-none');          // giấu nội dung cũ</code></pre></figure>
+<p><strong>Skeleton</strong> tinh tế hơn: dựng sẵn hình dáng placeholder nhấp nháy giống layout thật — mắt cảm nhận trang "sắp có nội dung" thay vì "đang tải rỗng". HTML + CSS thuần:</p>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;div id="doctors-skeleton" class="row g-4 d-none" aria-hidden="true"&gt;
+  &lt;div class="col-md-4"&gt;&lt;div class="card"&gt;&lt;div class="card-body"&gt;
+    &lt;div class="skeleton-line skeleton-avatar mb-3"&gt;&lt;/div&gt;
+    &lt;div class="skeleton-line w-75 mb-2"&gt;&lt;/div&gt;
+    &lt;div class="skeleton-line w-50"&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre></figure>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>.skeleton-line {
+  height: 14px; border-radius: 4px;
+  background: linear-gradient(90deg, #e9ecef 25%, #f8f9fa 50%, #e9ecef 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.2s infinite;
+}
+@keyframes shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }</code></pre></figure>
+<h3 id="h-14-trng-thi-error-alert--nt-retry">Trạng thái Error: alert + nút retry<a class="anchor" href="#h-14-trng-thi-error-alert--nt-retry" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>async function loadDoctors() {
+  const loading = document.querySelector('#doctors-loading');
+  const container = document.querySelector('#doctors-container');
+  const errorBox = document.querySelector('#doctors-error');
+
+  // 1. bật loading, giấu lỗi cũ
+  loading.classList.remove('d-none');
+  container.classList.add('d-none');
+  errorBox.classList.add('d-none');
+
+  try {
+    const response = await fetch('http://localhost:3000/doctors');
+    if (!response.ok) throw new Error(`Lỗi ${response.status}`);
+    const doctors = await response.json();
+
+    // 2. thành công: tắt loading, render
+    loading.classList.add('d-none');
+    renderDoctors(doctors);
+    container.classList.remove('d-none');
+  } catch (error) {
+    // 3. lỗi: tắt loading, hiện alert
+    loading.classList.add('d-none');
+    errorBox.classList.remove('d-none');
+    console.error('Tải bác sĩ thất bại:', error);
+  }
+}</code></pre></figure>
+<p>Alert lỗi trong HTML, kèm nút <strong>Thử lại</strong>:</p>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;div id="doctors-error" class="alert alert-danger d-none" role="alert"&gt;
+  &lt;h5 class="alert-heading"&gt;Không tải được danh sách bác sĩ&lt;/h5&gt;
+  &lt;p class="mb-2"&gt;Kiểm tra kết nối mạng hoặc xem JSON Server đã chạy chưa.&lt;/p&gt;
+  &lt;button id="btn-retry-doctors" class="btn btn-outline-danger btn-sm"&gt;↻ Thử lại&lt;/button&gt;
+&lt;/div&gt;</code></pre></figure>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>document.querySelector('#btn-retry-doctors').addEventListener('click', loadDoctors);</code></pre></figure>
+<p>Điểm hay: nút retry chỉ cần gọi <strong>lại chính hàm <code>loadDoctors</code></strong> — cả ba trạng thái tự chạy lại từ đầu vì chúng nằm trong một hàm duy nhất. Khi mạng lỗi, người dùng thấy thông báo rõ ràng và có hành động làm tiếp — không bao giờ "treo".</p>
+<h3 id="h-20-prompt-ai-mu">Prompt AI mẫu<a class="anchor" href="#h-20-prompt-ai-mu" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Dự án Highland Hospital (Bootstrap 5, JS thuần ES6+). Viết loadDoctors()
+fetch "http://localhost:3000/doctors" (JSON Server) với đủ 3 trạng thái:
+(1) spinner-border hiện trong #doctors-loading trước khi fetch; (2) thành
+công thì render card vào #doctors-container rồi ẩn spinner; (3) lỗi
+(network hoặc !response.ok) thì ẩn spinner, hiện alert-danger #doctors-error
+kèm nút "Thử lại" gọi lại loadDoctors(). Không dùng innerHTML để render
+dữ liệu người dùng. Kèm HTML mẫu cho 3 vùng loading/container/error.</code></pre></figure>
+<h3 id="h-22-thc-hnh">Thực hành<a class="anchor" href="#h-22-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<ol><li>Thêm vùng loading + error vào trang danh sách bác sĩ theo mẫu.</li><li>Chạy JSON Server, tải lại trang — spinner hiện rồi biến mất khi có dữ liệu.</li><li><strong>Tắt JSON Server</strong> rồi bấm Thử lại: alert hiện đúng lúc, Console chỉ có log bạn chủ động ghi.</li><li>Nâng cấp spinner thành skeleton 3 cột và quan sát hiệu ứng shimmer.</li></ol>
+<h3 id="h-24-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-24-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Xử lý async đã vững — giờ ráp vào form đặt lịch: chia thành 3 bước với state, nút Tiếp tục/Quay lại và progress indicator trong bài kế tiếp.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">7 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-v-sao-khng-c--giao-din-im-lng">Vì sao không được để giao diện im lặng?</a></li><li><a href="#h-6-trng-thi-loading">Trạng thái Loading</a></li><li><a href="#h-14-trng-thi-error-alert--nt-retry">Trạng thái Error: alert + nút retry</a></li><li><a href="#h-20-prompt-ai-mu">Prompt AI mẫu</a></li><li><a href="#h-22-thc-hnh">Thực hành</a></li><li><a href="#h-24-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="11-async-javascript-mock-rest-api.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Mock REST API</strong></span></a><a href="11-async-javascript-lu-ng-d-t-lich-da-bu-c.html" rel="next"><span><small>Bài sau</small><strong>Luồng đặt lịch đa bước</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

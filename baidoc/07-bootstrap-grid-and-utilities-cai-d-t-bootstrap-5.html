@@ -1,0 +1,80 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cài đặt Bootstrap 5 | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-6.html">Chương 6</a> &rsaquo; Bootstrap grid & utilities &rsaquo; Bài 1/5</p>
+<h1 class="lesson-title">Cài đặt Bootstrap 5</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 1/5</span><span>Module: Bootstrap grid & utilities</span><span>~4 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="ci-t-bootstrap-5">Cài đặt Bootstrap 5</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Nhúng Bootstrap 5 vào trang bằng CDN: thẻ CSS trong <code>&lt;head&gt;</code>, thẻ JS bundle cuối <code>&lt;body&gt;</code></li><li>Kiểm tra được version Bootstrap đang chạy</li><li>Hiểu vì sao khoá học dùng CDN và cách đặt CSS tự viết để override đúng</li></ul>
+<h3 id="h-3-bootstrap-l-g-v-v-sao-khng-cn-ti-v">Bootstrap là gì và vì sao không cần tải về<a class="anchor" href="#h-3-bootstrap-l-g-v-v-sao-khng-cn-ti-v" aria-label="Liên kết mục">#</a></h3>
+<p>Bootstrap 5 là thư viện CSS + JS mã nguồn mở: hệ thống lưới, components (navbar, card, modal...) và hàng trăm utility class giúp bạn dựng giao diện nhanh. Với khoá học này, ta dùng <strong>CDN</strong> — Bootstrap được phục vụ từ máy chủ toàn cầu qua một đường link, thay vì tải file về máy. Chỉ cần hai dòng là cả thư viện sẵn sàng.</p>
+<blockquote><p>⚠️ Khác Bootstrap 4, <strong>Bootstrap 5 không cần jQuery</strong>. Chỉ cần một file <code>bootstrap.bundle.min.js</code> duy nhất (bundle = JS lõi + Popper dùng cho dropdown/tooltip). Đừng chép nhầm code cũ có jQuery vào.</p></blockquote>
+<h3 id="h-6-cu-trc-trang-ti-thiu">Cấu trúc trang tối thiểu<a class="anchor" href="#h-6-cu-trc-trang-ti-thiu" aria-label="Liên kết mục">#</a></h3>
+<p>Thứ tự là yếu tố quyết định: CSS Bootstrap <strong>trước</strong>, CSS tự viết <strong>sau</strong>; JS đặt cuối <code>&lt;body&gt;</code>:</p>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="vi"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+  &lt;title&gt;Highland Hospital&lt;/title&gt;
+
+  &lt;!-- 1. CSS Bootstrap --&gt;
+  &lt;link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"&gt;
+
+  &lt;!-- 2. CSS tự viết — luôn SAU Bootstrap để override được --&gt;
+  &lt;link href="css/custom.css" rel="stylesheet"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+  &lt;!-- 3. Nội dung trang --&gt;
+  &lt;h1 class="text-primary"&gt;Highland Hospital&lt;/h1&gt;
+  &lt;button class="btn btn-primary"&gt;Đặt lịch khám&lt;/button&gt;
+
+  &lt;!-- 4. JS Bundle — cuối body, chỉ cần khi dùng component JS --&gt;
+  &lt;script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre></figure>
+<p>Giải thích từng chi tiết:</p>
+<ul><li><code>&lt;meta name="viewport"&gt;</code> bắt buộc có để trang responsive hoạt động đúng trên điện thoại — thiếu nó, Bootstrap vẫn render như trang desktop thu nhỏ.</li><li>Version cố định <code>5.3.3</code> thay vì <code>5</code> chung chung: đảm bảo mọi người trong khoá học cùng một phiên bản, không lỗi "chạy trên máy tôi mà".</li><li>CSS tự viết đặt <strong>sau</strong> link Bootstrap vì cascade — cùng độ đặc hiệu, file sau thắng. Muốn nút chính của bệnh viện màu xanh riêng, chỉ cần khai báo ở <code>custom.css</code> là ghi đè được.</li></ul>
+<h3 id="h-11-kim-tra-version-ang-chy">Kiểm tra version đang chạy<a class="anchor" href="#h-11-kim-tra-version-ang-chy" aria-label="Liên kết mục">#</a></h3>
+<p>Mở DevTools (<code>F12</code>) → Console, gõ:</p>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>bootstrap.Tooltip.VERSION
+// kết quả ví dụ: "5.3.3"</code></pre></figure>
+<p>Nếu báo <code>bootstrap is not defined</code>, nghĩa là JS bundle chưa tải được — kiểm tra lại đường link hoặc mạng. Còn muốn xác nhận CSS đã vào, chọn tab Elements và nhìn class <code>.btn-primary</code> có đủ thuộc tính Bootstrap trong panel Styles.</p>
+<h3 id="h-15-v-sao-kho-hc-dng-cdn">Vì sao khoá học dùng CDN<a class="anchor" href="#h-15-v-sao-kho-hc-dng-cdn" aria-label="Liên kết mục">#</a></h3>
+<ul><li><strong>Khởi động 0 giây</strong>: không cần cài npm, không cần cấu hình build — dán link, chạy Live Server là thấy kết quả. Phù hợp giai đoạn học HTML/CSS/JS thuần.</li><li><strong>Giữ mọi bài lab đồng bộ</strong>: ai cũng tải đúng cùng phiên bản từ cùng một CDN.</li><li><strong>Miễn phí và nhanh</strong>: jsDelivr phục vụ từ nhiều nút trên thế giới, có thể dùng cache trình duyệt sẵn từ các website khác.</li></ul>
+<p>Khi ra dự án thật cần offline hoặc build production, bạn mới chuyển sang cách cài qua npm — không cần học ngay lúc này.</p>
+<h3 id="h-18-prompt-mu-ai-kim-tra-trang-bootstrap">Prompt mẫu: AI kiểm tra trang Bootstrap<a class="anchor" href="#h-18-prompt-mu-ai-kim-tra-trang-bootstrap" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Tôi mới nhúng Bootstrap 5 vào trang Highland Hospital qua CDN nhưng nút
+.btn-primary không có màu xanh Bootstrap mà vẫn màu mặc định. Đây là
+đầu file HTML của tôi: [dán 10 dòng &lt;head&gt;]. Hãy chỉ ra lỗi có thể xảy
+ra theo thứ tự khả năng cao nhất (ví dụ: thiếu link CSS, link sai version,
+CSS tự viết đặt trước link Bootstrap...), và cho tôi &lt;head&gt; đúng chuẩn
+để dán lại.</code></pre></figure>
+<h3 id="h-20-thc-hnh">Thực hành<a class="anchor" href="#h-20-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Tạo <code>bootstrap-hello.html</code> đúng cấu trúc trên, thêm một nút <code>.btn-primary</code> và một đoạn <code>.text-primary</code>.</li><li>Mở bằng Live Server, kiểm tra version bằng Console, thử xoá dòng link CSS để thấy trang "mất hồn" thế nào.</li><li>Tạo <code>css/custom.css</code> đặt sau link Bootstrap, thử ghi đè màu <code>.btn-primary</code> — nhận ra vai trò thứ tự link.</li></ul>
+<h3 id="h-22-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-22-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Bootstrap đã chạy — bài sau khám phá trái tim của nó: hệ thống lưới 12 cột giúp dựng layout responsive mà không cần viết media query nào.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">8 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-bootstrap-l-g-v-v-sao-khng-cn-ti-v">Bootstrap là gì và vì sao không cần tải về</a></li><li><a href="#h-6-cu-trc-trang-ti-thiu">Cấu trúc trang tối thiểu</a></li><li><a href="#h-11-kim-tra-version-ang-chy">Kiểm tra version đang chạy</a></li><li><a href="#h-15-v-sao-kho-hc-dng-cdn">Vì sao khoá học dùng CDN</a></li><li><a href="#h-18-prompt-mu-ai-kim-tra-trang-bootstrap">Prompt mẫu: AI kiểm tra trang Bootstrap</a></li><li><a href="#h-20-thc-hnh">Thực hành</a></li><li><a href="#h-22-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="06-responsive-and-animation-lab-hero-responsive.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Lab: Hero responsive</strong></span></a><a href="07-bootstrap-grid-and-utilities-h-th-ng-lu-i-12-c-t.html" rel="next"><span><small>Bài sau</small><strong>Hệ thống lưới 12 cột</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

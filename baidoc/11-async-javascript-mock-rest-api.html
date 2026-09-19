@@ -1,0 +1,90 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mock REST API | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-9.html">Chương 9</a> &rsaquo; Async JavaScript &rsaquo; Bài 2/5</p>
+<h1 class="lesson-title">Mock REST API</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 2/5</span><span>Module: Async JavaScript</span><span>~4 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="mock-rest-api">Mock REST API</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Hiểu mô hình REST API: tài nguyên + endpoint + phương thức HTTP</li><li>Dựng API giả nhanh bằng JSON Server: <code>npx json-server db.json</code></li><li>Định nghĩa <code>db.json</code> chuẩn cho Highland Hospital với <code>/doctors</code>, <code>/appointments</code></li><li>Biết cách mock thuần bằng <code>Promise</code> + <code>setTimeout</code> khi không muốn cài thêm</li></ul>
+<h3 id="h-3-rest-api-l-g-bn-ti-gin">REST API là gì (bản tối giản)<a class="anchor" href="#h-3-rest-api-l-g-bn-ti-gin" aria-label="Liên kết mục">#</a></h3>
+<p>REST quy ước tổ chức dữ liệu thành <strong>tài nguyên</strong> (resource), mỗi tài nguyên một URL gọi là <strong>endpoint</strong>, hành động diễn tả bằng <strong>phương thức HTTP</strong>:</p>
+<div class="table-card"><table><thead><tr><th>Phương thức</th><th>Ý nghĩa</th><th>Endpoint Highland Hospital</th></tr></thead><tbody><tr><td><code>GET</code></td><td>đọc danh sách / một bản ghi</td><td><code>GET /doctors</code>, <code>GET /appointments/3</code></td></tr><tr><td><code>POST</code></td><td>tạo mới</td><td><code>POST /appointments</code></td></tr><tr><td><code>PATCH</code> / <code>PUT</code></td><td>cập nhật</td><td><code>PATCH /appointments/3</code></td></tr><tr><td><code>DELETE</code></td><td>xoá</td><td><code>DELETE /appointments/3</code></td></tr></tbody></table></div>
+<p>Phía client trao đổi JSON: gửi object JSON, nhận object JSON. Khoá học này chưa cần server thật — ta chỉ cần thứ trả về <strong>đúng format đó</strong>, gọi là <em>mock API</em>.</p>
+<h3 id="h-7-cch-1-json-server-nhanh-gn-tht-nht">Cách 1: JSON Server (nhanh, gần thật nhất)<a class="anchor" href="#h-7-cch-1-json-server-nhanh-gn-tht-nht" aria-label="Liên kết mục">#</a></h3>
+<p>Chỉ cần một file dữ liệu và một lệnh:</p>
+<figure class="code-block"><figcaption>Terminal</figcaption><pre><code># chạy trong thư mục dự án, ở terminal riêng (đừng tắt khi test)
+npx json-server --watch db.json --port 3000</code></pre></figure>
+<p>Lệnh này dựng nguyên một REST API từ file <code>db.json</code> — mỗi khoá cấp cao trở thành một endpoint. Tạo <code>db.json</code>:</p>
+<figure class="code-block"><figcaption>JSON</figcaption><pre><code>{
+  "doctors": [
+    { "id": 1, "name": "BS. Nguyễn Thu Hà", "specialty": "Tim mạch",
+      "experience": 12, "avatar": "https://i.pravatar.cc/150?img=47" },
+    { "id": 2, "name": "BS. Trần Minh Khang", "specialty": "Nội tổng hợp",
+      "experience": 8, "avatar": "https://i.pravatar.cc/150?img=12" }
+  ],
+  "appointments": [
+    { "id": 1, "patientName": "Trần Văn An", "phone": "0912 345 678",
+      "specialty": "Tim mạch", "doctorId": 1, "date": "2025-06-20",
+      "time": "09:00", "status": "pending" }
+  ]
+}</code></pre></figure>
+<p>Sau khi chạy, mở trình duyệt thử:</p>
+<ul><li><code>http://localhost:3000/doctors</code> — mảng bác sĩ</li><li><code>http://localhost:3000/doctors/1</code> — một bác sĩ</li><li><code>http://localhost:3000/appointments</code> — mảng lịch hẹn</li></ul>
+<p>JSON Server hỗ trợ sẵn <code>POST</code>/<code>PATCH</code>/<code>DELETE</code> lẫn lọc query như <code>GET /doctors?specialty=Tim mạch</code>. Lưu ý CORS: trang mở bằng <code>file://</code> sẽ bị chặn fetch — hãy luôn mở qua <strong>Live Server</strong> (<code>http://127.0.0.1:5500</code>).</p>
+<h3 id="h-15-cch-2-mock-thun-bng-promise--settimeout">Cách 2: mock thuần bằng Promise + setTimeout<a class="anchor" href="#h-15-cch-2-mock-thun-bng-promise--settimeout" aria-label="Liên kết mục">#</a></h3>
+<p>Khi chưa muốn cài thêm gì (demo offline), giả lập độ trễ mạng bằng tay — hàm vẫn trả về <code>Promise</code> nên chỗ gọi giống hệt khi fetch API thật:</p>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>// mock-api.js — chỉ dùng để học, xoá khi có API thật
+const fakeDoctors = [
+  { id: 1, name: 'BS. Nguyễn Thu Hà', specialty: 'Tim mạch', experience: 12 },
+  { id: 2, name: 'BS. Trần Minh Khang', specialty: 'Nội tổng hợp', experience: 8 },
+];
+
+function getDoctors() {
+  return new Promise((resolve) =&gt; {
+    setTimeout(() =&gt; resolve(fakeDoctors), 600);   // giả lập mạng 600ms
+  });
+}
+
+async function demo() {
+  const doctors = await getDoctors();   // gọi y như await fetch
+  console.log(doctors);
+}
+demo();</code></pre></figure>
+<p>Mẹo hay: mock cả lỗi để tập xử lý <code>catch</code> — đổi <code>resolve</code> thành <code>reject(new Error('Mạng lỗi'))</code>.</p>
+<h3 id="h-19-prompt-ai-mu">Prompt AI mẫu<a class="anchor" href="#h-19-prompt-ai-mu" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Tôi đang học mock API cho dự án Highland Hospital (frontend thuần).
+Tạo db.json cho JSON Server gồm: 6 doctors (id, name, specialty,
+experience, avatar) thuộc 3 chuyên khoa Tim mạch / Nội tổng hợp / Nhi,
+và 3 appointments (id, patientName, phone, specialty, doctorId, date,
+time, status) — tên tiếng Việt hợp lý. Kèm 3 lệnh fetch minh hoạ:
+GET /doctors, GET /appointments?status=pending, POST /appointments.</code></pre></figure>
+<h3 id="h-21-thc-hnh">Thực hành<a class="anchor" href="#h-21-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<ol><li>Tạo <code>db.json</code> (tự viết hoặc theo prompt), chạy <code>npx json-server --watch db.json --port 3000</code>.</li><li>Mở <code>http://localhost:3000/doctors</code> trong trình duyệt, ghi nhận JSON trả về.</li><li>Gửi <code>POST</code> một lịch hẹn bằng Console:</li></ol>
+<p><code>fetch('http://localhost:3000/appointments', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ patientName: 'Lê Thị Bích', phone: '0908 123 456', specialty: 'Nhi', doctorId: 3, date: '2025-06-22', time: '14:00', status: 'pending' }) })</code></p>
+<p>rồi <code>GET</code> lại danh sách xem bản ghi mới.</p>
+<ol><li>Xoá <code>db.json</code> và thử cách mock thuần — so sánh cách gọi hàm của hai cách giống nhau ở điểm nào.</li></ol>
+<h3 id="h-26-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-26-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Đã có API giả — nhưng mạng luôn chậm và hay lỗi; bài sau dạy hai trạng thái không thể thiếu của mọi màn hình tải dữ liệu: spinner loading và thông báo lỗi kèm nút retry.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">7 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-rest-api-l-g-bn-ti-gin">REST API là gì (bản tối giản)</a></li><li><a href="#h-7-cch-1-json-server-nhanh-gn-tht-nht">Cách 1: JSON Server (nhanh, gần thật nhất)</a></li><li><a href="#h-15-cch-2-mock-thun-bng-promise--settimeout">Cách 2: mock thuần bằng Promise + setTimeout</a></li><li><a href="#h-19-prompt-ai-mu">Prompt AI mẫu</a></li><li><a href="#h-21-thc-hnh">Thực hành</a></li><li><a href="#h-26-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="11-async-javascript-fetch-api-async-await.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Fetch API & Async/Await</strong></span></a><a href="11-async-javascript-loading-error-states.html" rel="next"><span><small>Bài sau</small><strong>Loading & Error states</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

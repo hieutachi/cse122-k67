@@ -1,0 +1,96 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Array Methods cốt lõi | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-8.html">Chương 8</a> &rsaquo; JavaScript cơ bản &rsaquo; Bài 3/5</p>
+<h1 class="lesson-title">Array Methods cốt lõi</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 3/5</span><span>Module: JavaScript cơ bản</span><span>~5 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="array-methods-ct-li">Array Methods cốt lõi</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Dùng thành thạo <code>map</code>, <code>filter</code>, <code>find</code>, <code>forEach</code>, <code>reduce</code>, <code>sort</code>, <code>includes</code></li><li>Tư duy "mô tả đầu vào → đầu ra" trước khi viết code</li><li>Lọc bác sĩ nội khoa, tìm bác sĩ theo id, đếm bác sĩ theo chuyên khoa</li></ul>
+<h3 id="h-3-t-duy-m-t-u-vou-ra">Tư duy mô tả đầu vào/đầu ra<a class="anchor" href="#h-3-t-duy-m-t-u-vou-ra" aria-label="Liên kết mục">#</a></h3>
+<p>Trước khi tra cứu cú pháp, hãy nói thành câu điều bạn cần:</p>
+<div class="table-card"><table><thead><tr><th>Bạn muốn</th><th>Nói với chính mình</th><th>Method</th></tr></thead><tbody><tr><td>Biến đổi từng phần tử thành phần tử mới</td><td>"Mỗi bác sĩ → một card HTML"</td><td><code>map</code></td></tr><tr><td>Giữ lại một nhóm phần tử thoả điều kiện</td><td>"Giữ bác sĩ nào thuộc Nội khoa"</td><td><code>filter</code></td></tr><tr><td>Lấy đúng MỘT phần tử theo điều kiện</td><td>"Bác sĩ có id = D002"</td><td><code>find</code></td></tr><tr><td>Làm gì đó với từng phần tử, không cần kết quả mới</td><td>"In từng bác sĩ ra console"</td><td><code>forEach</code></td></tr><tr><td>Gom toàn bộ mảng về một giá trị</td><td>"Tổng lượt khám, đếm theo chuyên khoa"</td><td><code>reduce</code></td></tr></tbody></table></div>
+<p>Chọn được method đúng là đã giải được nửa bài toán.</p>
+<h3 id="h-7-d-liu-mu">Dữ liệu mẫu<a class="anchor" href="#h-7-d-liu-mu" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>const doctors = [
+  { id: 'D001', name: 'Nguyễn Minh Anh', specialty: 'Nội tổng hợp', experience: 12, fee: 500000, bookings: 240 },
+  { id: 'D002', name: 'Lê Hoàng Nam',   specialty: 'Tim mạch',     experience: 15, fee: 650000, bookings: 310 },
+  { id: 'D003', name: 'Trần Thu Hà',    specialty: 'Nhi khoa',     experience: 8,  fee: 400000, bookings: 198 },
+  { id: 'D004', name: 'Phạm Quốc Bảo',  specialty: 'Nội tổng hợp', experience: 10, fee: 450000, bookings: 175 },
+];</code></pre></figure>
+<h3 id="h-9-map--bin-i-tng-phn-t">map — biến đổi từng phần tử<a class="anchor" href="#h-9-map--bin-i-tng-phn-t" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>// Đầu vào: mảng bác sĩ → Đầu ra: mảng chuỗi mô tả
+const labels = doctors.map((d) =&gt; `${d.name} — ${d.specialty}`);
+console.log(labels);
+
+// Thành HTML sẵn sàng đưa vào trang (chương 9 bài 5 sẽ dùng)
+const cards = doctors.map((d) =&gt; `&lt;p&gt;${d.name} (${d.specialty})&lt;/p&gt;`);
+console.log(cards);</code></pre></figure>
+<p><code>map</code> luôn trả mảng <strong>cùng số phần tử</strong>, mỗi phần tử là kết quả của callback.</p>
+<h3 id="h-12-filter--gi-phn-t-tho-iu-kin">filter — giữ phần tử thoả điều kiện<a class="anchor" href="#h-12-filter--gi-phn-t-tho-iu-kin" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>// Bác sĩ thuộc Nội tổng hợp
+const internists = doctors.filter((d) =&gt; d.specialty === 'Nội tổng hợp');
+console.log(internists.length); // 2
+
+// Bác sĩ dưới 10 năm kinh nghiệm
+const juniors = doctors.filter((d) =&gt; d.experience &lt; 10);
+console.log(juniors.map((d) =&gt; d.name)); // ['Trần Thu Hà']</code></pre></figure>
+<h3 id="h-14-find--ly-ng-mt-phn-t">find — lấy đúng một phần tử<a class="anchor" href="#h-14-find--ly-ng-mt-phn-t" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>// Đầu vào: tìm theo điều kiện → Đầu ra: phần tử ĐẦU TIÊN khớp, hoặc undefined
+const doctor = doctors.find((d) =&gt; d.id === 'D002');
+console.log(doctor?.name); // Lê Hoàng Nam
+
+// find kết hợp toán tử optional chaining (?.) tránh lỗi khi không tìm thấy
+const missing = doctors.find((d) =&gt; d.id === 'D999');
+console.log(missing?.name ?? 'Không có bác sĩ này'); // Không có bác sĩ này</code></pre></figure>
+<h3 id="h-16-foreach--duyt-khng-cn-kt-qu">forEach — duyệt không cần kết quả<a class="anchor" href="#h-16-foreach--duyt-khng-cn-kt-qu" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>doctors.forEach((d) =&gt; console.log(`${d.name}: ${d.fee.toLocaleString('vi-VN')}đ`));</code></pre></figure>
+<p>Nếu bạn định <em>trả về</em> mảng mới từ <code>forEach</code> thì đã chọn nhầm — dùng <code>map</code>.</p>
+<h3 id="h-19-reduce--gom-v-mt-gi-tr">reduce — gom về một giá trị<a class="anchor" href="#h-19-reduce--gom-v-mt-gi-tr" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>// Tổng lượt khám của toàn bệnh viện
+const totalBookings = doctors.reduce((sum, d) =&gt; sum + d.bookings, 0);
+console.log(totalBookings); // 923
+
+// Đếm số bác sĩ theo từng chuyên khoa → một object
+const countBySpecialty = doctors.reduce((acc, d) =&gt; {
+  acc[d.specialty] = (acc[d.specialty] || 0) + 1;
+  return acc;
+}, {});
+console.log(countBySpecialty); // { 'Nội tổng hợp': 2, 'Tim mạch': 1, 'Nhi khoa': 1 }</code></pre></figure>
+<p><code>reduce</code> nhận callback hai tham số: biến tích luỹ <code>acc</code> và phần tử hiện tại; tham số thứ hai của <code>reduce</code> là giá trị khởi tạo (<code>0</code>, <code>{}</code>...).</p>
+<h3 id="h-22-sort-v-includes">sort và includes<a class="anchor" href="#h-22-sort-v-includes" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>// sort SỬA mảng gốc — hãy sao chép trước khi sắp xếp
+const byFeeDesc = [...doctors].sort((a, b) =&gt; b.fee - a.fee);
+console.log(byFeeDesc.map((d) =&gt; d.name)); // đắt nhất đứng đầu
+
+// includes: kiểm tra phần tử có trong mảng không
+const morningShifts = ['D001', 'D003'];
+console.log(morningShifts.includes('D001')); // true</code></pre></figure>
+<h3 id="h-24-prompt-mu">Prompt mẫu<a class="anchor" href="#h-24-prompt-mu" aria-label="Liên kết mục">#</a></h3>
+<aside class="prompt-card"><span class="prompt-chip">Prompt mẫu</span><p><strong>Prompt gửi Gemini/Claude/ChatGPT:</strong> Cho mảng doctors sau: <code>[{ id, name, specialty, experience, fee, bookings }]</code> gồm 4 bác sĩ chuyên khoa Nội tổng hợp, Tim mạch, Nhi khoa. Hãy viết code dùng đúng một array method cho mỗi yêu cầu và ghi chú "đầu vào → đầu ra" trước mỗi đoạn: (1) in tên từng bác sĩ; (2) mảng tên các bác sĩ Tim mạch; (3) bác sĩ có id 'D003'; (4) tổng <code>fee</code> nếu cả 4 người khám một lượt; (5) xếp danh sách theo <code>experience</code> giảm dần mà không sửa mảng gốc. Giải thích vì sao không nên dùng forEach cho yêu cầu (4).</p></aside>
+<h3 id="h-26-thc-hnh">Thực hành<a class="anchor" href="#h-26-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<ol><li>Gõ mảng <code>doctors</code> vào Console DevTools (hoặc file <code>doctors-data.js</code>).</li><li><code>filter</code> lấy bác sĩ Nội tổng hợp, rồi <code>map</code> để lấy tên — thử ghép chuỗi <code>.filter(...).map(...)</code>.</li><li><code>find</code> bác sĩ theo <code>id</code> do bạn nhập, in ra tên hoặc thông báo "không tìm thấy".</li><li><code>reduce</code> đếm bác sĩ theo từng chuyên khoa.</li><li>Chạy prompt mẫu với AI, dán kết quả vào console và kiểm tra từng dòng.</li></ol>
+<h3 id="h-28-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-28-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Xử lý được cả mảng là nửa trận; bài sau gói dữ liệu thành object và chuyển đổi qua lại với JSON — định dạng mà mọi API bệnh viện đều trả về.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">12 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-t-duy-m-t-u-vou-ra">Tư duy mô tả đầu vào/đầu ra</a></li><li><a href="#h-7-d-liu-mu">Dữ liệu mẫu</a></li><li><a href="#h-9-map--bin-i-tng-phn-t">map — biến đổi từng phần tử</a></li><li><a href="#h-12-filter--gi-phn-t-tho-iu-kin">filter — giữ phần tử thoả điều kiện</a></li><li><a href="#h-14-find--ly-ng-mt-phn-t">find — lấy đúng một phần tử</a></li><li><a href="#h-16-foreach--duyt-khng-cn-kt-qu">forEach — duyệt không cần kết quả</a></li><li><a href="#h-19-reduce--gom-v-mt-gi-tr">reduce — gom về một giá trị</a></li><li><a href="#h-22-sort-v-includes">sort và includes</a></li><li><a href="#h-24-prompt-mu">Prompt mẫu</a></li><li><a href="#h-26-thc-hnh">Thực hành</a></li><li><a href="#h-28-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="09-javascript-basics-arrow-functions-destructuring.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Arrow functions & Destructuring</strong></span></a><a href="09-javascript-basics-objects-json.html" rel="next"><span><small>Bài sau</small><strong>Objects & JSON</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

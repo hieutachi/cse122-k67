@@ -1,0 +1,89 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hệ thống lưới 12 cột | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-6.html">Chương 6</a> &rsaquo; Bootstrap grid & utilities &rsaquo; Bài 2/5</p>
+<h1 class="lesson-title">Hệ thống lưới 12 cột</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 2/5</span><span>Module: Bootstrap grid & utilities</span><span>~4 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="h-thng-li-12-ct">Hệ thống lưới 12 cột</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Hiểu cấu trúc container → row → col và cách 12 cột chia đều mỗi hàng</li><li>Dùng <code>col-<em></code> cho màn hình nhỏ, <code>col-md-</em></code>, <code>col-lg-*</code>... để lưới phản ứng theo breakpoint</li><li>Áp dụng <code>offset</code>, gutters <code>g-*</code>; dựng hàng 3 cột dịch vụ và 4 cột bác sĩ</li></ul>
+<h3 id="h-3-tng-ct-li-mi-hng-chia-cho-12">Ý tưởng cốt lõi: mọi hàng chia cho 12<a class="anchor" href="#h-3-tng-ct-li-mi-hng-chia-cho-12" aria-label="Liên kết mục">#</a></h3>
+<p>Bootstrap chia chiều ngang container thành <strong>12 cột lý thuyết</strong>. Bạn gán cho mỗi phần tử một con số — các con số trong cùng một hàng nên cộng lại bằng 12 (hoặc nhỏ hơn để chừa khoảng trống). Không cần viết một dòng media query nào: con số kèm tiền tố breakpoint chính là "media query trong class".</p>
+<div class="table-card"><table><thead><tr><th>Số cột gán</th><th>Chiếm bề ngang</th></tr></thead><tbody><tr><td><code>col-12</code></td><td>toàn hàng (mặc định khi không ghi gì)</td></tr><tr><td><code>col-6</code></td><td>nửa hàng</td></tr><tr><td><code>col-4</code></td><td>một phần ba hàng</td></tr><tr><td><code>col-3</code></td><td>một phần tư hàng</td></tr></tbody></table></div>
+<h3 id="h-6-container-row-col">container, row, col<a class="anchor" href="#h-6-container-row-col" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;div class="container"&gt;      &lt;!-- cột giữa, tự căn giữa, rộng theo màn hình --&gt;
+  &lt;div class="row"&gt;          &lt;!-- bọc các cột, tạo rãnh gutter đều --&gt;
+    &lt;div class="col-12 col-md-4"&gt;Cột A&lt;/div&gt;
+    &lt;div class="col-12 col-md-4"&gt;Cột B&lt;/div&gt;
+    &lt;div class="col-12 col-md-4"&gt;Cột C&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre></figure>
+<p>Đọc class <code>col-12 col-md-4</code>: dưới 768px mỗi cột chiếm cả hàng (xếp dọc — đúng tinh thần mobile-first ở Chương 6); <strong>từ 768px trở lên</strong> mỗi cột chiếm 4/12 (ba cột ngang nhau). Chỉ viết <code>col</code> không số thì Bootstrap tự chia đều. Ba hộp container nên nhớ: <code>.container</code> rộng tối đa theo từng breakpoint; <code>.container-fluid</code> luôn rộng 100% viewport (cho section nền tràn: hero, footer); <code>.container-{sm|md|lg|xl|xxl}</code> chỉ giới hạn bề rộng từ breakpoint đó.</p>
+<h3 id="h-9-col-colmd-collg-ngha-l-g">col-<em>, col-md-</em>, col-lg-* nghĩa là gì<a class="anchor" href="#h-9-col-colmd-collg-ngha-l-g" aria-label="Liên kết mục">#</a></h3>
+<p>Tiền tố chính là mốc "từ bao nhiêu px trở lên" — khớp bảng breakpoints ở Chương 6. Ví dụ <code>col-12 col-md-6 col-lg-4</code>: mobile full hàng → tablet nửa hàng → desktop một phần ba. Càng nhiều mốc, layout càng trôi mượt — đó là cách Bootstrap hoá media query bạn tự viết ở Chương 6.</p>
+<div class="table-card"><table><thead><tr><th>Class</th><th>Viewport áp dụng</th><th>Ghi chú</th></tr></thead><tbody><tr><td><code>col-*</code></td><td>mọi màn hình</td><td>không có tiền tố</td></tr><tr><td><code>col-sm-*</code></td><td>≥ 576px</td><td>điện thoại ngang, tablet dọc</td></tr><tr><td><code>col-md-*</code></td><td>≥ 768px</td><td>tablet</td></tr><tr><td><code>col-lg-*</code></td><td>≥ 992px</td><td>desktop</td></tr><tr><td><code>col-xl-*</code></td><td>≥ 1200px</td><td>desktop lớn</td></tr></tbody></table></div>
+<h3 id="h-12-offset-v-gutters">Offset và gutters<a class="anchor" href="#h-12-offset-v-gutters" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;div class="row"&gt;
+  &lt;!-- chừa 2 cột trái, dùng 8 cột cho nội dung --&gt;
+  &lt;div class="col-8 offset-2"&gt;
+    &lt;p class="text-center"&gt;Hồ sơ bệnh viện — đoạn giới thiệu trung tâm.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre></figure>
+<ul><li><code>.offset-<em></code> / <code>.offset-md-</em></code>: đẩy cột sang phải N cột (tương đương <code>margin-left</code>).</li><li>Gutters — rãnh giữa các cột — mặc định 1.5rem, chỉnh bằng <code>g-*</code>: <code>g-0</code> (không rãnh, cho ảnh ghép liền), <code>g-3</code>, <code>g-5</code>...; tách theo trục bằng <code>gx-4</code> (ngang) / <code>gy-4</code> (dọc).</li></ul>
+<h3 id="h-15-dng-hai-hng-in-hnh-ca-highland-hospital">Dựng hai hàng điển hình của Highland Hospital<a class="anchor" href="#h-15-dng-hai-hng-in-hnh-ca-highland-hospital" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;section class="container py-5"&gt;
+  &lt;!-- Hàng 3 cột DỊCH VỤ: mobile xếp dọc, md 2 cột, lg 3 cột --&gt;
+  &lt;div class="row g-4"&gt;
+    &lt;div class="col-12 col-md-6 col-lg-4"&gt;
+      &lt;h3&gt;Khám tổng quát&lt;/h3&gt;
+      &lt;p&gt;Gói kiểm tra sức khỏe định kỳ cho cá nhân và gia đình.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class="col-12 col-md-6 col-lg-4"&gt;&lt;!-- card Xét nghiệm --&gt;&lt;/div&gt;
+    &lt;div class="col-12 col-md-6 col-lg-4"&gt;&lt;!-- card Răng hàm mặt --&gt;&lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Hàng 4 cột BÁC SĨ: md 2 cột, lg 4 cột (col-lg-3 × 4 = 12) --&gt;
+  &lt;div class="row g-4"&gt;
+    &lt;div class="col-12 col-md-6 col-lg-3"&gt;
+      &lt;h4&gt;BS. Nguyễn Minh Anh&lt;/h4&gt;
+      &lt;p&gt;Nội tổng hợp · 12 năm kinh nghiệm&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class="col-12 col-md-6 col-lg-3"&gt;&lt;!-- card BS thứ 2 --&gt;&lt;/div&gt;
+    &lt;div class="col-12 col-md-6 col-lg-3"&gt;&lt;!-- card BS thứ 3 --&gt;&lt;/div&gt;
+    &lt;div class="col-12 col-md-6 col-lg-3"&gt;&lt;!-- card BS thứ 4 --&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre></figure>
+<p>Miễn tổng số cột của các phần tử trong một <code>.row</code> là 12 (<code>col-lg-4 × 3</code> hoặc <code>col-lg-3 × 4</code>), Bootstrap tự xếp vừa một hàng và tự xuống dòng khi vượt 12.</p>
+<h3 id="h-18-prompt-mu-ai-dng-li">Prompt mẫu: AI dựng lưới<a class="anchor" href="#h-18-prompt-mu-ai-dng-li" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Dùng Bootstrap 5 (CDN) dựng section "Đội ngũ bác sĩ" cho Highland
+Hospital: 8 bác sĩ, mỗi bác sĩ là một card gồm ảnh (dùng
+https://via.placeholder.com/300x200), họ tên, chuyên khoa, nút "Đặt
+lịch". Lưới: 1 cột trên mobile, 2 cột từ col-md, 4 cột từ col-lg, gutter
+g-4. Toàn bộ nằm trong .container. Chỉ dùng class có sẵn của Bootstrap —
+không viết CSS riêng. Giải thích ngắn vì sao dùng col-lg-3 cho 4 cột.</code></pre></figure>
+<h3 id="h-20-thc-hnh">Thực hành<a class="anchor" href="#h-20-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Tạo <code>grid-demo.html</code>, dựng lại hàng 3 cột dịch vụ và hàng 4 cột bác sĩ từ code mẫu.</li><li>Thử đổi <code>col-lg-4</code> thành <code>col-lg-3</code> và thêm bác sĩ thứ tư — quan sát hàng chuyển từ 3 sang 4 cột.</li><li>Kéo cửa sổ qua 768px và 992px, xác nhận số cột đổi đúng mốc.</li></ul>
+<h3 id="h-22-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-22-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Lưới đã xếp được khung — bài sau trang điểm nội dung bên trong bằng bộ utilities spacing, màu sắc và typography của Bootstrap.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">9 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-tng-ct-li-mi-hng-chia-cho-12">Ý tưởng cốt lõi: mọi hàng chia cho 12</a></li><li><a href="#h-6-container-row-col">container, row, col</a></li><li><a href="#h-9-col-colmd-collg-ngha-l-g">col-</a></li><li><a href="#h-12-offset-v-gutters">Offset và gutters</a></li><li><a href="#h-15-dng-hai-hng-in-hnh-ca-highland-hospital">Dựng hai hàng điển hình của Highland Hospital</a></li><li><a href="#h-18-prompt-mu-ai-dng-li">Prompt mẫu: AI dựng lưới</a></li><li><a href="#h-20-thc-hnh">Thực hành</a></li><li><a href="#h-22-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="07-bootstrap-grid-and-utilities-cai-d-t-bootstrap-5.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Cài đặt Bootstrap 5</strong></span></a><a href="07-bootstrap-grid-and-utilities-spacing-colors-typography-utilities.html" rel="next"><span><small>Bài sau</small><strong>Spacing, Colors & Typography utilities</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

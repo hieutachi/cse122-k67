@@ -1,0 +1,94 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>let/const & Template Literals | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-8.html">Chương 8</a> &rsaquo; JavaScript cơ bản &rsaquo; Bài 1/5</p>
+<h1 class="lesson-title">let/const & Template Literals</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 1/5</span><span>Module: JavaScript cơ bản</span><span>~4 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="letconst-amp-template-literals">let/const &amp; Template Literals</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Phân biệt <code>var</code>, <code>let</code>, <code>const</code> và nắm phạm vi khối (block scope)</li><li>Biết khi nào dùng <code>const</code>, khi nào dùng <code>let</code></li><li>Tạo chuỗi nhiều dòng và chèn biến bằng template literals <code>${}</code></li><li>Sinh chuỗi HTML card bác sĩ bằng template literal</li></ul>
+<h3 id="h-3-var-vs-let-vs-const">var vs let vs const<a class="anchor" href="#h-3-var-vs-let-vs-const" aria-label="Liên kết mục">#</a></h3>
+<p>Ba từ khoá khai báo biến, nhưng hành vi rất khác nhau:</p>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>// 1. var — PHẠM VI HÀM: không nên dùng trong code mới
+if (true) {
+  var a = 10;
+}
+console.log(a); // 10 — var "lọt" ra ngoài khối if
+
+// 2. let — PHẠM VI KHỐI: chỉ tồn tại trong cặp {} gần nhất
+if (true) {
+  let b = 20;
+}
+// console.log(b); // ❌ ReferenceError: b is not defined
+
+// 3. const — giống let nhưng KHÔNG gán lại được
+const c = 30;
+// c = 40; // ❌ TypeError</code></pre></figure>
+<p>Quy tắc thực tế:</p>
+<ul><li>Mặc định dùng <code>const</code> — biến bạn khai báo thường không cần gán lại</li><li>Chỉ chuyển sang <code>let</code> khi biết chắc giá trị sẽ đổi (bộ đếm, tổng dồn...)</li><li>Bỏ hẳn <code>var</code>; nếu gặp trong tài liệu cũ, hiểu rằng nó gây rò rỉ phạm vi</li></ul>
+<p><code>const</code> không đồng nghĩa "không đổi": object và array khai báo <code>const</code> vẫn sửa được nội dung bên trong (thêm thuộc tính, push phần tử) — chỉ là không thể gán lại biến đó cho giá trị khác.</p>
+<h3 id="h-9-template-literals">Template literals<a class="anchor" href="#h-9-template-literals" aria-label="Liên kết mục">#</a></h3>
+<p>Chuỗi viết trong cặp backtick `<code> </code> `<code> cho phép xuống dòng tự do và chèn biểu thức bằng </code>${...}`:</p>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>const doctorName = 'BS.CKI Nguyễn Minh Anh';
+const specialty = 'Nội tổng hợp';
+
+// Nối chuỗi kiểu cũ — khó đọc
+const old = 'Bác sĩ: ' + doctorName + ' — ' + specialty;
+
+// Template literal — đọc như câu tiếng Việt
+const intro = `Bác sĩ: ${doctorName} — ${specialty}`;
+console.log(intro);</code></pre></figure>
+<p>Bên trong <code>${}</code> có thể là biểu thức bất kỳ, không chỉ biến:</p>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>const fee = 500000;
+console.log(`Giá khám: ${fee.toLocaleString('vi-VN')}đ`); // Giá khám: 500.000đ</code></pre></figure>
+<h3 id="h-14-template-literal-dng-html-card">Template literal dựng HTML card<a class="anchor" href="#h-14-template-literal-dng-html-card" aria-label="Liên kết mục">#</a></h3>
+<p>Sức mạnh thật sự: template literal dựng cả khối HTML rồi gán vào trang bằng <code>innerHTML</code>. Đây là cầu nối đúng nghĩa sang chương 10:</p>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>const doctor = {
+  name: 'BS.CKI Nguyễn Minh Anh',
+  specialty: 'Nội tổng hợp',
+  experience: 12,
+  fee: 500000,
+};
+
+const doctorCard = `
+  &lt;div class="card h-100"&gt;
+    &lt;div class="card-body"&gt;
+      &lt;h5 class="card-title"&gt;${doctor.name}&lt;/h5&gt;
+      &lt;span class="badge text-bg-success"&gt;${doctor.specialty}&lt;/span&gt;
+      &lt;p class="card-text mt-2"&gt;${doctor.experience} năm kinh nghiệm&lt;/p&gt;
+      &lt;p class="fw-semibold"&gt;Giá khám: ${doctor.fee.toLocaleString('vi-VN')}đ&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+`;
+
+// Thử in ra console trước; gắn vào trang ở chương 10
+console.log(doctorCard);</code></pre></figure>
+<p>Điểm mấu chốt: HTML bây giờ <strong>sinh ra từ dữ liệu</strong>. Đổi một con số trong object là card đổi theo — đây chính là tư duy "dữ liệu → giao diện" cả khoá học hướng tới.</p>
+<h3 id="h-18-prompt-mu">Prompt mẫu<a class="anchor" href="#h-18-prompt-mu" aria-label="Liên kết mục">#</a></h3>
+<aside class="prompt-card"><span class="prompt-chip">Prompt mẫu</span><p><strong>Prompt gửi Gemini/Claude/ChatGPT:</strong> Tôi đang học JavaScript ES6+ để render danh sách bác sĩ cho website Highland Hospital. Hãy dạy tôi: (1) viết 3 đoạn code ngắn minh hoạ <code>var</code> rò rỉ khỏi khối <code>if</code>, còn <code>let</code> thì không; (2) giải thích khi nào dùng <code>const</code> thay <code>let</code>; (3) tạo một template literal nhiều dòng sinh HTML card bác sĩ (tên, chuyên khoa, năm kinh nghiệm, giá khám) từ object mẫu, dùng <code>${}</code> để nội suy và <code>toLocaleString('vi-VN')</code> cho giá tiền. Giải thích từng dòng code bạn viết.</p></aside>
+<h3 id="h-20-thc-hnh">Thực hành<a class="anchor" href="#h-20-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<ol><li>Mở DevTools → tab Console, gõ lại đoạn <code>var</code>/<code>let</code>/<code>const</code> và quan sát lỗi <code>ReferenceError</code>.</li><li>Dựng object <code>doctor</code> và template literal card như trên; in kết quả ra console.</li><li>Sửa giá khám thành <code>1200000</code> và chạy lại — kiểm tra định dạng tiền.</li><li>Viết một template literal cho lời chào: <code>Chào {họ tên}, lịch khám {chuyên khoa} của bạn lúc {giờ} đã được xác nhận.</code> với ba biến của riêng bạn.</li><li>Chạy prompt mẫu với AI, đối chiếu lời giải thích về block scope.</li></ol>
+<h3 id="h-22-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-22-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Đã khai báo được dữ liệu và bọc nó vào chuỗi HTML; bài sau rút gọn cách viết hàm với arrow functions và lấy dữ liệu ra khỏi object bằng destructuring.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">7 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-var-vs-let-vs-const">var vs let vs const</a></li><li><a href="#h-9-template-literals">Template literals</a></li><li><a href="#h-14-template-literal-dng-html-card">Template literal dựng HTML card</a></li><li><a href="#h-18-prompt-mu">Prompt mẫu</a></li><li><a href="#h-20-thc-hnh">Thực hành</a></li><li><a href="#h-22-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="08-bootstrap-components-lab-faq-d-t-lich-tinh.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Lab: FAQ & đặt lịch tĩnh</strong></span></a><a href="09-javascript-basics-arrow-functions-destructuring.html" rel="next"><span><small>Bài sau</small><strong>Arrow functions & Destructuring</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

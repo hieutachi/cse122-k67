@@ -1,0 +1,72 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Chọn Flexbox hay Grid | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-5.html">Chương 5</a> &rsaquo; CSS Layout &rsaquo; Bài 4/5</p>
+<h1 class="lesson-title">Chọn Flexbox hay Grid</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 4/5</span><span>Module: CSS Layout</span><span>~4 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="chn-flexbox-hay-grid">Chọn Flexbox hay Grid</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Ra quyết định nhanh: layout một chiều → Flexbox, hai chiều → Grid</li><li>Đọc được bảng so sánh và biết khi nào hai công cụ phối hợp</li><li>Hỏi AI tư vấn layout đúng cách, kèm bối cảnh đủ</li><li>Dựng cùng danh sách bác sĩ bằng cả Flexbox lẫn Grid để tự cảm nhận</li></ul>
+<h3 id="h-3-quy-tc-quyt-nh--hi-mt-cu-duy-nht">Quy tắc quyết định — hỏi một câu duy nhất<a class="anchor" href="#h-3-quy-tc-quyt-nh--hi-mt-cu-duy-nht" aria-label="Liên kết mục">#</a></h3>
+<blockquote><p>Nội dung chảy theo <strong>một trục</strong> (hàng ngang hay cột dọc) hay cần canh cả <strong>hàng lẫn cột</strong> cùng lúc?</p></blockquote>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Chảy một chiều (nav, nút, chuỗi badge...) ──► Flexbox
+Cần lưới 2 chiều có hàng + cột đồng thời  ──► CSS Grid</code></pre></figure>
+<p>Bẫy phổ biến của người mới: thấy "mấy tấm card" là vội dùng Grid, nhưng một hàng card trượt ngang (horizontal scroll) chỉ cần Flexbox. Ngược lại, dùng Flexbox ghép nhiều hàng bằng <code>flex-wrap</code> để làm lưới thì các hàng không thẳng cột với nhau — Grid làm việc đó đúng bản chất.</p>
+<h3 id="h-7-bng-so-snh-nhanh">Bảng so sánh nhanh<a class="anchor" href="#h-7-bng-so-snh-nhanh" aria-label="Liên kết mục">#</a></h3>
+<div class="table-card"><table><thead><tr><th>Tiêu chí</th><th>Flexbox</th><th>CSS Grid</th></tr></thead><tbody><tr><td>Số chiều điều khiển</td><td>1 (main-axis)</td><td>2 (row + column)</td></tr><tr><td>Điểm xuất phát</td><td>Nội dung → dàn theo dòng chảy</td><td>Khai báo lưới → xếp nội dung vào</td></tr><tr><td>Căn chỉnh theo trục chéo</td><td><code>align-items</code></td><td><code>align-items</code> + <code>justify-items</code></td></tr><tr><td>Phần tử chiếm nhiều ô</td><td>Không có khái niệm</td><td><code>grid-column/row: span n</code></td></tr><tr><td>Đổi chỗ layout</td><td><code>order</code> (hạn chế)</td><td><code>grid-template-areas</code>, đặt tọa độ</td></tr><tr><td>Điểm mạnh nhất</td><td>Nav, toolbar, chuỗi item, căn giữa</td><td>Khung trang, lưới card, dashboard</td></tr><tr><td>Có thể lồng nhau</td><td>✅ (bài này dùng)</td><td>✅</td></tr></tbody></table></div>
+<p>Hai công cụ <strong>không loại trừ nhau</strong> — chúng là hai tầng: Grid dàn khung trang, Flexbox dàn nội dung bên trong từng ô. Khuôn mẫu chuẩn ngành:</p>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>.doctors-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+
+.doctor-card {
+  display: flex;              /* bên trong ô: xếp dọc, đẩy nút xuống đáy */
+  flex-direction: column;
+}
+.doctor-card .btn { margin-top: auto; }</code></pre></figure>
+<h3 id="h-11-cng-mt-danh-sch-bc-s--lm-bng-c-hai">Cùng một danh sách bác sĩ — làm bằng cả hai<a class="anchor" href="#h-11-cng-mt-danh-sch-bc-s--lm-bng-c-hai" aria-label="Liên kết mục">#</a></h3>
+<p><strong>Bản Flexbox</strong> (một hàng, wrap khi chật — hàng sau không cần thẳng cột hàng trước):</p>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>.doctors-flex {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+.doctors-flex .doctor-card { flex: 1 1 280px; }   /* mỗi card ≥ 280px */</code></pre></figure>
+<p><strong>Bản Grid</strong> (lưới thật — mọi hàng thẳng cột):</p>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>.doctors-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}</code></pre></figure>
+<p>Cả hai đều "responsive tự nhiên", nhưng chỉ Grid bảo đảm các card ở hàng dưới <strong>căn thẳng</strong> theo cột của hàng trên. Với lưới card bác sĩ, Grid là lựa chọn đúng — đó cũng là lý do bài Lab kế tiếp dùng Grid.</p>
+<h3 id="h-17-prompt-mu--hi-ai-t-vn-layout">Prompt mẫu — hỏi AI tư vấn layout<a class="anchor" href="#h-17-prompt-mu--hi-ai-t-vn-layout" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Tôi cần dàn vùng "Đội ngũ bác sĩ" của Highland Hospital: 8 card
+(avatar, tên, chuyên khoa, kinh nghiệm, nút đặt lịch), desktop 4
+cột, tablet 2 cột, mobile 1 cột; card cùng hàng phải bằng chiều
+cao, nút luôn bám đáy card. Hãy tư vấn: dùng Flexbox hay Grid cho
+lưới, và dùng gì bên trong từng card? Nêu lý do từng lựa chọn và
+một đoạn CSS tối thiểu cho lưới.</code></pre></figure>
+<h3 id="h-19-thc-hnh">Thực hành<a class="anchor" href="#h-19-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<ol><li>Dựng cùng 6 <code>.doctor-card</code> hai lần: một lần <code>.doctors-flex</code>, một lần <code>.doctors-grid</code>, cùng nội dung. Kéo màn hình từ 320px → 1200px, so sánh cách xuống hàng của hai bản.</li><li>Ghi vào một dòng nhận xét của bạn: khác biệt dễ thấy nhất giữa hai bản là gì.</li><li>Trong bản Grid, thêm <code>grid-auto-rows: 1fr</code> và quan sát các card cùng hàng tự đồng chiều cao.</li><li>Tìm trên trang chủ một chỗ "lẽ ra nên dùng công cụ kia" (ví dụ nav đang là Grid) và refactor lại cho đúng — đây là bài tập rèn mắt layout.</li></ol>
+<h3 id="h-21-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-21-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Lý thuyết đã đủ — Lab cuối chương: dựng lưới 4 Doctor Cards với <code>auto-fit/minmax</code>, prompt AI kèm phân tích từng dòng, kết thúc Chương 5 bằng một sản phẩm hoàn chỉnh.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">7 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-quy-tc-quyt-nh--hi-mt-cu-duy-nht">Quy tắc quyết định — hỏi một câu duy nhất</a></li><li><a href="#h-7-bng-so-snh-nhanh">Bảng so sánh nhanh</a></li><li><a href="#h-11-cng-mt-danh-sch-bc-s--lm-bng-c-hai">Cùng một danh sách bác sĩ — làm bằng cả hai</a></li><li><a href="#h-17-prompt-mu--hi-ai-t-vn-layout">Prompt mẫu — hỏi AI tư vấn layout</a></li><li><a href="#h-19-thc-hnh">Thực hành</a></li><li><a href="#h-21-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="05-css-layout-css-grid-can-ban.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>CSS Grid căn bản</strong></span></a><a href="05-css-layout-lab-lu-i-doctor-cards.html" rel="next"><span><small>Bài sau</small><strong>Lab: lưới Doctor Cards</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CSS Grid căn bản | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-5.html">Chương 5</a> &rsaquo; CSS Layout &rsaquo; Bài 3/5</p>
+<h1 class="lesson-title">CSS Grid căn bản</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 3/5</span><span>Module: CSS Layout</span><span>~3 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="css-grid-cn-bn">CSS Grid căn bản</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Dựng layout hai chiều bằng <code>display: grid</code> và đơn vị <code>fr</code></li><li>Khai báo lưới bằng <code>grid-template-columns/rows</code>, <code>gap</code></li><li>Đặt tên vùng bằng <code>grid-template-areas</code> và xếp phần tử theo dòng/cột</li><li>Dàn layout trang chủ Highland Hospital bằng grid areas</li></ul>
+<h3 id="h-3-hai-chiu-cng-lc">Hai chiều cùng lúc<a class="anchor" href="#h-3-hai-chiu-cng-lc" aria-label="Liên kết mục">#</a></h3>
+<p>Flexbox sắp theo một trục; Grid quản lý <strong>hàng và cột song song</strong> — đúng thứ layout trang cần. Container cha khai báo lưới, các con tự động xếp vào ô:</p>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>.doctors-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;  /* 3 cột đều nhau */
+  gap: 1.5rem;                          /* khoảng cách ô — cả hàng lẫn cột */
+}</code></pre></figure>
+<p><code>fr</code> (fraction) là đơn vị riêng của Grid: chia <strong>không gian còn lại</strong> theo tỷ lệ, không cần biết kích thước cụ thể. <code>1fr 1fr 1fr</code> ⇔ <code>repeat(3, 1fr)</code>. Cột <code>2fr</code> rộng gấp đôi cột <code>1fr</code>. Khác <code>%</code> ở chỗ <code>fr</code> không cộng với padding/gap — không bao giờ tràn.</p>
+<h3 id="h-7-iu-khin-tng-con--dng-v-ct">Điều khiển từng con — dòng và cột<a class="anchor" href="#h-7-iu-khin-tng-con--dng-v-ct" aria-label="Liên kết mục">#</a></h3>
+<p>Mặc định các con tự xếp tuần tự. Muốn một con chiếm nhiều ô, dùng số dòng (grid line):</p>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>.featured {
+  grid-column: 1 / 3;   /* từ dòng lưới 1 đến dòng lưới 3 → rộng 2 cột */
+}
+.doctor-card--wide { grid-column: span 2; }   /* tương đương, dễ đọc hơn */</code></pre></figure>
+<h3 id="h-10-gridtemplateareas--v-layout-bng-tn">grid-template-areas — vẽ layout bằng tên<a class="anchor" href="#h-10-gridtemplateareas--v-layout-bng-tn" aria-label="Liên kết mục">#</a></h3>
+<p>Cách trực quan nhất: đặt tên cho từng vùng, rồi "vẽ" bản đồ lưới bằng chuỗi:</p>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>.home {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-areas:
+    "header header header"
+    "hero   hero   sidebar"
+    "doctors doctors doctors"
+    "footer footer footer";
+}</code></pre></figure>
+<p>Mỗi dòng chuỗi là một <strong>hàng lưới</strong>, mỗi từ là tên vùng ở cột tương ứng; cùng tên lặp lại = vùng trải nhiều ô; <code>.</code> là ô bỏ trống. Gán phần tử vào vùng:</p>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>.site-header { grid-area: header; }
+.hero        { grid-area: hero; }
+.booking-tip { grid-area: sidebar; }
+.doctors     { grid-area: doctors; }
+.site-footer { grid-area: footer; }</code></pre></figure>
+<p>HTML khi đó chỉ là thứ tự logic (header, main, aside, footer...) — Grid hoàn toàn chịu trách nhiệm vị trí. Muốn đổi bố cục (sidebar xuống dưới hero) chỉ cần sửa <code>grid-template-areas</code>, không đụng HTML. Đây là lý do <code>grid-template-areas</code> là lựa chọn hàng đầu cho layout cấp trang.</p>
+<h3 id="h-16-v-sao-grid-hp-l-cho-khung-ch-khng-phi-mi-th">Vì sao Grid hợp lý cho "khung" chứ không phải mọi thứ<a class="anchor" href="#h-16-v-sao-grid-hp-l-cho-khung-ch-khng-phi-mi-th" aria-label="Liên kết mục">#</a></h3>
+<p>Cùng khoảng <code>gap</code> và căn chỉnh, nhưng khác triết lý:</p>
+<ul><li><strong>Grid</strong>: bạn định nghĩa lưới trước, nội dung xếp vào — khớp layout trang (header/hero/sidebar/footer) nơi cấu trúc đã biết.</li><li><strong>Flexbox</strong>: nội dung quyết định dòng chảy — khớp thanh nav, hàng nút, chuỗi card nơi số lượng đổi thay.</li></ul>
+<h3 id="h-19-prompt-mu--nh-ai-dng-khung-trang">Prompt mẫu — nhờ AI dựng khung trang<a class="anchor" href="#h-19-prompt-mu--nh-ai-dng-khung-trang" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Dùng CSS Grid dựng khung trang chủ Highland Hospital: header cao
+tự động, hero chiếm 2/3 bề rộng còn 1/3 là panel "Giờ khám" bên
+phải, bên dưới là vùng danh sách bác sĩ full-width, cuối cùng là
+footer. Dùng grid-template-areas, tên vùng rõ nghĩa, đơn vị fr,
+gap 0 cho khung trang (các section tự lo padding). Kèm HTML 5 thẻ
+semantic tối thiểu và giải thích ngắn cách đọc bản đồ areas.</code></pre></figure>
+<h3 id="h-21-thc-hnh">Thực hành<a class="anchor" href="#h-21-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<ol><li>Dựng khung trang chủ Highland Hospital: <code>grid-template-areas</code> 4 vùng như mẫu, thay <code>.booking-tip</code> bằng panel "Giờ khám 7:00–19:00".</li><li>Bên trong vùng <code>.doctors</code>, thêm grid con <code>repeat(3, 1fr)</code> — grid lồng grid là chuyện thường ngày.</li><li>Đổi <code>grid-template-columns: 2fr 1fr</code> và quan sát hero rộng hơn panel; rồi hoán đổi <code>grid-template-areas</code> để panel lên trước — HTML không đổi.</li><li>Thêm một con có <code>grid-column: span 2</code> vào lưới 3 cột và quan sát cách các con còn lại tự dồn sang hàng mới.</li></ol>
+<h3 id="h-23-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-23-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Cả Flexbox và Grid đều "cân" được nhiều layout — vậy khi nào dùng cái nào? Bài kế đưa ra quy tắc quyết định và dựng cùng một danh sách bác sĩ bằng cả hai cách.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">8 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-hai-chiu-cng-lc">Hai chiều cùng lúc</a></li><li><a href="#h-7-iu-khin-tng-con--dng-v-ct">Điều khiển từng con — dòng và cột</a></li><li><a href="#h-10-gridtemplateareas--v-layout-bng-tn">grid-template-areas — vẽ layout bằng tên</a></li><li><a href="#h-16-v-sao-grid-hp-l-cho-khung-ch-khng-phi-mi-th">Vì sao Grid hợp lý cho "khung" chứ không phải mọi thứ</a></li><li><a href="#h-19-prompt-mu--nh-ai-dng-khung-trang">Prompt mẫu — nhờ AI dựng khung trang</a></li><li><a href="#h-21-thc-hnh">Thực hành</a></li><li><a href="#h-23-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="05-css-layout-flexbox-nang-cao.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Flexbox nâng cao</strong></span></a><a href="05-css-layout-chon-flexbox-hay-grid.html" rel="next"><span><small>Bài sau</small><strong>Chọn Flexbox hay Grid</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

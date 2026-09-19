@@ -1,0 +1,88 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bảng biểu & đa phương tiện | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-3.html">Chương 3</a> &rsaquo; HTML5 semantic &rsaquo; Bài 4/5</p>
+<h1 class="lesson-title">Bảng biểu & đa phương tiện</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 4/5</span><span>Module: HTML5 semantic</span><span>~4 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="bng-biu-amp-a-phng-tin">Bảng biểu &amp; đa phương tiện</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Viết bảng hợp lệ với <code>table/thead/tbody/tr/th/td/caption</code></li><li>Dùng <code>img</code> đúng chuẩn: <code>alt</code>, <code>width/height</code>, <code>loading="lazy"</code></li><li>Chọn svg inline cho icon và hiểu vì sao ưu việt với icon UI</li></ul>
+<h3 id="h-3-bng-dng-cho-d-liu-khng-dng-cho-layout">Bảng: dùng cho dữ liệu, không dùng cho layout<a class="anchor" href="#h-3-bng-dng-cho-d-liu-khng-dng-cho-layout" aria-label="Liên kết mục">#</a></h3>
+<p>Bảng dành cho dữ liệu dạng lưới: giờ làm việc, bảng giá dịch vụ, danh sách lịch hẹn của Admin Dashboard. Ngày xưa người ta dùng <code>table</code> để dàn trang — đừng làm vậy, layout là việc của CSS (chương 4–7).</p>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;table&gt;
+  &lt;caption&gt;Giờ làm việc các khoa khám ngoại trú&lt;/caption&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th scope="col"&gt;Khoa&lt;/th&gt;
+      &lt;th scope="col"&gt;Sáng&lt;/th&gt;
+      &lt;th scope="col"&gt;Chiều&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th scope="row"&gt;Khám tổng quát&lt;/th&gt;
+      &lt;td&gt;07:30 – 11:30&lt;/td&gt;
+      &lt;td&gt;13:30 – 16:30&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th scope="row"&gt;Tim mạch&lt;/th&gt;
+      &lt;td&gt;07:30 – 11:00&lt;/td&gt;
+      &lt;td&gt;13:30 – 16:00&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th scope="row"&gt;Cấp cứu&lt;/th&gt;
+      &lt;td colspan="2"&gt;Hoạt động 24/7 — không cần đặt lịch&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</code></pre></figure>
+<p>Cấu trúc bắt buộc nhớ: <code>&lt;caption&gt;</code> (chú thích bảng, giúp ích cho accessibility), <code>&lt;thead&gt;</code> chứa hàng tiêu đề với <code>&lt;th scope="col"&gt;</code>, <code>&lt;tbody&gt;</code> chứa dữ liệu, ô tiêu đề hàng dùng <code>&lt;th scope="row"&gt;</code>, và <code>colspan</code>/<code>rowspan</code> khi một ô trải nhiều cột/hàng. Trình duyệt <strong>không</strong> tự thêm <code>thead/tbody</code> — bạn phải viết, vì CSS và JS (lọc tìm kiếm ở chương 12) đều cần chúng để truy vấn.</p>
+<h3 id="h-7-hnh-nh-ba-thuc-tnh-khng-c-qun">Hình ảnh: ba thuộc tính không được quên<a class="anchor" href="#h-7-hnh-nh-ba-thuc-tnh-khng-c-qun" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;img src="images/doctors/bs-huong.jpg"
+     alt="BS. Nguyễn Thị Hương đang tư vấn cho bệnh nhân tại Highland Hospital"
+     width="400" height="300"
+     loading="lazy"&gt;</code></pre></figure>
+<ul><li><code>alt</code> — mô tả hình khi không tải được và cho trình đọc màn hình. Hình <strong>trang trí</strong> thì để <code>alt=""</code> (rỗng) để máy bỏ qua; hình <strong>thông tin</strong> (chân dung bác sĩ) thì mô tả nội dung. Viết <code>alt="Ảnh bác sĩ"</code> cũng vô nghĩa như không viết.</li><li><code>width</code> + <code>height</code> — khai báo tỉ lệ khung hình ngay trong HTML để trình duyệt chừa sẵn chỗ, tránh hiện tượng layout nhảy (CLS) khi ảnh tải xong. Tuỳ chỉnh kích thước hiển thị vẫn là việc của CSS.</li><li><code>loading="lazy"</code> — chỉ tải ảnh khi nó sắp vào viewport. Dùng cho ảnh <strong>dưới</strong> màn hình đầu; ảnh hero nằm trên cần hiện ngay thì không lazy.</li></ul>
+<h3 id="h-10-svg-inline-cho-icon">SVG inline cho icon<a class="anchor" href="#h-10-svg-inline-cho-icon" aria-label="Liên kết mục">#</a></h3>
+<p>Icon của dịch vụ, icon liên hệ trong Highland Hospital nên là <strong>SVG inline</strong> (dán trực tiếp vào HTML) thay vì file ảnh rời:</p>
+<ul><li>Nhọn ở mọi kích thước — SVG là vector, không vỡ nền như PNG khi phóng to.</li><li>Nhuộm màu theo CSS được — ta có thể cho <code>fill="currentColor"</code> để icon tự mang màu chữ của nút/tiêu đề (rất hợp với design token <code>hh-teal</code> ở chương 2).</li><li>Không tốn thêm request HTTP như file ảnh.</li></ul>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+     stroke="currentColor" stroke-width="2" aria-hidden="true"&gt;
+  &lt;path d="M12 21s-7-4.6-7-11a4 4 0 0 1 7-2.8A4 4 0 0 1 19 10c0 6.4-7 11-7 11z"/&gt;
+  &lt;circle cx="12" cy="10" r="2.5"/&gt;
+&lt;/svg&gt;</code></pre></figure>
+<p>Với icon chỉ có tính trang trí, thêm <code>aria-hidden="true"</code> để trình đọc màn hình bỏ qua; icon <strong>có chức năng</strong> (icon kèm nghĩa, như nút "gọi hotline" chỉ toàn icon) thì cần <code>role="img"</code> và <code>&lt;title&gt;</code> bên trong.</p>
+<h3 id="h-15-prompt-mu-dng-bng-gi-lm-vic">Prompt mẫu: dựng bảng giờ làm việc<a class="anchor" href="#h-15-prompt-mu-dng-bng-gi-lm-vic" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Bối cảnh: Highland Hospital, mục "Giờ làm việc" trên trang chủ, HTML thuần.
+Nhiệm vụ: dựng bảng giờ làm việc 6 khoa (Khám tổng quát, Tim mạch, Nhi
+khoa, Xét nghiệm, Chẩn đoán hình ảnh, Cấp cứu) với cột Sáng và Chiều;
+khoa Cấp cứu ghi "24/7" trải cả hai cột.
+Ràng buộc: cấu trúc đầy đủ table &gt; caption + thead (th scope="col") +
+tbody; mỗi hàng có th scope="row" cho tên khoa; không dùng thuộc tính
+style; không thêm nội dung ngoài danh sách khoa trên.
+Định dạng: một khối HTML duy nhất, chú thích ngắn sau caption.</code></pre></figure>
+<h3 id="h-17-thc-hnh">Thực hành<a class="anchor" href="#h-17-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<p>Thêm vào trang chủ Highland Hospital: (1) bảng "Giờ làm việc" như prompt mẫu; (2) phần "Đội ngũ bác sĩ" gồm 3 <code>&lt;figure&gt;</code> — mỗi figure có <code>img</code> chân dung với <code>alt</code> mô tả, <code>width/height</code>, <code>loading="lazy"</code> và <code>&lt;figcaption&gt;</code> ghi tên + chuyên khoa. Mở DevTools tab Network, cuộn nhanh xuống dưới và xác nhận ảnh chỉ tải khi bạn cuộn tới.</p>
+<h3 id="h-19-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-19-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Đã đủ mọi mảnh ghép: khung tài liệu, thẻ ngữ nghĩa, form, bảng và media — bài <em>Lab: Landing Page semantic</em> yêu cầu ghép tất cả thành trang chủ hoàn chỉnh.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">7 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-bng-dng-cho-d-liu-khng-dng-cho-layout">Bảng: dùng cho dữ liệu, không dùng cho layout</a></li><li><a href="#h-7-hnh-nh-ba-thuc-tnh-khng-c-qun">Hình ảnh: ba thuộc tính không được quên</a></li><li><a href="#h-10-svg-inline-cho-icon">SVG inline cho icon</a></li><li><a href="#h-15-prompt-mu-dng-bng-gi-lm-vic">Prompt mẫu: dựng bảng giờ làm việc</a></li><li><a href="#h-17-thc-hnh">Thực hành</a></li><li><a href="#h-19-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="03-html5-semantic-forms-cac-ki-u-input-hi-n-dai.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Forms & các kiểu Input hiện đại</strong></span></a><a href="03-html5-semantic-lab-landing-page-semantic.html" rel="next"><span><small>Bài sau</small><strong>Lab: Landing Page semantic</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Workshop: viết prompt cắt giao diện | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-1.html">Chương 1</a> &rsaquo; Prompt engineering cho frontend &rsaquo; Bài 5/5</p>
+<h1 class="lesson-title">Workshop: viết prompt cắt giao diện</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 5/5</span><span>Module: Prompt engineering cho frontend</span><span>~5 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="workshop-vit-prompt-ct-giao-din">Workshop: viết prompt cắt giao diện</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Thực hành trọn quy trình viết prompt cho 3 tình huống thật</li><li>Nhận ra bẫy thường gặp của từng loại nhiệm vụ: dựng mới, thêm tính năng, sửa lỗi</li><li>Tự đánh giá prompt bằng checklist trước khi gửi cho AI</li></ul>
+<p>Cách học bài này: làm trước khi đọc. Với mỗi tình huống, tự viết prompt trong 5 phút và chạy thử, rồi mới so sánh với gợi ý bên dưới — chênh lệch giữa hai bản chính là bài học.</p>
+<h3 id="h-4-tnh-hung-1--ct-mt-section-t-m-t">Tình huống 1 — Cắt một section từ mô tả<a class="anchor" href="#h-4-tnh-hung-1--ct-mt-section-t-m-t" aria-label="Liên kết mục">#</a></h3>
+<p><strong>Bối cảnh</strong>: chưa có Figma, chỉ có mô tả bằng lời: khu vực "Dịch vụ nổi bật" gồm 6 ô dịch vụ xếp lưới 3 cột, mỗi ô có icon, tên dịch vụ và mô tả một câu.</p>
+<p>Viết prompt rồi so sánh gợi ý:</p>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Bối cảnh: Landing Page Highland Hospital, HTML5 + CSS thuần.
+Nhiệm vụ: dựng section "Dịch vụ nổi bật" — lưới 3 cột, đúng 6 ô, mỗi ô
+có icon (SVG inline), tên dịch vụ, mô tả 1 câu. Dịch vụ: Khám tổng quát,
+Tim mạch, Nhi khoa, Xét nghiệm, Chẩn đoán hình ảnh, Phục hồi chức năng.
+Ràng buộc: section &gt; h2 + div dùng display: grid,
+grid-template-columns: repeat(3, 1fr); không framework; không thêm dịch
+vụ nào ngoài 6 tên trên.
+Giao diện: nền #f0fdfa; mỗi ô nền trắng, viền 1px #e2e8f0, bo góc 12px,
+padding 1.5rem; icon màu #0f766e; tiêu đề #0f172a.
+Định dạng: HTML rồi CSS, hai khối riêng.</code></pre></figure>
+<p><strong>Bẫy thường gặp</strong>: quên ràng buộc "không thêm nội dung" → AI chèn dịch vụ thứ 7, thứ 8; quên token màu → AI chọn màu xanh dương mặc định lệch thương hiệu.</p>
+<h3 id="h-9-tnh-hung-2--thm-tnh-nng-lc-vo-code-c-sn">Tình huống 2 — Thêm tính năng lọc vào code có sẵn<a class="anchor" href="#h-9-tnh-hung-2--thm-tnh-nng-lc-vo-code-c-sn" aria-label="Liên kết mục">#</a></h3>
+<p><strong>Bối cảnh</strong>: danh sách bác sĩ đã render bằng <code>renderDoctors</code> (bài 03 chương này). Bạn muốn thêm dropdown lọc chuyên khoa ngay trên file đang chạy.</p>
+<p>Quy tắc vàng khi prompt trên code cũ: <strong>dán đúng code thật đang chạy</strong>, nêu rõ chỗ muốn chèn, và giới hạn "không sửa phần đã chạy đúng":</p>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Dưới đây là toàn bộ file doctors.js đang chạy đúng trên trang chủ
+Highland Hospital: (dán file).
+Nhiệm vụ: thêm &lt;select id="specialty-filter"&gt; ở đầu danh sách; các option
+sinh động từ chính mảng doctors (mỗi chuyên khoa một option, không trùng,
+kèm option "Tất cả"). Khi đổi giá trị select, render lại danh sách bằng
+hàm renderDoctors đã có.
+Ràng buộc: giữ nguyên tên và hoạt động của hàm cũ; chỉ thêm code mới,
+không sửa renderDoctors; không dùng thư viện.
+Định dạng: trả về phần code mới cần chèn kèm vị trí chèn.</code></pre></figure>
+<p><strong>Bẫy thường gặp</strong>: không dán code thật → AI viết hàm mới khác tên, dán vào là vỡ; yêu cầu "làm đẹp hơn" → AI đụng vào phần đang chạy ổn.</p>
+<h3 id="h-14-tnh-hung-3--sa-li-hin-th">Tình huống 3 — Sửa lỗi hiển thị<a class="anchor" href="#h-14-tnh-hung-3--sa-li-hin-th" aria-label="Liên kết mục">#</a></h3>
+<p><strong>Bối cảnh</strong>: ở màn hình 320px, tên bác sĩ dài ("BS. Nguyễn Thị Thanh Trúc") làm thẻ doctor card tràn chữ, đè lên dòng số năm kinh nghiệm.</p>
+<p>Áp dụng công thức bài 04 — code tối thiểu + hiện tượng + thứ tự nguyên nhân — và nhớ <em>"giải thích trước khi sửa"</em>:</p>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Code: đây là toàn bộ CSS liên quan đến thẻ bác sĩ —
+.doctor-card { max-width: 320px; padding: 1rem; }
+.doctor-card h3 { font-size: 1.05rem; }
+Hiện tượng: ở 320px, tên bác sĩ dài làm chữ tràn ra khỏi khung, đè lên
+dòng dưới. Từ 375px trở lên không sao.
+Nguyên nhân khả dĩ của tôi, phân tích theo thứ tự:
+1. h3 không cho xuống dòng (thiếu word-break / overflow-wrap).
+2. padding + max-width khiến vùng chữ quá hẹp.
+3. line-height của h3 quá nhỏ.
+Giải thích rồi mới đưa bản sửa, thay đổi tối thiểu.</code></pre></figure>
+<p><strong>Bẫy thường gặp</strong>: dán cả file style.css 300 dòng → AI phân tích loãng, sửa nhầm chỗ. Càng khoanh nhỏ phạm vi càng dễ đúng.</p>
+<h3 id="h-19-tiu-ch-t-nh-gi-prompt">Tiêu chí tự đánh giá prompt<a class="anchor" href="#h-19-tiu-ch-t-nh-gi-prompt" aria-label="Liên kết mục">#</a></h3>
+<p>Trước khi nhấn gửi, tự chấm 6 câu — đủ 6/6 thì prompt sẵn sàng:</p>
+<ul><li><span class="task" aria-hidden="true">&#9744;</span> Có nói rõ dự án Highland Hospital và file/trang đang làm?</li><li><span class="task" aria-hidden="true">&#9744;</span> Nhiệm vụ đo được: dựng/thêm/sửa <strong>cái gì</strong>, ở <strong>đâu</strong>?</li><li><span class="task" aria-hidden="true">&#9744;</span> Có ràng buộc công nghệ (không framework, không thư viện, giữ nguyên hàm cũ)?</li><li><span class="task" aria-hidden="true">&#9744;</span> Màu sắc, khoảng cách, dữ liệu được nêu bằng giá trị cụ thể?</li><li><span class="task" aria-hidden="true">&#9744;</span> Có yêu cầu định dạng đầu ra (khối code, thứ tự trả về)?</li><li><span class="task" aria-hidden="true">&#9744;</span> Với prompt sửa tiếp theo: mỗi lượt chỉ thay đổi một điểm?</li></ul>
+<h3 id="h-22-thc-hnh">Thực hành<a class="anchor" href="#h-22-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<p>Chạy đủ 3 tình huống trên code của bạn, mỗi tình huống chấm checklist trước khi gửi. Cuối buổi, lấy một prompt "tệ nhất bạn từng gửi" và viết lại cho đủ 6 tiêu chí.</p>
+<h3 id="h-24-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-24-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Đã đủ công cụ giao tiếp với AI — chương sau bạn bắt tay vào HTML5 thực thụ, mở đầu bằng <em>Cấu trúc tài liệu web chuẩn</em> với <code>&lt;!DOCTYPE html&gt;</code>, <code>&lt;head&gt;</code> và <code>&lt;body&gt;</code>.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">7 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-4-tnh-hung-1--ct-mt-section-t-m-t">Tình huống 1 — Cắt một section từ mô tả</a></li><li><a href="#h-9-tnh-hung-2--thm-tnh-nng-lc-vo-code-c-sn">Tình huống 2 — Thêm tính năng lọc vào code có sẵn</a></li><li><a href="#h-14-tnh-hung-3--sa-li-hin-th">Tình huống 3 — Sửa lỗi hiển thị</a></li><li><a href="#h-19-tiu-ch-t-nh-gi-prompt">Tiêu chí tự đánh giá prompt</a></li><li><a href="#h-22-thc-hnh">Thực hành</a></li><li><a href="#h-24-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="02-prompt-engineering-prompt-cho-debug.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Prompt cho Debug</strong></span></a><a href="03-html5-semantic-c-u-truc-tai-li-u-web-chu-n.html" rel="next"><span><small>Bài sau</small><strong>Cấu trúc tài liệu web chuẩn</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

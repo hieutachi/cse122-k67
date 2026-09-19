@@ -1,0 +1,53 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Chào mừng — vì sao Frontend cần AI | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-1.html">Chương 1</a> &rsaquo; Nhập môn & AI workflow &rsaquo; Bài 1/5</p>
+<h1 class="lesson-title">Chào mừng — vì sao Frontend cần AI</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 1/5</span><span>Module: Nhập môn & AI workflow</span><span>~5 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="cho-mng--v-sao-frontend-cn-ai">Chào mừng — vì sao Frontend cần AI</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Hiểu công việc frontend thay đổi thế nào khi có AI tham gia</li><li>Nhận ra phần việc AI làm nhanh thật, phần nào thì không</li><li>Biết bạn sẽ xây dựng gì trong khoá học</li></ul>
+<h3 id="h-3-ngh-frontend--dch-chuyn">Nghề frontend đã dịch chuyển<a class="anchor" href="#h-3-ngh-frontend--dch-chuyn" aria-label="Liên kết mục">#</a></h3>
+<p>Công việc frontend luôn gồm hai hoạt động rất khác nhau. Một là <strong>phán đoán</strong>: quyết định màn hình nên hoạt động thế nào, mắt người dùng dừng ở đâu, chuyện gì xảy ra khi mạng chậm. Hai là <strong>sản xuất</strong>: gõ ra markup, danh sách class, các hàm xử lý sự kiện, biến thể thứ mười lăm của một tấm card.</p>
+<p>AI đang rất giỏi ở hoạt động thứ hai, còn với hoạt động thứ nhất thì chỉ ở mức tư vấn. Ranh giới đó chính là ý tưởng của cả khoá học: <strong>bạn giữ phần phán đoán, và giao đi càng nhiều phần sản xuất càng tốt</strong> — miễn là bạn kiểm tra lại được nhanh.</p>
+<h3 id="h-6-mt-ngy-lm-vic-thc-t">Một ngày làm việc thực tế<a class="anchor" href="#h-6-mt-ngy-lm-vic-thc-t" aria-label="Liên kết mục">#</a></h3>
+<p>Khi môi trường đã chạy ổn, vòng lặp công việc của một frontend developer dùng AI thường như sau:</p>
+<ul><li><strong>Buổi sáng</strong> — Bạn nhận một frame Figma cho khu vực danh sách bác sĩ. Thay vì tự viết grid, bạn mô tả layout, các breakpoint và màu sắc đang dùng, rồi nhận bản nháp trong vài giây. Thời gian tiết kiệm được dành cho những thứ thiết kế chưa nói tới: trạng thái focus, tên bác sĩ quá dài, giao diện ở màn hình 320px.</li><li><strong>Buổi trưa</strong> — Một tấm card bị tràn khỏi container, nhưng chỉ trên Safari của iOS. Bạn dán đoạn CSS liên quan kèm mô tả hiện tượng và nhận về ba nguyên nhân khả dĩ, xếp theo mức độ có thể xảy ra. Bạn xác nhận nguyên nhân thật bằng DevTools.</li><li><strong>Buổi chiều</strong> — Bạn cần chuyển một danh sách lịch hẹn từ mảng tĩnh sang đọc từ API. Việc này sửa nhiều file, nên bạn dùng AI hỗ trợ viết hàm <code>fetch</code> và render lại, sau đó tự review từng dòng.</li></ul>
+<p>Không có bước nào ở trên giúp bạn khỏi phải hiểu HTML semantic, CSS layout hay DOM. Chúng chỉ giúp bạn khỏi phải <em>gõ</em> 70% phần việc nhàm chán.</p>
+<h3 id="h-10-nhng-vic-ai-khng-lm-thay-bn">Những việc AI không làm thay bạn<a class="anchor" href="#h-10-nhng-vic-ai-khng-lm-thay-bn" aria-label="Liên kết mục">#</a></h3>
+<p>Nên nói rõ giới hạn ngay từ đầu để sau này không thất vọng:</p>
+<ul><li>AI không biết design của bạn nếu bạn không nói. Thiếu bối cảnh, nó sẽ tự bịa màu, khoảng cách và tên class.</li><li>AI không biết người dùng thật sự cần gì. Nó sẽ dựng rất đẹp một tính năng sai yêu cầu.</li><li>AI không nhìn thấy trang đã render. Nó suy luận trên code, không suy luận trên kết quả hiển thị — người mở trình duyệt vẫn là bạn.</li><li>AI có lúc sai mà vẫn rất tự tin, đặc biệt với API mới của framework và chi tiết hỗ trợ trình duyệt.</li></ul>
+<p>Mỗi giới hạn đều có cách xử lý, và mười một chương còn lại chính là để dạy những cách đó.</p>
+<h3 id="h-14-bn-tr-ct-ca-kho-hc">Bốn trụ cột của khoá học<a class="anchor" href="#h-14-bn-tr-ct-ca-kho-hc" aria-label="Liên kết mục">#</a></h3>
+<ol><li><strong>HTML5 chuẩn ngữ nghĩa</strong> — cấu trúc tài liệu chuẩn, thẻ semantic cho SEO và Accessibility, Forms, Table, hình ảnh và SVG.</li><li><strong>CSS3 hiện đại &amp; tư duy dàn trang</strong> — Box Model, Flexbox, Grid, đơn vị tương đối, Responsive Web Design, Transitions và Animations.</li><li><strong>Bootstrap 5</strong> — hệ thống 12-Column Grid, Utility Classes và các Components tương tác sẵn có (Navbar, Modal, Offcanvas, Accordion...).</li><li><strong>JavaScript ES6+ &amp; DOM</strong> — cú pháp hiện đại, Array Methods, DOM Manipulation, sự kiện, <code>localStorage</code>, Fetch API / Async-Await.</li></ol>
+<h3 id="h-16-d-n-bn-s-xy-highland-hospital-web-portal">Dự án bạn sẽ xây: Highland Hospital Web Portal<a class="anchor" href="#h-16-d-n-bn-s-xy-highland-hospital-web-portal" aria-label="Liên kết mục">#</a></h3>
+<p>Mọi chương đều góp phần vào một ứng dụng duy nhất — <strong>Highland Hospital</strong> — website của một bệnh viện cho phép bệnh nhân xem dịch vụ, tìm bác sĩ theo chuyên khoa và đặt lịch khám trực tuyến.</p>
+<p>Dự án cố ý chỉ có frontend: không server phải bảo trì, không database phải khởi tạo, nhưng vẫn đủ phức tạp thật — render danh sách động, lọc theo chuyên khoa, form đặt lịch đa bước có validate, bảng quản lý lịch hẹn, dữ liệu lưu trong <code>localStorage</code> — để bạn dùng hết những gì đã học. Đến chương 12, bạn hoàn thiện Landing Page lẫn Admin Dashboard và deploy nó.</p>
+<h3 id="h-19-kho-hc-dnh-cho-ai">Khoá học dành cho ai<a class="anchor" href="#h-19-kho-hc-dnh-cho-ai" aria-label="Liên kết mục">#</a></h3>
+<p>Bạn <strong>không cần</strong> biết lập trình trước đó. Bạn chỉ cần một chiếc máy tính có trình duyệt Chrome, một editor (VS Code khuyến nghị), và sẵn sàng gõ lại code thay vì chỉ đọc. Không cần kinh nghiệm dùng AI.</p>
+<h3 id="h-21-cch-hc">Cách học<a class="anchor" href="#h-21-cch-hc" aria-label="Liên kết mục">#</a></h3>
+<p>Đọc xong một bài, hãy chạy ngay các prompt trong bài trên code của chính bạn. Một thói quen rất hiệu quả: tự làm trước mười phút rồi mới hỏi AI. Khoảng cách giữa bản của bạn và bản AI sinh ra là bài học nhanh nhất bạn có thể nhận được.</p>
+<h3 id="h-23-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-23-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Chúng ta sẽ phác bản đồ công cụ — Gemini, Claude, ChatGPT và nhóm công cụ thiết kế — rồi chọn ra những gì thực sự nên có trong quy trình hằng ngày của bạn.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">9 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-ngh-frontend--dch-chuyn">Nghề frontend đã dịch chuyển</a></li><li><a href="#h-6-mt-ngy-lm-vic-thc-t">Một ngày làm việc thực tế</a></li><li><a href="#h-10-nhng-vic-ai-khng-lm-thay-bn">Những việc AI không làm thay bạn</a></li><li><a href="#h-14-bn-tr-ct-ca-kho-hc">Bốn trụ cột của khoá học</a></li><li><a href="#h-16-d-n-bn-s-xy-highland-hospital-web-portal">Dự án bạn sẽ xây: Highland Hospital Web Portal</a></li><li><a href="#h-19-kho-hc-dnh-cho-ai">Khoá học dành cho ai</a></li><li><a href="#h-21-cch-hc">Cách học</a></li><li><a href="#h-23-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><span></span><a href="01-welcome-and-ai-workflow-ban-d-cong-cu-ai-cho-frontend.html" rel="next"><span><small>Bài sau</small><strong>Bản đồ công cụ AI cho Frontend</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lab: render danh sách bác sĩ | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-8.html">Chương 8</a> &rsaquo; JavaScript cơ bản &rsaquo; Bài 5/5</p>
+<h1 class="lesson-title">Lab: render danh sách bác sĩ</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 5/5</span><span>Module: JavaScript cơ bản</span><span>~5 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="lab-render-danh-sch-bc-s">Lab: render danh sách bác sĩ</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Tổng hợp <code>map</code> + template literal + destructuring để render mảng 6 bác sĩ ra lưới card</li><li>Chạy prompt AI sinh toàn bộ code rồi <strong>tự giải thích từng dòng</strong> trước khi dùng</li><li>Chuẩn bị nền tảng cho chương 10 — nơi thay dữ liệu tĩnh bằng DOM tương tác</li></ul>
+<h3 id="h-3-d-liu-6-bc-s">Dữ liệu 6 bác sĩ<a class="anchor" href="#h-3-d-liu-6-bc-s" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>const doctors = [
+  { id: 'D001', name: 'BS.CKI Nguyễn Minh Anh', specialty: 'Nội tổng hợp', experience: 12, fee: 500000, img: 'doctor-01.jpg' },
+  { id: 'D002', name: 'BS.CKI Lê Hoàng Nam',    specialty: 'Tim mạch',     experience: 15, fee: 650000, img: 'doctor-02.jpg' },
+  { id: 'D003', name: 'BS Trần Thu Hà',         specialty: 'Nhi khoa',     experience: 8,  fee: 400000, img: 'doctor-03.jpg' },
+  { id: 'D004', name: 'BS.CKI Phạm Quốc Bảo',   specialty: 'Nội tổng hợp', experience: 10, fee: 450000, img: 'doctor-04.jpg' },
+  { id: 'D005', name: 'TS.BS Vũ Hoàng Yến',     specialty: 'Sản phụ khoa', experience: 18, fee: 700000, img: 'doctor-05.jpg' },
+  { id: 'D006', name: 'BS Đặng Minh Khoa',      specialty: 'Thần kinh',    experience: 9,  fee: 550000, img: 'doctor-06.jpg' },
+];</code></pre></figure>
+<h3 id="h-5-render-bng-map--template-literal">Render bằng map + template literal<a class="anchor" href="#h-5-render-bng-map--template-literal" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>function renderDoctorCard(doctor) {
+  const { name, specialty, experience, fee, img } = doctor; // destructuring bài 02
+  return `
+    &lt;div class="col"&gt;
+      &lt;div class="card h-100 shadow-sm"&gt;
+        &lt;img src="assets/images/${img}" class="card-img-top" alt="${name}"&gt;
+        &lt;div class="card-body"&gt;
+          &lt;div class="d-flex justify-content-between align-items-start mb-2"&gt;
+            &lt;h5 class="card-title mb-0"&gt;${name}&lt;/h5&gt;
+            &lt;span class="badge text-bg-info"&gt;${specialty}&lt;/span&gt;
+          &lt;/div&gt;
+          &lt;p class="card-text text-body-secondary"&gt;${experience} năm kinh nghiệm&lt;/p&gt;
+          &lt;p class="fw-semibold mb-3"&gt;Giá khám: ${fee.toLocaleString('vi-VN')}đ&lt;/p&gt;
+          &lt;a href="booking.html" class="btn btn-outline-primary w-100"&gt;Đặt lịch khám&lt;/a&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  `;
+}
+
+const gridHTML = doctors.map((doctor) =&gt; renderDoctorCard(doctor)).join('');
+console.log(gridHTML);
+// Ở chương 10: document.querySelector('#doctorGrid').innerHTML = gridHTML;</code></pre></figure>
+<p>Điểm đáng chú ý:</p>
+<ul><li><code>map</code> biến 6 object thành 6 chuỗi HTML; <code>.join('')</code> nối chúng thành <strong>một</strong> chuỗi lớn</li><li><code>renderDoctorCard</code> tách riêng giúp tái sử dụng và dễ đọc — component thinking sơ khai</li><li>HTML card khớp chuẩn Bootstrap chương 8 nên khi đưa vào trang là hiển thị đẹp ngay</li></ul>
+<h3 id="h-9-t-chc-file--tch-d-liu-khi-logic">Tổ chức file — tách dữ liệu khỏi logic<a class="anchor" href="#h-9-t-chc-file--tch-d-liu-khi-logic" aria-label="Liên kết mục">#</a></h3>
+<p>Ngay từ bây giờ hãy chia làm ba file, vì chương 10 và Admin Dashboard sẽ cần chính cấu trúc này:</p>
+<figure class="code-block"><figcaption>Code</figcaption><pre><code>highland-hospital/
+├── doctors.html          # trang: grid rỗng + nhúng 2 script
+├── assets/
+│   ├── css/ (tuỳ chọn)
+│   └── js/
+│       ├── doctors-data.js     # chỉ chứa mảng doctors (dữ liệu)
+│       └── doctors-render.js   # hàm renderDoctorCard + gridHTML (logic)
+└── images/  (đặt file ảnh bác sĩ)</code></pre></figure>
+<p>Điểm mấu chốt là <strong>thứ tự nhúng script</strong>: file dữ liệu phải nằm trước file logic, và cả hai đặt cuối <code>&lt;body&gt;</code>:</p>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;body&gt;
+  &lt;div id="doctorGrid" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4"&gt;&lt;/div&gt;
+
+  &lt;script src="assets/js/doctors-data.js"&gt;&lt;/script&gt;
+  &lt;script src="assets/js/doctors-render.js"&gt;&lt;/script&gt;
+&lt;/body&gt;</code></pre></figure>
+<p>Nếu bạn nhúng <code>doctors-render.js</code> trước, nó chạy trong khi <code>doctors</code> chưa tồn tại và văng lỗi <code>ReferenceError</code> — lỗi kinh điển khi mới tách file. Chia tách "dữ liệu" và "cách hiển thị" chính là tiền đề cho việc về sau thay mảng tĩnh bằng dữ liệu từ API (chương 11) mà không đụng tới hàm render.</p>
+<h3 id="h-15-prompt-ai-sinh-code--ri-t-gii-thch">Prompt AI sinh code — rồi tự giải thích<a class="anchor" href="#h-15-prompt-ai-sinh-code--ri-t-gii-thch" aria-label="Liên kết mục">#</a></h3>
+<p>Prompt dưới đây yêu cầu AI sinh <strong>toàn bộ</strong> file — bản nháp nhanh (bước 2 của Workflow). Phần quan trọng nhất không phải code mà là bài tập bạn tự làm sau đó.</p>
+<aside class="prompt-card"><span class="prompt-chip">Prompt mẫu</span><p><strong>Prompt gửi Gemini/Claude/ChatGPT:</strong> Bạn là senior frontend developer. Website Highland Hospital dùng Bootstrap 5. Viết một file HTML hoàn chỉnh (CDN Bootstrap 5 CSS + JS) có: navbar đơn giản, section tiêu đề "Đội ngũ bác sĩ", và lưới card hiển thị 6 bác sĩ từ mảng <code>doctors</code> dưới đây — KHÔNG viết tay HTML cho từng bác sĩ mà dùng <code>Array.map</code> + template literal để render, mỗi card gồm ảnh, tên, badge chuyên khoa, số năm kinh nghiệm, giá khám (dùng <code>toLocaleString('vi-VN')</code>), nút "Đặt lịch khám". Lưới dùng <code>row-cols-1 row-cols-md-2 row-cols-lg-3 g-4</code> và card <code>h-100</code>. Dữ liệu: <code>[...6 bác sĩ như trên...]</code>. Sau khi trả code, kèm mục "Giải thích từng dòng" ngắn gọn.</p></aside>
+<p>Sau khi AI trả về, tự trả lời những câu sau trước khi dán vào trang (bước 3 — thấu hiểu):</p>
+<ol><li>Vì sao dùng <code>.join('')</code> sau <code>map</code> — nếu bỏ đi thì mảng chuỗi bị nối dấu phẩy kiểu gì?</li><li>Ký tự backtick và <code>${}</code> trong template literal đang giữ vai trò gì?</li><li>Hàm <code>renderDoctorCard</code> nhận vào gì và trả về gì (mô tả đầu vào → đầu ra)?</li><li>Nếu một bác sĩ thiếu <code>fee</code>, code sẽ in ra gì — và làm sao phòng tránh?</li></ol>
+<h3 id="h-20-cc-li-render-hay-gp">Các lỗi render hay gặp<a class="anchor" href="#h-20-cc-li-render-hay-gp" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Quên <code>.join('')</code>: lưới card hiện ra kèm dấu phẩy lạ giữa các card — vì mảng bị ép thành chuỗi</li><li>Đường dẫn ảnh sai: đặt <code>assets/images/</code> cho khớp cấu trúc thư mục dự án của bạn</li><li>Quên đóng backtick hoặc <code>${</code>: template literal nuốt lỗi rất im lặng, hãy đọc lại console</li></ul>
+<h3 id="h-22-thc-hnh">Thực hành<a class="anchor" href="#h-22-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<ol><li>Tạo <code>doctors.html</code> với grid rỗng <code>&lt;div id="doctorGrid" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4"&gt;&lt;/div&gt;</code>.</li><li>Tạo <code>doctors-data.js</code> (mảng) và <code>doctors-render.js</code> (hàm render + <code>console.log(gridHTML)</code>), mở trang bằng Live Server và kiểm tra console.</li><li>Chạy prompt mẫu, dán file AI sinh ra, rồi viết ra giấy phần giải thích 4 câu hỏi ở trên trước khi đọc phần AI giải thích.</li><li>Tinh chỉnh (bước 4): thêm một bác sĩ thứ 7 vào mảng và quan sát card thứ 7 tự xuống hàng theo grid.</li><li>Chuẩn bị cho chương 10: đổi dòng <code>console.log(gridHTML)</code> thành gán <code>innerHTML</code> — nhưng đừng lo nếu chưa hiểu <code>innerHTML</code>, bài sau sẽ nói kỹ.</li></ol>
+<h3 id="h-24-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-24-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Dữ liệu đã chảy thành giao diện; chương 10 sẽ nối nó vào DOM và sự kiện — bộ lọc chuyên khoa, submit form và modal xác nhận bắt đầu hoạt động thật.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">8 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-d-liu-6-bc-s">Dữ liệu 6 bác sĩ</a></li><li><a href="#h-5-render-bng-map--template-literal">Render bằng map + template literal</a></li><li><a href="#h-9-t-chc-file--tch-d-liu-khi-logic">Tổ chức file — tách dữ liệu khỏi logic</a></li><li><a href="#h-15-prompt-ai-sinh-code--ri-t-gii-thch">Prompt AI sinh code — rồi tự giải thích</a></li><li><a href="#h-20-cc-li-render-hay-gp">Các lỗi render hay gặp</a></li><li><a href="#h-22-thc-hnh">Thực hành</a></li><li><a href="#h-24-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="09-javascript-basics-objects-json.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Objects & JSON</strong></span></a><a href="10-dom-and-events-truy-v-n-thao-tac-dom.html" rel="next"><span><small>Bài sau</small><strong>Truy vấn & thao tác DOM</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

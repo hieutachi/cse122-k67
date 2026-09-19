@@ -1,0 +1,93 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Flexbox căn bản | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-5.html">Chương 5</a> &rsaquo; CSS Layout &rsaquo; Bài 1/5</p>
+<h1 class="lesson-title">Flexbox căn bản</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 1/5</span><span>Module: CSS Layout</span><span>~4 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="flexbox-cn-bn">Flexbox căn bản</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Hiểu mô hình trục chính (main-axis) và trục chéo (cross-axis)</li><li>Dùng <code>justify-content</code>, <code>align-items</code>, <code>flex-direction</code>, <code>gap</code>, <code>flex-wrap</code> thành thạo</li><li>Dàn thanh nav và hàng nút CTA Highland Hospital chỉ bằng vài dòng CSS</li></ul>
+<h3 id="h-3-mt-chiu---tng-ct-li-ca-flexbox">Một chiều — ý tưởng cốt lõi của Flexbox<a class="anchor" href="#h-3-mt-chiu---tng-ct-li-ca-flexbox" aria-label="Liên kết mục">#</a></h3>
+<p>Flexbox sắp xếp phần tử con theo <strong>một trục</strong>. Hiểu hai trục là hiểu 90% Flexbox:</p>
+<figure class="code-block"><figcaption>Code</figcaption><pre><code>   main-axis (mặc định: ngang, trái → phải)
+   ─────────────────────────────────────────────►
+ ┌────────────────────────────────────────────────┐
+ │  justify-content: căn theo trục CHÍNH          │◄── flex-start ──┐
+ │  [con]  [con]  [con]           ┌───────────┐   │◄── center ──────┤
+ │                                │ align-items│  │◄── flex-end ────┤
+ │                                │ căn trục CHÉO│                  │
+ │                                └───────────┘   │                 │
+ │                                (cross-axis: dọc)                │
+ └────────────────────────────────────────────────┘</code></pre></figure>
+<p>Mặc định <code>flex-direction: row</code>: trục chính nằm ngang, trục chéo thẳng đứng. Khi đổi thành <code>column</code>, hai trục hoán đổi — mọi thứ bạn học về hai thuộc tính căn chỉnh vẫn đúng, chỉ đổi vai.</p>
+<h3 id="h-7-cc-thuc-tnh-ct-li">Các thuộc tính cốt lõi<a class="anchor" href="#h-7-cc-thuc-tnh-ct-li" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>.nav {
+  display: flex;              /* con trở thành flex item, nằm một hàng */
+  justify-content: space-between; /* đẩy 2 đầu: logo trái, menu phải */
+  align-items: center;        /* căn giữa theo chiều dọc */
+  gap: 1.5rem;                /* khoảng cách đều GIỮA các con (không dùng margin) */
+}</code></pre></figure>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>.hero__actions { display: flex; gap: 1rem; flex-wrap: wrap; }</code></pre></figure>
+<ul><li><code>justify-content</code>: phân phối dọc theo <strong>trục chính</strong> — <code>flex-start</code>, <code>center</code>, <code>flex-end</code>, <code>space-between</code>, <code>space-around</code>, <code>space-evenly</code>.</li><li><code>align-items</code>: căn theo <strong>trục chéo</strong> — <code>stretch</code> (mặc định, con kéo dãn lấp trục chéo), <code>center</code>, <code>flex-start</code>, <code>flex-end</code>.</li><li><code>flex-wrap: wrap</code>: cho phép con xuống hàng khi không đủ chỗ — bắt buộc có nếu số phần tử không cố định.</li><li><code>gap</code>: khoảng cách giữa các con; hoạt động cả hai chiều khi wrap, thay thế mẹo <code>margin</code> lẻ.</li></ul>
+<h3 id="h-11-thanh-nav-highland-hospital">Thanh nav Highland Hospital<a class="anchor" href="#h-11-thanh-nav-highland-hospital" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;nav class="navbar"&gt;
+  &lt;a href="#" class="navbar__brand"&gt;🏥 Highland Hospital&lt;/a&gt;
+  &lt;ul class="navbar__menu"&gt;
+    &lt;li&gt;&lt;a href="#services"&gt;Dịch vụ&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#doctors"&gt;Bác sĩ&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#booking"&gt;Đặt lịch&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;a href="tel:1900-1234" class="navbar__hotline"&gt;1900 1234&lt;/a&gt;
+&lt;/nav&gt;</code></pre></figure>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>.navbar {
+  display: flex;
+  justify-content: space-between; /* brand trái, menu giữa, hotline phải */
+  align-items: center;
+  padding: 1rem 1.5rem;
+  background: var(--hh-white);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+}
+
+.navbar__menu {
+  display: flex;      /* bản thân menu cũng là một flex container */
+  gap: 1.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;         /* reset margin/padding mặc định của ul */
+}
+
+.navbar__menu a { text-decoration: none; color: var(--hh-gray-900); }
+.navbar__menu a:hover { color: var(--hh-primary); }</code></pre></figure>
+<p>Chú ý: một phần tử vừa là <strong>flex item</strong> (<code>.navbar__menu</code> là con của <code>.navbar</code>) vừa là <strong>flex container</strong> (nó chứa các <code>&lt;li&gt;</code>). Cấu trúc lồng nhau này là hình mẫu điển hình — flexbox hoạt động theo từng cặp cha-con, không "xuyên" qua nhiều tầng.</p>
+<h3 id="h-15-prompt-mu--dng-nav-bng-ai">Prompt mẫu — dựng nav bằng AI<a class="anchor" href="#h-15-prompt-mu--dng-nav-bng-ai" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Dùng Flexbox dựng thanh nav cho Highland Hospital, HTML đính kèm.
+Ràng buộc: logo trái, 3 liên kết giữa, số hotline phải; căn giữa
+theo chiều dọc; menu là flex, gap 1.5rem; khi màn hình &lt; 640px thì
+các liên kết ẩn đi (chưa cần hamburger). Viết CSS ngắn kèm chú
+thích tiếng Việt cho justify-content, align-items, gap.</code></pre></figure>
+<h3 id="h-17-thc-hnh">Thực hành<a class="anchor" href="#h-17-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<ol><li>Mở trang Highland Hospital, thêm class <code>.navbar</code> vào thanh điều hướng bạn đã dựng ở chương 3, áp dụng CSS mẫu.</li><li>Thực hành căn giữa tuyệt đối: <code>.hero__content</code> trong <code>.hero</code> dùng <code>display: flex; align-items: center; justify-content: center;</code> và so sánh với cách ở bài 05 (chỉ căn dọc).</li><li>Lần lượt đổi <code>flex-direction: column</code> cho <code>.hero__actions</code>, rồi đổi <code>justify-content</code> thành <code>flex-end</code>/<code>space-evenly</code> — quan sát mỗi lần thay đổi trục.</li><li>Thêm 5 nút vào hàng CTA và bỏ <code>flex-wrap: wrap</code> — xem điều gì xảy ra ở màn hình hẹp, rồi thêm lại <code>wrap</code>.</li></ol>
+<h3 id="h-19-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-19-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Đã biết cách "xếp hàng" các phần tử, giờ đến sức mạnh thật sự: flex-grow/shrink/basis để con tự co giãn chia không gian — giải bài toán hàng card bằng chiều cao và nav đẩy nút sang phải.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">7 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-mt-chiu---tng-ct-li-ca-flexbox">Một chiều — ý tưởng cốt lõi của Flexbox</a></li><li><a href="#h-7-cc-thuc-tnh-ct-li">Các thuộc tính cốt lõi</a></li><li><a href="#h-11-thanh-nav-highland-hospital">Thanh nav Highland Hospital</a></li><li><a href="#h-15-prompt-mu--dng-nav-bng-ai">Prompt mẫu — dựng nav bằng AI</a></li><li><a href="#h-17-thc-hnh">Thực hành</a></li><li><a href="#h-19-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="04-css3-foundations-lab-d-ng-hero-section.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Lab: dựng Hero section</strong></span></a><a href="05-css-layout-flexbox-nang-cao.html" rel="next"><span><small>Bài sau</small><strong>Flexbox nâng cao</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

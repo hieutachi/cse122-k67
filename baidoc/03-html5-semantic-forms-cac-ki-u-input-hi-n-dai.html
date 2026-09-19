@@ -1,0 +1,85 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Forms & các kiểu Input hiện đại | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-3.html">Chương 3</a> &rsaquo; HTML5 semantic &rsaquo; Bài 3/5</p>
+<h1 class="lesson-title">Forms & các kiểu Input hiện đại</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 3/5</span><span>Module: HTML5 semantic</span><span>~4 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="forms-amp-cc-kiu-input-hin-i">Forms &amp; các kiểu Input hiện đại</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Dựng form HTML chuẩn: <code>form</code>, <code>label</code>, các kiểu <code>input</code>, <code>select</code>, <code>textarea</code></li><li>Dùng đúng thuộc tính <code>required</code>, <code>placeholder</code>, <code>autocomplete</code> cho trải nghiệm tốt</li><li>Xây được form đặt lịch khám cho Highland Hospital</li></ul>
+<h3 id="h-3-form-l-ca-hng-ca-trang-web">Form là "cửa hàng" của trang web<a class="anchor" href="#h-3-form-l-ca-hng-ca-trang-web" aria-label="Liên kết mục">#</a></h3>
+<p>Form là nơi người dùng giao dữ liệu cho bạn — với Highland Hospital, đó là thông tin cá nhân và yêu cầu khám. HTML hiện đại giúp form <strong>tự kiểm tra hợp lệ cơ bản mà không cần một dòng JavaScript</strong>: chọn đúng kiểu <code>input</code> là đã được nửa chặng đường.</p>
+<h3 id="h-5-cc-khi-xy-dng">Các khối xây dựng<a class="anchor" href="#h-5-cc-khi-xy-dng" aria-label="Liên kết mục">#</a></h3>
+<ul><li><code>&lt;form&gt;</code> — khung chứa, với <code>action</code> (nơi gửi dữ liệu) và <code>method</code>. Trong giai đoạn chưa có server, dùng <code>action="#"</code> và để JavaScript (chương 10) xử lý.</li><li><code>&lt;label&gt;</code> — nhãn đi kèm mỗi ô nhập; thuộc tính <code>for</code> trỏ tới <code>id</code> của ô. Label vừa giúp người dùng biết cần điền gì, vừa là "tay cầm" cho trình đọc màn hình và cho thao tác bấm vào nhãn để focus ô.</li><li><code>&lt;input&gt;</code> — ô nhập; kiểu được quyết định bởi thuộc tính <code>type</code>:</li></ul>
+<div class="table-card"><table><thead><tr><th>type</th><th>Dùng cho</th><th>Trình duyệt tự cho gì</th></tr></thead><tbody><tr><td><code>text</code></td><td>Họ tên</td><td>—</td></tr><tr><td><code>email</code></td><td>Địa chỉ email</td><td>Bàn phím có <code>@</code>, tự kiểm tra định dạng</td></tr><tr><td><code>tel</code></td><td>Số điện thoại</td><td>Bàn phím số trên mobile</td></tr><tr><td><code>date</code></td><td>Ngày khám</td><td>Bộ chọn lịch có sẵn</td></tr><tr><td><code>number</code></td><td>Số (cân nặng, tuổi)</td><td>Nút tăng/giảm, chỉ nhận số</td></tr><tr><td><code>radio</code></td><td>Chọn 1 trong nhóm</td><td>—</td></tr><tr><td><code>checkbox</code></td><td>Chọn nhiều / đồng ý điều khoản</td><td>—</td></tr><tr><td><code>password</code></td><td>Mật khẩu</td><td>Che ký tự</td></tr></tbody></table></div>
+<ul><li><code>&lt;select&gt;</code> + <code>&lt;option&gt;</code> — dropdown chọn một trong nhiều giá trị (chuyên khoa, chi nhánh).</li><li><code>&lt;textarea&gt;</code> — ô nhập nhiều dòng (triệu chứng mô tả, ghi chú).</li></ul>
+<h3 id="h-9-thuc-tnh-lm-nn-tri-nghim">Thuộc tính làm nên trải nghiệm<a class="anchor" href="#h-9-thuc-tnh-lm-nn-tri-nghim" aria-label="Liên kết mục">#</a></h3>
+<ul><li><code>required</code> — không cho submit khi ô trống; kèm <code>:invalid</code> mặc định của CSS ta có thể định kiểu.</li><li><code>placeholder</code> — ví dụ gợi ý ("VD: Nguyễn Văn A"). Chỉ là gợi ý, <strong>không thay thế label</strong> — vì placeholder biến mất khi gõ và gây khó cho người dùng trình đọc màn hình.</li><li><code>autocomplete</code> — cho phép trình duyệt tự điền (<code>name</code>, <code>email</code>, <code>tel</code>...). Với form y tế, <strong>không</strong> đặt <code>autocomplete="on"</code> chung; chỉ bật cho từng trường thật sự nên tự điền.</li><li><code>name</code> — tên field gửi lên server (và bài chương 10 sẽ đọc bằng <code>FormData</code>). Đừng quên: thiếu <code>name</code> thì ô đó không có trong dữ liệu gửi đi.</li><li>Nhóm <code>radio</code>/<code>checkbox</code> phải dùng chung thuộc tính <code>name</code> để trình duyệt biết chúng là một nhóm.</li></ul>
+<h3 id="h-11-form-t-lch-khm-mu">Form đặt lịch khám mẫu<a class="anchor" href="#h-11-form-t-lch-khm-mu" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;form action="#" method="post" id="booking-form"&gt;
+  &lt;div class="form-group"&gt;
+    &lt;label for="patient-name"&gt;Họ và tên&lt;/label&gt;
+    &lt;input type="text" id="patient-name" name="patientName"
+           placeholder="VD: Nguyễn Thị Hương" required
+           autocomplete="name"&gt;
+  &lt;/div&gt;
+
+  &lt;div class="form-group"&gt;
+    &lt;label for="patient-email"&gt;Email&lt;/label&gt;
+    &lt;input type="email" id="patient-email" name="patientEmail"
+           placeholder="ban@email.com" required autocomplete="email"&gt;
+  &lt;/div&gt;
+
+  &lt;div class="form-group"&gt;
+    &lt;label for="appointment-date"&gt;Ngày khám dự kiến&lt;/label&gt;
+    &lt;input type="date" id="appointment-date" name="appointmentDate" required&gt;
+  &lt;/div&gt;
+
+  &lt;div class="form-group"&gt;
+    &lt;label for="specialty"&gt;Chuyên khoa&lt;/label&gt;
+    &lt;select id="specialty" name="specialty" required&gt;
+      &lt;option value=""&gt;— Chọn chuyên khoa —&lt;/option&gt;
+      &lt;option value="tim-mach"&gt;Tim mạch&lt;/option&gt;
+      &lt;option value="noi-tong-hop"&gt;Nội tổng hợp&lt;/option&gt;
+      &lt;option value="nhi-khoa"&gt;Nhi khoa&lt;/option&gt;
+    &lt;/select&gt;
+  &lt;/div&gt;
+
+  &lt;button type="submit"&gt;Gửi yêu cầu đặt lịch&lt;/button&gt;
+&lt;/form&gt;</code></pre></figure>
+<p>Đọc lại và tự trả lời: ô nào trình duyệt sẽ tự chặn nếu bỏ trống? Ngày khám có ô nào chặn chọn ngày trong quá khứ không (chưa — bài chương 10 sẽ thêm bằng JS)? Vì sao option đầu tiên có <code>value=""</code>? — để <code>required</code> hoạt động: người dùng chưa chọn thì giá trị rỗng và bị chặn submit.</p>
+<h3 id="h-14-prompt-mu-nng-cp-form-bng-ai">Prompt mẫu: nâng cấp form bằng AI<a class="anchor" href="#h-14-prompt-mu-nng-cp-form-bng-ai" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Bối cảnh: Highland Hospital, trang booking.html. Tôi có form đặt lịch
+khám đang chạy gồm họ tên, email, ngày khám, chuyên khoa (dán code form).
+Nhiệm vụ: thêm vào form: (1) radio "Giới tính" gồm Nam/Nữ/Khác; (2)
+textarea "Mô tả triệu chứng" dài tối đa 500 ký tự; (3) checkbox "Tôi đã
+đọc và đồng ý với quy định khám bệnh" bắt buộc.
+Ràng buộc: HTML thuần, không Bootstrap, không JavaScript; giữ nguyên các
+trường cũ và cấu trúc class .form-group.
+Định dạng: trả về toàn bộ &lt;form&gt; mới để tôi thay thế trực tiếp.</code></pre></figure>
+<h3 id="h-16-thc-hnh">Thực hành<a class="anchor" href="#h-16-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<p>Dựng form đặt lịch của Highland Hospital với đủ: họ tên (text), email, số điện thoại (tel), ngày khám (date), chuyên khoa (select), triệu chứng (textarea), checkbox đồng ý quy định. Mở trang, thử bấm Gửi khi để trống vài ô — quan sát thông báo hợp lệ của trình duyệt xuất hiện thế nào.</p>
+<h3 id="h-18-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-18-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Ngoài form, nội dung bệnh viện còn là giờ làm việc, bảng giá, hình ảnh bác sĩ — bài <em>Bảng biểu &amp; đa phương tiện</em> dạy <code>table</code>, <code>img</code> và <code>svg</code> đúng chuẩn.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">8 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-form-l-ca-hng-ca-trang-web">Form là "cửa hàng" của trang web</a></li><li><a href="#h-5-cc-khi-xy-dng">Các khối xây dựng</a></li><li><a href="#h-9-thuc-tnh-lm-nn-tri-nghim">Thuộc tính làm nên trải nghiệm</a></li><li><a href="#h-11-form-t-lch-khm-mu">Form đặt lịch khám mẫu</a></li><li><a href="#h-14-prompt-mu-nng-cp-form-bng-ai">Prompt mẫu: nâng cấp form bằng AI</a></li><li><a href="#h-16-thc-hnh">Thực hành</a></li><li><a href="#h-18-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="03-html5-semantic-the-ng-nghia-seo.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Thẻ ngữ nghĩa & SEO</strong></span></a><a href="03-html5-semantic-bang-bi-u-da-phuong-ti-n.html" rel="next"><span><small>Bài sau</small><strong>Bảng biểu & đa phương tiện</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

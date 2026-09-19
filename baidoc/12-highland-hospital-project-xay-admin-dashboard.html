@@ -1,0 +1,230 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Xây Admin Dashboard | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-9.html">Chương 9</a> &rsaquo; Dự án Highland Hospital &rsaquo; Bài 4/6</p>
+<h1 class="lesson-title">Xây Admin Dashboard</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 4/6</span><span>Module: Dự án Highland Hospital</span><span>~8 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="xy-admin-dashboard">Xây Admin Dashboard</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Dựng layout dashboard: navbar (hoặc sidebar) + vùng nội dung chính</li><li>Tính 4 metrics cards (tổng lịch hẹn, hôm nay, chờ duyệt, hoàn thành) trực tiếp từ mảng <code>appointments</code></li><li>Xây data table lịch hẹn: tìm kiếm theo tên bệnh nhân, lọc theo trạng thái</li><li>Cập nhật trạng thái, xoá lịch hẹn, đồng bộ mọi thay đổi vào <code>localStorage</code></li></ul>
+<h3 id="h-3-ngun-d-liu-appointments--localstorage">Nguồn dữ liệu: appointments + localStorage<a class="anchor" href="#h-3-ngun-d-liu-appointments--localstorage" aria-label="Liên kết mục">#</a></h3>
+<p>Bài trước, bệnh nhân tạo lịch hẹn ở trang đặt lịch. Dashboard phải đọc <strong>đúng cùng nguồn đó</strong> — key <code>highland_appointments</code> trong <code>localStorage</code>, dữ liệu gốc seed trong <code>js/data.js</code>:</p>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>// js/data.js — dữ liệu seed lần đầu (khi localStorage trống)
+const seedAppointments = [
+  { id: 1, patient: 'Nguyễn Văn An',   doctor: 'BS. Nguyễn Văn An',      specialty: 'Tim mạch',      date: '2026-05-18', time: '08:30', status: 'cho' },
+  { id: 2, patient: 'Trần Thị Bích',   doctor: 'TS.BS. Trần Thị Bích',   specialty: 'Nội tổng quát', date: '2026-05-18', time: '09:00', status: 'xac_nhan' },
+  { id: 3, patient: 'Lê Minh Châu',    doctor: 'BS.CKII. Lê Minh Châu',  specialty: 'Tim mạch',      date: '2026-05-19', time: '14:00', status: 'cho' },
+  { id: 4, patient: 'Phạm Quốc Dũng',  doctor: 'BS. Hoàng Thu Hà',       specialty: 'Nội tổng quát', date: '2026-05-15', time: '10:00', status: 'hoan_thanh' },
+  { id: 5, patient: 'Hoàng Thu Hà',    doctor: 'ThS.BS. Phạm Quốc Dũng', specialty: 'Nhi khoa',      date: '2026-05-17', time: '16:00', status: 'huy' },
+];
+
+// js/admin.js — helpers đọc/ghi dùng chung
+const STORAGE_KEY = 'highland_appointments';
+function loadAppointments() {
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if (raw) return JSON.parse(raw);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(seedAppointments)); // seed lần đầu
+  return [...seedAppointments];
+}
+function saveAppointments(list) { localStorage.setItem(STORAGE_KEY, JSON.stringify(list)); }</code></pre></figure>
+<p>Trạng thái dùng giá trị ổn định <code>'cho' / 'xac_nhan' / 'huy' / 'hoan_thanh'</code> (không dấu tiếng Việt — dễ nhập sai, khó so sánh); <strong>nhãn hiển thị</strong> map riêng:</p>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>const STATUS_LABEL = { cho: 'Chờ duyệt', xac_nhan: 'Xác nhận', huy: 'Huỷ', hoan_thanh: 'Hoàn thành' };
+const STATUS_BADGE = { cho: 'text-bg-warning', xac_nhan: 'text-bg-success', huy: 'text-bg-danger', hoan_thanh: 'text-bg-secondary' };</code></pre></figure>
+<h3 id="h-8-layout-dashboard">Layout dashboard<a class="anchor" href="#h-8-layout-dashboard" aria-label="Liên kết mục">#</a></h3>
+<p>Dùng navbar tối giản thay sidebar — trên mobile nó thu gọn sẵn mà không cần CSS thêm:</p>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="vi"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+  &lt;title&gt;Admin — Highland Hospital&lt;/title&gt;
+  &lt;link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"&gt;
+  &lt;link rel="stylesheet" href="css/style.css"&gt;
+&lt;/head&gt;
+&lt;body class="bg-light"&gt;
+  &lt;nav class="navbar navbar-expand-lg navbar-dark bg-dark"&gt;
+    &lt;div class="container-fluid"&gt;
+      &lt;a class="navbar-brand fw-bold" href="admin.html"&gt;🏥 Highland Admin&lt;/a&gt;
+      &lt;button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNav"
+              aria-controls="adminNav" aria-expanded="false" aria-label="Mở menu quản trị"&gt;
+        &lt;span class="navbar-toggler-icon"&gt;&lt;/span&gt;
+      &lt;/button&gt;
+      &lt;div class="collapse navbar-collapse" id="adminNav"&gt;
+        &lt;ul class="navbar-nav ms-auto"&gt;
+          &lt;li class="nav-item"&gt;&lt;a class="nav-link" href="index.html"&gt;Về trang chủ&lt;/a&gt;&lt;/li&gt;
+          &lt;li class="nav-item"&gt;&lt;a class="nav-link active" aria-current="page" href="admin.html"&gt;Dashboard&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/nav&gt;
+  &lt;main class="container-fluid py-4"&gt;
+    &lt;div class="d-flex justify-content-between align-items-center mb-4"&gt;
+      &lt;h1 class="h3 fw-bold mb-0"&gt;Tổng quan lịch hẹn&lt;/h1&gt;
+      &lt;a href="booking.html" class="btn btn-primary btn-sm"&gt;+ Lịch hẹn mới&lt;/a&gt;
+    &lt;/div&gt;
+    &lt;!-- metrics + bảng dựng dưới đây --&gt;
+  &lt;/main&gt;
+  &lt;script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"&gt;&lt;/script&gt;
+  &lt;script src="js/data.js"&gt;&lt;/script&gt;
+  &lt;script src="js/admin.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre></figure>
+<h3 id="h-11-metrics-cards-tnh-t-d-liu">Metrics cards tính từ dữ liệu<a class="anchor" href="#h-11-metrics-cards-tnh-t-d-liu" aria-label="Liên kết mục">#</a></h3>
+<p>4 thẻ thống kê <strong>không được hardcode số</strong> — mọi con số tính từ mảng <code>appointments</code> mỗi lần render, để dữ liệu đổi thì metrics tự đúng:</p>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;div class="row g-3 mb-4" id="metricRow"&gt;&lt;!-- 4 cột col-sm-6 col-xl-3 render bằng JS --&gt;&lt;/div&gt;</code></pre></figure>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>function renderMetrics(appointments) {
+  const today = new Date().toISOString().slice(0, 10); // 'YYYY-MM-DD' — khớp format date
+  const metrics = [
+    { label: 'Tổng lịch hẹn', value: appointments.length, extra: 'tất cả thời gian', icon: '📋', color: 'primary' },
+    { label: 'Hôm nay', value: appointments.filter(a =&gt; a.date === today).length, extra: new Date().toLocaleDateString('vi-VN'), icon: '📅', color: 'info' },
+    { label: 'Chờ duyệt', value: appointments.filter(a =&gt; a.status === 'cho').length, extra: 'cần xử lý', icon: '⏳', color: 'warning' },
+    { label: 'Hoàn thành', value: appointments.filter(a =&gt; a.status === 'hoan_thanh').length, extra: 'đã kết thúc', icon: '✅', color: 'success' },
+  ];
+  document.getElementById('metricRow').innerHTML = metrics.map(m =&gt; `
+    &lt;div class="col-sm-6 col-xl-3"&gt;
+      &lt;div class="card border-0 shadow-sm h-100"&gt;
+        &lt;div class="card-body d-flex align-items-center gap-3"&gt;
+          &lt;div class="bg-${m.color}-subtle rounded-3 p-3 fs-4"&gt;${m.icon}&lt;/div&gt;
+          &lt;div&gt;
+            &lt;p class="text-secondary small mb-0"&gt;${m.label}&lt;/p&gt;
+            &lt;p class="h3 fw-bold mb-0"&gt;${m.value}&lt;/p&gt;
+            &lt;p class="text-secondary small mb-0"&gt;${m.extra}&lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;`).join('');
+}</code></pre></figure>
+<p>Dữ liệu mẫu dùng năm cố định nên metric "Hôm nay" có thể ra 0 — hãy cập nhật vài lịch hẹn về đúng ngày hôm nay khi thử.</p>
+<h3 id="h-16-data-table-c-tm-kim--lc-trng-thi">Data table có tìm kiếm + lọc trạng thái<a class="anchor" href="#h-16-data-table-c-tm-kim--lc-trng-thi" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;div class="card border-0 shadow-sm"&gt;
+  &lt;div class="card-body"&gt;
+    &lt;div class="row g-3 mb-3"&gt;
+      &lt;div class="col-md-6"&gt;
+        &lt;input type="search" id="searchInput" class="form-control"
+               placeholder="Tìm theo tên bệnh nhân…" aria-label="Tìm lịch hẹn theo tên bệnh nhân"&gt;
+      &lt;/div&gt;
+      &lt;div class="col-md-6"&gt;
+        &lt;select id="statusFilter" class="form-select" aria-label="Lọc theo trạng thái"&gt;
+          &lt;option value="all"&gt;Tất cả trạng thái&lt;/option&gt;
+          &lt;option value="cho"&gt;Chờ duyệt&lt;/option&gt;
+          &lt;option value="xac_nhan"&gt;Xác nhận&lt;/option&gt;
+          &lt;option value="huy"&gt;Huỷ&lt;/option&gt;
+          &lt;option value="hoan_thanh"&gt;Hoàn thành&lt;/option&gt;
+        &lt;/select&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="table-responsive"&gt;
+      &lt;table class="table table-hover align-middle"&gt;
+        &lt;thead class="table-light"&gt;
+          &lt;tr&gt;
+            &lt;th scope="col"&gt;Bệnh nhân&lt;/th&gt;
+            &lt;th scope="col"&gt;Chuyên khoa&lt;/th&gt;
+            &lt;th scope="col"&gt;Bác sĩ&lt;/th&gt;
+            &lt;th scope="col"&gt;Ngày giờ&lt;/th&gt;
+            &lt;th scope="col"&gt;Trạng thái&lt;/th&gt;
+            &lt;th scope="col" class="text-end"&gt;Thao tác&lt;/th&gt;
+          &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody id="appointmentBody"&gt;&lt;/tbody&gt;
+      &lt;/table&gt;
+    &lt;/div&gt;
+    &lt;p id="emptyNote" class="text-center text-secondary my-4 d-none"&gt;Không có lịch hẹn nào khớp.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre></figure>
+<p>State của bảng gói vào một object — mọi thay đổi chỉ cần gọi lại <code>applyFilters()</code>:</p>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>let appointments = loadAppointments();
+const filters = { keyword: '', status: 'all' };
+
+function applyFilters() {
+  const kw = filters.keyword.trim().toLowerCase();
+  const result = appointments.filter(a =&gt;
+    (filters.status === 'all' || a.status === filters.status) &amp;&amp;
+    (!kw || a.patient.toLowerCase().includes(kw))
+  );
+  renderTable(result);
+}
+function renderTable(list) {
+  document.getElementById('appointmentBody').innerHTML = list.map(rowHTML).join('');
+  document.getElementById('emptyNote').classList.toggle('d-none', list.length &gt; 0);
+}</code></pre></figure>
+<p>Tìm kiếm + lọc là <strong>hai điều kiện độc lập</strong> gộp trong một <code>filter</code> — mô hình y hệt bộ lọc bác sĩ ở bài 03. Hàm <code>rowHTML</code> sinh một hàng:</p>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>function rowHTML(a) {
+  return `
+    &lt;tr data-id="${a.id}"&gt;
+      &lt;td class="fw-semibold"&gt;${a.patient}&lt;/td&gt;
+      &lt;td&gt;${a.specialty}&lt;/td&gt;
+      &lt;td&gt;${a.doctor}&lt;/td&gt;
+      &lt;td&gt;${a.date} · ${a.time}&lt;/td&gt;
+      &lt;td&gt;&lt;span class="badge ${STATUS_BADGE[a.status]}"&gt;${STATUS_LABEL[a.status]}&lt;/span&gt;&lt;/td&gt;
+      &lt;td class="text-end"&gt;
+        &lt;button class="btn btn-sm btn-outline-success me-1" data-action="xac_nhan" title="Xác nhận"&gt;✓&lt;/button&gt;
+        &lt;button class="btn btn-sm btn-outline-danger me-1" data-action="huy" title="Huỷ"&gt;✕&lt;/button&gt;
+        &lt;button class="btn btn-sm btn-outline-secondary" data-action="delete" title="Xoá"&gt;🗑&lt;/button&gt;
+      &lt;/td&gt;
+    &lt;/tr&gt;`;
+}</code></pre></figure>
+<h3 id="h-22-cp-nht-trng-thi-amp-xo--bng-event-delegation">Cập nhật trạng thái &amp; xoá — bằng event delegation<a class="anchor" href="#h-22-cp-nht-trng-thi-amp-xo--bng-event-delegation" aria-label="Liên kết mục">#</a></h3>
+<p>Một listener trên <code>&lt;tbody&gt;</code> xử lý mọi nút của mọi hàng; tìm hàng chứa nút qua <code>closest('tr')</code>:</p>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>document.getElementById('appointmentBody').addEventListener('click', (e) =&gt; {
+  const btn = e.target.closest('button[data-action]');
+  if (!btn) return;
+  const row = btn.closest('tr');
+  const id = Number(row.dataset.id);
+  const target = appointments.find(a =&gt; a.id === id);
+  if (!target) return;
+  const action = btn.dataset.action;
+  if (action === 'delete') {
+    if (!confirm(`Xoá lịch hẹn của "${target.patient}"?`)) return;
+    appointments = appointments.filter(a =&gt; a.id !== id);
+  } else {
+    target.status = action; // 'xac_nhan' hoặc 'huy'
+  }
+  saveAppointments(appointments); // ghi lại ngay sau mỗi thay đổi
+  applyFilters();                 // badge tự đổi
+  renderMetrics(appointments);    // metrics tự cập nhật
+});
+
+document.getElementById('searchInput').addEventListener('input', (e) =&gt; { filters.keyword = e.target.value; applyFilters(); });
+document.getElementById('statusFilter').addEventListener('change', (e) =&gt; { filters.status = e.target.value; applyFilters(); });</code></pre></figure>
+<p>Toàn bộ giao diện chỉ là <strong>hàm render của dữ liệu</strong>: sửa dữ liệu → ghi <code>localStorage</code> → gọi lại render. Đó là mô hình "state-driven UI" — gặp lại nguyên xi khi học React.</p>
+<h3 id="h-26-prompt-ai-cho-bi-ny">Prompt AI cho bài này<a class="anchor" href="#h-26-prompt-ai-cho-bi-ny" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Tôi đang xây Admin Dashboard cho bệnh viện Highland Hospital bằng Bootstrap 5,
+JS thuần ES6+. Dữ liệu là mảng appointments trong localStorage (key
+highland_appointments), mỗi phần tử: { id, patient, doctor, specialty, date,
+time, status } với status ∈ cho | xac_nhan | huy | hoan_thanh.
+Tôi đã có HTML: ô #searchInput, select #statusFilter, tbody #appointmentBody,
+vùng #metricRow. Viết giúp js/admin.js:
+1. renderMetrics(list): 4 card — tổng số, lịch hẹn hôm nay (so date với ngày hiện
+   tại), số chờ duyệt, số hoàn thành
+2. applyFilters() lọc theo từ khoá (tên bệnh nhân, không phân biệt hoa thường)
+   và trạng thái, render vào #appointmentBody kèm badge màu khác nhau cho 4 trạng thái
+3. Event delegation trên tbody: nút data-action="xac_nhan" | "huy" | "delete"
+4. Mọi thay đổi phải ghi localStorage ngay rồi render lại
+5. Có trạng thái rỗng khi không có kết quả
+Giải thích ngắn vì sao nên tách render thành hàm riêng và chỗ dùng confirm().</code></pre></figure>
+<h3 id="h-28-thc-hnh">Thực hành<a class="anchor" href="#h-28-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<ol><li>Tạo <code>admin.html</code> + <code>js/admin.js</code> theo cấu trúc trên; kiểm tra 4 metrics khớp số lượng dữ liệu seed.</li><li>Tìm "Thu" — kết quả đúng; lọc "Chờ duyệt" rồi gõ thêm từ khoá — hai điều kiện chạy đồng thời.</li><li>Bấm ✓ xác nhận một lịch hẹn → badge chuyển xanh, metrics "Chờ duyệt" giảm 1. Tải lại trang — dữ liệu còn nhờ <code>localStorage</code>.</li><li>Xoá một lịch hẹn (có confirm) → metrics giảm tương ứng.</li><li>Gõ <code>localStorage.clear()</code> trong Console rồi tải lại — dữ liệu seed tự nạp lần đầu.</li><li>Chạy prompt AI trên, đối chiếu output với code của bạn.</li></ol>
+<h3 id="h-30-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-30-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Chức năng đã đủ — giờ làm cả 3 trang chạy <strong>nhanh và mượt trên mọi màn hình</strong>: đo Lighthouse, tối ưu ảnh, giảm layout shift, kiểm tra responsive 320/768/1024/1440, accessibility cơ bản — bài <em>Tối ưu hiệu năng &amp; Responsive</em>.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">9 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-ngun-d-liu-appointments--localstorage">Nguồn dữ liệu: appointments + localStorage</a></li><li><a href="#h-8-layout-dashboard">Layout dashboard</a></li><li><a href="#h-11-metrics-cards-tnh-t-d-liu">Metrics cards tính từ dữ liệu</a></li><li><a href="#h-16-data-table-c-tm-kim--lc-trng-thi">Data table có tìm kiếm + lọc trạng thái</a></li><li><a href="#h-22-cp-nht-trng-thi-amp-xo--bng-event-delegation">Cập nhật trạng thái &amp; xoá — bằng event delegation</a></li><li><a href="#h-26-prompt-ai-cho-bi-ny">Prompt AI cho bài này</a></li><li><a href="#h-28-thc-hnh">Thực hành</a></li><li><a href="#h-30-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="12-highland-hospital-project-tuong-tac-javascript-tren-landing-page.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Tương tác JavaScript trên Landing Page</strong></span></a><a href="12-highland-hospital-project-t-i-uu-hi-u-nang-responsive.html" rel="next"><span><small>Bài sau</small><strong>Tối ưu hiệu năng & Responsive</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

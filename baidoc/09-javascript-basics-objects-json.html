@@ -1,0 +1,114 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Objects & JSON | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-8.html">Chương 8</a> &rsaquo; JavaScript cơ bản &rsaquo; Bài 4/5</p>
+<h1 class="lesson-title">Objects & JSON</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 4/5</span><span>Module: JavaScript cơ bản</span><span>~4 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="objects-amp-json">Objects &amp; JSON</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Tạo object, truy cập và sửa thuộc tính, thêm phương thức</li><li>Hiểu JSON là gì và chuyển đổi với <code>JSON.stringify</code> / <code>JSON.parse</code></li><li>Làm việc với mảng lịch hẹn mẫu dạng JSON của bệnh viện</li><li>Phân biệt object trong code (JavaScript) và JSON (định dạng văn bản)</li></ul>
+<h3 id="h-3-to-v-thao-tc-object">Tạo và thao tác object<a class="anchor" href="#h-3-to-v-thao-tc-object" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>// Object literal
+const appointment = {
+  id: 'A001',
+  patientName: 'Nguyễn Văn An',
+  specialty: 'Tim mạch',
+  doctorId: 'D002',
+  date: '2025-12-12',
+  time: '09:00',
+  status: 'pending', // pending | confirmed | done | cancelled
+};
+
+// Truy cập — hai cách tương đương
+console.log(appointment.patientName); // Nguyễn Văn An
+console.log(appointment['specialty']); // Tim mạch — dùng khi tên thuộc tính là biến
+
+// Sửa thuộc tính
+appointment.status = 'confirmed';
+appointment.doctorId = 'D005'; // đổi bác sĩ
+
+// Thêm thuộc tính mới
+appointment.note = 'Cần khám lúc chiều';
+
+// Xoá thuộc tính
+delete appointment.note;
+
+// Phương thức — hàm nằm trong object, dùng this để trỏ vào chính object
+const bookingService = {
+  confirm(appt) {
+    appt.status = 'confirmed';
+    return `Lịch ${appt.id} đã xác nhận cho ${appt.patientName}.`;
+  },
+};
+console.log(bookingService.confirm(appointment));</code></pre></figure>
+<p>Dấu ngoặc vuông <code>appointment['date']</code> hữu ích khi tên thuộc tính nằm trong biến hoặc chứa ký tự đặc biệt (<code>'thời-gian-khám'</code> thì phải dùng ngoặc vuông).</p>
+<h3 id="h-6-mng-lch-hn--d-liu-gc-ca-bnh-vin">Mảng lịch hẹn — dữ liệu gốc của bệnh viện<a class="anchor" href="#h-6-mng-lch-hn--d-liu-gc-ca-bnh-vin" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>const appointments = [
+  { id: 'A001', patientName: 'Nguyễn Văn An', specialty: 'Tim mạch',     date: '2025-12-12', time: '09:00', status: 'pending'   },
+  { id: 'A002', patientName: 'Trần Thu Hà',   specialty: 'Nhi khoa',     date: '2025-12-12', time: '10:30', status: 'confirmed' },
+  { id: 'A003', patientName: 'Phạm Quốc Bảo', specialty: 'Nội tổng hợp', date: '2025-12-13', time: '14:00', status: 'done'      },
+];
+
+// Kết hợp mọi thứ bài 03 đã học
+const pendingCount = appointments.filter((a) =&gt; a.status === 'pending').length;
+console.log(`Có ${pendingCount} lịch hẹn đang chờ xác nhận.`);
+
+const tomorrow = appointments
+  .filter((a) =&gt; a.date === '2025-12-13')
+  .map((a) =&gt; `${a.time} — ${a.patientName} (${a.specialty})`);
+console.log(tomorrow);</code></pre></figure>
+<p>Một object là "một lịch hẹn"; một mảng object là "toàn bộ sổ lịch" — cấu trúc này sẽ chạy xuyên suốt phần Admin Dashboard ở chương 12.</p>
+<h3 id="h-9-json--nh-dng-trao-i-d-liu">JSON — định dạng trao đổi dữ liệu<a class="anchor" href="#h-9-json--nh-dng-trao-i-d-liu" aria-label="Liên kết mục">#</a></h3>
+<p>JSON (JavaScript Object Notation) là <strong>văn bản</strong> để truyền dữ liệu giữa trình duyệt và server. Nó trông giống object JavaScript nhưng khác ba điểm: mọi key phải bọc nháy kép, chuỗi dùng nháy kép, không chứa hàm hay <code>undefined</code>.</p>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>// Object trong bộ nhớ
+const appointment = {
+  patientName: 'Nguyễn Văn An',
+  specialty: 'Tim mạch',
+  fee: 650000,
+};
+
+// Object → chuỗi JSON (để gửi lên server / lưu localStorage)
+const json = JSON.stringify(appointment);
+console.log(json);
+// {"patientName":"Nguyễn Văn An","specialty":"Tim mạch","fee":650000}
+
+// Chuỗi JSON → object (khi nhận từ server)
+const restored = JSON.parse(json);
+console.log(restored.patientName); // Nguyễn Văn An</code></pre></figure>
+<p>Tham số thứ ba của <code>stringify</code> thêm khoảng trắng cho dễ đọc khi debug: <code>JSON.stringify(appointments, null, 2)</code> in toàn bộ sổ lịch dạng cây.</p>
+<h3 id="h-13-json-hp-l--kim-tra-nhanh">JSON hợp lệ — kiểm tra nhanh<a class="anchor" href="#h-13-json-hp-l--kim-tra-nhanh" aria-label="Liên kết mục">#</a></h3>
+<p>Lỗi thường gặp: key thiếu nháy kép, dư dấu phẩy cuối, hoặc dùng nháy đơn.</p>
+<figure class="code-block"><figcaption>JSON</figcaption><pre><code>// ❌ Không phải JSON hợp lệ
+{ "patientName": 'Nguyễn Văn An', specialty: "Tim mạch", }
+
+// ✅ JSON hợp lệ
+{ "patientName": "Nguyễn Văn An", "specialty": "Tim mạch" }</code></pre></figure>
+<p>Khi bị <code>JSON.parse</code> báo <code>Unexpected token</code>, dán chuỗi vào validator trực tuyến hoặc hỏi AI sửa — nhưng bạn phải đọc được lỗi ở dòng nào.</p>
+<h3 id="h-17-prompt-mu">Prompt mẫu<a class="anchor" href="#h-17-prompt-mu" aria-label="Liên kết mục">#</a></h3>
+<aside class="prompt-card"><span class="prompt-chip">Prompt mẫu</span><p><strong>Prompt gửi Gemini/Claude/ChatGPT:</strong> Tôi đang xây Admin Dashboard cho Highland Hospital, dữ liệu là mảng lịch hẹn JSON dạng <code>[{ id, patientName, specialty, doctorId, date, time, status }]</code>. Hãy viết code: (1) <code>JSON.stringify</code> một lịch hẹn mẫu rồi <code>JSON.parse</code> lại, in ra console; (2) dùng <code>filter</code> lấy các lịch <code>confirmed</code> vào ngày <code>2025-12-12</code>; (3) viết JSON thủ công cho 3 lịch hẹn và cho tôi biết nếu tôi gõ sai cú pháp thì lỗi trông thế nào. Giải thích khác biệt giữa object JavaScript và JSON.</p></aside>
+<h3 id="h-19-thc-hnh">Thực hành<a class="anchor" href="#h-19-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<ol><li>Tạo <code>appointments.js</code> chứa mảng 3 lịch hẹn; mở Console và in <code>JSON.stringify(appointments, null, 2)</code>.</li><li>Dùng <code>filter</code> đếm lịch theo từng trạng thái (pending/confirmed/done).</li><li>Tạo object <code>appointment</code> mới, thêm thuộc tính <code>note</code>, rồi xoá nó bằng <code>delete</code> — quan sát kết quả in ra.</li><li>Mở một API bất kỳ trả JSON (ví dụ <code>jsonplaceholder.typicode.com/todos/1</code>) trong trình duyệt và nhận xét điểm giống/khác với object bạn viết.</li><li>Chạy prompt mẫu với AI, tự sửa JSON lỗi trước khi nhờ nó.</li></ol>
+<h3 id="h-21-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-21-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Dữ liệu đã sẵn ở dạng object/array; bài Lab cuối chương gom toàn bộ — map + template literal — để render sáu bác sĩ thành lưới card thật sự.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">8 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-to-v-thao-tc-object">Tạo và thao tác object</a></li><li><a href="#h-6-mng-lch-hn--d-liu-gc-ca-bnh-vin">Mảng lịch hẹn — dữ liệu gốc của bệnh viện</a></li><li><a href="#h-9-json--nh-dng-trao-i-d-liu">JSON — định dạng trao đổi dữ liệu</a></li><li><a href="#h-13-json-hp-l--kim-tra-nhanh">JSON hợp lệ — kiểm tra nhanh</a></li><li><a href="#h-17-prompt-mu">Prompt mẫu</a></li><li><a href="#h-19-thc-hnh">Thực hành</a></li><li><a href="#h-21-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="09-javascript-basics-array-methods-c-t-loi.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Array Methods cốt lõi</strong></span></a><a href="09-javascript-basics-lab-render-danh-sach-bac-si.html" rel="next"><span><small>Bài sau</small><strong>Lab: render danh sách bác sĩ</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

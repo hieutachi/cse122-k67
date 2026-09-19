@@ -1,0 +1,92 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Flexbox nâng cao | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-5.html">Chương 5</a> &rsaquo; CSS Layout &rsaquo; Bài 2/5</p>
+<h1 class="lesson-title">Flexbox nâng cao</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 2/5</span><span>Module: CSS Layout</span><span>~5 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="flexbox-nng-cao">Flexbox nâng cao</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Làm chủ <code>flex-grow</code>, <code>flex-shrink</code>, <code>flex-basis</code> và shorthand <code>flex</code></li><li>Dùng <code>align-self</code>, <code>order</code> cho các ngoại lệ trong layout</li><li>Giải hai bài toán thật: hàng card đồng chiều cao, nav đẩy nút sang phải</li><li>Biết cách nhờ AI giải thích hành vi flex kỳ lạ</li></ul>
+<h3 id="h-3-khng-gian-d-tha-i-u--flexgrow">Không gian dư thừa đi đâu? — flex-grow<a class="anchor" href="#h-3-khng-gian-d-tha-i-u--flexgrow" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>.doctor-card { flex: 1 1 0; }   /* 3 card chia đều bề rộng container */</code></pre></figure>
+<p>Ba con <code>flex: 1 1 0</code> trong container rộng: tổng <code>grow</code> = 3, không gian dư chia làm 3 phần bằng nhau → ba card <strong>bằng nhau</strong>. Con nào <code>flex-grow: 2</code> sẽ nhận gấp đôi phần dư của con <code>grow: 1</code>.</p>
+<h3 id="h-6-khi-container-cht--flexshrink">Khi container chật — flex-shrink<a class="anchor" href="#h-6-khi-container-cht--flexshrink" aria-label="Liên kết mục">#</a></h3>
+<p>Ngược lại, nếu tổng kích thước con vượt container, con co lại theo <code>flex-shrink</code> (mặc định 1 — ai cũng co như nhau). Đặt <code>flex-shrink: 0</code> cho phần tử không bao giờ được bóp (logo, ảnh avatar, nút):</p>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>.navbar__brand { flex-shrink: 0; }   /* logo không bao giờ méo */</code></pre></figure>
+<h3 id="h-9-flexbasis--kch-thc-khi-im">flex-basis — kích thước khởi điểm<a class="anchor" href="#h-9-flexbasis--kch-thc-khi-im" aria-label="Liên kết mục">#</a></h3>
+<p><code>flex-basis</code> là kích thước con <em>muốn</em> có trên trục chính trước khi grow/shrink. Giá trị hay gặp: <code>0</code> (bỏ qua nội dung, chia đều thuần túy) hoặc <code>auto</code> (lấy theo width/nội dung).</p>
+<p>Shorthand đầy đủ: <code>flex: &lt;grow&gt; &lt;shrink&gt; &lt;basis&gt;</code>. Ba pattern phổ biến nhất trong dự án:</p>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>flex: 1 1 0;        /* con linh hoạt, các con grow bằng nhau */
+flex: 0 0 auto;     /* con GIỮ NGUYÊN kích thước (không lớn, không bé) */
+flex: 1 1 240px;    /* tối thiểu 240px rồi mới chia — nền móng của auto-fit (bài 05) */</code></pre></figure>
+<h3 id="h-13-alignself-amp-order--ph-l-c-kim-sot">align-self &amp; order — phá lệ có kiểm soát<a class="anchor" href="#h-13-alignself-amp-order--ph-l-c-kim-sot" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>.navbar {
+  display: flex;
+  align-items: center;       /* mọi con căn giữa dọc */
+}
+.navbar__hotline {
+  align-self: stretch;       /* riêng hotline kéo dài hết chiều cao nav */
+  display: flex;
+  align-items: center;
+}</code></pre></figure>
+<p><code>align-self</code> ghi đè <code>align-items</code> cho <strong>một</strong> con. <code>order</code> đổi thứ tự hiển thị mà không đụng HTML — dùng thận trọng vì nó tách rời thứ tự thị giác khỏi thứ tự DOM (ảnh hưởng bàn phím/trợ năng):</p>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>.navbar__hotline { order: 3; }   /* ép ra cuối dù HTML đặt giữa */</code></pre></figure>
+<h3 id="h-17-bi-ton-1--hng-card-ng-chiu-cao">Bài toán 1 — hàng card đồng chiều cao<a class="anchor" href="#h-17-bi-ton-1--hng-card-ng-chiu-cao" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;section class="services"&gt;
+  &lt;article class="service-card"&gt;
+    &lt;h3&gt;Khám tổng quát&lt;/h3&gt;
+    &lt;p&gt;Gói khám sức khỏe định kỳ toàn diện cho mọi lứa tuổi, có bác sĩ tư vấn kết quả ngay trong buổi.&lt;/p&gt;
+  &lt;/article&gt;
+  &lt;article class="service-card"&gt;&lt;h3&gt;Xét nghiệm&lt;/h3&gt;&lt;p&gt;Lấy mẫu tại nhà, trả kết quả trong 24 giờ.&lt;/p&gt;&lt;/article&gt;
+  &lt;article class="service-card"&gt;&lt;h3&gt;Chăm sóc đặc biệt&lt;/h3&gt;&lt;p&gt;ICU và phòng bệnh tiêu chuẩn quốc tế.&lt;/p&gt;&lt;/article&gt;
+&lt;/section&gt;</code></pre></figure>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>.services { display: flex; gap: 1.5rem; }
+.service-card {
+  flex: 1;                  /* bằng nhau: grow=1, shrink=1, basis=0% */
+  display: flex;
+  flex-direction: column;   /* nội dung xếp dọc bên trong card */
+  padding: 1.5rem;
+  background: white;
+  border-radius: 12px;
+}</code></pre></figure>
+<p>Mặc định <code>align-items: stretch</code> kéo <strong>các hộp card</strong> bằng chiều cao — nhưng nội dung dài ngắn khác nhau vẫn lệch đáy. Biến card thành flex column rồi đẩy phần tử cuối xuống đáy:</p>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>.service-card p { margin-top: auto; }   /* mô tả bám đáy card */</code></pre></figure>
+<h3 id="h-22-bi-ton-2--nav-y-nt-sang-phi">Bài toán 2 — nav đẩy nút sang phải<a class="anchor" href="#h-22-bi-ton-2--nav-y-nt-sang-phi" aria-label="Liên kết mục">#</a></h3>
+<p>Không cần <code>justify-content: space-between</code> cồng kềnh với nhiều nhóm; chỉ cần một "bộ đệm" co giãn:</p>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>.navbar { display: flex; align-items: center; gap: 1.5rem; }
+.navbar__menu { display: flex; gap: 1.25rem; list-style: none; }
+.navbar__spacer { flex: 1; }       /* ngốn hết khoảng trống giữa menu và nút */</code></pre></figure>
+<p><code>&lt;a class="btn navbar__cta"&gt;Đặt lịch khám&lt;/a&gt;</code> với <code>.navbar__cta { flex-shrink: 0; }</code> sẽ nằm sát mép phải, còn menu đứng cạnh logo. Kỹ thuật "spacer co giãn" (<code>flex: 1</code> trên phần tử rỗng) là một trong những mẹo flex được dùng nhiều nhất.</p>
+<h3 id="h-26-prompt-mu--ai-g-ri-hnh-vi-flex">Prompt mẫu — AI gỡ rối hành vi flex<a class="anchor" href="#h-26-prompt-mu--ai-g-ri-hnh-vi-flex" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Trong trang Highland Hospital, 3 card dịch vụ flex: 1 trong
+.container có max-width 1100px, nhưng card giữa luôn cao hơn hai
+card bên dù nội dung ngắn nhất, và một ảnh bên trong bị tràn ra
+ngoài. HTML và CSS đính kèm: [dán]. Hãy giải thích theo thứ tự
+khả năng (flex-basis mặc định auto + nội dung ảnh, align-items
+stretch, min-width:auto của flex item) rồi đưa bản sửa tối thiểu.</code></pre></figure>
+<h3 id="h-28-thc-hnh">Thực hành<a class="anchor" href="#h-28-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<ol><li>Chuyển <code>.hero__actions</code> và <code>.navbar</code> của bạn sang flex như bài này; thêm <code>.navbar__cta</code> dùng kỹ thuật spacer.</li><li>Dựng hàng 3 card dịch vụ nội dung dài ngắn khác nhau; dùng <code>align-items: stretch</code> + <code>margin-top: auto</code> để đáy card thẳng hàng.</li><li>Thử <code>flex: 1 1 0</code> vs <code>flex: 1 1 240px</code> với cùng 3 card — ghi nhận khác biệt khi container hẹp dần.</li><li>Đặt một ảnh không có <code>width</code> vào card và quan sát nó "đẩy" card rộng ra — đây là hành vi <code>min-width: auto</code> của flex item; sửa bằng <code>min-width: 0</code> hoặc cho ảnh <code>width: 100%</code>.</li></ol>
+<h3 id="h-30-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-30-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Flexbox xử lý xuất sắc một chiều; khi cần dàn trang hai chiều (hàng VÀ cột cùng lúc) — như layout tổng thể trang chủ — CSS Grid mới là công cụ chủ lực.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">10 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-khng-gian-d-tha-i-u--flexgrow">Không gian dư thừa đi đâu? — flex-grow</a></li><li><a href="#h-6-khi-container-cht--flexshrink">Khi container chật — flex-shrink</a></li><li><a href="#h-9-flexbasis--kch-thc-khi-im">flex-basis — kích thước khởi điểm</a></li><li><a href="#h-13-alignself-amp-order--ph-l-c-kim-sot">align-self &amp; order — phá lệ có kiểm soát</a></li><li><a href="#h-17-bi-ton-1--hng-card-ng-chiu-cao">Bài toán 1 — hàng card đồng chiều cao</a></li><li><a href="#h-22-bi-ton-2--nav-y-nt-sang-phi">Bài toán 2 — nav đẩy nút sang phải</a></li><li><a href="#h-26-prompt-mu--ai-g-ri-hnh-vi-flex">Prompt mẫu — AI gỡ rối hành vi flex</a></li><li><a href="#h-28-thc-hnh">Thực hành</a></li><li><a href="#h-30-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="05-css-layout-flexbox-can-ban.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Flexbox căn bản</strong></span></a><a href="05-css-layout-css-grid-can-ban.html" rel="next"><span><small>Bài sau</small><strong>CSS Grid căn bản</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

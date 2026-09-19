@@ -1,0 +1,91 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CSS Selectors & Specificity | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-4.html">Chương 4</a> &rsaquo; CSS3 foundations &rsaquo; Bài 1/5</p>
+<h1 class="lesson-title">CSS Selectors & Specificity</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 1/5</span><span>Module: CSS3 foundations</span><span>~5 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="css-selectors-amp-specificity">CSS Selectors &amp; Specificity</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Chọn đúng phần tử bằng bộ chọn cơ bản, combinator và pseudo-class</li><li>Hiểu Specificity là gì và tự tính được nó trong đầu</li><li>Biết <code>!important</code> giải quyết rắc rối thế nào nhưng vì sao nên tránh</li><li>Áp dụng ngay để chọn phần tử trong trang Highland Hospital</li></ul>
+<h3 id="h-3-css-dnh-vo-phn-t-nh-th-no">CSS "dính" vào phần tử như thế nào<a class="anchor" href="#h-3-css-dnh-vo-phn-t-nh-th-no" aria-label="Liên kết mục">#</a></h3>
+<p>Mỗi dòng CSS gồm hai nửa: <strong>bộ chọn</strong> (nửa trước dấu <code>{</code>) và <strong>khối khai báo</strong> (các thuộc tính bên trong). Toàn bộ sức mạnh của CSS nằm ở chỗ viết được bộ chọn đúng — quá rộng thì style văng sang nơi khác, quá hẹp thì không trúng phần tử cần đổi.</p>
+<h4 id="b-chn-c-bn">Bộ chọn cơ bản</h4>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>/* 1. Element — trúng MỌI thẻ cùng tên */
+section { padding: 2rem 0; }
+/* 2. Class — trúng mọi phần tử mang class, dùng lại được, nên ưu tiên */
+.card { border-radius: 12px; }
+/* 3. ID — trúng đúng MỘT phần tử, không dùng lại được */
+#booking-form { max-width: 640px; }
+/* 4. Attribute — trúng theo thuộc tính */
+input[type="tel"] { letter-spacing: 0.05em; }
+a[href^="tel:"] { font-weight: 600; }  /* href bắt đầu bằng "tel:" */</code></pre></figure>
+<p>Với trang Highland Hospital: <code>#doctors</code> là vùng danh sách bác sĩ (một nơi duy nhất → ID hợp lý), còn <code>.doctor-card</code> xuất hiện nhiều lần → phải là class.</p>
+<h4 id="combinator--i-theo-quan-h-trong-cy-dom">Combinator — đi theo quan hệ trong cây DOM</h4>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>/* Con trực tiếp: nav là cha trực tiếp của ul */
+nav &gt; ul { list-style: none; }
+/* Hậu duệ: mọi a nằm bên trong .hero (không cần là con trực tiếp) */
+.hero a { color: white; }
+/* Anh chị em liền kề: p ngay sau h1 */
+h1 + p { font-size: 1.125rem; }
+/* Anh chị em cùng cha, xuất hiện sau */
+.specialty ~ .doctor-card { border-top: 1px solid #e5e7eb; }</code></pre></figure>
+<h4 id="pseudoclass--trng-thi-amp-v-tr">Pseudo-class — trạng thái &amp; vị trí</h4>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>a:hover { text-decoration: underline; }        /* khi trỏ chuột */
+input:focus { outline: 3px solid #93c5fd; }    /* khi đang nhập liệu */
+.news-item:first-child { border-top: none; }   /* phần tử đầu tiên */
+.news-item:last-child { border-bottom: none; }
+li:nth-child(odd) { background: #f8fafc; }     /* dòng lẻ xen kẽ */</code></pre></figure>
+<p>Pseudo-class là "ngụy class" trình duyệt tự thêm theo trạng thái — bạn không cần JavaScript để tô đậm liên kết đang được trỏ tới.</p>
+<h3 id="h-13-specificity--v-sao-c-style-khng-chu-i">Specificity — vì sao có style "không chịu đổi"<a class="anchor" href="#h-13-specificity--v-sao-c-style-khng-chu-i" aria-label="Liên kết mục">#</a></h3>
+<p>Khi hai bộ chọn cùng tác động vào một phần tử, trình duyệt chọn theo <strong>Specificity</strong> (độ cụ thể), không theo thứ tự xuất hiện. Cách tính nhanh:</p>
+<div class="table-card"><table><thead><tr><th>Bộ chọn</th><th>Điểm (a, b, c)</th></tr></thead><tbody><tr><td><code>*</code> , <code>a:hover</code> ngoài pseudo-class</td><td>(0,0,0)</td></tr><tr><td>Element, pseudo-element (<code>::before</code>)</td><td>+1 vào c</td></tr><tr><td>Class, attribute, pseudo-class</td><td>+1 vào b</td></tr><tr><td>ID</td><td>+1 vào a</td></tr></tbody></table></div>
+<p>So từ trái qua phải: <code>(1,0,0)</code> — một ID — thắng mọi tổ hợp class. Ví dụ:</p>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>/* (0,1,1): 1 class + 1 element */
+.card p { color: #334155; }
+/* (0,2,0): 2 class — thắng dòng trên dù viết TRƯỚC nó */
+.card .text-muted { color: #64748b; }</code></pre></figure>
+<p>Muốn style đè được nhưng không phình selector, hãy <strong>giữ độ đặc sâu vừa đủ</strong>: <code>.doctor-card .btn</code> thay vì <code>.main-content .doctor-card .btn.btn-primary</code>.</p>
+<h3 id="h-19-important--cng-c-cui-cng"><code>!important</code> — công cụ cuối cùng<a class="anchor" href="#h-19-important--cng-c-cui-cng" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>CSS</figcaption><pre><code>.hidden { display: none !important; }</code></pre></figure>
+<p><code>!important</code> nhảy qua cả Specificity lẫn thứ tự. Khi nào dùng được? Khi override class của thư viện (như Bootstrap) mà không kiểm soát được nguồn — đó là lý do chính đáng duy nhất. Còn trong CSS tự viết, <code>!important</code> rải rác là dấu hiệu selector đang cấu trúc kém: một <code>!important</code> hôm nay sẽ buộc bạn thêm <code>!important</code> khác để thắng nó ngày mai. Nếu thấy mình sắp viết, hãy hỏi lại: <em>selector này có đang quá thấp hoặc quá cao độ ưu tiên so với cấu trúc thật không?</em></p>
+<h3 id="h-22-prompt-mu--nh-ai-ch-ng-selector">Prompt mẫu — nhờ AI chỉ đúng selector<a class="anchor" href="#h-22-prompt-mu--nh-ai-ch-ng-selector" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Trang Highland Hospital có HTML như sau:
+&lt;section id="services"&gt;...&lt;/section&gt;
+&lt;section id="doctors"&gt;
+  &lt;article class="doctor-card"&gt;
+    &lt;h3&gt;BS. Nguyễn Minh Anh&lt;/h3&gt;
+    &lt;p class="specialty"&gt;Tim mạch&lt;/p&gt;
+  &lt;/article&gt;
+  &lt;article class="doctor-card"&gt;...&lt;/article&gt;
+&lt;/section&gt;
+
+Tôi muốn: 1) chữ màu xám cho mọi .specialty; 2) viền trên chỉ
+cho .doctor-card ngay sau .specialty; 3) nền sáng cho doctor-card
+lẻ. Viết CSS kèm giải thích Specificity của từng dòng theo điểm
+(a,b,c). Đừng dùng !important.</code></pre></figure>
+<h3 id="h-24-thc-hnh">Thực hành<a class="anchor" href="#h-24-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<ol><li>Mở file HTML bạn đã dựng ở chương 3 (Landing Page semantic của Highland Hospital).</li><li>Dùng DevTools (Chuột phải → Inspect) tìm ra: selector ngắn nhất chọn đúng tiêu đề Hero, đúng nút "Đặt lịch khám" đầu tiên.</li><li>Viết 5 quy tắc CSS: hover lên thẻ bác sĩ đổi bóng đổ, <code>input:focus</code> có viền xanh, <code>li:nth-child(odd)</code> cho hàng trong bảng giờ khám, <code>h2 + p</code> cho đoạn mô tả dưới mỗi tiêu đề section.</li><li>Thử đặt <code>.doctor-card { background: red; }</code> ở cuối file và <code>#doctors .doctor-card { background: blue; }</code> ở đầu file — quan sát màu nào thắng và giải thích bằng Specificity.</li></ol>
+<h3 id="h-26-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-26-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Đã chọn trúng phần tử, giờ ta đi sâu vào thứ quyết định kích thước thật của từng phần tử — Box Model — và cách tránh những phép tính layout sai kinh điển.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">6 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-css-dnh-vo-phn-t-nh-th-no">CSS "dính" vào phần tử như thế nào</a></li><li><a href="#h-13-specificity--v-sao-c-style-khng-chu-i">Specificity — vì sao có style "không chịu đổi"</a></li><li><a href="#h-22-prompt-mu--nh-ai-ch-ng-selector">Prompt mẫu — nhờ AI chỉ đúng selector</a></li><li><a href="#h-24-thc-hnh">Thực hành</a></li><li><a href="#h-26-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="03-html5-semantic-lab-landing-page-semantic.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Lab: Landing Page semantic</strong></span></a><a href="04-css3-foundations-the-box-model.html" rel="next"><span><small>Bài sau</small><strong>The Box Model</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

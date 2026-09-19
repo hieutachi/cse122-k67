@@ -1,0 +1,131 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lab: bộ lọc bác sĩ theo chuyên khoa | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-8.html">Chương 8</a> &rsaquo; DOM & events &rsaquo; Bài 5/5</p>
+<h1 class="lesson-title">Lab: bộ lọc bác sĩ theo chuyên khoa</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 5/5</span><span>Module: DOM & events</span><span>~5 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="lab-b-lc-bc-s-theo-chuyn-khoa">Lab: bộ lọc bác sĩ theo chuyên khoa</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Tổng hợp DOM, sự kiện và array methods vào một tính năng thật</li><li>Lọc mảng <code>doctors</code> theo <code>select</code> chuyên khoa + ô tìm kiếm, rồi render lại card</li><li>Dùng Event Delegation cho nút "Đặt lịch" trên từng card</li><li>Thực hành AI-Accelerated Workflow: prompt AI sinh code, sau đó tự phân tích và sửa</li></ul>
+<h3 id="h-3-bi-ton">Bài toán<a class="anchor" href="#h-3-bi-ton" aria-label="Liên kết mục">#</a></h3>
+<p>Landing Page có section "Đội ngũ bác sĩ". Bệnh nhân cần: (1) chọn chuyên khoa → chỉ thấy bác sĩ khoa đó; (2) gõ ô tìm kiếm → lọc theo tên/chuyên khoa; (3) bấm <strong>"Đặt lịch"</strong> trên card → chuyển tới form đặt lịch. Hai bộ lọc <strong>kết hợp</strong> được với nhau, mỗi lần đổi giá trị là render lại từ dữ liệu.</p>
+<h3 id="h-5-d-liu-v-html-nn">Dữ liệu và HTML nền<a class="anchor" href="#h-5-d-liu-v-html-nn" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>const doctors = [
+  { id: 1, name: 'BS. Nguyễn Thu Hà', specialty: 'Tim mạch', experience: 12 },
+  { id: 2, name: 'BS. Trần Minh Khang', specialty: 'Nội tổng hợp', experience: 8 },
+  { id: 3, name: 'BS. Lê Hoàng Yến', specialty: 'Tim mạch', experience: 5 },
+  { id: 4, name: 'BS. Phạm Quốc Bảo', specialty: 'Nhi', experience: 15 },
+];</code></pre></figure>
+<figure class="code-block"><figcaption>HTML</figcaption><pre><code>&lt;div class="row g-3 mb-4"&gt;
+  &lt;div class="col-md-4"&gt;
+    &lt;label for="filter-specialty" class="form-label"&gt;Chuyên khoa&lt;/label&gt;
+    &lt;select id="filter-specialty" class="form-select"&gt;
+      &lt;option value=""&gt;Tất cả chuyên khoa&lt;/option&gt;
+    &lt;/select&gt;
+  &lt;/div&gt;
+  &lt;div class="col-md-8"&gt;
+    &lt;label for="search-doctor" class="form-label"&gt;Tìm bác sĩ&lt;/label&gt;
+    &lt;input type="search" id="search-doctor" class="form-control"
+           placeholder="Nhập tên hoặc chuyên khoa…"&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="doctors-grid" class="row g-4"&gt;&lt;/div&gt;</code></pre></figure>
+<h3 id="h-8-lc--render-mi-th-chy-qua-mt-hm">Lọc + render: mọi thứ chảy qua một hàm<a class="anchor" href="#h-8-lc--render-mi-th-chy-qua-mt-hm" aria-label="Liên kết mục">#</a></h3>
+<p>Nguyên tắc của lab: <strong>không</strong> tô/xoá trực tiếp trên card cũ — mỗi lần dữ liệu thay đổi, tính lại danh sách phù hợp rồi <strong>render lại toàn bộ lưới</strong>. Dữ liệu là nguồn chân lý, DOM chỉ là bản vẽ lại.</p>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>const specialtySelect = document.querySelector('#filter-specialty');
+const searchInput = document.querySelector('#search-doctor');
+const grid = document.querySelector('#doctors-grid');
+
+// Nạp chuyên khoa duy nhất vào select (Set để loại trùng)
+[...new Set(doctors.map((doc) =&gt; doc.specialty))].forEach((specialty) =&gt; {
+  const option = document.createElement('option');
+  option.value = specialty;
+  option.textContent = specialty;
+  specialtySelect.append(option);
+});
+
+function getFilteredDoctors() {
+  const specialty = specialtySelect.value;
+  const keyword = searchInput.value.trim().toLowerCase();
+  return doctors.filter((doc) =&gt; {
+    const matchSpecialty = specialty === '' || doc.specialty === specialty;
+    const matchKeyword = keyword === '' ||
+      doc.name.toLowerCase().includes(keyword) ||
+      doc.specialty.toLowerCase().includes(keyword);
+    return matchSpecialty &amp;&amp; matchKeyword;   // hai điều kiện cùng lúc (AND)
+  });
+}
+
+function renderDoctors(list) {
+  grid.innerHTML = '';
+  if (list.length === 0) {
+    grid.innerHTML = '&lt;div class="col-12"&gt;&lt;p class="text-muted"&gt;Không tìm thấy bác sĩ phù hợp.&lt;/p&gt;&lt;/div&gt;';
+    return;
+  }
+  for (const doctor of list) {
+    const col = document.createElement('div');
+    col.className = 'col-md-6 col-lg-4';
+    col.innerHTML = `
+      &lt;div class="card h-100 shadow-sm doctor-card" data-id="${doctor.id}"&gt;
+        &lt;div class="card-body"&gt;
+          &lt;h3 class="h6 card-title"&gt;${doctor.name}&lt;/h3&gt;
+          &lt;p class="text-muted small mb-1"&gt;${doctor.specialty}&lt;/p&gt;
+          &lt;p class="small mb-3"&gt;${doctor.experience} năm kinh nghiệm&lt;/p&gt;
+          &lt;button type="button" class="btn btn-sm btn-primary btn-book"&gt;Đặt lịch&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;`;
+    grid.append(col);
+  }
+}</code></pre></figure>
+<p>Chú ý: tên bác sĩ nằm trong <strong>mảng dữ liệu do bạn kiểm soát</strong>, không phải dữ liệu người dùng nhập — nên template literal cho gọn là chấp nhận được. Render dữ liệu người dùng (tên bệnh nhân, feedback…) thì quay lại <code>createElement</code> + <code>textContent</code> như bài DOM.</p>
+<h3 id="h-12-ni-s-kin">Nối sự kiện<a class="anchor" href="#h-12-ni-s-kin" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>// Hai bộ lọc: hễ đổi giá trị là render lại — ít code, không sót trường hợp
+specialtySelect.addEventListener('change', () =&gt; renderDoctors(getFilteredDoctors()));
+searchInput.addEventListener('input', () =&gt; renderDoctors(getFilteredDoctors()));
+
+// Nút "Đặt lịch" sinh ra sau khi render → bắt buộc delegation trên container
+grid.addEventListener('click', (event) =&gt; {
+  const bookButton = event.target.closest('.btn-book');
+  if (!bookButton) return;
+  const card = bookButton.closest('.doctor-card');
+  const doctor = doctors.find((doc) =&gt; doc.id === Number(card.dataset.id));
+  console.log('Đặt lịch với:', doctor.name, `(#${doctor.id})`);
+  // chương 11: chỗ này sẽ mở form đặt lịch đa bước kèm sẵn bác sĩ đã chọn
+});</code></pre></figure>
+<h3 id="h-14-prompt-ai-mu--ri-t-phn-tch">Prompt AI mẫu — rồi tự phân tích<a class="anchor" href="#h-14-prompt-ai-mu--ri-t-phn-tch" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Dự án Highland Hospital, JS thuần ES6+. Có mảng doctors = [{id, name,
+specialty, experience}] và HTML gồm select#filter-specialty (đã có option
+theo chuyên khoa), input#search-doctor, div#doctors-grid. Viết JS:
+(1) getFilteredDoctors() kết hợp lọc specialty + từ khoá tên/chuyên khoa
+không phân biệt hoa thường; (2) renderDoctors() dựng card Bootstrap có nút
+.btn-book và data-id; (3) lắng nghe change + input để render lại;
+(4) Event Delegation trên grid bắt click .btn-book. Không thêm thư viện.</code></pre></figure>
+<p>Code AI trả về, đừng chạy ngay — tự phân tích theo AI-Accelerated Workflow:</p>
+<ol><li>Render lại có đúng khi <strong>cả hai</strong> điều kiện cùng bật (chọn khoa + đang gõ chữ)?</li><li>Có xử lý danh sách rỗng hay để lưới trống trơn?</li><li>Nút Đặt lịch xử lý bằng delegation, hay AI lại gắn listener trong vòng lặp render (sẽ hỏng khi render lại)?</li><li>Có chỗ nào <code>innerHTML</code> với dữ liệu người dùng kiểm soát không?</li></ol>
+<p>Chỉnh sửa chỗ chưa đạt rồi mới chạy — đây là bước Refine mà AI không làm thay bạn được.</p>
+<h3 id="h-19-thc-hnh">Thực hành<a class="anchor" href="#h-19-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<ol><li>Dựng HTML + mảng <code>doctors</code>, tự viết hai hàm trước (10 phút) rồi mới chạy prompt.</li><li>So sánh code AI với bản của bạn: ghi 2 điểm AI hay hơn và 2 điểm bạn giữ cách của mình.</li><li>Kiểm tra ca khó: chọn "Tim mạch" + gõ "khang" → danh sách rỗng kèm thông báo; bấm Đặt lịch → log đúng bác sĩ.</li><li>Thêm nút "Chi tiết" thứ hai và mở rộng delegation bằng <code>closest('.btn-book, .btn-detail')</code>.</li></ol>
+<h3 id="h-21-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-21-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Bộ lọc chạy trên dữ liệu tĩnh đã xong — chương sau thay mảng <code>doctors</code> cứng bằng dữ liệu lấy từ API bất đồng bộ, bắt đầu từ Fetch API và async/await.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">8 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-bi-ton">Bài toán</a></li><li><a href="#h-5-d-liu-v-html-nn">Dữ liệu và HTML nền</a></li><li><a href="#h-8-lc--render-mi-th-chy-qua-mt-hm">Lọc + render: mọi thứ chảy qua một hàm</a></li><li><a href="#h-12-ni-s-kin">Nối sự kiện</a></li><li><a href="#h-14-prompt-ai-mu--ri-t-phn-tch">Prompt AI mẫu — rồi tự phân tích</a></li><li><a href="#h-19-thc-hnh">Thực hành</a></li><li><a href="#h-21-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="10-dom-and-events-luu-tr-v-i-localstorage.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Lưu trữ với localStorage</strong></span></a><a href="11-async-javascript-fetch-api-async-await.html" rel="next"><span><small>Bài sau</small><strong>Fetch API & Async/Await</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>

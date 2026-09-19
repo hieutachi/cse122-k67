@@ -1,0 +1,75 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Event Handling & Delegation | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main"><article class="lesson">
+<p class="lesson-crumbs"><a href="index.html">Bài giảng</a> &rsaquo; <a href="../ebook/chuong-8.html">Chương 8</a> &rsaquo; DOM & events &rsaquo; Bài 2/5</p>
+<h1 class="lesson-title">Event Handling & Delegation</h1>
+<div class="lesson-actions" role="toolbar" aria-label="Tùy chọn đọc"><button type="button" data-font="dec" aria-label="Giảm cỡ chữ">A&minus;</button><button type="button" data-font="inc" aria-label="Tăng cỡ chữ">A+</button><button type="button" data-done-toggle aria-pressed="false">Đánh dấu đã học &#10003;</button><button type="button" data-copylink>Copy link</button></div>
+<p class="lesson-meta"><span>Bài 2/5</span><span>Module: DOM & events</span><span>~4 phút đọc</span></p>
+<div class="lesson-body">
+<h2 id="event-handling-amp-delegation">Event Handling &amp; Delegation</h2>
+<h3 id="h-1-mc-tiu-bi-hc">Mục tiêu bài học<a class="anchor" href="#h-1-mc-tiu-bi-hc" aria-label="Liên kết mục">#</a></h3>
+<ul><li>Đăng ký hành vi cho phần tử bằng <code>addEventListener</code></li><li>Làm quen các sự kiện thường gặp: <code>click</code>, <code>input</code>, <code>submit</code>, <code>change</code>, <code>scroll</code></li><li>Đọc sự kiện qua event object: <code>target</code>, <code>preventDefault()</code></li><li>Hiểu Event Delegation — một listener trên container thay cho N listener con</li></ul>
+<h3 id="h-3-addeventlistener--khi-x-xy-ra-th-lm-y">addEventListener — "khi X xảy ra thì làm Y"<a class="anchor" href="#h-3-addeventlistener--khi-x-xy-ra-th-lm-y" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>const searchInput = document.querySelector('#search-doctor');
+
+searchInput.addEventListener('input', (event) =&gt; {
+  console.log('Người dùng đang gõ:', event.target.value);
+});</code></pre></figure>
+<p>Cú pháp: <code>element.addEventListener('tên sự kiện', handler)</code>. Handler nhận một <strong>event object</strong> — vật mang thông tin về sự việc vừa xảy ra.</p>
+<div class="table-card"><table><thead><tr><th>Sự kiện</th><th>Kích hoạt khi</th><th>Dùng cho</th></tr></thead><tbody><tr><td><code>click</code></td><td>bấm chuột / chạm</td><td>nút, card, liên kết</td></tr><tr><td><code>input</code></td><td>gõ phím, thay đổi giá trị</td><td>ô tìm kiếm, live filter</td></tr><tr><td><code>change</code></td><td>kết thúc thay đổi (blur, chọn xong)</td><td><code>&lt;select&gt;</code>, checkbox</td></tr><tr><td><code>submit</code></td><td>bấm nút submit trong form</td><td>form đặt lịch</td></tr><tr><td><code>scroll</code></td><td>cuộn trang / vùng chứa</td><td>sticky header, lazy load</td></tr></tbody></table></div>
+<h3 id="h-7-event-object-target-v-preventdefault">Event object: target và preventDefault<a class="anchor" href="#h-7-event-object-target-v-preventdefault" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>document.querySelector('#booking-form').addEventListener('submit', (event) =&gt; {
+  event.preventDefault();          // chặn trình duyệt tự reload trang
+  const form = event.currentTarget;
+  const patientName = form.querySelector('#patient-name').value.trim();
+  console.log('Đặt lịch cho:', patientName);
+});</code></pre></figure>
+<ul><li><code>event.target</code> — phần tử gốc rễ <em>thực sự</em> bị bấm/gõ (có thể là một node con sâu bên trong).</li><li><code>event.preventDefault()</code> — chặn hành vi mặc định: form không reload, link không nhảy trang, checkbox không đổi trạng thái. Form <code>&lt;form&gt;</code> mà không gọi dòng này sẽ <strong>reload lại trang</strong> và mất hết trạng thái — lỗi kinh điển của người mới.</li></ul>
+<h3 id="h-10-event-delegation--mt-tai-nghe-cho-c-hi-trng">Event Delegation — một tai nghe cho cả hội trường<a class="anchor" href="#h-10-event-delegation--mt-tai-nghe-cho-c-hi-trng" aria-label="Liên kết mục">#</a></h3>
+<p>Khi danh sách được render bằng JavaScript (chương 9), các nút <strong>"Đặt lịch"</strong> trên card <strong>chưa tồn tại lúc trang tải</strong> — nên gắn <code>addEventListener</code> trực tiếp lên chúng sẽ không bao giờ chạy. Giải pháp: gắn listener lên <strong>container tồn tại từ đầu</strong>, rồi dùng <code>event.target</code> để đoán xem cú click có rơi vào nút không.</p>
+<p>Sự kiện trong DOM <em>nổi bọt</em> (bubbling): click vào nút con sẽ trồi lên qua các phần tử cha cho tới <code>document</code>. Nghe ở cha tức là nghe được mọi thứ diễn ra ở con — kể cả con được thêm vào sau này.</p>
+<figure class="code-block"><figcaption>JavaScript</figcaption><pre><code>// Ví dụ: danh sách lịch hẹn — mỗi dòng có nút xoá .btn-delete
+const appointmentList = document.querySelector('#appointment-list');
+
+appointmentList.addEventListener('click', (event) =&gt; {
+  const deleteBtn = event.target.closest('.btn-delete');
+  if (!deleteBtn) return;                    // click không rơi vào nút xoá → bỏ qua
+
+  const row = deleteBtn.closest('li');       // tìm nguyên dòng lịch hẹn
+  const id = row.dataset.id;                 // đọc id từ data-*
+  row.remove();
+
+  console.log(`Đã xoá lịch hẹn #${id} — bước 4 sẽ lưu thay đổi vào localStorage`);
+});</code></pre></figure>
+<ul><li><code>closest('.btn-delete')</code> — đi <em>ngược lên</em> từ <code>event.target</code> tìm phần tử khớp selector; không khớp thì trả <code>null</code>. Nhờ đó bạn không cần biết người dùng bấm đúng vào chữ hay vào icon trong nút.</li><li>Vì chỉ có <strong>một</strong> listener trên container, bạn không phải gỡ/gắn lại listener mỗi lần render lại danh sách — đây là lý do delegation được dùng ở khắp nơi.</li></ul>
+<h3 id="h-15-prompt-ai-mu">Prompt AI mẫu<a class="anchor" href="#h-15-prompt-ai-mu" aria-label="Liên kết mục">#</a></h3>
+<figure class="code-block"><figcaption>text</figcaption><pre><code>Dự án Highland Hospital, danh sách lịch hẹn được render bằng JS vào
+ul#appointment-list, mỗi &lt;li&gt; có data-id và nút xoá class "btn-delete".
+Viết JS dùng Event Delegation: gắn MỘT listener click vào ul,
+dùng event.target.closest('.btn-delete') để nhận diện nút xoá, xoá &lt;li&gt;
+tương ứng và log id. Kèm 3 dòng giải thích vì sao không gắn listener
+trực tiếp lên từng nút.</code></pre></figure>
+<h3 id="h-17-thc-hnh">Thực hành<a class="anchor" href="#h-17-thc-hnh" aria-label="Liên kết mục">#</a></h3>
+<ol><li>Render 5 lịch hẹn mẫu vào <code>#appointment-list</code>, mỗi dòng kèm nút xoá.</li><li>Gắn listener theo delegation như trên, kiểm tra xoá được dòng đúng.</li><li>Thử thách: trước khi xoá, gọi <code>event.preventDefault()</code> không có tác dụng với <code>click</code> — hãy thêm <code>confirm('Xoá lịch hẹn này?')</code> và chỉ xoá khi người dùng đồng ý.</li><li>Thêm một ô input lọc và quan sát sự kiện <code>input</code> log từng ký tự.</li></ol>
+<h3 id="h-19-bi-tip-theo">Bài tiếp theo<a class="anchor" href="#h-19-bi-tip-theo" aria-label="Liên kết mục">#</a></h3>
+<p>Đã bắt được sự kiện <code>submit</code> — bài sau ta dùng nó cho việc quan trọng nhất của form đặt lịch: kiểm tra dữ liệu phía client và hiển thị lỗi đúng chỗ.</p>
+<details class="lesson-toc" open><summary>Mục lục bài này <span class="meta">7 mục</span></summary><ol><li><a href="#h-1-mc-tiu-bi-hc">Mục tiêu bài học</a></li><li><a href="#h-3-addeventlistener--khi-x-xy-ra-th-lm-y">addEventListener — "khi X xảy ra thì làm Y"</a></li><li><a href="#h-7-event-object-target-v-preventdefault">Event object: target và preventDefault</a></li><li><a href="#h-10-event-delegation--mt-tai-nghe-cho-c-hi-trng">Event Delegation — một tai nghe cho cả hội trường</a></li><li><a href="#h-15-prompt-ai-mu">Prompt AI mẫu</a></li><li><a href="#h-17-thc-hnh">Thực hành</a></li><li><a href="#h-19-bi-tip-theo">Bài tiếp theo</a></li></ol></details>
+</div></article>
+<nav class="ebook-nav" data-prevnext><a href="10-dom-and-events-truy-v-n-thao-tac-dom.html" rel="prev"><span aria-hidden="true">&#8592;</span><span><small>Bài trước</small><strong>Truy vấn & thao tác DOM</strong></span></a><a href="10-dom-and-events-form-validation-phia-client.html" rel="next"><span><small>Bài sau</small><strong>Form Validation phía client</strong></span><span aria-hidden="true">&#8594;</span></a></nav></main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>
