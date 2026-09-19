@@ -1,0 +1,115 @@
+/* External CSS: các lớp của ví dụ Box Model */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 32px 20px;
+  color: #172033;
+  font-family: Arial, sans-serif;
+  background-color: #f8fafc;
+}
+
+main {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+h1 {
+  margin: 0 0 16px;
+  color: #0f172a;
+}
+
+.demo-area {
+  margin: 36px 0;
+  padding: 12px;
+  overflow-x: auto;
+  border: 1px solid #cbd5e1;
+  background-color: #ffffff;
+}
+
+.margin-layer {
+  position: relative;
+  width: 376px;
+  height: 272px;
+  margin: 36px auto;
+  padding: 36px;
+  background-color: #fde68a;
+}
+
+.border-layer {
+  height: 200px;
+  padding: 28px;
+  border: 8px solid #f97316;
+  background-color: #fed7aa;
+}
+
+.padding-layer {
+  height: 136px;
+  padding: 28px;
+  background-color: #bbf7d0;
+}
+
+.content-box {
+  display: flex;
+  width: 240px;
+  height: 80px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  background-color: #2563eb;
+}
+
+.content-box span {
+  font-size: 13px;
+}
+
+.label {
+  position: absolute;
+  z-index: 1;
+  padding: 3px 6px;
+  color: #172033;
+  font-size: 12px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.margin-label {
+  top: -28px;
+  left: 0;
+}
+
+.border-label {
+  top: 4px;
+  left: 4px;
+}
+
+.padding-label {
+  top: 4px;
+  left: 4px;
+}
+
+.summary {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.summary p {
+  margin: 0;
+  padding: 12px;
+  border: 1px solid #dbeafe;
+  background-color: #ffffff;
+}
+
+@media (max-width: 520px) {
+  body {
+    padding: 24px 12px;
+  }
+
+  .summary {
+    grid-template-columns: 1fr;
+  }
+}

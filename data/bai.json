@@ -1,0 +1,721 @@
+[
+ {
+  "id": "Bai-1",
+  "num": 1,
+  "lines": [
+   "﻿KHÓA HỌC FRON | T | -END",
+   "Giới thiệu về khóa học | Lộ trình khóa học | Giới thiệu về công việc Front-end trong thực tế",
+   "Tạo ra giao diện website để người dùng  | nhìn thấy được | .",
+   "Tự tay lập trình được giao diện web theo bản thiết kế | Giúp các bạn nắm vững được kiến thức nền tảng | Đủ khả năng ứng tuyển được tại các công ty",
+   "Hạn chế nghỉ học (không quá 6 buổi) | Xem lại bài học  | sau khi học xong ít nhất 1 lượt (slide + file code)",
+   "Phần 1: Giới thiệu và định hướng, học HTML, HTML5 (3 buổi) | Phần 2: Học CSS, CSS3, Project mini 1 (5 buổi) | Phần 3: Học Bootstrap 4 (4 buổi)",
+   "03. Giới thiệu về công việc Front-end trong thực tế",
+   "Landing page Luxcat | Website bán cây xanh | Website bán tour du lịch",
+   "03. Giới thiệu về công việc Front-end trong thực tế | Tìm job tuyển dụng tại: | https://www.topcv.vn/",
+   "04. Khái niệm UI - UX | UI là gì? | UI Design (User Interface Design): là",
+   "05. Hướng dẫn cài đặt phần mềm | Phần mềm: | Visual Studio Code (Link tải: https://code.visualstudio.com/download)",
+   "06. Học HTML | 6.1. Khái niệm | HTML viết tắt của"
+  ]
+ },
+ {
+  "id": "Bai-2",
+  "num": 2,
+  "lines": [
+   "﻿KHÓA HỌC FRONT-END | Bài 02: Học HTML, HTML5 (Tiết 2)",
+   "Thẻ <a>  (Chèn link) | Thẻ  | <img> (",
+   "Thẻ  | <a></a>  | (anchor - mỏ neo) là thẻ để khi click vào thẻ đó sẽ chuyển hướng đến trang khác.",
+   "Thẻ  | <img />  | là thẻ để nhúng ảnh vào trang web, thẻ img là thẻ trống, chỉ chứa các thuộc tính và không có thẻ đóng.",
+   "Absolute File Paths  | (Đường dẫn tệp tuyệt đối): Đường dẫn tệp tuyệt đối là URL đầy đủ của tệp. | <img src=\"",
+   "Ví dụ: Kết hợp thẻ <a></a> và thẻ <img> | <a href=\"https://28tech.com.vn/\"> | <img src=\"https://28tech.com.vn/assets/img/logo.png\" alt=\"Logo 28tech\">",
+   "Thẻ  | <video></video>  | là thẻ để nhúng video vào trang web. Trong thẻ video có thẻ <source> để chứa đường dẫn file video và kiểu video.",
+   "Thuộc tính: | type | : Kiểu video (mp4, ogg, webm)",
+   "Thẻ  | <audio></audio>  | là thẻ dùng để nhúng audio vào trang web. Trong thẻ audio có thẻ <source> để chứa đường dẫn file audio và kiểu audio.",
+   "Thuộc tính: | autoplay | : Tự động phát audio",
+   "Thẻ  | <table></table>  | dùng để tạo bảng trong HTML.",
+   "Ý nghĩa các thẻ: | <table></table> | : Xác định một bảng"
+  ]
+ },
+ {
+  "id": "Bai-3",
+  "num": 3,
+  "lines": [
+   "﻿Bài | 03:  | Học HTML, HTML5 (Tiết",
+   "Nhúng |  Iframe | Một",
+   "Thẻ | < | i",
+   "Mục | tiêu | cho",
+   "Semantic | : Dịch ra là  | ngữ nghĩa",
+   "02.  | Một | số",
+   "Là |  m | ột biểu mẫu HTML được sử dụng để thu thập thông tin đầu vào của người dùng. Đầu vào của người dùng thường được gửi đến máy chủ để xử lý.",
+   "action | : Thuộc tính action xác định hành động sẽ được thực hiện khi biểu mẫu được gửi. Giá trị là một đường dẫn. Thông thường, dữ liệu biểu mẫu được gửi đến tệp trên máy chủ khi người dùng nhấp vào nút gửi. | target",
+   "method | : Thuộc tính method chỉ định giao thức HTTP sẽ được sử dụng khi gửi dữ liệu biểu mẫu. Có 2 phương thức là GET và POST | .",
+   "autocomplete | : Khi bật tính năng tự động điền, trình duyệt sẽ tự động gợi ý các giá trị dựa trên các giá trị mà người dùng đã nhập trước đó. | novalidate",
+   "<input> | Có thể được hiển thị theo nhiều cách, tùy thuộc vào thuộc tính type. | Mặc định type=”text”.",
+   "<select> | Hiển thị dạng danh sách thả xuống (dropdown) | Các thẻ <option> xác định một tùy chọn có thể được chọn. Theo mặc định, mục đầu tiên trong danh sách thả xuống sẽ được chọn. Để thay đổi mặc định lựa chọn thì thêm thuộc tính “selected” vào <option> muốn chọn mặc định."
+  ]
+ },
+ {
+  "id": "Bai-4",
+  "num": 4,
+  "lines": [
+   "﻿KHÓA HỌC FRONT-END | Bài 04: Học CSS, CSS3 cơ bản (Tiết 1)",
+   "Khái niệm, cú pháp, selectors | 3 kiểu chèn CSS | Colors (Màu sắc), Backgrounds (Nền)",
+   "CSS: viết tắt của Cascading Style Sheets | Là ngôn ngữ được dùng để định dạng kiểu hiển thị cho các phần tử HTML. | 01. Khái niệm, cú pháp, selectors",
+   "Bộ chọn CSS chọn (các) phần tử HTML mà bạn muốn tạo kiểu. | Ví dụ: Các thẻ <h1>, <p>, <table>,... thì viết trong css sẽ chỉ lấy tên thẻ là h1, p, table | 01. Khái niệm, cú pháp, selectors",
+   "Bộ chọn element (element selector): chọn các phần tử HTML dựa trên tên phần tử. | p { | \ttext-align: center;",
+   "Bộ chọn id (id selector): Sử dụng thuộc tính id (identifier - định danh) của một phần tử HTML để chọn một phần tử cụ thể. Lưu ý: Tên id không được bắt đầu bằng số. | #title { | \ttext-align: center;",
+   "Bộ chọn class (class selector): chọn các thành phần HTML với một thuộc tính class cụ thể. Lưu ý: Tên class không được bắt đầu bằng số. | .title { | \ttext-align: center;",
+   "Bộ chọn chung (universal selector): chọn tất cả các thành phần HTML trên trang. | * { | \ttext-align: center;",
+   "Bộ chọn nhóm (grouping selector): Bộ chọn nhóm chọn tất cả các element, id, class có cùng thuộc tính và giá trị thuộc tính. | h1, h2, p { | \ttext-align: center;",
+   "Ta sẽ thêm thuộc tính style vào trong thẻ mà muốn sửa CSS. | Có thể được sử dụng để áp dụng một kiểu duy nhất cho một element. | Ví dụ: <p style=\"color:red;\">This is a paragraph.</p>",
+   "Ta sẽ thêm thẻ <style></style> và bất cứ đâu trong file html, sau đó viết CSS vào trong thẻ <style> đó. | Thường thì thẻ <style> này sẽ nằm trong thẻ <head></head>. | Có thể được sử dụng nếu có một trang HTML duy nhất.",
+   "Ta thêm 1 file css ở bên ngoài, sau đó dùng thẻ <link /> đặt ở trong thẻ <head></head> và chèn đường dẫn vào thuộc tính href ở trong thẻ link. | Có thể thay đổi giao diện của toàn bộ trang web bằng cách chỉ thay đổi một tệp. | Ví dụ: <link rel=\"stylesheet\" href=\"mystyle.css\">"
+  ]
+ },
+ {
+  "id": "Bai-5",
+  "num": 5,
+  "lines": [
+   "﻿KHÓA HỌC FRONT-END | Bài 05:  | Học CSS, CSS3 cơ bản (Tiết 2)",
+   "List ( | Danh | sách",
+   "list-style-type: disc;  | //  | Hình",
+   "list-style-position: outside;  | //  | Các",
+   "02.  | Table (Bảng) | Code các bảng sau, sử dụng HTML, CSS:",
+   "02.  | Table (Bảng) | Code các bảng sau, sử dụng HTML, CSS:",
+   "02.  | Table (Bảng) | Code các bảng sau, sử dụng HTML, CSS:",
+   "03.  | Display (Hiển thị) | display: inline;",
+   "03.  | Visibility (Hiển thị) | visibility: hidden;",
+   "04.  | Position (Vị trí) | Thuộc tính position để xác định vị trí element muốn hiển thị. Có 5 giá trị khác nhau",
+   "position: static;  | // Vị trí ở trạng thái mặc định của phần tử (tức là các thuộc tính top, bottom, right, left không có hiệu lực) | position: relative;",
+   "Thuộc tính  | z-index |  thiết lập thứ tự xếp chồng nhau của một thành phần vị trí."
+  ]
+ },
+ {
+  "id": "Bai-6",
+  "num": 6,
+  "lines": [
+   "﻿KHÓA HỌC FRONT-END | Bài 06:  | Học CSS, CSS3 nâng cao (Tiết 1)",
+   "Float và Clear | Attribute selectors (Bộ chọn thuộc tính) | Units",
+   "Thuộc tính float là một thuộc tính được sử dụng để chuyển một phần tử sang góc trái hoặc góc bên phải của không gian bao quanh nó. | Float có các giá trị sau: | float: left;",
+   "Thuộc tính Clear là một thuộc tính ngược lại hoàn toàn với Float. | Ngăn chặn phần tử B chiếm vùng không gian của phần tử A (với A là phần tử sử dụng float). | Thuộc tính clear có các giá trị sau:",
+   "Thuộc tính clear có các giá trị sau: | clear: both; | Khi cả 2 phần tử A và phần tử B sử dụng float, chúng ta không thể sử dụng clear: left; hay clear: right; để ngăn chặn thành phần C chiếm vùng không gian còn trống, trong trường hợp này ta sử dụng thuộc tính clear: both; để ngăn chặn sự chiếm vùng của thành phần C.",
+   "01.  | Float và Clear | 1.3. Ví dụ",
+   "[attribute] | Chọn tất cả các phần tử có thuộc tính [attribute]. | [attribute=\"value\"]",
+   "[attribute~=\"value\"] | Chọn tất cả các phần tử có thuộc tính [attribute] phải chứa giá trị value. | Nhưng value đó phải đứng độc lập, không được viết liền với từ khác.",
+   "[attribute^=\"value\"] | Chọn tất cả các phần tử có thuộc tính [attribute] bắt đầu bằng giá trị value | Khác với [attribute|=\"value\"] ở chỗ nó không có ngoại lệ và chọn tất cả các phần tử bắt đầu bằng value, được phép viết liền với các từ khác.",
+   "[attribute*=\"value\"] | Chọn tất cả các phần tử có thuộc tính [attribute] chứa giá trị value. | Lưu ý: Giá trị không nhất thiết phải là một từ nguyên vẹn!",
+   "L | à loại đơn vị có giá trị cố định và thể hiện chính xác chiều dài kích thước nó hiển thị, không phụ thuộc cũng như không thay đổi bởi bất kỳ tác động bên ngoài nào. | Một số đơn vị:",
+   "L | à đơn vị đo lường được sử dụng trong CSS ở mức tương đối, thường phụ thuộc vào 1 thành phần nào đó thì mới xác định được giá trị của nó. | Một"
+  ]
+ },
+ {
+  "id": "Bai-7",
+  "num": 7,
+  "lines": [
+   "﻿KHÓA HỌC FRONT-END | Bài 07:  | Học CSS, CSS3 nâng cao (Tiết",
+   "Flexbox | Tập cắt lại giao diện ở bài tập 6 | Giao bài project mini 1",
+   "Flexbox Layout là một kiểu bố cục trang có khả năng: | Tự cân đối kích thước | Thay đổi chiều rộng/chiều cao",
+   "S | ơ đồ cấu trúc |  Flexbox:",
+   "1.2.1. display flex | 1.2.2. flex-direction | 1.2.3. flex-wrap",
+   "Giúp sắp xếp các phần tử một cách dễ dàng, linh hoạt hơn trước. | Cú pháp: | selector {",
+   "Xác định hướng của main-axis để container sắp xếp lại các item. | Cú pháp: | selector {",
+   "01.  | Flexbox | 1.2.2. flex-direction",
+   "Thuộc tính flex-wrap cho phép item có tự động xuống dòng hay không khi kích thước container thay đổi. | Cú pháp: | selector {",
+   "01.  | Flexbox | 1.2.3. flex-wrap",
+   "Thuộc tính justify-content để  | điều chỉnh vị trí bắt đầu  | và",
+   "01.  | Flexbox | 1.2.4. justify-content"
+  ]
+ },
+ {
+  "id": "Bai-8",
+  "num": 8,
+  "lines": [
+   "﻿KHÓA HỌC FRONT-END | Bài  | 08:",
+   "Dựng cấu trúc thư mục và file | Thêm |  code reset CSS",
+   "Tạo project mới (thư mục mới) đặt tên là: ho-va-ten-project-1 | Cấu trúc thư mục và file như hình | :",
+   "Do  | trình duyệt có sẵn  | một số",
+   "Sử | dụng | những"
+  ]
+ },
+ {
+  "id": "Bai-9",
+  "num": 9,
+  "lines": [
+   "﻿KHÓA HỌC FRONT-END | Bài 09:  | Học Bootstrap 4 (Tiết 1)",
+   "Giới thiệu và hướng dẫn tích hợp vào web | Dựng layout và sử dụng Grid | Components: Alerts, Badge, Breadcrumb, Buttons, Carousel",
+   "Bootstrap |  là một  | framework",
+   "Cách 1 | : Nhúng link CDN (Link trực tuyến trên server). Xem cách nhúng trên trang getbootstrap.com | Cách 2",
+   ".container | : Giúp element  | căn đều 2 lề",
+   "Ví dụ: Thêm thẻ div sau vào trang html và test thử các màn hình. | <div class=\" | container",
+   ".container-fluid | :  | C",
+   "02.  | Dựng layout và sử dụng Grid | 2.3.",
+   "Grid System (hệ thống lưới) trong Bootstrap được xây dựng với flexbox | . | C",
+   "02.  | Dựng layout và sử dụng Grid | 2.4.",
+   "Ví dụ: Dựng lại một số box trong layout sau sử dụng container, container-fluid, grid và responsive giao diện. | Link demo: https://bootstrapmade.com/demo/templates/Green/ | 02.",
+   "02.  | Dựng layout và sử dụng Grid | 2.4."
+  ]
+ },
+ {
+  "id": "Bai-10",
+  "num": 10,
+  "lines": [
+   "﻿KHÓA HỌC FRONT-END | Bài  | 10",
+   "Components: Collapse, Dropdowns, Forms, Modal, Navs, Pagination | Dựng tiếp layout ở bài 9 | 02",
+   "01 | .  | Components",
+   "01 | .  | Components",
+   "01 | .  | Components",
+   "01 | .  | Components",
+   "01 | .  | Components",
+   "01 | .  | Components",
+   "01 | .  | Components",
+   "01 | .  | Components",
+   "01 | .  | Components",
+   "01 | .  | Components"
+  ]
+ },
+ {
+  "id": "Bai-11",
+  "num": 11,
+  "lines": [
+   "﻿KHÓA HỌC FRONT-END | Bài  | 11",
+   "Chữa bài project mini 1 | 01 | Nội dung",
+   "Link giao diện:  | https://mobirise.com/extensions/softwarem4/software-app | /"
+  ]
+ },
+ {
+  "id": "Bai-12",
+  "num": 12,
+  "lines": [
+   "﻿KHÓA HỌC FRONT-END | Bài  | 12",
+   "Một số Utilities phổ biến | Làm bài tập | Giao bài project mini 2",
+   "Color: https://getbootstrap.com/docs/4.6/utilities/colors/ | 01 | .",
+   "Background color: https://getbootstrap.com/docs/4.6/utilities/colors/ | 01 | .",
+   "Display inline và block: https://getbootstrap.com/docs/4.6/utilities/display/ | 01 | .",
+   "Display flex: https://getbootstrap.com/docs/4.6/utilities/flex/ | 01 | .",
+   "https://getbootstrap.com/docs/4.6/utilities/float/ | 01 | .",
+   "https://getbootstrap.com/docs/4.6/utilities/text/ | 01 | .",
+   "Code một số box trong web sau: https://bootstrapmade.com/demo/templates/OnePage/ | 02.  | Làm bài tập",
+   "Code một số box trong web sau: https://bootstrapmade.com/demo/templates/OnePage/ | 02.  | Làm bài tập",
+   "Code một số box trong web sau: https://bootstrapmade.com/demo/templates/OnePage/ | 02.  | Làm bài tập",
+   "03.  | Giao bài project mini 2 | Link giao diện: https://templatemo.com/templates/templatemo_535_softy_pinko/"
+  ]
+ },
+ {
+  "id": "Bai-13",
+  "num": 13,
+  "lines": [
+   "﻿KHÓA HỌC FRONT-END | Buổi 13: Học GIT, GITHUB",
+   "Học GIT | Sử dụng GITHUB | Deploy code lên Vercel",
+   "Git là  | một hệ thống quản lý phiên bản phân tán  | (Distributed Version Control System – DVCS).",
+   "https://git-scm.com/downloads | 01. Học GIT | 1.2. Cài đặt GIT",
+   "Working directory  | (Thư mục làm việc): Khu vực chứa dự án mà chúng ta đang làm việc. | Staging area",
+   "git --version | : Xem phiên bản hiện tại đang được cài trên máy tính. | git --help",
+   "git init | Khởi tạo  | 1 git",
+   "git add ten_file | Thông tin của các file sẽ được lưu vào  | Staging area",
+   "git commit -m \"Nội dung…\" | Để đưa những file ở vùng Staging area chuyển sang Repository, mục đích là tạo ra 1 phiên bản mới vào lưu vào lịch sử của Repository. | Với điều kiện các tập tin, thư mục được thay đổi",
+   "Nhắc lại quy trình: | Khi  | thêm, sửa, xóa file",
+   "git log | : Giúp bạn  | xem lại thông tin lịch",
+   "git checkout -- ten_file | : Bỏ đi những thay đổi của file, để file đó trở về như lúc ban đầu. Áp dụng cho file đang ở vùng Working directory. | git reset HEAD ten_file"
+  ]
+ },
+ {
+  "id": "Bai-14",
+  "num": 14,
+  "lines": [
+   "﻿KHÓA HỌC FRONT-END | Bài  | 14",
+   "Chữa bài project mini 2 | 01 | Nội dung",
+   "Link giao diện:  | https://templatemo.com/templates/templatemo_535_softy_pinko/ | Yêu cầu:"
+  ]
+ },
+ {
+  "id": "Bai-15",
+  "num": 15,
+  "lines": [
+   "﻿KHÓA HỌC FRONT-END | Bài 15:  | Javascript cơ bản (Tiết 1)",
+   "Khái niệm và giới thiệu | Variables (Biến) | Operators (Toán tử)",
+   "Javascript (viết tắt là JS) là một  | ngôn ngữ lập trình kịch bản  | dựa vào các đối tượng có sẵn hoặc do lập trình viên tự định nghĩa.",
+   "Trước đây | ,  | J",
+   "01.  | Khái niệm và giới thiệu | 1.3.",
+   "Cách 1:  | Inline |  - viết trực tiếp trong thẻ HTML",
+   "Biến  | (variable) là nơi để bạn có thể  | lưu trữ thông tin",
+   "Quy tắc |  đặt tên biến: | B",
+   "Toán tử số học  | là toán tử dùng để thực hiện các  | phép toán số học",
+   "03.  | Operators (Toán tử) | 3.1. Arithmetic (Toán tử số học)",
+   "Toán tử gán  | dùng để  | gán giá trị cho một biến",
+   "Toán tử so sánh |  là toán tử hai ngôi dùng để so sánh giá trị của hai toán hạng với nhau. | Danh sách các toán tử"
+  ]
+ },
+ {
+  "id": "Bai-16",
+  "num": 16,
+  "lines": [
+   "﻿KHÓA HỌC FRONT-END | Bài 16:  | Javascript cơ bản (Tiết",
+   "Câu lệnh rẽ nhánh If Else | Switch Case | Vòng lặp For",
+   "Câu lệnh if(...) sẽ  | kiểm tra điều kiện  | biểu thức bên",
+   "Lệnh  | else |  sẽ được thực thi nếu lệnh if không được thực hiện, tức là điều kiện ở",
+   "Ta có thể kết hợp nhiều câu lệnh if để xử lý bài toán, bằng cách thêm nhiều lệnh  | else if |  phía sau.",
+   "Ví dụ: (thử các trường hợp gán giá trị cho a, b) | 01.  | Câu lệnh rẽ nhánh If Else",
+   "Chúng ta cũng có thể  | rút gọn  | câu lệnh",
+   "Lệnh  | switch case  | có công dụng giống như lệnh if else đó là đều",
+   "Trường hợp  | bỏ break  | đi thì câu lệnh sẽ",
+   "Vòng | lặp | for",
+   "Vòng | lặp | for in",
+   "Vòng lặp  | for  | of"
+  ]
+ },
+ {
+  "id": "Bai-17",
+  "num": 17,
+  "lines": [
+   "﻿KHÓA HỌC FRONT-END | Bài 17:  | Javascript cơ bản (Tiết",
+   "Functions | Try Catch | Làm việc với Object nâng cao",
+   "Hàm |  là một  | chương trình con",
+   "Đối tượng  | arguments | :",
+   "Có |  tính  | hoisting",
+   "Không |  có tính  | hoisting",
+   "Không |  có tính  | hoisting",
+   "Ví dụ 1 | : | Tính tổng các số chẵn của mảng.",
+   "Try catch  | là một khối lệnh  | dùng để bắt lỗi",
+   "Các bước  | thực thi: | Bước 1",
+   "Cú pháp: | tenObject.tenKey = value; | Hoặc",
+   "Để | duyệt qua mỗi phần tử của mảng và thực hiện một hành động nào đó. | Có"
+  ]
+ },
+ {
+  "id": "Bai-18",
+  "num": 18,
+  "lines": [
+   "﻿KHÓA HỌC FRONT-END | Bài 18:  | Javascript cơ bản (",
+   "Khái niệm BOM | BOM Window | BOM Screen",
+   "BOM |  là chữ viết tắt của  | B",
+   "window |  là một  | đối tượng",
+   "innerHeight |  để  | lấy",
+   "Để  | mở một cửa sổ mới | .",
+   "Để  | đóng cửa sổ  | mà ta đã dùng lệnh open() để mở",
+   "Để  | lấy đường dẫn  | hiện tại của",
+   "screen.width  | để lấy  | chiều rộng màn hình máy tính",
+   "location |  là một  | đối tượng",
+   "hash | : lấy phần  | sau dấu #",
+   "history |  dùng để quản  | lý lịch sử lướt web"
+  ]
+ },
+ {
+  "id": "Bai-19",
+  "num": 19,
+  "lines": [
+   "﻿KHÓA HỌC FRONT-END | Bài 19:  | Javascript cơ bản (",
+   "Khái niệm DOM | DOM Element | DOM HTML",
+   "DOM |  là viết tắt của chữ  | D",
+   "Cho phép truy xuất đến các thẻ html | Thay đổi các thuộc tính của thẻ html | Thay đổi css của các thẻ html",
+   "DOM document | : có nhiệm vụ lưu trữ toàn bộ các thành phần trong tài liệu của website (Ví dụ bên trên) | DOM element",
+   "Để  | truy xuất  | tới một",
+   "Tên thẻ HTML chính là tên các thẻ như p, a, div, ... Và ta sẽ truy xuất tới nó bằng cú pháp sau: | var element = document.getElementsByTagName('tagName | '",
+   "Để tìm các thẻ HTML có class nào đó thì ta dùng cú pháp sau: | var element = document.getElementsByClassName('className'); | Ví dụ:",
+   "Để tìm một thẻ HTML theo bộ chọn CSS thì ta dùng cú pháp sau: | var element = document.querySelector('selector'); | Ví dụ:",
+   "Để tìm các thẻ HTML theo bộ chọn CSS thì ta dùng cú pháp sau: | var element = document.querySelector | All",
+   "Để lấy nội dung của một element ta dùng innerHTML: | \t<h2>Nội dung hiện tại</h2> | \tdocument.querySelector(\"h2\")",
+   "Để lấy giá trị của thuộc tính HTML ta sử dụng cú pháp sau: | \t<h2>Nội dung hiện tại</h2> | \tdocument.querySelector(\"h2\")"
+  ]
+ },
+ {
+  "id": "Bai-20",
+  "num": 20,
+  "lines": [
+   "﻿KHÓA HỌC FRONT-END | Bài 20:  | Javascript cơ bản (Tiết",
+   "DOM Events | DOM Events Listener | DOM Navigation",
+   "Dom Event  | (sự kiện) là một  | tác động",
+   "Danh sách  | một số DOM Events phổ biến: | 01.",
+   "DOM Events Listener  | giống | Dom Event",
+   "Dùng | để | quản",
+   "Tạo một Node mới  | hoàn toàn và không liên quan tới những thẻ HTML đang hiển thị trên website. | C",
+   "Text node là một  | node đặc biệt | , nó không phải là một thẻ HTML thông thường mà chỉ",
+   "Dùng để  | thêm |  (bổ sung)",
+   "Được dùng để  | thêm một Node  | vào",
+   "Được dùng để  | xóa một node  | con ra khỏi node hiện tại.",
+   "Dùng để  | replace (thay thế)  | một"
+  ]
+ },
+ {
+  "id": "Bai-21",
+  "num": 21,
+  "lines": [
+   "﻿KHÓA HỌC FRONT-END | Bài 21:  | Javascript nâng cao (Tiết 1)",
+   "Scope | Hoisting | Strict Mode",
+   "Scope |  là  | phạm vi truy cập",
+   "Hoisting | nghĩa | là",
+   "Sử dụng  | var | :  Nếu biến",
+   "Declaration |  Function | Có",
+   "Strict mode  | là  | chế độ code nghiêm ngặt",
+   "Strict mode  | toàn cục | :",
+   "Từ khóa  | this |  sẽ",
+   "Trường hợp 1:  | Nếu không bật chế độ strict mode  | thì javascript sẽ hiểu this là một biến toàn cục, và cấp cao nhất chính là",
+   "Khi gán hành động cho các sự kiện javascript thì  | this |  chính là",
+   "( | Chỉ | có"
+  ]
+ },
+ {
+  "id": "Bai-22",
+  "num": 22,
+  "lines": [
+   "﻿KHÓA HỌC FRONT-END | Bài 22:  | Javascript nâng cao (",
+   "Callbacks | Promise | Fetch API",
+   "Hàm callback  | (gọi lại) là một hàm được  | truyền dưới dạng",
+   "Promise |  dùng để  | giải quyết",
+   "Cú pháp | : | var promise = new Promise((resolve, reject) => {",
+   "Trong đó | : | new Promise",
+   "Promise có 3 trạng thái | : | Pending",
+   "Sử dụng  | Promise.all | Promise.all",
+   "Sử dụng  | Promise.all | Lưu ý",
+   "Phương thức Fetch  | dùng để  | gọi lên",
+   "Trong đó | : | Phương thức",
+   "Async / Await  | là một tính năng của JavaScript giúp chúng ta  | làm việc với các hàm bất đồng bộ"
+  ]
+ },
+ {
+  "id": "Bai-23",
+  "num": 23,
+  "lines": [
+   "﻿KHÓA HỌC FRONT-END | Bài 23:  | Javascript nâng cao (Tiết",
+   "Storage API:  | localStorage | ,",
+   "localStorage | là | k",
+   "localStorage | .setItem | ()",
+   "localStorage | .getItem | ()",
+   "localStorage | .removeItem | ()",
+   "localStorage | .clear | ()",
+   "localStorage | .key | ()",
+   "sessionStorage | là | k",
+   "sessionStorage | .setItem | ()",
+   "sessionStorage.getItem | () | Dùng để",
+   "sessionStorage.removeItem | () | Dùng để"
+  ]
+ },
+ {
+  "id": "Bai-24",
+  "num": 24,
+  "lines": [
+   "﻿KHÓA HỌC FRONT-END | Bài 24 | :",
+   "BEM | NPM | SASS/SCSS",
+   "BEM |  viết tắt của cụm  | Block – Element – Modifier",
+   "Block | : Là một khối độc lập của một nhóm, và cũng có thể dùng lại như một component (một khối có thể tái sử dụng). Nó cần ngắn gọn, dễ hiểu, bao quát, không cụ thể để có khả năng dùng lại cao nhất. Ví dụ như:  | card",
+   "NPM |  viết tắt của  | Node Package Manager",
+   "Bước 1 | : Gõ lệnh  | npm -v",
+   "name | : tên gói thư viện | version",
+   "npm update [tên_package] | : Để update package. Hạn chế dùng, chỉ dùng khi thực sự hiểu về package muốn update. | npm uninstall [tên_package]",
+   "SASS | viết tắt của  | S",
+   "Bước 1 | : Mở terminal lên và gõ lệnh:  | npm install -g sass",
+   "@extend  | được dùng trong trường hợp bạn muốn một selector sử dụng lại những thuộc tính của selector khác. | Giúp giảm trùng lặp code.",
+   "Placeholder |  dùng để kết hợp với extend để bỏ đi những phần select không cần thiết khi biên dịch. (Thêm dấu % ở trước) | 03."
+  ]
+ },
+ {
+  "id": "Bai-25",
+  "num": 25,
+  "lines": [
+   "﻿KHÓA HỌC FRONT-END | Bài 2 | 5",
+   "Chữa bài project mini 3 | 01 | Nội dung",
+   "Làm trang danh sách sản phẩm bao gồm các yêu cầu sau | : | Hiển thị danh sách sản phẩm",
+   "Ảnh demo:"
+  ]
+ },
+ {
+  "id": "Bai-26",
+  "num": 26,
+  "lines": [
+   "﻿KHÓA HỌC FRONT-END | Bài 2 | 6",
+   "Chữa bài project mini  | 4 | 01",
+   "Code lại project mini 2 (hoặc  | 1 website bất kỳ bạn thích | ) nhưng"
+  ]
+ },
+ {
+  "id": "Bai-27",
+  "num": 27,
+  "lines": [
+   "﻿KHÓA HỌC FRONT-END | Bài 2 | 7",
+   "Multiple Page Application và Single Page Application | Khái niệm ReactJS | Hướng dẫn cài đặt",
+   "MPA |  là kiểu website hoạt động theo cách truyền thống, khi người dùng yêu cầu một trang web, thì server sẽ tính toán và trả về trang web đó cho người dùng toàn bộ trang web dưới dạng mã html và web đó sẽ được load lại mới hoàn toàn. | Ví dụ",
+   "SPA |  là một trang web mà ở đó người dùng có thể truy cập nhiều trang con mà không ảnh hưởng gì đến trang gốc. Khi người dùng truy cập vào thành phần bất kỳ trên trang, SPA sẽ chỉ chạy nội dung trên thành phần đó mà không tải lại toàn bộ trang như web truyền thống. | Ví dụ",
+   "ReactJS |  là một  | mã nguồn mở",
+   "Bước 1 | : Cài đặt Node.js trước. Chỉ cần cài 1 lần duy nhất, nếu máy tính đã cài rồi thì không cần cài nữa. | Bước 2",
+   "node_modules | : chứa các thư viện được cài đặt cho dự án, tất cả cài đặt sẽ được lưu tại đây, chúng ta không thao tác trong thư mục này. | public",
+   "Để hiểu rõ hơn về render trong React, ta xem  | nội dung 3 file | :",
+   "/public/index.html | File này không chứa bất kỳ nội dung nào hiển thị ngoài trình duyệt. | Trong file này ta chỉ cần quan tâm đến dòng <div id=\"root\"></div>, tất cả HTML sau này được render vào trong id=\"root\" này.",
+   "/src/index.js | Chúng ta quan tâm đến các đoạn code sau: | import App from './App';",
+   "Có  | 3 cách  | khai báo giá trị cho một biến:",
+   "Tham số mặc định cho phép các tham số mang giá trị mặc định nếu tham số không có giá trị hoặc giá trị không xác định (undefined). | Hoặc có thể hiểu tham số mặc định là tham số ban đầu được gán cho function. | Có"
+  ]
+ },
+ {
+  "id": "Bai-28",
+  "num": 28,
+  "lines": [
+   "﻿KHÓA HỌC FRONT-END | Bài 2 | 8",
+   "JSX | Components | Props",
+   "JSX |  viết tắt của từ  | J",
+   "Lưu ý | : | Trong JSX chỉ viết được 1 element cha bọc ở bên ngoài",
+   "Components |  (Thành phần) giúp phân chia các UI (giao diện người dùng) thành  | các phần nhỏ",
+   "Ví | dụ | :",
+   "Props |  là  | một object",
+   "Cài đặt thêm package (gói): https://www.npmjs.com/package/react-icons | Sử dụng câu lệnh:  | npm i react-icons",
+   "Xử lý các sự kiện  | trong React rất  | giống",
+   "Chuyển project 2 thành Reactjs và chia thành các component con. | Bài | tập"
+  ]
+ },
+ {
+  "id": "Bai-29",
+  "num": 29,
+  "lines": [
+   "﻿KHÓA HỌC FRONT-END | Bài 2 | 9",
+   "Conditional Rendering (Render với điều kiện) | Lists | Sử dụng CSS/SCSS trong ReactJS",
+   "Trong React, chúng ta có thể tạo nhiều component khác nhau, khi đó có thể render bất kỳ component nào ta muốn, bằng cách sử dụng điều kiện tại phần render. | Cách sử dụng câu điều kiện (câu điều kiện if else) tại phần render giống như cách sử dụng trong Javascript | .",
+   "Ví dụ 1: Từ một mảng menu in ra giao diện | const arrayMenu = [ |     \"Trang chủ\",",
+   "Ví dụ 2: Truyền props từ component cha là ProductList/index.js vào component con là ProductItem.js | Ví dụ 3: List dạng lồng nhau. Có một mảng country, trong mảng country có mảng con là city. Lặp qua từng phần tử của mảng country, sau đấy lặp qua từng phần tử của mảng city và vẽ ra giao diện. | (Ví dụ sẽ demo trong buổi học)",
+   "Các bước  | sử dụng  | CSS",
+   "Các bước  | sử dụng  | SCSS",
+   "Hooks |  (gắn vào, móc vào) | Có",
+   "Có  | 10 loại hooks | :"
+  ]
+ },
+ {
+  "id": "Bai-30",
+  "num": 30,
+  "lines": [
+   "﻿KHÓA HỌC FRONT-END | Bài  | 30",
+   "useState | useEffect | 02",
+   "useState |  giúp  | cập nhật lại trạng thái",
+   "Cú | pháp | :",
+   "Ví | dụ |  1",
+   "useEffect |  dùng để  | xử lý logic",
+   "Khi  | render lại giao diện  | (tức render lần 2 trở đi), thì",
+   "Khi  | render lại giao diện  | (tức render lần 2 trở đi), thì",
+   "Khi  | render lại giao diện  | (tức render lần 2 trở đi), thì"
+  ]
+ },
+ {
+  "id": "Bai-31",
+  "num": 31,
+  "lines": [
+   "﻿KHÓA HỌC FRONT-END | Bài  | 31",
+   "useContext | useRef | React.memo()",
+   "use | Context  | (bối cảnh) giúp",
+   "Các bước để sử dụng useContext | : | Bước 1",
+   "Các bước để sử dụng useContext | : | Bước",
+   "Các bước để sử dụng useContext | : | Bước",
+   "useRef |  t | rả về một object với thuộc tính current được khởi tạo thông qua tham số truyền vào.",
+   "React.memo()  | dùng để  | ghi nhớ kết quả",
+   "useCallback | giúp |  t"
+  ]
+ },
+ {
+  "id": "Bai-32",
+  "num": 32,
+  "lines": [
+   "﻿KHÓA HỌC FRONT-END | Bài  | 32",
+   "useMemo | useReducer | Hướng dẫn thêm Skeleton",
+   "useMemo | giúp |  t",
+   "useReducer |  giống như một phiên bản nâng cao của useState. | useReducer",
+   "Hướng dẫn thêm  | Skeleton |  (Bộ khung xương) vào website"
+  ]
+ },
+ {
+  "id": "Bai-33",
+  "num": 33,
+  "lines": [
+   "﻿KHÓA HỌC FRONT-END | Bài  | 33",
+   "Làm | bài | tập",
+   "Làm trang quản lý sản phẩm gồm những phần sau | : | Hiển thị danh sách sản phẩm.",
+   "0 | 1 | .",
+   "0 | 1 | .",
+   "0 | 1 | .",
+   "0 | 1 | ."
+  ]
+ },
+ {
+  "id": "Bai-34",
+  "num": 34,
+  "lines": [
+   "﻿KHÓA HỌC FRONT-END | Bài  | 34",
+   "Vấn đề và giải pháp khi chia sẻ data giữa các component | Khái niệm Redux | Cách hoạt động của Redux",
+   "Để truyền được data  | giữa các component ta |  phải truyền data lên App sau đó mới truyền",
+   "Với Redux,  | data |  của ứng dụng được lưu trong một nơi gọi là store và mỗi component đều có thể truy cập bất kỳ",
+   "Redux là 1 thư viện viết bằng Javascript. | Redux dùng để quản lý state (trạng thái) của toàn bộ ứng dụng (Giống việc khai báo 1 biến ở chế độ toàn cục để có thể sử dụng ở nhiều nơi). | Cài đặt:",
+   "Store | :  | là một kho để lưu trữ các state và phân phát các state cho các component.",
+   "Các bước sử dụng Redux | : | Bước",
+   "Các bước sử dụng Redux | : | Bước 3",
+   "Ví dụ 1 | : Tăng, giảm số khi click, reset click. | 0",
+   "Ví dụ 2 | : Ứng dụng todo list. | 0"
+  ]
+ },
+ {
+  "id": "Bai-35",
+  "num": 35,
+  "lines": [
+   "﻿KHÓA HỌC FRONT-END | Bài  | 35",
+   "Giới thiệu | Cách sử dụng components của React Router | Nested Routes",
+   "React Router là một thư viện được viết bằng React để quản lý routing trong các ứng dụng web. | Ví dụ: | Trang chủ: https://domain.com",
+   "BrowserRouter | :  | Để kết nối ứng dụng của bạn với URL của trình duyệt thì phải import BrowserRouter và bọc nó bên ngoài toàn bộ ứng dụng chính là component App.",
+   "Để tạo ra các route con lồng nhau. | Ví dụ: | https://domain.com/blog/news: Trang tin tức mới.",
+   "Để hiển thị component ở route con ra ngoài route cha. | Như ví dụ ở trên thì khi truy cập vào https://domain.com/blog sẽ load component Blog và không hiển thị conponent con nào cả | .",
+   "Dynamic routes giúp chúng ta tạo ra được các routes động. | 0 | 5",
+   "useParams | :  | Dùng để lấy được tham số trên param.",
+   "Giả sử ứng dụng của chúng ta có hai phần: public và private. | Phần public thì ai cũng có thể truy cập được như trang chủ, trang blog… | Phần private thì phải đăng nhập vào mới xem được như trang thông tin cá nhân,...",
+   "Hook useRoutes |  dùng để xác định các tuyến đường dưới dạng object thuần javascript thay cho <Routes> và <Route>. | 0"
+  ]
+ },
+ {
+  "id": "Bai-36",
+  "num": 36,
+  "lines": [
+   "﻿KHÓA HỌC FRONT-END | Bài  | 36",
+   "Bài tập Redux + React Router | Giao bài project mini 5 | 02",
+   "Ví dụ | : Làm trang danh sách sản phẩm và trang giỏ hàng (để add sản phẩm vào giỏ hàng và lưu vào redux). | Hiển thị danh sách sản phẩm",
+   "Trang danh sách sản phẩm: | 0 | 1",
+   "Trang giỏ hàng: | 0 | 1",
+   "Đề  | bài | : Làm trang web kiểm tra trắc nghiệm.",
+   "Đề  | bài | : Làm trang web kiểm tra trắc nghiệm.",
+   "Đề  | bài | : Làm trang web kiểm tra trắc nghiệm."
+  ]
+ },
+ {
+  "id": "Bai-37",
+  "num": 37,
+  "lines": [
+   "﻿KHÓA HỌC FRONT-END | Bài  | 37",
+   "Giới thiệu và hướng dẫn cài đặt | Component: Button | Component: Icon",
+   "Giới thiệu: | Ant Design là một thư viện để xây dựng UI (giao diện người dùng). | Ant Design cung cấp nhiều Component để xây dựng ứng dụng web chất lượng cao và dễ bảo trì.",
+   "API: | 0 | 2",
+   "Các bước nhúng icon: | Bước 1 | : Import bằng câu lệnh import { SearchOutlined } from",
+   "API: | 0 | 4",
+   "Ant Design chia giao diện thành  | 24 cột | .",
+   "Ant Design chia giao diện thành  | 24 cột | .",
+   "Dùng để xử lý bố cục tổng thể của một trang. | Các component của Layout: | Layout",
+   "API cho Sider: | 0 | 6",
+   "API: | 0 | 7",
+   "API: | Menu: | 0"
+  ]
+ },
+ {
+  "id": "Bai-38",
+  "num": 38,
+  "lines": [
+   "﻿KHÓA HỌC FRONT-END | Bài  | 38",
+   "Component: Checkbox | Component: DatePicker | Component: Input",
+   "API: | Checkbox: | 0",
+   "API: | Checkbox Group: | 0",
+   "API: | 0 | 2",
+   "API: | 0 | 2",
+   "API: | Input: | 0",
+   "API: | Input: | 0",
+   "API: | Input.TextArea: | 0",
+   "API: | Input.Search: | 0",
+   "API: | Input.Password: | 0",
+   "API: | Radio: | 0"
+  ]
+ },
+ {
+  "id": "Bai-39",
+  "num": 39,
+  "lines": [
+   "﻿KHÓA HỌC FRONT-END | Bài  | 39",
+   "Component: Form | Component: Badge | Component: Carousel",
+   "API: | Form: | 0",
+   "API: | Form: | 0",
+   "API: | Form.Item: | 0",
+   "API: | Form.Item: | 0",
+   "API: | Badge: | 0",
+   "API: | Badge.Ribbon (Ruy-băng): | 0",
+   "API: | 0 | 3",
+   "API: | Collapse: | 0",
+   "API: | Collapse.Panel: | 0",
+   "API: | 0 | 5"
+  ]
+ },
+ {
+  "id": "Bai-40",
+  "num": 40,
+  "lines": [
+   "﻿KHÓA HỌC FRONT-END | Bài  | 40",
+   "Component: Tag | Component: Tooltip | Component: Message",
+   "API: | 0 | 1",
+   "API: | 0 | 2",
+   "API: | 0 | 2",
+   "API: | 0 | 3",
+   "API: | 0 | 4",
+   "API: | 0 | 4",
+   "API: | 0 | 5",
+   "API: | Skeleton: | 0",
+   "API: | SkeletonAvatar: | 0",
+   "API: | SkeletonTitle: | 0"
+  ]
+ },
+ {
+  "id": "Bai-41",
+  "num": 41,
+  "lines": [
+   "﻿KHÓA HỌC FRONT-END | Bài  | 41",
+   "Giới | thiệu | và",
+   "Ant Design Charts là một thư viện dùng để hiển thị các biểu đồ trên web với UI được thiết kế theo phong cách Ant Design. | Ưu điểm: | Sử dụng dễ dàng.",
+   "Cách sử dụng | : | Bước 1: import { Line } from '@ant-design/plots';",
+   "Một số options | : | 0",
+   "Một số options | : | 0",
+   "Một số options | : | 0",
+   "Cách | sử | dụng",
+   "Một số options | : ( | Giống",
+   "Cách | sử | dụng",
+   "Một số options | : ( | Giống",
+   "Cách sử dụng | : | Bước 1: import { Area } from '@ant-design/plots';"
+  ]
+ },
+ {
+  "id": "Bai-42",
+  "num": 42,
+  "lines": [
+   "﻿KHÓA HỌC FRONT-END | Bài  | 42",
+   "Giao bài project cuối khóa | Chữa project mini 5 | 02",
+   "Đề bài: Làm trang web tuyển dụng ngành lập trình. | Mô tả: Website tuyển dụng ngành lập trình là nơi để đăng những bài viết tuyển dụng liên quan đến các công việc lập trình, cho phép các công ty đăng các công việc (job) lên trên đó và người dùng có thể truy cập lên trang chủ để tìm kiếm công việc phù hợp. | 0",
+   "Trang đăng nhập | :  | Nhập email, password.",
+   "Trang cấu hình thông tin công ty | :  | Tên công ty",
+   "Trang quản lý job | Trang chi tiết job:  | Tên job",
+   "Trang chủ: | Nút đăng ký làm nhà tuyển dụng. | Hiển thị dropdown chọn thành phố + thanh search để người dùng tìm kiếm việc. Ví dụ: Hà Nội, TP. Hồ Chí Minh, Đà Nẵng, …",
+   "Trang kết quả tìm kiếm: (Sau khi người dùng tìm kiếm sẽ chuyển đến trang này). | Danh sách các job liên quan đến: khu vực (nếu có) + từ khóa tìm kiếm (nếu có). | Mỗi job show ra một số thông tin cơ bản: tiêu đề, lương, tags, thành phố, thời gian đăng bài, tên công ty. Khi click vào 1 job sẽ sang trang chi tiết job đó.",
+   "Trang chi tiết 1 job: (Một số thông tin cơ bản). | Tên job | Nút ứng tuyển (Khi click vào link xuống form ứng tuyển).",
+   "Trang danh sách công ty. | Tên công ty | Số điện thoại",
+   "Trang chi tiết công ty. | Tên công ty | Địa chỉ",
+   "company (API danh sách các công ty) | id: Id từng công ty | companyName: Tên công ty"
+  ]
+ },
+ {
+  "id": "Bai-43",
+  "num": 43,
+  "lines": [
+   "﻿KHÓA HỌC FRONT-END | Bài  | 43",
+   "Hướng dẫn viết CV | Một số câu hỏi phỏng vấn thường gặp | 02",
+   "CV có thể hiểu là một bản tóm tắt thông tin về ứng viên khi ứng tuyển một công ty. | Những lưu ý khi thiết kế CV | CV cần viết ngắn gọn, mẫu giao diện đơn giản.",
+   "CV cần có một số thông tin cơ bản sau: | Họ và tên, ảnh đại diện. | Vị trí tuyển dụng: Intern Frontend, Fresher Frontend, Frontend Developer.",
+   "Lên trang https://www.topcv.vn/ để tạo CV nhanh và có nhiều mẫu sẵn. | Link demo: https://www.topcv.vn/xem-cv/UlBVBA5VCQEJBw9cUlQGUgcFWwxeVwQCAA4KBAbc36 | 0",
+   "Câu hỏi | : Anh/Chị hãy giới thiệu đôi chút về bản thân mình. | Cách trả lời",
+   "Câu hỏi | : Tại sao bạn muốn ứng tuyển vào vị trí lập trình viên? | Cách trả lời",
+   "Câu hỏi | : Điểm mạnh của bạn là gì? | Cách trả lời",
+   "Câu hỏi | : Điểm yếu của bạn là gì? | Cách trả lời",
+   "Câu hỏi | :  | Bạn có bằng cấp nào về kỹ thuật chưa?",
+   "Câu hỏi | :  | Kiến thức hiện tại của bạn giúp được gì trong công việc này?",
+   "Câu hỏi | : Bạn làm gì để duy trì giá trị bằng cấp của bạn? | Cách trả lời"
+  ]
+ },
+ {
+  "id": "Bai-44",
+  "num": 44,
+  "lines": [
+   "﻿KHÓA HỌC FRONT-END | Bài  | 44",
+   "Chữa bài project cuối khóa | 01 | Nội dung",
+   "Đề bài: Làm trang web tuyển dụng ngành lập trình. | Mô tả: Website tuyển dụng ngành lập trình là nơi để đăng những bài viết tuyển dụng liên quan đến các công việc lập trình, cho phép các công ty đăng các công việc (job) lên trên đó và người dùng có thể truy cập lên trang chủ để tìm kiếm công việc phù hợp. | 0",
+   "Trang đăng nhập | :  | Nhập email, password.",
+   "Trang cấu hình thông tin công ty | :  | Tên công ty",
+   "Trang quản lý job | Trang chi tiết job:  | Tên job",
+   "Trang chủ: | Nút đăng ký làm nhà tuyển dụng. | Hiển thị dropdown chọn thành phố + thanh search để người dùng tìm kiếm việc. Ví dụ: Hà Nội, TP. Hồ Chí Minh, Đà Nẵng, …",
+   "Trang kết quả tìm kiếm: (Sau khi người dùng tìm kiếm sẽ chuyển đến trang này). | Danh sách các job liên quan đến: khu vực (nếu có) + từ khóa tìm kiếm (nếu có). | Mỗi job show ra một số thông tin cơ bản: tiêu đề, lương, tags, thành phố, thời gian đăng bài, tên công ty. Khi click vào 1 job sẽ sang trang chi tiết job đó.",
+   "Trang chi tiết 1 job: (Một số thông tin cơ bản). | Tên job | Nút ứng tuyển (Khi click vào link xuống form ứng tuyển).",
+   "Trang danh sách công ty. | Tên công ty | Số điện thoại",
+   "Trang chi tiết công ty. | Tên công ty | Địa chỉ",
+   "company (API danh sách các công ty) | id: Id từng công ty | companyName: Tên công ty"
+  ]
+ }
+]

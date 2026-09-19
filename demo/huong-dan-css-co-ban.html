@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Hướng dẫn sử dụng CSS cơ bản ngoài ba cách chèn CSS.">
+  <title>Hướng dẫn sử dụng CSS cơ bản</title>
+
+  <style>
+    :root {
+      --ink: #172033;
+      --muted: #64748b;
+      --paper: #ffffff;
+      --page: #f1f5f9;
+      --line: #cbd5e1;
+      --blue: #2563eb;
+      --blue-soft: #dbeafe;
+      --orange: #ea580c;
+      --green: #15803d;
+      --code: #172033;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+      background: var(--page);
+    }
+
+    a {
+      color: var(--blue);
+    }
+
+    code,
+    pre {
+      font-family: Consolas, "Courier New", monospace;
+    }
+
+    code {
+      padding: 2px 5px;
+      border-radius: 4px;
+      background: var(--blue-soft);
+      color: #1e40af;
+      font-size: 0.92em;
+    }
+
+    .site-header {
+      padding: 56px 20px 64px;
+      color: #ffffff;
+      background: linear-gradient(135deg, #1d4ed8, #0f766e);
+    }
+
+    .container {
+      width: min(100% - 40px, 1060px);
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: #bfdbfe;
+      font-size: 13px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin: 0;
+      line-height: 1.25;
+    }
+
+    h1 {
+      max-width: 760px;
+      font-size: clamp(32px, 6vw, 58px);
+    }
+
+    .intro {
+      max-width: 720px;
+      margin: 18px 0 0;
+      color: #e0f2fe;
+      font-size: 18px;
+    }
+
+    .topic-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 28px;
+    }
+
+    .topic-nav a {
+      padding: 7px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      border-radius: 999px;
+      color: #ffffff;
+      text-decoration: none;
+    }
+
+    .topic-nav a:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    main {
+      padding: 36px 0 72px;
+    }
+
+    .lesson-section {
+      margin-bottom: 28px;
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--paper);
+      box-shadow: 0 5px 18px rgba(15, 23, 42, 0.06);
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .section-number {
+      color: var(--orange);
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .section-heading h2 {
+      font-size: 26px;
+    }
+
+    .lesson-section > p:last-child {
+      margin-bottom: 0;
+    }
+
+    .concept-grid,
+    .demo-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .concept {
+      padding: 16px;
+      border-left: 4px solid var(--blue);
+      background: #f8fafc;
+    }
+
+    .concept h3 {
+      margin-bottom: 6px;
+      font-size: 17px;
+    }
+
+    .concept p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    pre {
+      overflow-x: auto;
+      margin: 16px 0;
+      padding: 16px;
+      border-radius: 8px;
+      color: #e2e8f0;
+      background: var(--code);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .note {
+      margin: 16px 0 0;
+      padding: 12px 16px;
+      border-left: 4px solid var(--orange);
+      background: #fff7ed;
+    }
+
+    .demo-box {
+      padding: 20px;
+      border: 5px solid #f59e0b;
+      outline: 3px dashed #93c5fd;
+      outline-offset: 5px;
+      background: #dcfce7;
+    }
+
+    .demo-box p {
+      margin: 0;
+      padding: 12px;
+      background: #2563eb;
+      color: #ffffff;
+    }
+
+    .flex-demo {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      background: #eff6ff;
+    }
+
+    .flex-demo span {
+      flex: 1 1 120px;
+      padding: 14px;
+      color: #ffffff;
+      text-align: center;
+      background: #0f766e;
+    }
+
+    .grid-demo {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .grid-demo span {
+      padding: 20px 10px;
+      color: #ffffff;
+      text-align: center;
+      background: #7c3aed;
+    }
+
+    .state-demo {
+      display: inline-block;
+      padding: 10px 16px;
+      border: 1px solid var(--blue);
+      border-radius: 6px;
+      color: var(--blue);
+      text-decoration: none;
+    }
+
+    .state-demo:hover {
+      color: #ffffff;
+      background: var(--blue);
+    }
+
+    .state-demo:focus-visible {
+      outline: 3px solid var(--orange);
+      outline-offset: 3px;
+    }
+
+    .checklist {
+      display: grid;
+      gap: 8px;
+      margin: 0;
+      padding-left: 22px;
+    }
+
+    .checklist li::marker {
+      color: var(--green);
+    }
+
+    footer {
+      padding: 24px 20px;
+      color: #cbd5e1;
+      text-align: center;
+      background: #0f172a;
+    }
+
+    footer p {
+      margin: 0;
+    }
+
+    @media (max-width: 680px) {
+      .container {
+        width: min(100% - 24px, 1060px);
+      }
+
+      .site-header {
+        padding: 38px 12px 44px;
+      }
+
+      main {
+        padding-top: 20px;
+      }
+
+      .lesson-section {
+        padding: 20px;
+      }
+
+      .concept-grid,
+      .demo-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .grid-demo {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header" id="top">
+    <div class="container">
+      <p class="eyebrow">Bài học thực hành</p>
+      <h1>Hướng dẫn sử dụng CSS cơ bản</h1>
+      <p class="intro">
+        Tài liệu này tập trung vào cách viết quy tắc CSS và các kỹ thuật định dạng thường dùng,
+        không trình bày lại ba cách chèn CSS.
+      </p>
+      <nav class="topic-nav" aria-label="Mục lục bài học">
+        <a href="#syntax">Cú pháp</a>
+        <a href="#selectors">Bộ chọn</a>
+        <a href="#box-model">Box Model</a>
+        <a href="#layout">Bố cục</a>
+        <a href="#responsive">Responsive</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="lesson-section" id="syntax">
+      <div class="section-heading">
+        <span class="section-number">01</span>
+        <h2>Cú pháp của một quy tắc CSS</h2>
+      </div>
+      <p>Một quy tắc CSS gồm bộ chọn và một khối khai báo. Mỗi khai báo có dạng <code>thuộc-tính: giá-trị;</code>.</p>
+      <pre><code>p {
+  color: #172033;
+  font-size: 16px;
+  line-height: 1.6;
+}</code></pre>
+      <div class="concept-grid">
+        <div class="concept">
+          <h3>Bộ chọn (selector)</h3>
+          <p>Cho biết phần tử nào sẽ nhận kiểu, ví dụ <code>p</code>, <code>.card</code> hoặc <code>#header</code>.</p>
+        </div>
+        <div class="concept">
+          <h3>Thuộc tính và giá trị</h3>
+          <p><code>color</code> là thuộc tính, còn <code>#172033</code> là giá trị được gán cho thuộc tính đó.</p>
+        </div>
+      </div>
+      <p class="note"><strong>Mẹo:</strong> Mỗi khai báo nên kết thúc bằng dấu chấm phẩy để dễ đọc và tránh lỗi khi thêm dòng mới.</p>
+    </section>
+
+    <section class="lesson-section" id="selectors">
+      <div class="section-heading">
+        <span class="section-number">02</span>
+        <h2>Các bộ chọn thường dùng</h2>
+      </div>
+      <pre><code>/* Chọn tất cả thẻ p */
+p { color: #334155; }
+
+/* Chọn phần tử có class="notice" */
+.notice { background-color: #fef3c7; }
+
+/* Chọn phần tử có id="top" */
+#top { padding: 24px; }
+
+/* Chọn p nằm bên trong .article */
+.article p { margin-bottom: 16px; }
+
+/* Chọn p ngay sau h2 */
+h2 + p { color: #64748b; }</code></pre>
+      <p>Bộ chọn <code>class</code> thường được ưu tiên trong dự án vì có thể dùng lại cho nhiều phần tử. <code>id</code> nên dành cho một phần tử duy nhất hoặc một điểm neo.</p>
+    </section>
+
+    <section class="lesson-section" id="box-model">
+      <div class="section-heading">
+        <span class="section-number">03</span>
+        <h2>Box Model: hộp của phần tử</h2>
+      </div>
+      <p>Mỗi phần tử được xem như một chiếc hộp gồm <strong>content</strong>, <strong>padding</strong>, <strong>border</strong> và <strong>margin</strong>.</p>
+      <div class="demo-grid">
+        <div>
+          <pre><code>.card {
+  width: 280px;
+  padding: 20px;
+  border: 2px solid #2563eb;
+  margin: 24px;
+}</code></pre>
+          <p>Thông thường, <code>width</code> chỉ tính phần content. Dùng <code>box-sizing: border-box</code> để width bao gồm cả padding và border.</p>
+        </div>
+        <div class="demo-box">
+          <p>Content nằm bên trong padding. Vùng xanh lá là padding, đường cam là border.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="lesson-section" id="visual">
+      <div class="section-heading">
+        <span class="section-number">04</span>
+        <h2>Màu sắc, chữ và nền</h2>
+      </div>
+      <p>CSS cho phép định dạng màu chữ, màu nền, cỡ chữ, kiểu chữ, căn lề và khoảng cách dòng.</p>
+      <pre><code>.profile {
+  color: #172033;
+  background-color: #ffffff;
+  font-family: Arial, sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 1.5;
+}</code></pre>
+      <p>Nên tạo biến màu trong <code>:root</code> khi một màu được dùng nhiều lần. Khi cần đổi giao diện, chỉ cần sửa giá trị của biến.</p>
+      <pre><code>:root {
+  --primary: #2563eb;
+}
+
+.button {
+  color: #ffffff;
+  background-color: var(--primary);
+}</code></pre>
+    </section>
+
+    <section class="lesson-section" id="layout">
+      <div class="section-heading">
+        <span class="section-number">05</span>
+        <h2>Bố cục với Flexbox và Grid</h2>
+      </div>
+      <p><strong>Flexbox</strong> phù hợp để sắp xếp các phần tử theo một chiều. <strong>Grid</strong> phù hợp với bố cục gồm hàng và cột.</p>
+      <div class="demo-grid">
+        <div>
+          <h3>Flexbox</h3>
+          <pre><code>.menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}</code></pre>
+          <div class="flex-demo" aria-label="Ví dụ Flexbox">
+            <span>A</span><span>B</span><span>C</span>
+          </div>
+        </div>
+        <div>
+          <h3>Grid</h3>
+          <pre><code>.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}</code></pre>
+          <div class="grid-demo" aria-label="Ví dụ CSS Grid">
+            <span>1</span><span>2</span><span>3</span>
+            <span>4</span><span>5</span><span>6</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="lesson-section" id="states">
+      <div class="section-heading">
+        <span class="section-number">06</span>
+        <h2>Trạng thái và pseudo-class</h2>
+      </div>
+      <p>Pseudo-class mô tả trạng thái đặc biệt của phần tử, chẳng hạn khi người dùng rê chuột hoặc dùng bàn phím.</p>
+      <pre><code>.button:hover {
+  background-color: #1d4ed8;
+}
+
+.button:focus-visible {
+  outline: 3px solid #f97316;
+  outline-offset: 2px;
+}
+
+input:checked + span {
+  color: #2563eb;
+}</code></pre>
+      <a class="state-demo" href="#states">Di chuột hoặc bấm Tab vào đây</a>
+    </section>
+
+    <section class="lesson-section" id="responsive">
+      <div class="section-heading">
+        <span class="section-number">07</span>
+        <h2>Responsive cho điện thoại</h2>
+      </div>
+      <p>Media query thay đổi kiểu hiển thị khi chiều rộng màn hình đạt điều kiện nhất định.</p>
+      <pre><code>.layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+@media (max-width: 640px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}</code></pre>
+      <p>Hãy thử thu nhỏ cửa sổ trình duyệt: các ô minh họa phía trên sẽ chuyển từ hai cột thành một cột.</p>
+    </section>
+
+    <section class="lesson-section" id="checklist">
+      <div class="section-heading">
+        <span class="section-number">08</span>
+        <h2>Quy trình viết CSS dễ kiểm soát</h2>
+      </div>
+      <ol class="checklist">
+        <li>Xác định đúng phần tử cần định dạng.</li>
+        <li>Đặt tên class ngắn, rõ nghĩa và dùng dấu gạch ngang.</li>
+        <li>Viết kiểu chung trước, rồi mới viết kiểu riêng và responsive.</li>
+        <li>Dùng biến CSS cho màu sắc, khoảng cách và các giá trị lặp lại.</li>
+        <li>Kiểm tra trên cả màn hình máy tính và điện thoại.</li>
+      </ol>
+    </section>
+  </main>
+
+  <footer>
+    <p>Học CSS bằng cách đọc, sửa giá trị và quan sát kết quả.</p>
+  </footer>
+</body>
+</html>

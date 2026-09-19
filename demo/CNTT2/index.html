@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f8faf6">
+  <meta name="description" content="CampusConnect — tìm bạn cùng gu, học cùng nhau và khám phá những trải nghiệm đáng nhớ của đời sinh viên.">
+  <title>CampusConnect — Cùng gu. Cùng lớn.</title>
+  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css">
+  <script src="./script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Chuyển đến nội dung chính</a>
+
+  <svg class="icon-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
+    <symbol id="i-arrow-up" viewBox="0 0 24 24"><path d="M6 18 18 6M6 6h12v12"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5L12 3Z"/></symbol>
+    <symbol id="i-people" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 21v-3a6 6 0 0 1 12 0v3m2-17a3 3 0 0 1 0 6m1 4a5 5 0 0 1 3 4v3"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M12 6C9 3 4 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-2-1-7-1-10 2Zm0 0v15"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M7 3v4m10-4v4M3 11h18m-14 4h2m6 0h2"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-location" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+    <symbol id="i-code" viewBox="0 0 24 24"><path d="m7 6-6 6 6 6m10-12 6 6-6 6M14 3l-4 18"/></symbol>
+    <symbol id="i-music" viewBox="0 0 24 24"><path d="M9 18V5l12-3v13M9 9l12-3"/><ellipse cx="6" cy="18" rx="3" ry="3"/><ellipse cx="18" cy="15" rx="3" ry="3"/></symbol>
+    <symbol id="i-coffee" viewBox="0 0 24 24"><path d="M3 8h13v8a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5V8Zm13 1h2a4 4 0 0 1 0 8h-2M6 2v2m4-2v2m4-2v2"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="3"/><path d="M8 10V6a4 4 0 0 1 8 0v4m-4 5v2"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+    <symbol id="i-logo" viewBox="0 0 32 32"><path d="M20 8h-6a8 8 0 0 0 0 16h6"/><path d="M13 12h6a4 4 0 0 1 0 8h-6"/><path d="m18 5 4 3-4 3m-4 10-4 3 4 3"/></symbol>
+  </svg>
+
+  <header class="site-header" id="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="#home" aria-label="CampusConnect — trang chủ">
+        <span class="brand-mark"><svg class="icon"><use href="#i-logo"/></svg></span>
+        <span>Campus<span class="brand-accent">Connect</span><span class="brand-dot">.</span></span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav" aria-label="Mở menu điều hướng">
+        <span></span><span></span>
+      </button>
+      <nav class="main-nav" id="main-nav" aria-label="Điều hướng chính">
+        <a class="nav-link" href="#about">Vì sao CampusConnect?</a>
+        <a class="nav-link" href="#explore">Khám phá</a>
+        <a class="button button-small" href="#signup">Tham gia ngay <svg class="icon"><use href="#i-arrow-up"/></svg></a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero section" id="home" aria-labelledby="hero-title">
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <div class="eyebrow hero-eyebrow"><span class="live-dot"></span> DÀNH CHO NHỮNG NĂM THÁNG RỰC RỠ</div>
+          <h1 id="hero-title">Đại học vui hơn<br>khi có hội<br><span class="highlight">cùng gu.<svg viewBox="0 0 340 20" aria-hidden="true"><path d="M5 13C90 0 236 0 334 9M41 18c96-9 189-8 259-3"/></svg></span><span class="hero-asterisk" aria-hidden="true">✳</span></h1>
+          <p class="hero-description">Tìm bạn đồng hành, khám phá cộng đồng và biến những năm đại học thành câu chuyện đáng nhớ. Tất cả bắt đầu từ một kết nối.</p>
+          <div class="hero-actions">
+            <a class="button" href="#signup">Tìm hội của bạn <svg class="icon"><use href="#i-arrow"/></svg></a>
+            <a class="text-link" href="#explore"><span class="play-icon" aria-hidden="true">↗</span> Dạo một vòng</a>
+          </div>
+          <div class="hero-social">
+            <div class="avatar-stack" aria-hidden="true"><span class="avatar avatar-peach">AN</span><span class="avatar avatar-purple">MI</span><span class="avatar avatar-green">KH</span><span class="avatar avatar-yellow">BẠN</span></div>
+            <p>Khác cá tính. Chung kết nối.<br><strong>Hội mình chỉ còn thiếu bạn!</strong></p>
+          </div>
+        </div>
+
+        <div class="hero-art" aria-label="Minh họa những người bạn cùng trò chuyện và học tập trong khuôn viên trường">
+          <div class="art-orbit" aria-hidden="true"></div>
+          <img class="campus-illustration" src="./assets/campus.svg" alt="Ba sinh viên học nhóm dưới bóng cây, phía sau là tòa nhà đại học" width="600" height="570" fetchpriority="high">
+          <div class="float-card float-card-top" aria-hidden="true">
+            <span class="mini-icon mint"><svg class="icon"><use href="#i-people"/></svg></span>
+            <div><strong>Đã tìm thấy hội cùng gu!</strong><span>Một lời chào, nhiều kết nối.</span></div>
+            <span class="notification-dot"></span>
+          </div>
+          <div class="float-card float-card-bottom" aria-hidden="true">
+            <span class="event-date"><small>THỨ</small><strong>07</strong></span>
+            <div><span class="tiny-label">LỊCH HẸN CUỐI TUẦN</span><strong>Cà phê & chuyện campus</strong><span class="card-meta"><span class="status-dot"></span> Có hội là có vui</span></div>
+            <span class="round-arrow"><svg class="icon"><use href="#i-arrow-up"/></svg></span>
+          </div>
+          <span class="art-note" aria-hidden="true">your people, your place.<svg viewBox="0 0 100 45"><path d="M4 5c30 34 52 31 84 9m-16 1 18-4-3 17"/></svg></span>
+          <span class="art-star star-one" aria-hidden="true">✦</span><span class="art-star star-two" aria-hidden="true">✦</span>
+        </div>
+      </div>
+      <div class="container campus-strip">
+        <p>Một campus.<br><strong>Muôn màu cá tính.</strong></p>
+        <div class="interest-tags" aria-label="Các sở thích có thể kết nối"><span># Công nghệ</span><span># Sáng tạo</span><span># Âm nhạc</span><span># Thể thao</span><span># Chữa lành</span></div>
+        <span class="strip-note">Và cả chất riêng của bạn <svg class="icon"><use href="#i-spark"/></svg></span>
+      </div>
+    </section>
+
+    <section class="section about-section" id="about" aria-labelledby="about-title">
+      <div class="container">
+        <div class="section-heading reveal">
+          <div><p class="eyebrow">KẾT NỐI NHỎ. TRẢI NGHIỆM LỚN.</p><h2 id="about-title">Không chỉ cùng trường.<br>Còn <span class="green-text">cùng tần số.</span></h2></div>
+          <p>Một không gian để bạn tìm thấy nơi mình thuộc về, từ buổi học đầu tiên đến những dự định thật lớn.</p>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card reveal">
+            <div class="feature-top"><span class="feature-icon mint"><svg class="icon"><use href="#i-people"/></svg></span><span class="feature-number">01 / CONNECT</span></div>
+            <h3>Đúng người, đúng gu</h3>
+            <p>Gặp những người bạn chung sở thích. Từ một chiếc “hi” đến một hội bạn luôn có mặt.</p>
+            <div class="feature-preview tag-preview" aria-hidden="true"><span>Design lovers</span><span>Team hướng nội</span><span>Chạy deadline</span><span class="tag-plus">+ bạn</span></div>
+          </article>
+          <article class="feature-card reveal">
+            <div class="feature-top"><span class="feature-icon lavender"><svg class="icon"><use href="#i-book"/></svg></span><span class="feature-number">02 / GROW</span></div>
+            <h3>Học cùng, tiến xa</h3>
+            <p>Tìm đồng đội làm dự án, chia sẻ kiến thức và cùng nhau vượt qua những mùa deadline.</p>
+            <div class="feature-preview chat-preview" aria-hidden="true"><span class="chat-avatar">M</span><span>Tối nay cùng ôn bài nhé?<small>Đồng đội của bạn · Vừa xong</small></span><svg class="icon"><use href="#i-check"/></svg></div>
+          </article>
+          <article class="feature-card reveal">
+            <div class="feature-top"><span class="feature-icon peach"><svg class="icon"><use href="#i-spark"/></svg></span><span class="feature-number">03 / EXPERIENCE</span></div>
+            <h3>Thanh xuân có hẹn</h3>
+            <p>Workshop, câu lạc bộ và những cuộc gặp bất ngờ. Đừng để điều thú vị chỉ nằm trên bảng tin.</p>
+            <div class="feature-preview ticket-preview" aria-hidden="true"><svg class="icon"><use href="#i-calendar"/></svg><div>Hẹn bạn ở trải nghiệm tiếp theo<small>Một chỗ dành riêng cho bạn</small></div><span class="ticket-stub">ADMIT<br>ONE</span></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section explore-section" id="explore" aria-labelledby="explore-title">
+      <div class="container">
+        <div class="section-heading reveal">
+          <div><p class="eyebrow">RA KHỎI LỚP. BƯỚC VÀO CUỘC VUI.</p><h2 id="explore-title">Campus có gì <span class="green-text">hay?</span></h2></div>
+          <p>Một vài ý tưởng cho chiếc lịch sắp tới.<br><span class="demo-label">Sự kiện minh họa cho bản demo</span></p>
+        </div>
+        <div class="filter-bar reveal" role="group" aria-label="Lọc sự kiện">
+          <button class="filter-button active" type="button" data-filter="all" aria-pressed="true">Tất cả <span>03</span></button>
+          <button class="filter-button" type="button" data-filter="learn" aria-pressed="false">Học tập</button>
+          <button class="filter-button" type="button" data-filter="connect" aria-pressed="false">Kết nối</button>
+          <span class="filter-caption">Tìm một điều khiến bạn hào hứng <svg class="icon"><use href="#i-arrow"/></svg></span>
+        </div>
+        <p class="sr-only" id="filter-status" role="status"></p>
+        <div class="event-grid">
+          <article class="event-card reveal" data-category="learn">
+            <div class="event-visual visual-code" aria-hidden="true"><span class="visual-label">LEARN SOMETHING NEW</span><span class="code-bracket">{</span><div class="code-window"><div class="window-dots"><i></i><i></i><i></i></div><span class="code-line">&lt;hello <b>campus</b> /&gt;</span><span class="code-line small-code">let yourIdeas = 'happen';</span><span class="code-cursor"></span></div><span class="code-bracket closing-bracket">}</span><span class="visual-caption">BUILD. BREAK. CREATE.</span><svg class="visual-spark icon"><use href="#i-spark"/></svg></div>
+            <div class="event-body"><div class="event-category"><span class="category-dot purple-dot"></span> WORKSHOP <span>Học tập</span></div><h3>Code & Coffee: từ ý tưởng đến web</h3><p>Mang laptop, một ý tưởng và tinh thần thử nghiệm. Phần còn lại, cùng nhau làm!</p><div class="event-location"><svg class="icon"><use href="#i-location"/></svg> Không gian học tập chung</div><button class="event-link" type="button" data-event="Code & Coffee: từ ý tưởng đến web">Mình muốn tham gia <svg class="icon"><use href="#i-arrow-up"/></svg></button></div>
+          </article>
+          <article class="event-card reveal" data-category="connect">
+            <div class="event-visual visual-music" aria-hidden="true"><span class="visual-label">GOOD MUSIC. GOOD PEOPLE.</span><span class="music-orbit orbit-one"></span><span class="music-orbit orbit-two"></span><span class="vinyl"><span></span></span><svg class="music-note icon"><use href="#i-music"/></svg><span class="music-title">CHILL<br><i>một chút.</i></span><span class="visual-caption">CAMPUS ACOUSTIC SESSIONS</span></div>
+            <div class="event-body"><div class="event-category"><span class="category-dot orange-dot"></span> ÂM NHẠC <span>Kết nối</span></div><h3>Acoustic Night: hát giữa thanh xuân</h3><p>Gác deadline một tối. Có nhạc mộc, những câu chuyện và một góc dành cho bạn.</p><div class="event-location"><svg class="icon"><use href="#i-location"/></svg> Sân vườn campus</div><button class="event-link" type="button" data-event="Acoustic Night: hát giữa thanh xuân">Mình muốn tham gia <svg class="icon"><use href="#i-arrow-up"/></svg></button></div>
+          </article>
+          <article class="event-card reveal" data-category="connect">
+            <div class="event-visual visual-coffee" aria-hidden="true"><span class="visual-label">STRANGERS TODAY. FRIENDS TOMORROW.</span><span class="coffee-doodle doodle-one">hello!</span><span class="coffee-doodle doodle-two">chào bạn.</span><div class="coffee-cup cup-one"><span>c.</span></div><div class="coffee-cup cup-two"><span>c.</span></div><span class="coffee-spark">✳</span><span class="visual-caption">A LITTLE COFFEE, A LOT OF CONNECTION.</span></div>
+            <div class="event-body"><div class="event-category"><span class="category-dot green-dot"></span> GẶP GỠ <span>Kết nối</span></div><h3>Cà phê với những người bạn mới</h3><p>Không cần quen trước. Chỉ cần đến, gọi món yêu thích và bắt đầu một câu chuyện.</p><div class="event-location"><svg class="icon"><use href="#i-location"/></svg> Góc cà phê sinh viên</div><button class="event-link" type="button" data-event="Cà phê với những người bạn mới">Mình muốn tham gia <svg class="icon"><use href="#i-arrow-up"/></svg></button></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section signup-section" id="signup" aria-labelledby="signup-title">
+      <div class="container">
+        <div class="signup-panel reveal">
+          <div class="signup-copy"><p class="eyebrow">KẾT NỐI ĐẦU TIÊN, NGAY HÔM NAY.</p><h2 id="signup-title">Hội của bạn<br>đang ở <span>đây.</span><svg class="icon signup-spark" aria-hidden="true"><use href="#i-spark"/></svg></h2><p>Đừng chỉ đi qua những năm đại học.<br>Hãy sống hết mình, cùng những người bạn mới.</p><ul class="signup-benefits"><li><svg class="icon"><use href="#i-check"/></svg> Một phút để bắt đầu kết nối</li><li><svg class="icon"><use href="#i-check"/></svg> Khám phá cộng đồng đúng sở thích</li><li><svg class="icon"><use href="#i-check"/></svg> Thêm trải nghiệm, thêm bạn đồng hành</li></ul><div class="signup-signature"><span class="signature-line"></span> See you on campus!</div></div>
+          <div class="signup-form-card">
+            <div id="form-content">
+              <span class="form-eyebrow">SAY HELLO TO YOUR NEXT CHAPTER</span>
+              <h3>Gia nhập CampusConnect</h3><p class="form-intro">Bắt đầu bằng một lời chào nhé.</p>
+              <div class="selected-event" id="selected-event" hidden><svg class="icon" aria-hidden="true"><use href="#i-calendar"/></svg><span id="selected-event-name"></span><button type="button" id="clear-event" aria-label="Bỏ chọn sự kiện"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button></div>
+              <form id="signup-form">
+                <div class="form-field"><label for="full-name">Bạn tên là gì? <span aria-hidden="true">*</span></label><input id="full-name" name="fullName" type="text" placeholder="Nguyễn Minh Anh" autocomplete="name" required minlength="2" maxlength="80" aria-describedby="name-error"><span class="field-error" id="name-error"></span></div>
+                <div class="form-field"><label for="email">Email của bạn <span aria-hidden="true">*</span></label><input id="email" name="email" type="email" placeholder="ban@example.com" autocomplete="email" required maxlength="254" aria-describedby="email-error"><span class="field-error" id="email-error"></span></div>
+                <div class="form-field"><label for="school">Bạn đang học trường nào? <span aria-hidden="true">*</span></label><input id="school" name="school" type="text" placeholder="Tên trường của bạn" autocomplete="organization" required minlength="2" maxlength="120" aria-describedby="school-error"><span class="field-error" id="school-error"></span></div>
+                <button class="button submit-button" type="submit" disabled><span>Đăng ký kết nối</span><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+                <p class="form-note"><svg class="icon" aria-hidden="true"><use href="#i-lock"/></svg><span>Bản demo: dữ liệu chỉ được kiểm tra trên trình duyệt, không lưu trữ và không gửi đến máy chủ.</span></p>
+                <p class="sr-only" id="form-status" role="status"></p>
+              </form>
+              <noscript><p class="noscript-message">Bật JavaScript để dùng bộ lọc và thử form đăng ký. Đây là bản demo, chưa có chức năng tạo tài khoản.</p></noscript>
+            </div>
+            <div class="success-state" id="success-state" role="status" tabindex="-1" hidden><span class="success-icon"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span><span class="form-eyebrow">MỘT KHỞI ĐẦU THẬT ĐẸP</span><h3 id="success-title">Chào bạn mới!</h3><p id="success-message"></p><div class="success-demo">Bạn vừa hoàn thành trải nghiệm đăng ký demo. Chưa có tài khoản hay đăng ký sự kiện nào được tạo.</div><button class="button" id="reset-form" type="button">Thử lại form <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="container"><div class="footer-main"><a class="brand" href="#home" aria-label="CampusConnect — về đầu trang"><span class="brand-mark"><svg class="icon" aria-hidden="true"><use href="#i-logo"/></svg></span><span>Campus<span class="brand-accent">Connect</span><span class="brand-dot">.</span></span></a><p>Cùng gu. Cùng lớn. Cùng một thanh xuân.</p><a class="back-top" href="#home">Về đầu trang <svg class="icon" aria-hidden="true"><use href="#i-arrow-up"/></svg></a></div><div class="footer-bottom"><span>© <span id="current-year">2026</span> CampusConnect. Một ý tưởng kết nối sinh viên.</span><span>Được tạo với tinh thần <svg class="icon" aria-hidden="true"><use href="#i-spark"/></svg> kết nối.</span></div></div></footer>
+</body>
+</html>

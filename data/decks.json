@@ -1,0 +1,154 @@
+{
+ "Bootstrap 1.pptx": {
+  "slides": 21,
+  "first": "CSS FRAMEWORK"
+ },
+ "Bootstrap 2.pptx": {
+  "slides": 34,
+  "first": "Bootstrap Grid System & Layout"
+ },
+ "Bootstrap 3.pptx": {
+  "slides": 28,
+  "first": "Bootstrap Forms & Buttons"
+ },
+ "Bootstrap 4.pptx": {
+  "slides": 23,
+  "first": "Bootstrap Cards & Navigation"
+ },
+ "Bootstrap 5.pptx": {
+  "slides": 24,
+  "first": "BOOTSTRAP MODALS & OTHERS"
+ },
+ "Bootstrap 6.pptx": {
+  "slides": 22,
+  "first": "BOOTSTRAP UTILITIES CLASSES"
+ },
+ "Bootstrap 7.pptx": {
+  "slides": 26,
+  "first": "BOOTSTRAP ICONS"
+ },
+ "Bootstrap 8.pptx": {
+  "slides": 18,
+  "first": "BOOTSTRAP CUSTOMIZATION\u000b& BEST PRACTICES"
+ },
+ "Bootstrap 9.pptx": {
+  "slides": 22,
+  "first": "BOOTSTRAP\u000bNÂNG CẤP DỰ ÁN"
+ },
+ "CSS 1.pptx": {
+  "slides": 21,
+  "first": "CSS Cơ bản & Selectors"
+ },
+ "CSS 2.pptx": {
+  "slides": 15,
+  "first": "CSS BOX MODEL & LAYOUT"
+ },
+ "CSS 3.pptx": {
+  "slides": 14,
+  "first": "CSS Typography & Colors"
+ },
+ "CSS 4.pptx": {
+  "slides": 23,
+  "first": "CSS Flexbox"
+ },
+ "CSS 5.pptx": {
+  "slides": 14,
+  "first": "CSS Grid"
+ },
+ "CSS 6.pptx": {
+  "slides": 14,
+  "first": "Responsive Design & Media Queries"
+ },
+ "CSS 7.pptx": {
+  "slides": 15,
+  "first": "CSS Advanced"
+ },
+ "CSS 8.pptx": {
+  "slides": 19,
+  "first": "PHẦN 8: TỐI ƯU HÓA & CÔNG CỤ MỞ RỘNG"
+ },
+ "CSS 9.pptx": {
+  "slides": 30,
+  "first": "Quy trình xây dựng trang web hoàn chỉnh"
+ },
+ "HTML 0.pptx": {
+  "slides": 83,
+  "first": "CSE391 – Nền tảng phát triển Web"
+ },
+ "HTML 1.pptx": {
+  "slides": 20,
+  "first": "HTML Cơ Bản & Cấu Trúc"
+ },
+ "HTML 2.pptx": {
+  "slides": 19,
+  "first": "Semantic HTML5 Tags"
+ },
+ "HTML 3.pptx": {
+  "slides": 31,
+  "first": "HTML Forms & Inputs"
+ },
+ "HTML 4.pptx": {
+  "slides": 30,
+  "first": "HTML Media & Embedding"
+ },
+ "HTML 5.pptx": {
+  "slides": 26,
+  "first": "HTML Tables & Lists"
+ },
+ "HTML 6.pptx": {
+  "slides": 12,
+  "first": "HTML Links & Navigation"
+ },
+ "HTML 7.pptx": {
+  "slides": 14,
+  "first": "Web Development Course"
+ },
+ "HTML 8.pptx": {
+  "slides": 12,
+  "first": "Phần 8"
+ },
+ "Intro.pptx": {
+  "slides": 44,
+  "first": "CSE391 – Nền tảng phát triển Web"
+ },
+ "JS 01.pptx": {
+  "slides": 24,
+  "first": "JAVASCRIPT\u000bGIỚI THIỆU & SETUP"
+ },
+ "JS 02.pptx": {
+  "slides": 36,
+  "first": "JAVASCRIPT VARIABLES, DATA TYPES & OPERATORS"
+ },
+ "JS 03.pptx": {
+  "slides": 33,
+  "first": "JAVASCRIPT\u000bFUNCTIONS & SCOPE"
+ },
+ "JS 04.pptx": {
+  "slides": 26,
+  "first": "JAVASCRIPT CONTROL FLOW"
+ },
+ "JS 05.pptx": {
+  "slides": 27,
+  "first": "JAVASCRIPT ARRAYS & OBJECTS"
+ },
+ "JS 06.pptx": {
+  "slides": 23,
+  "first": "JAVASCRIPT DOM MANIPULATION"
+ },
+ "JS 07.pptx": {
+  "slides": 26,
+  "first": "JAVASCRIPT EVENTS & ASYNC PROGRAMMING"
+ },
+ "JS 08.pptx": {
+  "slides": 25,
+  "first": "JAVASCRIPT ES6+ FEATURES\u000b& BEST PRACTICES"
+ },
+ "JS 09.pptx": {
+  "slides": 15,
+  "first": "ỨNG DỤNG JAVASCRIPT\u000bVÀO PORTFOLIO\u000bWEBSITE"
+ },
+ "JS 10.pptx": {
+  "slides": 25,
+  "first": "JAVASCRIPT ES6+ FEATURES\u000b& BEST PRACTICES"
+ }
+}

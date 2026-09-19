@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ví dụ CSS Box Model</title>
+
+  <!-- Internal CSS: tạo khung chú thích cho bài học -->
+  <style>
+    .lesson-note {
+      max-width: 680px;
+      padding: 12px 16px;
+      border-left: 4px solid #2563eb;
+      background-color: #eff6ff;
+    }
+  </style>
+
+  <!-- External CSS: định dạng hộp Box Model nằm trong style.css -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <h1>CSS Box Model</h1>
+    <p class="lesson-note">
+      Mỗi phần tử HTML được xem như một chiếc hộp gồm 4 lớp:
+      <strong>content</strong>, <strong>padding</strong>,
+      <strong>border</strong> và <strong>margin</strong>.
+    </p>
+
+    <section class="demo-area" aria-label="Minh họa Box Model">
+      <div class="margin-layer">
+        <span class="label margin-label">MARGIN: 36px</span>
+        <div class="border-layer">
+          <span class="label border-label">BORDER: 8px</span>
+          <div class="padding-layer">
+            <span class="label padding-label">PADDING: 28px</span>
+            <div class="content-box">
+              <strong>CONTENT</strong>
+              <span>Chiều rộng: 240px</span>
+              <span>Chiều cao: 100px</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="summary">
+      <p><strong>Content</strong>: vùng chứa chữ hoặc hình ảnh.</p>
+      <p><strong>Padding</strong>: khoảng cách giữa content và border.</p>
+      <p><strong>Border</strong>: đường viền bao quanh padding.</p>
+      <p><strong>Margin</strong>: khoảng cách giữa hộp này và phần tử khác.</p>
+    </div>
+  </main>
+</body>
+</html>
