@@ -9,7 +9,7 @@
   --sh-sm:0 1px 2px rgba(15,23,42,.06),0 1px 3px rgba(15,23,42,.08);
   --sh-md:0 10px 24px -8px rgba(15,23,42,.16);
   --sh-lg:0 24px 48px -16px rgba(15,23,42,.28);
-  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+  --font:'Be Vietnam Pro',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
   --mono:'JetBrains Mono',ui-monospace,Consolas,'Courier New',monospace;
 }
 *{box-sizing:border-box}
@@ -36,12 +36,11 @@ main.wrap{padding-top:40px;padding-bottom:56px;min-height:60vh}
 
 /* ---------- Hero ---------- */
 .hero{position:relative;overflow:hidden;color:#fff;padding:72px 0 76px;
-  background:var(--dark)}
-.hero::before{content:"";position:absolute;inset:0;
   background:
-    radial-gradient(560px 320px at 12% -10%,rgba(99,102,241,.5),transparent 65%),
-    radial-gradient(640px 380px at 88% 8%,rgba(14,165,233,.38),transparent 65%),
-    radial-gradient(520px 300px at 55% 115%,rgba(124,58,237,.32),transparent 60%)}
+    radial-gradient(560px 320px at 12% -10%,rgba(79,70,229,.55),transparent 65%),
+    radial-gradient(640px 380px at 88% 8%,rgba(14,165,233,.42),transparent 65%),
+    radial-gradient(520px 300px at 55% 115%,rgba(124,58,237,.40),transparent 60%),
+    var(--dark)}
 .hero::after{content:"";position:absolute;inset:0;opacity:.35;pointer-events:none;
   background-image:linear-gradient(rgba(148,163,184,.12) 1px,transparent 1px),
     linear-gradient(90deg,rgba(148,163,184,.12) 1px,transparent 1px);

@@ -1,29 +1,29 @@
 <!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Chuong 4. CSS co ban: selector, mau, nen, text | CSE122</title>
-<meta name="description" content="CSE122 - Phat trien ung dung Web co ban: ebook 9 chuong, slide truc quan, demo HTML/CSS/JS.">
+<title>Chương 4. CSS cơ bản: selector, màu, nền, chữ | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap">
-<link rel="stylesheet" href="../assets/css/style.css?v=20260919">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919b">
 </head><body>
 <header class="topbar"><div class="wrap">
-<div class="brand">CSE122 - Phat trien ung dung Web co ban<small>Basic Web Application Development | 3TC (2-0-1)</small></div>
-<nav class="nav" aria-label="Main"><a href="../index.html">Trang chu</a><a href="../ebook/index.html">Ebook</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
 </div></header><main class="wrap">
-<h1>Chuong 4. CSS co ban: selector, mau, nen, text</h1><p class="meta">Cu phap CSS, 3 cach nhung, selectors, specificity, mau, background, typography, variables.</p>
-<nav><a href="index.html">&#8592; Muc luc Ebook</a></nav>
-<h3>Demo: 3 cach nhung CSS</h3>
+<h1>Chương 4. CSS cơ bản: selector, màu, nền, chữ</h1><p class="meta">Cú pháp CSS, 3 cách nhúng, selectors, specificity, màu sắc, background, typography, variables.</p>
+<nav><a href="index.html">&#8592; Mục lục Ebook</a></nav>
+<h3>Demo: 3 cách nhúng CSS</h3>
 <div class="demo">
-<h4>1. Inline</h4><pre><code>&lt;p style="color:#2563eb"&gt;Chu xanh inline&lt;/p&gt;</code></pre>
-<p style="color:#2563eb">Ket qua: chu nay mau xanh (inline).</p>
+<h4>1. Inline</h4><pre><code>&lt;p style="color:#2563eb"&gt;Chữ xanh inline&lt;/p&gt;</code></pre>
+<p style="color:#2563eb">Kết quả: chữ này màu xanh (inline).</p>
 <h4>2. Internal</h4><pre><code>&lt;style&gt;p.x{color:#15803d}&lt;/style&gt;</code></pre>
-<p style="color:#15803d">Ket qua: chu nay mau xanh la (internal).</p>
+<p style="color:#15803d">Kết quả: chữ này màu xanh lá (internal).</p>
 <h4>3. External</h4><pre><code>&lt;link rel="stylesheet" href="style.css"&gt;</code></pre>
-<p>File <code>assets/css/style.css</code> cua site nay chinh la external CSS.</p>
+<p>File <code>assets/css/style.css</code> của site này chính là external CSS.</p>
 </div>
-<div class="note">Box Model: content &rarr; padding &rarr; border &rarr; margin. Thu demo day du tai <a href="../demo/ba-cach-nhung-css.html">trang Demo</a>.</div>
-<div class="sec-head"><h2>Slide truc quan cua chuong</h2><span class="meta">26 anh &#8226; click de xem lon</span></div>
+<div class="note">Box Model: content &rarr; padding &rarr; border &rarr; margin. Xem demo đầy đủ tại <a href="../demo/ba-cach-nhung-css.html">trang Demo</a>.</div>
+<div class="sec-head"><h2>Slide trực quan của chương</h2><span class="meta">26 ảnh &#8226; click để xem lớn</span></div>
 <div class="slide-grid"><figure><img loading="lazy" src="../assets/img/trucquan/4.1.jpg" alt="Slide 4.1.jpg"><figcaption>4.1</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/4.10.jpg" alt="Slide 4.10.jpg"><figcaption>4.10</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/4.11.jpg" alt="Slide 4.11.jpg"><figcaption>4.11</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/4.12.jpg" alt="Slide 4.12.jpg"><figcaption>4.12</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/4.13.jpg" alt="Slide 4.13.jpg"><figcaption>4.13</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/4.14.jpg" alt="Slide 4.14.jpg"><figcaption>4.14</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/4.15.jpg" alt="Slide 4.15.jpg"><figcaption>4.15</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/4.16.jpg" alt="Slide 4.16.jpg"><figcaption>4.16</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/4.17.jpg" alt="Slide 4.17.jpg"><figcaption>4.17</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/4.18.jpg" alt="Slide 4.18.jpg"><figcaption>4.18</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/4.19.jpg" alt="Slide 4.19.jpg"><figcaption>4.19</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/4.2.jpg" alt="Slide 4.2.jpg"><figcaption>4.2</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/4.20.jpg" alt="Slide 4.20.jpg"><figcaption>4.20</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/4.21.jpg" alt="Slide 4.21.jpg"><figcaption>4.21</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/4.22.jpg" alt="Slide 4.22.jpg"><figcaption>4.22</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/4.23.jpg" alt="Slide 4.23.jpg"><figcaption>4.23</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/4.24.jpg" alt="Slide 4.24.jpg"><figcaption>4.24</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/4.25.jpg" alt="Slide 4.25.jpg"><figcaption>4.25</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/4.26.jpg" alt="Slide 4.26.jpg"><figcaption>4.26</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/4.3.jpg" alt="Slide 4.3.jpg"><figcaption>4.3</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/4.4.jpg" alt="Slide 4.4.jpg"><figcaption>4.4</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/4.5.jpg" alt="Slide 4.5.jpg"><figcaption>4.5</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/4.6.jpg" alt="Slide 4.6.jpg"><figcaption>4.6</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/4.7.jpg" alt="Slide 4.7.jpg"><figcaption>4.7</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/4.8.jpg" alt="Slide 4.8.jpg"><figcaption>4.8</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/4.9.jpg" alt="Slide 4.9.jpg"><figcaption>4.9</figcaption></figure></div>
-<div class="ebook-nav"><a href="chuong-3.html">&#8592; Chuong truoc</a><a href="chuong-5.html">Chuong sau &#8594;</a></div>
-</main><footer><div class="wrap"><span>CSE122 - Khoa CNTT, Dai hoc Thuy Loi</span><span>Nguon: 38 decks CSE122_ | Bai 1-44 | 163 anh truc quan | ViDU + upstream 64 bai</span><span id="year"></span></div><script src="../assets/js/app.js?v=20260919"></script></footer></body></html>
+<div class="ebook-nav"><a href="chuong-3.html">&#8592; Chương trước</a><a href="chuong-5.html">Chương sau &#8594;</a></div>
+</main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span></div><script src="../assets/js/app.js?v=20260919b"></script></footer></body></html>

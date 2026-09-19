@@ -1,37 +1,37 @@
 <!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Chuong 8. JavaScript co ban va DOM | CSE122</title>
-<meta name="description" content="CSE122 - Phat trien ung dung Web co ban: ebook 9 chuong, slide truc quan, demo HTML/CSS/JS.">
+<title>Chương 8. JavaScript cơ bản và DOM | CSE122</title>
+<meta name="description" content="CSE122 – Phát triển ứng dụng Web cơ bản: học liệu số gồm ebook 9 chương, slide trực quan và demo HTML/CSS/JS chạy trực tiếp.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap">
-<link rel="stylesheet" href="../assets/css/style.css?v=20260919">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260919b">
 </head><body>
 <header class="topbar"><div class="wrap">
-<div class="brand">CSE122 - Phat trien ung dung Web co ban<small>Basic Web Application Development | 3TC (2-0-1)</small></div>
-<nav class="nav" aria-label="Main"><a href="../index.html">Trang chu</a><a href="../ebook/index.html">Ebook</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
 </div></header><main class="wrap">
-<h1>Chuong 8. JavaScript co ban va DOM</h1><p class="meta">let/const, arrow functions, array methods, object/JSON, DOM, events, validation, localStorage.</p>
-<nav><a href="index.html">&#8592; Muc luc Ebook</a></nav>
-<h3>Demo JS nho: doi chu khi click</h3>
+<h1>Chương 8. JavaScript cơ bản và DOM</h1><p class="meta">let/const, arrow functions, array methods, object/JSON, DOM, events, validation, localStorage.</p>
+<nav><a href="index.html">&#8592; Mục lục Ebook</a></nav>
+<h3>Demo JS nhỏ: đổi chữ khi click</h3>
 <div class="demo">
-<button class="btn" id="demoBtn">Bam vao day</button>
-<p id="demoOut">Chua bam.</p>
+<button class="btn" id="demoBtn">Bấm vào đây</button>
+<p id="demoOut">Chưa bấm.</p>
 </div>
 <pre><code>const btn = document.querySelector('#demoBtn');
 btn.addEventListener('click', () =&gt; {
-  document.querySelector('#demoOut').textContent = 'Da bam ' + new Date().toLocaleTimeString();
+  document.querySelector('#demoOut').textContent = 'Đã bấm ' + new Date().toLocaleTimeString();
 });</code></pre>
 <script>
 document.addEventListener('DOMContentLoaded', function(){
   var b = document.getElementById('demoBtn');
   if (b) b.addEventListener('click', function(){
     var o = document.getElementById('demoOut');
-    if (o) o.textContent = 'Da bam luc ' + new Date().toLocaleTimeString();
+    if (o) o.textContent = 'Đã bấm lúc ' + new Date().toLocaleTimeString();
   });
 });
 </script>
-<div class="sec-head"><h2>Slide truc quan cua chuong</h2><span class="meta">16 anh &#8226; click de xem lon</span></div>
+<div class="sec-head"><h2>Slide trực quan của chương</h2><span class="meta">16 ảnh &#8226; click để xem lớn</span></div>
 <div class="slide-grid"><figure><img loading="lazy" src="../assets/img/trucquan/8.1.jpg" alt="Slide 8.1.jpg"><figcaption>8.1</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/8.10.jpg" alt="Slide 8.10.jpg"><figcaption>8.10</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/8.11.jpg" alt="Slide 8.11.jpg"><figcaption>8.11</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/8.12.jpg" alt="Slide 8.12.jpg"><figcaption>8.12</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/8.13.jpg" alt="Slide 8.13.jpg"><figcaption>8.13</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/8.14.jpg" alt="Slide 8.14.jpg"><figcaption>8.14</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/8.15.jpg" alt="Slide 8.15.jpg"><figcaption>8.15</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/8.16.jpg" alt="Slide 8.16.jpg"><figcaption>8.16</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/8.2.jpg" alt="Slide 8.2.jpg"><figcaption>8.2</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/8.3.jpg" alt="Slide 8.3.jpg"><figcaption>8.3</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/8.4.jpg" alt="Slide 8.4.jpg"><figcaption>8.4</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/8.5.jpg" alt="Slide 8.5.jpg"><figcaption>8.5</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/8.6.jpg" alt="Slide 8.6.jpg"><figcaption>8.6</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/8.7.jpg" alt="Slide 8.7.jpg"><figcaption>8.7</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/8.8.jpg" alt="Slide 8.8.jpg"><figcaption>8.8</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/8.9.jpg" alt="Slide 8.9.jpg"><figcaption>8.9</figcaption></figure></div>
-<div class="ebook-nav"><a href="chuong-7.html">&#8592; Chuong truoc</a><a href="chuong-9.html">Chuong sau &#8594;</a></div>
-</main><footer><div class="wrap"><span>CSE122 - Khoa CNTT, Dai hoc Thuy Loi</span><span>Nguon: 38 decks CSE122_ | Bai 1-44 | 163 anh truc quan | ViDU + upstream 64 bai</span><span id="year"></span></div><script src="../assets/js/app.js?v=20260919"></script></footer></body></html>
+<div class="ebook-nav"><a href="chuong-7.html">&#8592; Chương trước</a><a href="chuong-9.html">Chương sau &#8594;</a></div>
+</main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span></div><script src="../assets/js/app.js?v=20260919b"></script></footer></body></html>
