@@ -17,3 +17,13 @@ python -X utf8 tools/build_site.py
 
 ## Deploy
 Push this folder (with `.github/workflows/deploy.yml`) to a GitHub repo, enable GitHub Pages via Actions.
+
+## Validate slide ordering
+From the repository root, run the standard-library tests (no dependencies):
+```powershell
+python -m unittest discover -s tests -v
+```
+The Pages workflow runs these checks before deployment. They verify numeric slide
+order (`4.1`, `4.2`, ..., `4.9`, `4.10`) across all nine chapters, matching Ebook
+galleries, and complete image coverage with valid links. Legacy filenames such as
+`3;11.jpg` and `7,3.jpg` keep their URLs and sort by their chapter/slide numbers.
