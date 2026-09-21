@@ -1,0 +1,127 @@
+{
+  "1": {
+    "minutes": 45,
+    "goals": [
+      "Mô tả được vai trò client, server và một lượt HTTP request–response.",
+      "Mở dự án bằng VS Code, chạy qua HTTP cục bộ và quan sát bằng DevTools.",
+      "Lưu một phiên bản bài làm bằng Git, không đưa mật khẩu hoặc khóa API vào repository."
+    ],
+    "concepts": [
+      {"title": "Client, server và HTTP", "text": "Trình duyệt là client: gửi request tới server, nhận response rồi xử lý HTML, CSS và JavaScript. Response có mã trạng thái, header và có thể có body. 200 thường biểu thị thành công; 404 nghĩa là không tìm thấy tài nguyên; 204 không có body."},
+      {"title": "Đọc lỗi bằng DevTools", "text": "Network cho biết URL, method, status, header, response và thời gian tải của từng request. Elements dùng xem DOM/CSS; Console xem thông báo và lỗi JavaScript. Mở Network trước khi tải lại trang để ghi nhận các request."},
+      {"title": "Quy trình làm việc", "text": "Tạo thư mục dự án → sửa tệp → chạy server cục bộ → kiểm tra trình duyệt → git diff → git add → git commit. Git lưu lịch sử phiên bản; GitHub là dịch vụ lưu trữ và cộng tác, không phải chính Git."
+      }
+    ],
+    "task": "Tạo trang giới thiệu bản thân và ghi lại một lượt tải trang.",
+    "steps": [
+      "Tạo index.html có tiêu đề và một đoạn giới thiệu; mở thư mục bằng VS Code và chạy bằng Live Server theo bài hướng dẫn môi trường.",
+      "Mở DevTools → Network, tải lại trang, chọn request tài liệu HTML; ghi URL, method, status và Content-Type. So sánh với một request ảnh nếu có.",
+      "Đổi nội dung, tải lại để xác nhận; xem git diff rồi commit các tệp bài làm. Viết 3–5 dòng giải thích browser và server đã làm gì."
+    ],
+    "checks": [
+      "Địa chỉ trang bắt đầu bằng http:// hoặc https://, không phải file://.",
+      "Chỉ ra được request tài liệu HTML và phân biệt nó với request ảnh/CSS.",
+      "Có tệp bài làm, bản ghi Network và một commit; không chứa thông tin bí mật."
+    ]
+  },
+  "2": {
+    "minutes": 50,
+    "goals": [
+      "Viết được khung HTML5 với lang, charset, viewport, head và body.",
+      "Sắp xếp heading, đoạn văn, danh sách và liên kết theo ý nghĩa nội dung.",
+      "Chèn ảnh với alt phù hợp và giải thích đường dẫn tương đối/tuyệt đối."
+    ],
+    "concepts": [
+      {"title": "Khung tài liệu và heading", "text": "<!DOCTYPE html> khai báo HTML hiện đại. <html lang=\"vi\"> xác định ngôn ngữ; head chứa metadata, title, charset UTF-8 và viewport; body chứa nội dung. Dùng h1 cho tiêu đề chính và h2/h3 theo cấp mục, không chọn heading chỉ để thay đổi cỡ chữ."},
+      {"title": "Liên kết và đường dẫn", "text": "<a href=\"...\"> tạo liên kết. https://site.com/logo.png là URL tuyệt đối; images/logo.png và ../index.html được giải quyết tương đối từ URL trang hiện tại. #gioi-thieu trỏ tới phần tử có id=\"gioi-thieu\". Không dùng đường dẫn ổ đĩa cá nhân khi xuất bản."},
+      {"title": "Hình ảnh có văn bản thay thế", "text": "<img> dùng src để chỉ tệp ảnh và alt để cung cấp văn bản thay thế phù hợp với ngữ cảnh. Ảnh mang thông tin cần mô tả ý nghĩa; ảnh chỉ trang trí dùng alt=\"\". Kiểm tra đúng chữ hoa/thường trong tên tệp vì máy chủ có thể phân biệt chúng."
+      }
+    ],
+    "task": "Dựng trang giới thiệu câu lạc bộ gồm nội dung, ảnh và điều hướng.",
+    "steps": [
+      "Tạo index.html và thư mục images. Viết đủ khung HTML5, một h1, ít nhất hai h2, đoạn giới thiệu và danh sách hoạt động.",
+      "Thêm ảnh cục bộ với alt, một liên kết tới website khác và một liên kết #id tới mục liên hệ trong trang.",
+      "Chạy bằng server cục bộ; bấm từng liên kết, xem request ảnh trong Network và thử đổi tên ảnh để nhận biết lỗi 404 rồi sửa lại."
+    ],
+    "checks": [
+      "Tiếng Việt hiển thị đúng; title trên tab khác với heading trong nội dung.",
+      "Ảnh và liên kết hoạt động khi mở qua HTTP, không phụ thuộc đường dẫn ổ đĩa.",
+      "Thứ tự heading hợp lý; liên kết có tên dễ hiểu và ảnh có alt phù hợp."
+    ]
+  },
+  "3": {
+    "minutes": 60,
+    "goals": [
+      "Tổ chức bảng dữ liệu với caption, th và scope; không dùng table để dàn trang.",
+      "Tạo form có label, name, kiểu input và ràng buộc nhập liệu phù hợp.",
+      "Chọn vùng semantic và nội dung nhúng có tên mô tả, dùng được bằng bàn phím."
+    ],
+    "concepts": [
+      {"title": "Bảng dữ liệu", "text": "table dành cho dữ liệu có quan hệ hàng/cột. caption mô tả bảng; th cùng scope=\"col\" hoặc scope=\"row\" xác định tiêu đề. thead/tbody nhóm hàng để cấu trúc rõ hơn. Dùng CSS, không dùng bảng, để bố trí trang."},
+      {"title": "Form và kiểm tra dữ liệu", "text": "form nhóm input, select và textarea. label có for khớp id giúp người dùng chọn trường; name là tên dữ liệu gửi đi. GET thường đưa dữ liệu vào query string; POST gửi trong body nhưng không tự mã hóa, vẫn cần HTTPS. required và type=\"email\" hỗ trợ kiểm tra phía trình duyệt, không thay thế kiểm tra phía server."},
+      {"title": "Semantic và nội dung nhúng", "text": "header, nav, main và footer mô tả vai trò vùng nội dung. iframe nhúng một trang/tài liệu khác và cần title mô tả; trang đích có thể chặn nhúng. video/audio nên có controls; video có lời nói cần phụ đề phù hợp. Kiểm tra thứ tự Tab và tiêu điểm nhìn thấy được."
+      }
+    ],
+    "task": "Tạo trang lịch hoạt động và form đăng ký thử, chỉ dùng dữ liệu giả.",
+    "steps": [
+      "Tạo header/nav/main/footer; thêm bảng ít nhất ba hoạt động với caption, tiêu đề cột và dữ liệu thời gian.",
+      "Tạo form gồm họ tên, email, lựa chọn hoạt động và ghi chú. Mỗi trường có label, id, name; thêm required cho trường bắt buộc và nút type=\"submit\".",
+      "Dùng Tab/Shift+Tab để đi qua form; thử bỏ trống và email sai. Nếu chưa có backend, chỉ thử validation, không nhập dữ liệu thật và không coi thao tác gửi là đã lưu đăng ký."
+    ],
+    "checks": [
+      "Bảng thể hiện dữ liệu, không làm khung layout; từng cột có tiêu đề rõ ràng.",
+      "Bấm label đưa tiêu điểm tới đúng trường; form chặn dữ liệu trống/email sai theo ràng buộc.",
+      "Toàn bộ điều khiển dùng được bằng bàn phím; không có tuyên bố đã lưu dữ liệu khi chưa có backend."
+    ]
+  },
+  "4": {
+    "minutes": 60,
+    "goals": [
+      "Kết nối stylesheet và phân biệt inline, internal, external CSS.",
+      "Dùng selector, cascade, specificity để giải thích quy tắc đang có hiệu lực.",
+      "Định nghĩa màu, typography và CSS variables nhất quán cho một hero section."
+    ],
+    "concepts": [
+      {"title": "Nhúng CSS và selector", "text": "Inline dùng thuộc tính style, internal dùng phần tử style, external dùng link rel=\"stylesheet\" tới tệp CSS. .card chọn class, #hero chọn id, p chọn tên thẻ. Ưu tiên class để tái sử dụng style; tránh dùng !important để che lỗi chưa hiểu."},
+      {"title": "Cascade và specificity", "text": "Cascade xét nguồn, mức quan trọng và layer trước specificity. Trong cùng mức ưu tiên, selector có độ đặc hiệu cao hơn thắng; khi cùng độ đặc hiệu, quy tắc xuất hiện sau thường thắng. ID đặc hiệu hơn class, class hơn tên thẻ; không phải cứ khai báo sau là luôn thắng."},
+      {"title": "Màu, chữ và biến CSS", "text": "Đặt biến như --brand trong :root và dùng var(--brand) để đổi màu nhất quán. rem phụ thuộc cỡ chữ gốc; em trong font-size phụ thuộc cỡ chữ của phần tử cha. Chọn line-height dễ đọc, độ tương phản đủ rõ và không truyền tải trạng thái chỉ bằng màu."
+      }
+    ],
+    "task": "Trang trí hero giới thiệu Highland Hospital bằng external CSS.",
+    "steps": [
+      "Làm theo bài lab hero: tạo phần tiêu đề, mô tả và liên kết hành động; nối style.css bằng đường dẫn tương đối.",
+      "Đặt biến màu và font trong :root; dùng class cho hero, tiêu đề và liên kết. Áp dụng background, color, font-size và line-height phù hợp.",
+      "Tạo hai quy tắc cùng tác động vào tiêu đề; dùng DevTools → Styles/Computed giải thích quy tắc thắng, rồi loại bỏ quy tắc thừa. Thử đổi biến màu để kiểm tra các phần cùng cập nhật."
+    ],
+    "checks": [
+      "Network tải stylesheet thành công; sửa style.css làm giao diện thay đổi.",
+      "Giải thích được ít nhất một quy tắc bị gạch trong Styles, không cần thêm !important.",
+      "Chữ dễ đọc, màu nhất quán; liên kết hành động có tiêu điểm nhìn thấy khi dùng Tab."
+    ]
+  },
+  "5": {
+    "minutes": 75,
+    "goals": [
+      "Tính được kích thước hộp với content-box và border-box.",
+      "Chọn Flexbox cho sắp xếp theo trục, Grid cho bố cục hàng/cột phù hợp.",
+      "Tạo lưới thẻ không tràn trang và giải thích tác dụng của gap, wrap, alignment."
+    ],
+    "concepts": [
+      {"title": "Box Model", "text": "Hộp gồm content, padding, border; margin nằm bên ngoài border. Với content-box, width chỉ tính content nên phải cộng padding và border để ra bề rộng tới mép border. Với border-box, width bao gồm content, padding và border, không bao gồm margin."},
+      {"title": "Flexbox", "text": "display:flex bố trí các phần tử con theo trục chính; flex-direction chọn hướng trục. justify-content căn theo trục chính, align-items theo trục chéo. flex-wrap cho phép xuống dòng, gap tạo khoảng cách. Không dùng order chỉ để đảo thứ tự đọc có ý nghĩa."},
+      {"title": "Grid và chọn công cụ", "text": "display:grid cùng grid-template-columns xác định các cột; gap tạo khoảng cách giữa ô. Flexbox thuận tiện cho một hàng hoặc cột và nhóm điều khiển; Grid thuận tiện khi cần phối hợp hàng/cột. Có thể dùng Flexbox bên trong từng thẻ của một lưới Grid; không có công cụ luôn tốt hơn trong mọi tình huống."
+      }
+    ],
+    "task": "Hoàn thành lưới doctor cards với cùng nội dung bằng Flexbox và Grid.",
+    "steps": [
+      "Theo bài lab, tạo ít nhất bốn thẻ bác sĩ bằng dữ liệu giả với tên, chuyên khoa và liên kết. Đặt box-sizing:border-box và giới hạn ảnh không rộng hơn thẻ.",
+      "Tạo phiên bản Flexbox có wrap/gap, sau đó phiên bản Grid có các cột thích hợp. So sánh cách căn thẻ và chọn một bản dùng cho bài làm cuối.",
+      "Dùng DevTools xem content/padding/border/margin của một thẻ; tính bề rộng với hai kiểu box-sizing. Thử viewport 320px, 390px và desktop; dùng ít cột hơn khi không đủ chỗ."
+    ],
+    "checks": [
+      "Lưới không gây cuộn ngang toàn trang ở 320px và 390px; ảnh không tràn thẻ.",
+      "Giải thích được width có hoặc không bao gồm padding/border, và margin luôn nằm ngoài.",
+      "Có lý do chọn Flexbox/Grid; thứ tự đọc và thứ tự Tab vẫn theo nội dung hợp lý."
+    ]
+  }
+}

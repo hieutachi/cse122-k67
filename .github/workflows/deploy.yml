@@ -16,17 +16,34 @@ concurrency:
 
 jobs:
   deploy:
+    if: github.ref == 'refs/heads/main'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Validate slide order and image links
+      - name: Validate learning content, anchors and slide order
         run: python3 -m unittest discover -s tests -v
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Validate frontend syntax and learning state
+        run: |
+          node --check assets/js/app.js
+          node --test tests/test_runtime.cjs
+      - name: Validate real-browser learning interactions
+        env:
+          CSE122_BROWSER: /usr/bin/google-chrome
+        run: node tests/browser_smoke.cjs
       - uses: actions/configure-pages@v5
+      - name: Stage public site only
+        run: |
+          mkdir _site
+          cp index.html robots.txt _site/
+          cp -R assets baidoc chuong data demo ebook slides _site/
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: _site
       - id: deployment
         uses: actions/deploy-pages@v4

@@ -5,7 +5,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
-<link rel="stylesheet" href="../assets/css/style.css?v=20260919f">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260921-phase1">
 <meta name="theme-color" content="#0f172a">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
 <meta property="og:type" content="website">
@@ -20,6 +20,25 @@
 </div></header><main class="wrap" id="main">
 <h1>Chương 1. Nhập môn Web, Internet, môi trường dev</h1><p class="meta">Kiến trúc Web, client–server, HTTP request–response, trình duyệt, VS Code, DevTools, Git/GitHub workflow.</p>
 <nav><a href="index.html">&#8592; Mục lục Ebook</a></nav>
+<nav class="learning-path" aria-label="Lộ trình học chương 1">
+<h2>Học chương này như thế nào?</h2>
+<ol><li><a href="../baidoc/index.html#ch1"><strong>1. Đọc lý thuyết</strong><span>Bài giảng của chương</span></a></li>
+<li><a href="#chapter-slides"><strong>2. Xem slide</strong><span>15 ảnh trực quan</span></a></li>
+<li><a href="#chapter-practice"><strong>3. Thực hành</strong><span>Làm bài tập theo hướng dẫn</span></a></li>
+<li><a href="#quiz"><strong>4. Tự kiểm tra</strong><span>Trả lời và xem giải thích</span></a></li></ol>
+<p class="meta">Đi theo thứ tự gợi ý hoặc chọn ngay phần bạn cần. Tiến độ chỉ lưu trên trình duyệt này, không tự đồng bộ giữa các thiết bị.</p></nav><section class="chapter-guide" aria-labelledby="chapter-goals">
+<h2 id="chapter-goals">Sau chương này, bạn làm được gì?</h2>
+<ul><li>Mô tả được vai trò client, server và một lượt HTTP request–response.</li><li>Mở dự án bằng VS Code, chạy qua HTTP cục bộ và quan sát bằng DevTools.</li><li>Lưu một phiên bản bài làm bằng Git, không đưa mật khẩu hoặc khóa API vào repository.</li></ul>
+<h2 id="chapter-theory">Kiến thức cần nắm</h2><h3>Client, server và HTTP</h3><p>Trình duyệt là client: gửi request tới server, nhận response rồi xử lý HTML, CSS và JavaScript. Response có mã trạng thái, header và có thể có body. 200 thường biểu thị thành công; 404 nghĩa là không tìm thấy tài nguyên; 204 không có body.</p><h3>Đọc lỗi bằng DevTools</h3><p>Network cho biết URL, method, status, header, response và thời gian tải của từng request. Elements dùng xem DOM/CSS; Console xem thông báo và lỗi JavaScript. Mở Network trước khi tải lại trang để ghi nhận các request.</p><h3>Quy trình làm việc</h3><p>Tạo thư mục dự án → sửa tệp → chạy server cục bộ → kiểm tra trình duyệt → git diff → git add → git commit. Git lưu lịch sử phiên bản; GitHub là dịch vụ lưu trữ và cộng tác, không phải chính Git.</p>
+<h2 id="chapter-practice">Thực hành có hướng dẫn</h2>
+<p class="meta">Thời gian thực hành gợi ý: 45 phút, có thể chia thành nhiều lượt.</p>
+<p><strong>Tạo trang giới thiệu bản thân và ghi lại một lượt tải trang.</strong></p>
+<ol class="practice-steps"><li>Tạo index.html có tiêu đề và một đoạn giới thiệu; mở thư mục bằng VS Code và chạy bằng Live Server theo bài hướng dẫn môi trường.</li><li>Mở DevTools → Network, tải lại trang, chọn request tài liệu HTML; ghi URL, method, status và Content-Type. So sánh với một request ảnh nếu có.</li><li>Đổi nội dung, tải lại để xác nhận; xem git diff rồi commit các tệp bài làm. Viết 3–5 dòng giải thích browser và server đã làm gì.</li></ol>
+<p><a href="../baidoc/01-welcome-and-ai-workflow-thi-t-l-p-moi-tru-ng-lam-vi-c.html#h-15-thc-hnh">Mở bài hướng dẫn gốc và ví dụ chi tiết →</a></p>
+<h3 id="chapter-checklist">Tự kiểm tra bài làm trước khi chuyển chương</h3>
+<ul><li>Địa chỉ trang bắt đầu bằng http:// hoặc https://, không phải file://.</li><li>Chỉ ra được request tài liệu HTML và phân biệt nó với request ảnh/CSS.</li><li>Có tệp bài làm, bản ghi Network và một commit; không chứa thông tin bí mật.</li></ul>
+<p class="meta">Quiz bên dưới chỉ kiểm tra nhanh kiến thức. Hãy đối chiếu cả sản phẩm thực hành; điểm quiz không phải điểm học phần.</p>
+</section>
 <h3>Sơ đồ: Client – Server</h3>
 <pre><code>+----------+   HTTP request    +-----------+
 | Browser  | ----------------&gt; |  Server   |
@@ -31,8 +50,8 @@
   Người đọc                       Backend (học phần sau)</code></pre>
 <div class="note">Chrome DevTools: F12 &rarr; tab Network để thấy từng request–response thực tế.</div>
 <div class="note">Bài giảng gốc liên quan: <a class="tag" href="../slides/bai.html#bai1">Bài 1</a> <a class="tag" href="../slides/bai.html#bai13">Bài 13</a> <a class="tag" href="../slides/bai.html#bai14">Bài 14</a> <a class="tag" href="../baidoc/index.html#ch1">Bài đọc upstream &#8594;</a></div>
-<div class="quiz-panel" id="quiz" data-chapter="1"><h3>Tự kiểm tra nhanh – Chương 1</h3><div id="quiz-body"><p class="meta">Đang tải câu hỏi…</p></div></div>
-<div class="sec-head"><h2>Slide trực quan của chương</h2><span class="meta">15 ảnh &#8226; click để xem lớn</span></div>
+<div class="sec-head"><h2 id="chapter-slides">Slide trực quan của chương</h2><span class="meta">15 ảnh &#8226; click để xem lớn</span></div>
 <div class="slide-grid"><figure><img loading="lazy" src="../assets/img/trucquan/1.0.jpg" alt="Slide 1.0.jpg"><figcaption>1.0</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/1.1.jpg" alt="Slide 1.1.jpg"><figcaption>1.1</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/1.2.jpg" alt="Slide 1.2.jpg"><figcaption>1.2</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/1.3.jpg" alt="Slide 1.3.jpg"><figcaption>1.3</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/1.4.jpg" alt="Slide 1.4.jpg"><figcaption>1.4</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/1.5.jpg" alt="Slide 1.5.jpg"><figcaption>1.5</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/1.6.jpg" alt="Slide 1.6.jpg"><figcaption>1.6</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/1.7.jpg" alt="Slide 1.7.jpg"><figcaption>1.7</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/1.8.jpg" alt="Slide 1.8.jpg"><figcaption>1.8</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/1.9.jpg" alt="Slide 1.9.jpg"><figcaption>1.9</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/1.10.jpg" alt="Slide 1.10.jpg"><figcaption>1.10</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/1.11.jpg" alt="Slide 1.11.jpg"><figcaption>1.11</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/1.12.jpg" alt="Slide 1.12.jpg"><figcaption>1.12</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/1.13.jpg" alt="Slide 1.13.jpg"><figcaption>1.13</figcaption></figure><figure><img loading="lazy" src="../assets/img/trucquan/1.14.jpg" alt="Slide 1.14.jpg"><figcaption>1.14</figcaption></figure></div>
+<div class="quiz-panel" id="quiz" data-chapter="1"><h3>Tự kiểm tra nhanh – Chương 1</h3><p class="meta">Bài tự luyện, không phải điểm đánh giá học phần. Sau mỗi câu có giải thích và mục đọc lại.</p><div id="quiz-body"><p class="meta">Đang tải câu hỏi…</p></div></div>
 <div class="ebook-nav"><span></span><a href="chuong-2.html">Chương sau &#8594;</a></div>
-</main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260919f"></script></body></html>
+</main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260921-phase1"></script></body></html>
