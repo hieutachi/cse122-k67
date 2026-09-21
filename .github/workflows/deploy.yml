@@ -41,7 +41,7 @@ jobs:
         run: |
           mkdir _site
           cp index.html robots.txt _site/
-          cp -R assets baidoc chuong data demo ebook slides _site/
+          cp -R assets baidoc data demo ebook slides _site/
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
