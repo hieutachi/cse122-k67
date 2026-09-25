@@ -1,0 +1,157 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Demo Chương 6 – Responsive, Animation | CSE122</title>
+<meta name="description" content="Demo chương 6 CSE122: giả lập bề rộng thiết bị bằng iframe, phòng thí nghiệm transition và animation keyframes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260921-phase1">
+<link rel="stylesheet" href="chuong.css?v=20260925-chap1">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main">
+<p class="meta"><a href="index.html#demo-theo-chuong">Demo theo chương</a> · Chương 6/9 · Lý thuyết: <a href="../ebook/chuong-6.html">Ebook chương 6</a> · <a href="../baidoc/index.html#ch6">Bài giảng</a> · <a href="de-cuong/index.html#dc-c6-6-1">Đề cương</a></p>
+<h1>Demo Chương 6 — Responsive, Animation</h1>
+<p>Responsive = một trang tự thích ứng với <strong>bề rộng khung nhìn</strong> bằng media query; animation = thay đổi thuộc tính <strong>theo thời gian</strong> bằng transition/keyframes. Demo 1 nhúng một trang thật vào “màn hình thiết bị” giả lập; demo 2–3 cho chỉnh trực tiếp các thông số chuyển động.</p>
+
+<section class="cd-sec" id="cd-6-1">
+<h2>1. Giả lập bề rộng thiết bị</h2>
+<p class="cd-why">Khung đen bên dưới là một <code>&lt;iframe&gt;</code> chứa trang <a href="responsive-mini.html">responsive-mini.html</a> — kéo thanh trượt để đổi bề rộng “màn hình”. Media query <em>bên trong</em> iframe phản ứng y như trên điện thoại thật: lưới 3 → 2 → 1 cột, menu xuống dòng. Huy hiệu trong iframe báo breakpoint đang kích hoạt.</p>
+<div class="cd-ctl">
+  <label for="cd6-w">Bề rộng: <b id="cd6-w-v">1024</b>px</label>
+  <input type="range" id="cd6-w" min="280" max="1060" value="1024" style="min-width:180px">
+  <span class="cd-seg" role="group" aria-label="Thiết bị mẫu">
+    <button type="button" data-w="390">📱 390</button>
+    <button type="button" data-w="768">📟 768</button>
+    <button type="button" class="on" data-w="1024">🖥 1024</button>
+  </span>
+</div>
+<div class="cd-device" id="cd6-device" style="width:1024px">
+  <iframe id="cd6-frame" src="responsive-mini.html" title="Trang responsive mẫu trong khung thiết bị giả lập"></iframe>
+</div>
+<p class="cd-note">Ngoài đời thật, thay vì iframe ta viết media query ngay trong CSS của trang: <code>@media (max-width: 599px) { main { grid-template-columns: 1fr } }</code>. Nguyên tắc <strong>mobile-first</strong>: style mặc định cho màn nhỏ, media query <code>min-width</code> nâng cấp dần lên màn to.</p>
+</section>
+<section class="cd-sec" id="cd-6-2">
+<h2>2. Phòng thí nghiệm transition</h2>
+<p class="cd-why">Transition làm thuộc tính thay đổi <em>từ từ</em> thay vì nhảy cóc. Chọn thuộc tính, thời lượng, hàm easing rồi bấm “Chạy” — hộp vuông trượt đi và đổi màu theo đúng thông số; code tự cập nhật.</p>
+<div class="cd-grid2">
+  <div class="cd-pane" style="min-height:130px">
+    <div class="cd-transbox" id="cd6-box" aria-hidden="true"></div>
+  </div>
+  <div>
+    <div class="cd-ctl">
+      <label for="cd6-prop">property:</label>
+      <select id="cd6-prop"><option>all</option><option>background-color</option><option>transform</option></select>
+      <label for="cd6-dur">duration: <b id="cd6-dur-v">600</b>ms</label>
+      <input type="range" id="cd6-dur" min="100" max="2000" step="100" value="600">
+      <label for="cd6-ease">easing:</label>
+      <select id="cd6-ease"><option>ease</option><option>linear</option><option>ease-in</option><option>ease-out</option><option>ease-in-out</option><option value="cubic-bezier(.68,-0.55,.27,1.55)">cubic-bezier — nảy</option></select>
+      <button type="button" class="btn" id="cd6-run">Chạy ⇄</button>
+    </div>
+    <div class="cd-out" id="cd6-trans-code" aria-live="polite"></div>
+  </div>
+</div>
+<p class="cd-note">Trạng thái <code>.go</code> đổi hai thuộc tính cùng lúc: <code>background-color</code> và <code>transform: translateX(160px)</code>. Chọn property chỉ <code>background-color</code>: hộp đổi màu mượt nhưng <em>nhảy</em> vị trí tức thì — thuộc tính nào không nằm trong transition thì không được làm mượt.</p>
+</section>
+
+<section class="cd-sec" id="cd-6-3">
+<h2>3. Animation với @keyframes</h2>
+<p class="cd-why">Transition chỉ đi “từ A sang B” một lần; <strong>animation + @keyframes</strong> mô tả kịch bản nhiều mốc (0% → 50% → 100%) và lặp vô hạn. Chọn hiệu ứng, đổi chu kỳ, bấm tạm dừng/chạy tiếp (<code>animation-play-state</code>).</p>
+<div class="cd-grid2">
+  <div class="cd-pane" style="display:flex;align-items:center;justify-content:center;min-height:190px">
+    <div class="cd-animbox" id="cd6-anim" aria-hidden="true"></div>
+  </div>
+  <div>
+    <div class="cd-ctl">
+      <span class="cd-seg" role="group" aria-label="Chọn keyframes">
+        <button type="button" class="on" data-anim="cd-spin" aria-pressed="true">spin</button>
+        <button type="button" data-anim="cd-bounce" aria-pressed="false">bounce</button>
+        <button type="button" data-anim="cd-pulse" aria-pressed="false">pulse</button>
+        <button type="button" data-anim="cd-fade" aria-pressed="false">fade</button>
+      </span>
+      <label for="cd6-adur">chu kỳ: <b id="cd6-adur-v">1.6</b>s</label>
+      <input type="range" id="cd6-adur" min="0.5" max="4" step="0.1" value="1.6">
+      <button type="button" class="btn" id="cd6-play">⏸ Tạm dừng</button>
+    </div>
+    <div class="cd-out" id="cd6-anim-code" aria-live="polite"></div>
+  </div>
+</div>
+<p class="cd-warn">Tôn trọng người dùng nhạy cảm chuyển động: khi hệ điều hành bật <code>prefers-reduced-motion: reduce</code>, animation nên tắt hoặc rút gọn — chính trang Ebook của môn học này đã làm như vậy.</p>
+</section>
+
+<nav class="cd-nav" aria-label="Chuyển chương demo"><a href="chuong-5.html" rel="prev">← Chương 5 · CSS Layout</a><a href="index.html#demo-theo-chuong">☰ Danh sách demo</a><a class="cd-next" href="chuong-7.html" rel="next">Chương 7 · Bootstrap Components →</a></nav>
+</main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260921-phase1"></script>
+<script>
+'use strict';
+(function(){
+  function $(id){return document.getElementById(id);}
+  /* ---- Demo 1: giả lập thiết bị ---- */
+  var w=$('cd6-w'),dev=$('cd6-device'),wv=$('cd6-w-v'),presets=document.querySelectorAll('#cd-6-1 .cd-seg button');
+  function setW(px){
+    w.value=px;dev.style.width=px+'px';wv.textContent=px;
+    presets.forEach(function(b){
+      var on=+b.dataset.w===px;
+      b.classList.toggle('on',on);b.setAttribute('aria-pressed',on?'true':'false');
+    });
+  }
+  w.addEventListener('input',function(){setW(+w.value);});
+  presets.forEach(function(b){
+    b.setAttribute('aria-pressed',b.classList.contains('on')?'true':'false');
+    b.addEventListener('click',function(){setW(+b.dataset.w);});
+  });
+  /* ---- Demo 2: transition ---- */
+  var box=$('cd6-box'),tcode=$('cd6-trans-code');
+  function renderTrans(){
+    var prop=$('cd6-prop').value,dur=$('cd6-dur').value,ease=$('cd6-ease').value;
+    $('cd6-dur-v').textContent=dur;
+    box.style.transitionProperty=prop;
+    box.style.transitionDuration=dur+'ms';
+    box.style.transitionTimingFunction=ease;
+    tcode.textContent='/* Trạng thái .go: nền cam + trượt phải 160px */\n.box{\n  transition: '+prop+' '+dur+'ms '+ease+';\n}\n.box.go{\n  background-color: #f59e0b;\n  transform: translateX(160px);\n}';
+  }
+  ['cd6-prop','cd6-ease'].forEach(function(id){$(id).addEventListener('change',renderTrans);});
+  $('cd6-dur').addEventListener('input',renderTrans);
+  $('cd6-run').addEventListener('click',function(){box.classList.toggle('go');});
+  renderTrans();
+  /* ---- Demo 3: keyframes ---- */
+  var anim=$('cd6-anim'),acode=$('cd6-anim-code'),playing=true,animBtns=document.querySelectorAll('#cd-6-3 .cd-seg button[data-anim]');
+  function currentAnim(){
+    var on=document.querySelector('#cd-6-3 .cd-seg button.on');
+    return on?on.dataset.anim:'cd-spin';
+  }
+  function renderAnim(){
+    var name=currentAnim(),dur=$('cd6-adur').value;
+    $('cd6-adur-v').textContent=dur;
+    anim.style.animation='none';
+    void anim.offsetWidth; /* reset để đổi hiệu ứng chạy lại từ đầu */
+    anim.style.animation=name+' '+dur+'s ease-in-out infinite';
+    anim.style.animationPlayState=playing?'running':'paused';
+    acode.textContent='/* khai báo keyframes trong chuong.css */\n@keyframes '+name+'{ 0%{…} 50%{…} 100%{…} }\n\n.box{\n  animation: '+name+' '+dur+'s ease-in-out infinite;\n  animation-play-state: '+(playing?'running':'paused')+';\n}';
+  }
+  animBtns.forEach(function(b){
+    b.addEventListener('click',function(){
+      animBtns.forEach(function(x){x.classList.remove('on');x.setAttribute('aria-pressed','false');});
+      b.classList.add('on');b.setAttribute('aria-pressed','true');
+      renderAnim();
+    });
+  });
+  $('cd6-adur').addEventListener('input',renderAnim);
+  $('cd6-play').addEventListener('click',function(){
+    playing=!playing;
+    $('cd6-play').textContent=playing?'⏸ Tạm dừng':'▶ Chạy tiếp';
+    renderAnim();
+  });
+  renderAnim();
+})();
+</script>
+
+</body></html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Demo Chương 4 – CSS cơ bản: selector, màu | CSE122</title>
+<meta name="description" content="Demo chương 4 CSE122: sân chơi CSS selector với specificity và bộ trộn màu dùng CSS variables chạy trực tiếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260921-phase1">
+<link rel="stylesheet" href="chuong.css?v=20260925-chap1">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main">
+<p class="meta"><a href="index.html#demo-theo-chuong">Demo theo chương</a> · Chương 4/9 · Lý thuyết: <a href="../ebook/chuong-4.html">Ebook chương 4</a> · <a href="../baidoc/index.html#ch4">Bài giảng</a> · <a href="de-cuong/index.html#dc-c4-4-1">Đề cương</a> · Demo cũ: <a href="ba-cach-nhung-css.html">3 cách nhúng CSS</a>, <a href="huong-dan-css-co-ban.html">Hướng dẫn CSS cơ bản</a></p>
+<h1>Demo Chương 4 — CSS cơ bản: selector, màu, chữ</h1>
+<p>CSS = <strong>chọn phần tử</strong> (selector) + <strong>gán thuộc tính</strong>. Hai demo dưới đây làm rõ hai câu hỏi lớn nhất của người mới: “selector này khớp phần tử nào, mạnh đến đâu?” và “màu sắc trong CSS hoạt động ra sao?”.</p>
+
+<section class="cd-sec" id="cd-4-1">
+<h2>1. Sân chơi selector &amp; specificity</h2>
+<p class="cd-why">Bấm một selector: các phần tử khớp trong khung mẫu được tô vàng, kèm số lượng và <strong>specificity</strong> (độ ưu tiên khi hai rule tranh chấp — tính theo bộ ba <code>(id, class, thẻ)</code>).</p>
+<div class="cd-ctl">
+  <span class="cd-seg" data-lab="sel" role="group" aria-label="Chọn selector để thử">
+    <button type="button" data-sel="li" data-spec="(0,0,1)" aria-pressed="false">li</button>
+    <button type="button" data-sel=".item" data-spec="(0,1,0)" aria-pressed="false">.item</button>
+    <button type="button" data-sel=".item.active" data-spec="(0,2,0)" aria-pressed="false">.item.active</button>
+    <button type="button" data-sel="[data-day=&quot;4&quot;]" data-spec="(0,1,0)" aria-pressed="false">[data-day="4"]</button>
+    <button type="button" data-sel="ul.list > li:first-child" data-spec="(0,2,2)" aria-pressed="false">ul.list &gt; li:first-child</button>
+    <button type="button" data-sel="#cd4-sample p" data-spec="(1,0,1)" aria-pressed="false">#cd4-sample p</button>
+    <button type="button" data-sel=".item, .more" data-spec="(0,1,0)" aria-pressed="false">.item, .more</button>
+  </span>
+</div>
+<div class="cd-grid2">
+  <div class="cd-pane">
+    <div id="cd4-sample" class="cd-sample">
+      <h3>Lịch học tuần</h3>
+      <p class="lead">Tuần 12 · CSE122</p>
+      <ul class="list">
+        <li class="item" data-day="2">Thứ 2 — HTML</li>
+        <li class="item active" data-day="4">Thứ 4 — CSS</li>
+        <li class="item" data-day="6">Thứ 6 — JavaScript</li>
+      </ul>
+      <p><a class="more" href="../slides/index.html">Xem slide →</a></p>
+    </div>
+  </div>
+  <div>
+    <div class="cd-out" id="cd4-out" role="status" aria-live="polite"></div>
+    <details class="cd-code"><summary>Xem HTML của khung mẫu</summary>
+<figure class="cd-code"><pre><code>&lt;div id="cd4-sample"&gt;
+  &lt;h3&gt;Lịch học tuần&lt;/h3&gt;
+  &lt;p class="lead"&gt;Tuần 12 · CSE122&lt;/p&gt;
+  &lt;ul class="list"&gt;
+    &lt;li class="item" data-day="2"&gt;Thứ 2 — HTML&lt;/li&gt;
+    &lt;li class="item active" data-day="4"&gt;Thứ 4 — CSS&lt;/li&gt;
+    &lt;li class="item" data-day="6"&gt;Thứ 6 — JavaScript&lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;p&gt;&lt;a class="more" href="#"&gt;Xem slide →&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;</code></pre></figure></details>
+  </div>
+</div>
+<p class="cd-note">So sánh <code>.item.active</code> (0,2,0) với <code>[data-day="4"]</code> (0,1,0): cả hai đều khớp đúng 1 phần tử, nhưng nếu hai rule xung đột thì class kép thắng nhờ specificity cao hơn — không phụ thuộc thứ tự viết.</p>
+</section>
+<section class="cd-sec" id="cd-4-2">
+<h2>2. Màu sắc &amp; CSS variables</h2>
+<p class="cd-why">Chọn một màu bất kỳ: ô xem trước cập nhật ngay vì nền của nó đọc từ <strong>biến CSS</strong> <code>--cd-accent</code>. JS chỉ đổi giá trị biến — mọi phần tử dùng biến đó tự đổi theo. Đây chính là cách cả website này đổi màu chủ đạo từ một chỗ.</p>
+<div class="cd-ctl">
+  <label for="cd4-color">Màu chủ đạo:</label>
+  <input type="color" id="cd4-color" value="#4f46e5">
+</div>
+<div class="cd-grid2">
+  <div class="cd-pane">
+    <div class="cd-swatch" id="cd4-swatch">Chữ trên nền màu</div>
+  </div>
+  <div>
+    <div class="cd-out" id="cd4-color-out" role="status" aria-live="polite"></div>
+    <details class="cd-code" open><summary>Xem code</summary>
+<figure class="cd-code"><pre><code>/* CSS — khai báo và dùng biến */
+.cd-swatch{
+  background: var(--cd-accent, #4f46e5);
+  color: var(--cd-ink, #fff);
+}
+
+/* JS — chỉ cần đổi biến trên phần tử */
+swatch.style.setProperty('--cd-accent', hex);
+swatch.style.setProperty('--cd-ink', ink);</code></pre></figure></details>
+  </div>
+</div>
+<p class="cd-note">Màu chữ được tự chọn đen/trắng theo <strong>độ chói tương đối</strong> của nền — nguyên tắc tương phản (contrast) của accessibility: chữ phải đủ tương phản với nền để đọc được.</p>
+</section>
+
+<nav class="cd-nav" aria-label="Chuyển chương demo"><a href="chuong-3.html" rel="prev">← Chương 3 · HTML nâng cao</a><a href="index.html#demo-theo-chuong">☰ Danh sách demo</a><a class="cd-next" href="chuong-5.html" rel="next">Chương 5 · CSS Layout →</a></nav>
+</main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260921-phase1"></script>
+<script>
+'use strict';
+(function(){
+  function $(id){return document.getElementById(id);}
+  /* ---- Demo 1: selector playground ---- */
+  var seg=document.querySelector('.cd-seg[data-lab="sel"]');
+  var sample=$('cd4-sample'),out=$('cd4-out');
+  seg.addEventListener('click',function(event){
+    var btn=event.target.closest?event.target.closest('button[data-sel]'):null;
+    if(!btn||!seg.contains(btn))return;
+    seg.querySelectorAll('button').forEach(function(b){b.classList.remove('on');b.setAttribute('aria-pressed','false');});
+    btn.classList.add('on');btn.setAttribute('aria-pressed','true');
+    sample.querySelectorAll('.hl').forEach(function(el){el.classList.remove('hl');});
+    var matched=sample.querySelectorAll(btn.dataset.sel);
+    matched.forEach(function(el){el.classList.add('hl');});
+    out.textContent='selector:    '+btn.dataset.sel+'\nkhớp:        '+matched.length+' phần tử (đã tô vàng trong khung mẫu)\nspecificity: '+btn.dataset.spec+'   ← (số id, số class, số thẻ)';
+  });
+  seg.querySelector('button').click();
+  /* ---- Demo 2: màu & CSS variables ---- */
+  var color=$('cd4-color'),swatch=$('cd4-swatch'),cout=$('cd4-color-out');
+  function hexToRgb(hex){
+    var n=parseInt(hex.slice(1),16);
+    return [(n>>16)&255,(n>>8)&255,n&255];
+  }
+  function updateColor(){
+    var hex=color.value,rgb=hexToRgb(hex);
+    var lum=(0.299*rgb[0]+0.587*rgb[1]+0.114*rgb[2])/255;
+    var ink=lum>0.62?'#0f172a':'#ffffff';
+    swatch.style.setProperty('--cd-accent',hex);
+    swatch.style.setProperty('--cd-ink',ink);
+    cout.textContent='màu đã chọn:        '+hex+'\nrgb:                rgb('+rgb.join(', ')+')\nchữ nên dùng:       '+ink+'\nđộ chói tương đối:  '+(lum*100).toFixed(0)+'%';
+  }
+  color.addEventListener('input',updateColor);
+  updateColor();
+})();
+</script>
+</body></html>

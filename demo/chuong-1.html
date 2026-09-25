@@ -1,0 +1,140 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Demo Chương 1 – Nhập môn Web, Internet | CSE122</title>
+<meta name="description" content="Demo chương 1 CSE122: mổ xẻ cấu trúc URL và mô phỏng chu trình request–response HTTP chạy trực tiếp trong trình duyệt.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260921-phase1">
+<link rel="stylesheet" href="chuong.css?v=20260925-chap1">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main">
+<p class="meta"><a href="index.html#demo-theo-chuong">Demo theo chương</a> · Chương 1/9 · Lý thuyết: <a href="../ebook/chuong-1.html">Ebook chương 1</a> · <a href="../baidoc/index.html#ch1">Bài giảng</a> · <a href="de-cuong/index.html#dc-c1-1-1">Đề cương</a></p>
+<h1>Demo Chương 1 — Nhập môn Web, Internet, môi trường dev</h1>
+<p>Hai ví dụ nền tảng: đọc hiểu một địa chỉ URL và hình dung chu trình <strong>request → xử lý → response</strong> giữa trình duyệt với máy chủ web. Cả hai chạy trực tiếp, không cần cài đặt.</p>
+
+<section class="cd-sec" id="cd-1-1">
+<h2>1. Giải phẫu một URL</h2>
+<p class="cd-why">Mọi trang web đều có địa chỉ. Trình duyệt tách địa chỉ thành từng thành phần — protocol, host, port, path, query, fragment — để biết <em>hỏi ai</em>, <em>xin cái gì</em>. Sửa URL bên dưới và xem từng thành phần thay đổi (dùng <code>new URL()</code> của chính trình duyệt).</p>
+<div class="cd-ctl">
+  <label for="cd1-url">URL:</label>
+  <input type="url" id="cd1-url" size="46" value="https://www.tlu.edu.vn:8443/khoa/cntt/index.html?nam=2025&amp;hoc-ky=1#gioi-thieu">
+</div>
+<div id="cd1-url-out" aria-live="polite"></div>
+<p class="cd-note">Fragment (<code>#gioi-thieu</code>) <strong>không bao giờ được gửi lên máy chủ</strong> — nó chỉ dùng để trình duyệt cuộn tới phần tử có <code>id</code> tương ứng trong trang.</p>
+</section>
+
+<section class="cd-sec" id="cd-1-2">
+<h2>2. Mô phỏng request – response HTTP</h2>
+<p class="cd-why">Web hoạt động theo mô hình client–server: trình duyệt gửi <strong>request</strong> (dòng yêu cầu + headers), máy chủ trả về <strong>response</strong> (status line + headers + body). Chọn method và status rồi bấm gửi để xem thông điệp thô của hai chiều.</p>
+<div class="cd-http" aria-hidden="true">
+  <div class="cd-node" id="cd1-browser">🖥 Trình duyệt<small>client</small></div>
+  <div><div class="cd-arrow" id="cd1-req">→<br><small>request</small></div><div class="cd-arrow" id="cd1-res">←<br><small>response</small></div></div>
+  <div class="cd-node" id="cd1-server">🗄 Máy chủ web<small>server</small></div>
+</div>
+<div class="cd-ctl">
+  <label for="cd1-method">Method:</label>
+  <select id="cd1-method"><option>GET</option><option>POST</option><option>PUT</option><option>DELETE</option></select>
+  <label for="cd1-status">Status trả về:</label>
+  <select id="cd1-status"><option value="200">200 OK</option><option value="301">301 Moved Permanently</option><option value="404">404 Not Found</option><option value="500">500 Internal Server Error</option></select>
+  <button type="button" class="btn" id="cd1-send">Gửi request →</button>
+</div>
+<div class="cd-grid2">
+  <div><h3 class="cd-tag">Request (trình duyệt gửi đi)</h3><div class="cd-out" id="cd1-req-out" aria-live="polite"></div></div>
+  <div><h3 class="cd-tag">Response (máy chủ trả về)</h3><div class="cd-out" id="cd1-res-out" aria-live="polite"></div></div>
+</div>
+<p class="cd-note" id="cd1-explain">Bấm “Gửi request” để bắt đầu. Ngoài đời thực: mở DevTools (F12) → tab <strong>Network</strong> → tải lại trang, bạn sẽ thấy chính những thông điệp này.</p>
+</section>
+<nav class="cd-nav" aria-label="Chuyển chương demo"><a href="index.html#demo-theo-chuong">☰ Danh sách demo</a><a class="cd-next" href="chuong-2.html" rel="next">Chương 2 · HTML cơ bản →</a></nav>
+</main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260921-phase1"></script>
+<script>
+'use strict';
+(function(){
+  function $(id){return document.getElementById(id);}
+  /* ---- Demo 1: giải phẫu URL ---- */
+  var urlIn=$('cd1-url'),urlOut=$('cd1-url-out');
+  function parse(){
+    urlOut.textContent='';
+    var raw=(urlIn.value||'').trim(),u;
+    try{u=new URL(raw);}catch(err){
+      urlOut.textContent='⚠ URL không hợp lệ: “'+raw+'”. Cần tối thiểu protocol + host, ví dụ https://example.com';
+      return;
+    }
+    var rows=[
+      ['protocol',u.protocol,'Giao thức. https = HTTP + TLS (mã hoá)'],
+      ['hostname',u.hostname,'Tên máy chủ (domain) cần hỏi'],
+      ['port',u.port||(u.protocol==='https:'?'443 (mặc định)':'80 (mặc định)'),'Cổng dịch vụ trên máy chủ'],
+      ['pathname',u.pathname,'Đường dẫn tài nguyên trên máy chủ'],
+      ['search',u.search||'(trống)','Query string: các cặp khoá=giá trị (lọc, tìm kiếm, phân trang)'],
+      ['hash',u.hash||'(trống)','Fragment: vị trí cuộn trong trang — KHÔNG gửi lên server']
+    ];
+    var table=document.createElement('table');
+    table.className='cd-url-table';
+    rows.forEach(function(r){
+      var tr=document.createElement('tr');
+      r.forEach(function(cell,i){
+        var td=document.createElement(i===0?'th':'td');
+        if(i===2){td.style.color='var(--muted)';td.style.fontSize='13px';td.style.textTransform='none';td.style.letterSpacing='0';td.style.background='transparent';}
+        td.textContent=cell;
+        tr.appendChild(td);
+      });
+      table.appendChild(tr);
+    });
+    var card=document.createElement('div');
+    card.className='table-card';
+    card.appendChild(table);
+    urlOut.appendChild(card);
+  }
+  urlIn.addEventListener('input',parse);
+  parse();
+  /* ---- Demo 2: mô phỏng HTTP ---- */
+  var REASON={'200':'OK','301':'Moved Permanently','404':'Not Found','500':'Internal Server Error'};
+  var MEANING={
+    '200':'200 OK — yêu cầu thành công, body chứa đúng tài nguyên đã xin.',
+    '301':'301 Moved Permanently — tài nguyên đã chuyển sang địa chỉ mới (header Location); trình duyệt tự hỏi lại địa chỉ mới.',
+    '404':'404 Not Found — máy chủ hiểu yêu cầu nhưng không tìm thấy tài nguyên (thường do sai đường dẫn).',
+    '500':'500 Internal Server Error — máy chủ gặp lỗi khi xử lý; lỗi thuộc về phía server, không phải người dùng.'};
+  var send=$('cd1-send'),browser=$('cd1-browser'),server=$('cd1-server'),
+      reqA=$('cd1-req'),resA=$('cd1-res'),reqOut=$('cd1-req-out'),resOut=$('cd1-res-out'),explain=$('cd1-explain'),timers=[];
+  function currentUrl(){try{return new URL((urlIn.value||'').trim());}catch(err){return null;}}
+  function clearAll(){timers.forEach(clearTimeout);timers=[];[browser,server,reqA,resA].forEach(function(n){n.classList.remove('active');});}
+  function later(fn,ms){timers.push(setTimeout(fn,ms));}
+  send.addEventListener('click',function(){
+    if(send.disabled)return;
+    clearAll();
+    var u=currentUrl(),method=$('cd1-method').value,status=$('cd1-status').value;
+    var path=u?u.pathname+u.search:'/index.html',host=u?u.host:'www.example.com';
+    reqOut.textContent='';resOut.textContent='';
+    explain.textContent='Đang gửi request…';
+    send.disabled=true;browser.classList.add('active');reqA.classList.add('active');
+    reqOut.textContent=method+' '+path+' HTTP/1.1\nHost: '+host+'\nAccept: text/html\nUser-Agent: Mozilla/5.0 (CSE122-demo)';
+    later(function(){
+      reqA.classList.remove('active');server.classList.add('active');
+      explain.textContent='Máy chủ đang xử lý request…';
+    },600);
+    later(function(){
+      server.classList.remove('active');resA.classList.add('active');browser.classList.add('active');
+      resOut.textContent='HTTP/1.1 '+status+' '+REASON[status]+'\nContent-Type: text/html; charset=utf-8\n\n'+
+        (status==='200'?'<!DOCTYPE html> …(nội dung trang)…':
+         status==='301'?'Location: https://example.com/dia-chi-moi\n(body trống)':
+         '<h1>'+status+'</h1> …(trang báo lỗi)…');
+    },1200);
+    later(function(){
+      resA.classList.remove('active');browser.classList.remove('active');
+      explain.textContent=MEANING[status];
+      send.disabled=false;
+    },1800);
+  });
+})();
+</script>
+</body></html>

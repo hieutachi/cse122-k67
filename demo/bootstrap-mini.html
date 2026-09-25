@@ -1,0 +1,144 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bootstrap Components mini | CSE122</title>
+<meta name="robots" content="noindex">
+<!-- Bootstrap 5.3.3 qua CDN (giống bài giảng 07–08). Không có mạng: cấu trúc HTML vẫn đúng, chỉ mất style. -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>body{padding-bottom:40px}.bd-demo-grid>[class^=col]{padding-bottom:.5rem}.bd-demo-grid>[class^=col]>div{background:#eef2ff;border:1px dashed #c7d2fe;border-radius:.5rem;padding:.6rem;text-align:center;font:600 .8rem ui-monospace,Consolas,monospace;color:#4338ca}</style>
+</head><body>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4" aria-label="Navbar demo">
+  <div class="container">
+    <a class="navbar-brand" href="#">MiniShop</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navDemo" aria-controls="navDemo" aria-expanded="false" aria-label="Bật tắt menu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navDemo">
+      <ul class="navbar-nav ms-auto mb-2 mb-md-0">
+        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Trang chủ</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Sản phẩm</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Giỏ hàng <span class="badge text-bg-warning">3</span></a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main class="container">
+  <h1 class="h3 mb-1">Bootstrap Components — trang demo Chương 7</h1>
+  <p class="text-secondary mb-4">Toàn bộ style đến từ <code>bootstrap.min.css</code> (CDN); hành vi modal/accordion/collapse đến từ <code>bootstrap.bundle.min.js</code>.</p>
+
+  <section class="mb-4" aria-label="Buttons và badges">
+    <h2 class="h5">1. Buttons · Badges · Alerts</h2>
+    <div class="d-flex flex-wrap gap-2 align-items-center mb-3">
+      <button type="button" class="btn btn-primary">Primary</button>
+      <button type="button" class="btn btn-outline-secondary">Outline</button>
+      <button type="button" class="btn btn-success btn-sm">Small success</button>
+      <button type="button" class="btn btn-danger" disabled>Disabled</button>
+      <span class="badge text-bg-dark">badge</span>
+      <span class="badge rounded-pill text-bg-info">pill</span>
+    </div>
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      <strong>Alert dismissible:</strong> bấm nút × — JS bundle tự ẩn alert nhờ <code>data-bs-dismiss</code>.
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Đóng"></button>
+    </div>
+  </section>
+
+  <section class="mb-4" aria-label="Grid 12 cột">
+    <h2 class="h5">2. Grid 12 cột + spacing utilities</h2>
+    <div class="row bd-demo-grid text-center">
+      <div class="col-12 col-md-8"><div>.col-12 .col-md-8</div></div>
+      <div class="col-12 col-md-4"><div>.col-12 .col-md-4</div></div>
+      <div class="col-6 col-lg-3"><div>.col-6 .col-lg-3</div></div>
+      <div class="col-6 col-lg-3"><div>.col-6 .col-lg-3</div></div>
+      <div class="col-6 col-lg-3"><div>.col-6 .col-lg-3</div></div>
+      <div class="col-6 col-lg-3"><div>.col-6 .col-lg-3</div></div>
+    </div>
+    <p class="text-secondary small mb-0">Thu hẹp cửa sổ: 4 cột → 2 cột → 1 cột. Đổi khoảng cách bằng <code>gap-*</code>, <code>mt-*</code>, <code>py-*</code> thay vì viết CSS.</p>
+  </section>
+  <div class="row g-4">
+    <section class="col-lg-6" aria-label="Card">
+      <h2 class="h5">3. Card</h2>
+      <div class="card h-100">
+        <svg class="card-img-top" width="100%" height="140" role="img" aria-label="Ảnh minh hoạ" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#4f46e5"/><text x="50%" y="54%" fill="#fff" font-size="15" font-family="monospace" text-anchor="middle">card-img-top</text></svg>
+        <div class="card-body">
+          <h3 class="card-title h6">Khoá học Web cơ bản</h3>
+          <p class="card-text small">Card gồm img, body, title, text và button — sắp xếp sẵn, chỉ cần ghép class.</p>
+          <a href="#" class="btn btn-primary btn-sm" onclick="return false">Xem chi tiết</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="col-lg-6" aria-label="Form validation">
+      <h2 class="h5">4. Form + validation Bootstrap</h2>
+      <form class="needs-validation" id="bsForm" novalidate>
+        <div class="mb-3">
+          <label for="bsHoTen" class="form-label">Họ tên</label>
+          <input type="text" class="form-control" id="bsHoTen" required minlength="2">
+          <div class="invalid-feedback">Vui lòng nhập ít nhất 2 ký tự.</div>
+        </div>
+        <div class="mb-3">
+          <label for="bsEmail" class="form-label">Email</label>
+          <input type="email" class="form-control" id="bsEmail" required>
+          <div class="invalid-feedback">Email không hợp lệ.</div>
+        </div>
+        <div class="form-check mb-3">
+          <input class="form-check-input" type="checkbox" id="bsDieuKhoan" required>
+          <label class="form-check-label" for="bsDieuKhoan">Đồng ý điều khoản</label>
+          <div class="invalid-feedback">Bạn phải đồng ý trước khi gửi.</div>
+        </div>
+        <button class="btn btn-success" type="submit">Gửi form</button>
+        <div class="form-text">Bỏ trống rồi bấm Gửi: Bootstrap thêm class <code>.was-validated</code> để hiện thông báo đỏ.</div>
+      </form>
+    </section>
+  </div>
+
+  <section class="mt-4" aria-label="Accordion, modal, offcanvas">
+    <h2 class="h5">5. Accordion · Modal · Offcanvas (cần JS bundle)</h2>
+    <div class="accordion mb-3" id="bsAccordion">
+      <div class="accordion-item">
+        <h3 class="accordion-header"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#bsCollapse1" aria-expanded="true" aria-controls="bsCollapse1">Bootstrap là gì?</button></h3>
+        <div id="bsCollapse1" class="accordion-collapse collapse show" data-bs-parent="#bsAccordion"><div class="accordion-body small">Thư viện CSS + JS miễn phí: grid, components và utilities — dùng qua CDN, không cần build.</div></div>
+      </div>
+      <div class="accordion-item">
+        <h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#bsCollapse2" aria-expanded="false" aria-controls="bsCollapse2">Bundle khác gì bản thường?</button></h3>
+        <div id="bsCollapse2" class="accordion-collapse collapse" data-bs-parent="#bsAccordion"><div class="accordion-body small"><code>bootstrap.bundle.min.js</code> = JS lõi + Popper, đủ cho dropdown/tooltip/modal. Bootstrap 5 không cần jQuery.</div></div>
+      </div>
+    </div>
+    <div class="d-flex flex-wrap gap-2">
+      <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#bsModal">Mở modal</button>
+      <button type="button" class="btn btn-outline-secondary" data-bs-toggle="offcanvas" data-bs-target="#bsOffcanvas">Mở offcanvas</button>
+    </div>
+  </section>
+</main>
+
+<div class="modal fade" id="bsModal" tabindex="-1" aria-labelledby="bsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header"><h2 class="modal-title h5" id="bsModalLabel">Modal Bootstrap</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button></div>
+      <div class="modal-body small">Mở/đóng bằng <code>data-bs-toggle</code> + <code>data-bs-dismiss</code>, không cần tự viết JS. Nền tối, khoá cuộn và phím Escape đều có sẵn.</div>
+      <div class="modal-footer"><button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Đóng</button></div>
+    </div>
+  </div>
+</div>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="bsOffcanvas" aria-labelledby="bsOffcanvasLabel">
+  <div class="offcanvas-header"><h2 class="offcanvas-title h5" id="bsOffcanvasLabel">Offcanvas</h2>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Đóng"></button></div>
+  <div class="offcanvas-body small">Panel trượt từ phải — hợp làm giỏ hàng hoặc menu mobile.</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+'use strict';
+(function(){
+  var form=document.getElementById('bsForm');
+  if(!form)return;
+  form.addEventListener('submit',function(event){
+    event.preventDefault();
+    event.stopPropagation();
+    form.classList.add('was-validated');
+  });
+})();
+</script>
+</body></html>

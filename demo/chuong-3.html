@@ -1,0 +1,142 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Demo Chương 3 – HTML nâng cao: bảng, biểu mẫu | CSE122</title>
+<meta name="description" content="Demo chương 3 CSE122: bảng điểm dùng colspan/rowspan và biểu mẫu đăng ký kiểm tra hợp lệ bằng HTML5 validation API.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260921-phase1">
+<link rel="stylesheet" href="chuong.css?v=20260925-chap1">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main">
+<p class="meta"><a href="index.html#demo-theo-chuong">Demo theo chương</a> · Chương 3/9 · Lý thuyết: <a href="../ebook/chuong-3.html">Ebook chương 3</a> · <a href="../baidoc/index.html#ch3">Bài giảng</a> · <a href="de-cuong/index.html#dc-c3-3-1">Đề cương</a></p>
+<h1>Demo Chương 3 — HTML nâng cao: bảng, biểu mẫu</h1>
+<p>Bảng dữ liệu và form là hai thành phần “nghiêm túc” đầu tiên của HTML: bảng cần <code>colspan/rowspan</code> để gộp ô, form cần <strong>validation</strong> để không nhận dữ liệu sai. Cả hai đều có sẵn trong HTML5 — không cần thư viện nào.</p>
+
+<section class="cd-sec" id="cd-3-1">
+<h2>1. Bảng điểm với colspan / rowspan</h2>
+<p class="cd-why">Nhóm tiêu đề “Điểm thành phần” gộp 3 cột (<code>colspan="3"</code>); cột STT và Họ tên gộp 2 hàng (<code>rowspan="2"</code>). Bảng kết quả ở bên phải — mở “Xem code” để đối chiếu.</p>
+<div class="cd-grid2">
+  <div>
+    <details class="cd-code"><summary>Xem code HTML của bảng</summary>
+<figure class="cd-code"><pre><code>&lt;table&gt;
+  &lt;caption&gt;Điểm CSE122 · nhóm K67&lt;/caption&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th rowspan="2"&gt;STT&lt;/th&gt;
+      &lt;th rowspan="2"&gt;Họ tên&lt;/th&gt;
+      &lt;th colspan="3"&gt;Điểm thành phần&lt;/th&gt;
+      &lt;th rowspan="2"&gt;TB&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;&lt;th&gt;TX&lt;/th&gt;&lt;th&gt;Giữa kỳ&lt;/th&gt;&lt;th&gt;Cuối kỳ&lt;/th&gt;&lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;Nguyễn Văn An&lt;/td&gt;
+        &lt;td&gt;9&lt;/td&gt;&lt;td&gt;8&lt;/td&gt;&lt;td&gt;8.5&lt;/td&gt;&lt;td&gt;8.5&lt;/td&gt;&lt;/tr&gt;
+    …
+  &lt;/tbody&gt;
+  &lt;tfoot&gt;
+    &lt;tr&gt;&lt;td colspan="5"&gt;Trung bình cả lớp&lt;/td&gt;&lt;td&gt;8.3&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tfoot&gt;
+&lt;/table&gt;</code></pre></figure></details>
+    <p class="cd-note">Quy tắc đếm ô: <code>colspan</code> “nuốt” ô bên phải, <code>rowspan</code> “nuốt” ô hàng dưới — nên hàng thứ hai chỉ còn 3 thẻ <code>&lt;th&gt;</code>. Kiểm tra nhanh bằng cách hover từng ô trong DevTools.</p>
+  </div>
+  <div class="table-card">
+    <table>
+      <caption>Điểm CSE122 · nhóm K67</caption>
+      <thead>
+        <tr><th scope="col" rowspan="2">STT</th><th scope="col" rowspan="2">Họ tên</th><th scope="colgroup" colspan="3">Điểm thành phần</th><th scope="col" rowspan="2">TB</th></tr>
+        <tr><th scope="col">TX</th><th scope="col">Giữa kỳ</th><th scope="col">Cuối kỳ</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>Nguyễn Văn An</td><td>9</td><td>8</td><td>8.5</td><td>8.5</td></tr>
+        <tr><td>2</td><td>Trần Thị Bình</td><td>10</td><td>9</td><td>9.5</td><td>9.5</td></tr>
+        <tr><td>3</td><td>Lê Minh Châu</td><td>7</td><td>7.5</td><td>6.5</td><td>7.0</td></tr>
+      </tbody>
+      <tfoot>
+        <tr><td colspan="5">Trung bình cả lớp</td><td>8.3</td></tr>
+      </tfoot>
+    </table>
+  </div>
+</div>
+</section>
+<section class="cd-sec" id="cd-3-2">
+<h2>2. Biểu mẫu đăng ký tự kiểm tra (HTML5 validation)</h2>
+<p class="cd-why">Các thuộc tính <code>required</code>, <code>minlength</code>, <code>type="email"</code>, <code>pattern</code>, <code>min/max</code> biến form thành form “tự biết lỗi”. Bấm <strong>Gửi</strong> khi để trống/sai dữ liệu, rồi bật <code>novalidate</code> để thấy trình duyệt bỏ qua kiểm tra — đó là lúc lập trình viên phải tự kiểm tra bằng JS (chương 8).</p>
+<div class="cd-grid2">
+  <div class="cd-pane">
+    <form id="cd3-form" novalidate>
+      <p><label for="cd3-hoten">Họ và tên <span aria-hidden="true">*</span></label><br>
+      <input type="text" id="cd3-hoten" name="hoTen" required minlength="2" placeholder="Nguyễn Văn A" autocomplete="name"></p>
+      <p><label for="cd3-email">Email <span aria-hidden="true">*</span></label><br>
+      <input type="email" id="cd3-email" name="email" required placeholder="a@tlu.edu.vn" autocomplete="email"></p>
+      <p><label for="cd3-sdt">Số điện thoại (10 số, bắt đầu bằng 0)</label><br>
+      <input type="tel" id="cd3-sdt" name="sdt" pattern="0[0-9]{9}" placeholder="0912345678" autocomplete="tel"></p>
+      <p><label for="cd3-tuoi">Tuổi (15–60)</label><br>
+      <input type="number" id="cd3-tuoi" name="tuoi" min="15" max="60" value="20"></p>
+      <p><label for="cd3-lop">Lớp</label><br>
+      <select id="cd3-lop" name="lop"><option>67TH1</option><option>67TH2</option><option>67PM1</option></select></p>
+      <p><label><input type="checkbox" id="cd3-dongy" name="dongY" required> Đồng ý điều khoản <span aria-hidden="true">*</span></label></p>
+      <p class="cd-ctl" style="margin:0">
+        <button type="submit" class="btn">Gửi đăng ký</button>
+        <label style="font-weight:500"><input type="checkbox" id="cd3-noval"> Tắt validation (<code>novalidate</code>)</label>
+      </p>
+    </form>
+  </div>
+  <div>
+    <details class="cd-code"><summary>Xem code các ràng buộc</summary>
+<figure class="cd-code"><pre><code>&lt;input type="text" name="hoTen"
+       required minlength="2"&gt;
+&lt;input type="email" name="email" required&gt;
+&lt;input type="tel" name="sdt"
+       pattern="0[0-9]{9}"&gt;
+&lt;input type="number" name="tuoi"
+       min="15" max="60"&gt;
+&lt;input type="checkbox" name="dongY" required&gt;</code></pre></figure></details>
+    <div class="cd-out" id="cd3-out" role="status" aria-live="polite"></div>
+  </div>
+</div>
+<p class="cd-note">Khi validation bật, trình duyệt tự chặn submit và hiện bong bóng lỗi cạnh ô sai — thuộc tính này <em>miễn phí</em>, nhưng luôn kiểm tra lại phía server trong dự án thật (người dùng có thể tắt JS).</p>
+</section>
+
+<nav class="cd-nav" aria-label="Chuyển chương demo"><a href="chuong-2.html" rel="prev">← Chương 2 · HTML cơ bản</a><a href="index.html#demo-theo-chuong">☰ Danh sách demo</a><a class="cd-next" href="chuong-4.html" rel="next">Chương 4 · CSS cơ bản →</a></nav>
+</main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260921-phase1"></script>
+<script>
+'use strict';
+(function(){
+  function $(id){return document.getElementById(id);}
+  var form=$('cd3-form'),out=$('cd3-out'),noval=$('cd3-noval');
+  noval.addEventListener('change',function(){form.noValidate=noval.checked;});
+  form.addEventListener('submit',function(event){
+    event.preventDefault();
+    form.noValidate=noval.checked;
+    var fields=Array.prototype.filter.call(form.elements,function(el){return el.willValidate;});
+    var invalid=fields.filter(function(el){return !el.checkValidity();});
+    if(invalid.length){
+      out.textContent='✗ Form có '+invalid.length+' lỗi:\n'+invalid.map(function(el){
+        var label=el.labels&&el.labels[0]?el.labels[0].textContent.trim().replace('*','').trim():(el.name||el.id);
+        return '• '+label+' → '+el.validationMessage;
+      }).join('\n');
+      if(!noval.checked){invalid[0].focus();invalid[0].reportValidity();}
+      return;
+    }
+    var data={};
+    fields.forEach(function(el){
+      if(!el.name)return;
+      data[el.name]=el.type==='checkbox'?el.checked:el.value;
+    });
+    out.textContent='✓ Form hợp lệ. Dữ liệu sẵn sàng gửi lên server (JSON):\n'+JSON.stringify(data,null,2);
+  });
+})();
+</script>
+</body></html>

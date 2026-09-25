@@ -207,6 +207,48 @@ async function main() {
     await check('(()=>{const r=document.getElementById("dc-c7-7-2").getBoundingClientRect();return r.top>=0&&r.bottom<=innerHeight})()','Deep-linked chunk is scrolled into view');
     await screenshot('desktop-syllabus-deeplink');
 
+    // Per-chapter teaching demos (demo/chuong-*.html): hub listing + interactive spot checks.
+    await navigate('demo/index.html');
+    await check('document.querySelectorAll(".cd-chap-grid .card a").length===9','Demo hub lists all 9 chapter demo pages');
+    await check('[...document.querySelectorAll(".cd-chap-grid a")].every(a=>/^chuong-[1-9]\\.html$/.test(a.getAttribute("href")))','Chapter demo links point at demo/chuong-N.html');
+    await screenshot('desktop-demo-hub');
+    for(let ch=1;ch<=9;ch++){
+      await navigate(`demo/chuong-${ch}.html`);
+      await check('document.querySelectorAll(".cd-sec").length>=2 && !!document.querySelector(".cd-nav") && document.querySelector("h1").textContent.includes("Chương "+'+ch+')','Chapter '+ch+' demo page renders sections, nav and heading');
+    }
+    await navigate('demo/chuong-1.html');
+    await evaluate('(()=>{const i=document.getElementById("cd1-url");i.value="https://example.com:8080/a/b?q=1#h";i.dispatchEvent(new Event("input"));})()');
+    await check('document.getElementById("cd1-url-out").textContent.includes("8080") && document.getElementById("cd1-url-out").textContent.includes("?q=1")','URL anatomy demo parses port and query live');
+    await click('#cd1-send');
+    await wait('document.getElementById("cd1-explain").textContent.includes("200 OK")');
+    await check('document.getElementById("cd1-res-out").textContent.includes("HTTP/1.1 200") && !document.getElementById("cd1-send").disabled','HTTP simulator completes the round trip and re-enables the button');
+    await navigate('demo/chuong-4.html');
+    await click('.cd-seg[data-lab="sel"] button[data-sel=".item.active"]');
+    await check('document.querySelectorAll("#cd4-sample .hl").length===1 && document.getElementById("cd4-out").textContent.includes("(0,2,0)")','Selector playground highlights the match and reports specificity');
+    await navigate('demo/chuong-5.html');
+    await click('.cd-seg[data-lab="flex"] button[data-v="space-between"]');
+    await check('getComputedStyle(document.getElementById("cd5-flex")).justifyContent==="space-between" && document.getElementById("cd5-flex-code").textContent.includes("space-between")','Flexbox playground applies justify-content live and echoes the CSS');
+    await navigate('demo/chuong-7.html');
+    await wait('document.getElementById("cd7-frame").contentDocument?.querySelectorAll(".btn").length>=6');
+    await check('!!document.getElementById("cd7-frame").contentDocument.querySelector(".navbar") && !!document.getElementById("cd7-frame").contentDocument.getElementById("bsModal")','Bootstrap demo iframe exposes navbar, buttons and modal');
+    await navigate('demo/chuong-8.html');
+    await click('#cd8-arr button[data-m="filter"]');
+    await check('document.getElementById("cd8-arr-out").textContent.includes("diem") && document.getElementById("cd8-arr-out").textContent.includes("8.5")','Array-method visualizer renders filter() output');
+    await evaluate('(()=>{const t=document.getElementById("cd8-note");t.value="CSE122 demo";document.getElementById("cd8-save").click();})()');
+    await navigate('demo/chuong-8.html');
+    await check('document.getElementById("cd8-note").value==="CSE122 demo"','Notepad restores its text from localStorage after reload');
+    await navigate('demo/chuong-9.html');
+    await wait('document.querySelectorAll("#cd9-list .cd-card").length===6');
+    await check('document.getElementById("cd9-code").textContent.includes("await")','Fetch lab shows its async/await source');
+    await evaluate('(()=>{const f=document.getElementById("cd9-fail");f.checked=true;f.dispatchEvent(new Event("change"));})()');
+    await wait('!document.getElementById("cd9-err").hidden');
+    await check('document.getElementById("cd9-err").getAttribute("role")==="alert" && !!document.getElementById("cd9-retry")','Simulated 404 surfaces an accessible alert with retry');
+    await click('#cd9-retry');
+    await wait('document.querySelectorAll("#cd9-list .cd-card").length===6 && document.getElementById("cd9-err").hidden');
+    await check('document.getElementById("cd9-status").textContent.includes("200 OK")','Retry recovers from the simulated network failure');
+    await click('#cd9-next');
+    await check('!document.getElementById("cd9-step-err").hidden','Multi-step booking refuses to advance without a choice');
+
     for(const width of [390,320]) {
       await send('Emulation.setDeviceMetricsOverride',{width,height:844,deviceScaleFactor:1,mobile:true});
       await navigate('demo/de-cuong/index.html');
@@ -238,6 +280,13 @@ async function main() {
       await navigate('ebook/chuong-2.html');await click('.slide-grid figure');await key('ArrowRight');
       await check('LB.idx===1 && document.querySelector(".lb-close").getBoundingClientRect().right<=innerWidth','Mobile lightbox controls reachable');
       await key('Escape');
+    }
+    // Chapter demo pages must stay inside a phone-sized viewport (pre blocks, iframes, tables scroll internally).
+    await send('Emulation.setDeviceMetricsOverride',{width:390,height:844,deviceScaleFactor:1,mobile:true});
+    for(const file of ['demo/index.html','demo/chuong-1.html','demo/chuong-5.html','demo/chuong-7.html','demo/chuong-9.html']) {
+      await navigate(file);
+      await check('document.documentElement.scrollWidth<=innerWidth+1','No horizontal page overflow on '+file+' at 390px');
+      if(file==='demo/chuong-5.html')await screenshot('mobile-demo-chuong-5');
     }
     await send('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'reduce'}]});
     await navigate('ebook/chuong-3.html');await wait('document.querySelectorAll(".quiz-q").length===3');

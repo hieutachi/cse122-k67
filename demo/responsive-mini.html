@@ -1,0 +1,46 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Trang responsive mẫu | CSE122</title>
+<meta name="robots" content="noindex">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;font:15px/1.6 system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;color:#0f172a;background:#f8fafc}
+  header{background:#0f172a;color:#fff;padding:12px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  nav{display:flex;gap:6px;margin-left:auto}
+  nav a{color:#cbd5e1;text-decoration:none;font-weight:600;font-size:13px;padding:6px 10px;border-radius:999px}
+  nav a:hover,nav a[aria-current]{background:#312e81;color:#fff}
+  .bp{font:700 11px ui-monospace,Consolas,monospace;background:#4f46e5;color:#fff;padding:4px 10px;border-radius:999px}
+  main{padding:16px;display:grid;gap:12px;grid-template-columns:repeat(3,1fr)}
+  .col{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:14px}
+  .col h2{margin:0 0 6px;font-size:16px}
+  .col p{margin:0;font-size:13.5px;color:#475569}
+  .col.wide{grid-column:span 3;background:#eef2ff;border-color:#c7d2fe}
+  footer{padding:12px 16px;color:#64748b;font-size:12.5px;border-top:1px solid #e2e8f0}
+  /* Mobile-first: thu dần số cột khi viewport hẹp lại */
+  @media(max-width:1023px){main{grid-template-columns:repeat(2,1fr)}.col.wide{grid-column:span 2}}
+  @media(max-width:767px){nav{width:100%;margin-left:0;justify-content:center}}
+  @media(max-width:599px){main{grid-template-columns:1fr}.col.wide{grid-column:span 1}}
+</style></head><body>
+<header><b>MiniShop</b><span class="bp" id="bp">…</span>
+<nav aria-label="Chính"><a href="#gioi-thieu" aria-current="page">Trang chủ</a><a href="#san-pham">Sản phẩm</a><a href="#lien-he">Liên hệ</a></nav></header>
+<main>
+  <section class="col wide" id="gioi-thieu"><h2>Chào mừng đến MiniShop</h2>
+    <p>Kéo thanh trượt bề rộng thiết bị ở trang ngoài để xem lưới 3 → 2 → 1 cột và menu đổi vị trí. Huy hiệu bên trái cho biết breakpoint đang kích hoạt (đo bằng <code>matchMedia</code> + <code>innerWidth</code>).</p></section>
+  <section class="col" id="san-pham"><h2>Sản phẩm 1</h2><p>Card tự co giãn theo cột lưới — không cần JavaScript.</p></section>
+  <section class="col"><h2>Sản phẩm 2</h2><p>Ảnh và chữ đều dùng đơn vị tương đối nên không tràn khung.</p></section>
+  <section class="col" id="lien-he"><h2>Liên hệ</h2><p>Trên mobile, nav xuống dòng và căn giữa nhờ <code>flex-wrap</code>.</p></section>
+</main>
+<footer>Trang tự chứa dùng cho demo responsive — Chương 6 CSE122.</footer>
+<script>
+'use strict';
+(function(){
+  var bp=document.getElementById('bp');
+  function update(){
+    var w=window.innerWidth;
+    var label=w<600?'mobile':w<768?'tablet dọc':w<1024?'tablet':'desktop';
+    bp.textContent=label+' · '+w+'px';
+  }
+  window.addEventListener('resize',update);
+  update();
+})();
+</script></body></html>

@@ -1,0 +1,12 @@
+{
+  "lop": "CSE122 · K67",
+  "hocKy": "2025-2026.1",
+  "sinhVien": [
+    { "id": 1, "ten": "Nguyễn Văn An", "diem": 8.5, "nganh": "CNTT" },
+    { "id": 2, "ten": "Trần Thị Bình", "diem": 9.2, "nganh": "CNTT" },
+    { "id": 3, "ten": "Lê Minh Châu", "diem": 7.0, "nganh": "HTTT" },
+    { "id": 4, "ten": "Phạm Quốc Đạt", "diem": 6.5, "nganh": "KHMT" },
+    { "id": 5, "ten": "Hoàng Thị Em", "diem": 8.0, "nganh": "HTTT" },
+    { "id": 6, "ten": "Vũ Thành Long", "diem": 9.8, "nganh": "CNTT" }
+  ]
+}

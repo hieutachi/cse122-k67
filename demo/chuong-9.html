@@ -1,0 +1,197 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Demo Chương 9 – Fetch API và dự án | CSE122</title>
+<meta name="description" content="Demo chương 9 CSE122: gọi Fetch API thật tới file JSON với trạng thái loading/lỗi/thử lại, cùng form đặt lịch 3 bước dựng payload JSON.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260921-phase1">
+<link rel="stylesheet" href="chuong.css?v=20260925-chap1">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main">
+<p class="meta"><a href="index.html#demo-theo-chuong">Demo theo chương</a> · Chương 9/9 · Lý thuyết: <a href="../ebook/chuong-9.html">Ebook chương 9</a> · <a href="../baidoc/index.html#ch9">Bài giảng</a> · <a href="de-cuong/index.html#dc-c9-9-1">Đề cương</a> · Dự án mẫu: <a href="CNTT2/index.html">CampusConnect</a></p>
+<h1>Demo Chương 9 — JS nâng cao: Fetch API và dự án</h1>
+<p>Chương cuối ghép tất cả lại: lấy dữ liệu từ server bằng <strong>fetch + async/await</strong>, xử lý đủ ba trạng thái <em>đang tải / thành công / thất bại</em>, và dựng một luồng nghiệp vụ nhiều bước như dự án cuối kỳ.</p>
+
+<section class="cd-sec" id="cd-9-1">
+<h2>1. Fetch API: tải dữ liệu thật, xử lý lỗi thật</h2>
+<p class="cd-why">Nút bên dưới gọi <code>fetch('data/sinh-vien.json')</code> — một request HTTP <strong>thật</strong> tới chính server đang phục vụ trang này (mở DevTools → Network để thấy nó). Tích “Giả lập lỗi mạng” để yêu cầu một file không tồn tại → nhận 404 → nhánh <code>catch</code> hiện thông báo kèm nút Thử lại.</p>
+<div class="cd-ctl">
+  <button type="button" class="btn" id="cd9-load">⬇ Tải dữ liệu (GET)</button>
+  <label style="font-weight:500"><input type="checkbox" id="cd9-fail"> Giả lập lỗi mạng (GET file không tồn tại → 404)</label>
+</div>
+<div id="cd9-status" role="status" aria-live="polite" style="font-size:14px"></div>
+<div class="cd-alert" id="cd9-err" role="alert" hidden>
+  <span id="cd9-err-msg"></span>
+  <button type="button" class="btn btn-sm" id="cd9-retry" style="margin-left:8px">↻ Thử lại</button>
+</div>
+<div class="cd-cards" id="cd9-list"></div>
+<details class="cd-code" open style="margin-top:12px"><summary>Xem code async/await</summary>
+<figure class="cd-code"><pre id="cd9-code"><code>async function loadStudents() {
+  hienLoading();
+  try {
+    const response = await fetch('data/sinh-vien.json');
+    if (!response.ok) throw new Error('HTTP ' + response.status);
+    const data = await response.json();   // chờ parse JSON
+    renderCards(data.sinhVien);           // 200 OK → vẽ card
+  } catch (err) {
+    hienLoi(err.message);                 // 404/500/mất mạng → alert + nút Thử lại
+  } finally {
+    anLoading();
+  }
+}</code></pre></figure></details>
+<p class="cd-note"><code>await</code> “dừng” hàm async tới khi fetch xong mà không đơ trang — phần còn lại của trang vẫn chạy bình thường. Đó là khác biệt lớn so với vòng lặp chờ kiểu cũ.</p>
+</section>
+<section class="cd-sec" id="cd-9-2">
+<h2>2. Form đặt lịch 3 bước (multi-step) — khung dự án cuối kỳ</h2>
+<p class="cd-why">Nghiệp vụ thật hiếm khi nằm trong một form duy nhất. Mỗi bước <strong>tự kiểm tra</strong> trước khi cho đi tiếp; bước cuối ghép dữ liệu thành một payload JSON đúng dạng body của request <code>POST /api/dat-lich</code> (mô phỏng — xem lại chương 1 để nhớ request trông như thế nào).</p>
+<div class="cd-grid2">
+  <div class="cd-pane">
+    <div class="cd-steps" id="cd9-steps"><span class="on">1 · Dịch vụ</span><span>2 · Thời gian</span><span>3 · Thông tin</span></div>
+    <div class="cd-step" id="cd9-step-1">
+      <p><label><input type="radio" name="cd9-dv" value="Khám tổng quát"> Khám tổng quát</label></p>
+      <p><label><input type="radio" name="cd9-dv" value="Tiêm vaccine"> Tiêm vaccine</label></p>
+      <p><label><input type="radio" name="cd9-dv" value="Tư vấn dinh dưỡng"> Tư vấn dinh dưỡng</label></p>
+    </div>
+    <div class="cd-step" id="cd9-step-2" hidden>
+      <p><label for="cd9-date">Ngày đặt:</label><br><input type="date" id="cd9-date"></p>
+      <p><label for="cd9-time">Khung giờ:</label><br>
+      <select id="cd9-time"><option>08:00</option><option>09:30</option><option>14:00</option><option>15:30</option></select></p>
+    </div>
+    <div class="cd-step" id="cd9-step-3" hidden>
+      <p><label for="cd9-name">Họ tên người đặt:</label><br><input type="text" id="cd9-name" minlength="2" placeholder="Nguyễn Văn A"></p>
+      <p><label for="cd9-phone">Điện thoại (10 số, bắt đầu bằng 0):</label><br><input type="tel" id="cd9-phone" placeholder="0912345678"></p>
+    </div>
+    <div class="cd-alert" id="cd9-step-err" role="alert" hidden></div>
+    <p class="cd-ctl" style="margin:12px 0 0">
+      <button type="button" class="btn btn-ghost" id="cd9-back" disabled>← Quay lại</button>
+      <button type="button" class="btn" id="cd9-next">Tiếp theo →</button>
+      <button type="button" class="btn" id="cd9-finish" hidden>✓ Hoàn tất đặt lịch</button>
+    </p>
+  </div>
+  <div>
+    <div class="cd-out" id="cd9-book-out" role="status" aria-live="polite" style="min-height:160px"></div>
+    <details class="cd-code"><summary>Xem code kiểm tra từng bước</summary>
+<figure class="cd-code"><pre><code>nextBtn.addEventListener('click', () =&gt; {
+  if (step === 1 &amp;&amp; !layDichVu())
+    return baoLoi('Chọn một dịch vụ để tiếp tục.');
+  if (step === 2 &amp;&amp; !ngay.value)
+    return baoLoi('Chọn ngày đặt lịch.');
+  hienBuoc(step + 1);
+});
+
+// Bước cuối: ghép payload đúng chuẩn POST JSON
+const payload = {
+  dichVu: layDichVu(),
+  ngay: ngay.value, gio: gio.value,
+  khachHang: { ten, dienThoai }
+};</code></pre></figure></details>
+  </div>
+</div>
+<p class="cd-note">Muốn payload được gửi đi thật? Thay khối mô phỏng bằng <code>fetch('/api/dat-lich', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(payload) })</code> khi có server — đúng nội dung bài 34–40 của học liệu.</p>
+</section>
+
+<nav class="cd-nav" aria-label="Chuyển chương demo"><a href="chuong-8.html" rel="prev">← Chương 8 · JavaScript &amp; DOM</a><a href="index.html#demo-theo-chuong">☰ Danh sách demo</a><a class="cd-next" href="index.html">Về Demo hub →</a></nav>
+
+</main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260921-phase1"></script>
+<script>
+'use strict';
+(function(){
+  function $(id){return document.getElementById(id);}
+  /* ---- Demo 1: Fetch API ---- */
+  var list=$('cd9-list'),statusEl=$('cd9-status'),errBox=$('cd9-err'),errMsg=$('cd9-err-msg'),
+      loadBtn=$('cd9-load'),failBox=$('cd9-fail'),retryBtn=$('cd9-retry');
+  async function loadStudents(){
+    var url=failBox.checked?'data/khong-ton-tai.json':'data/sinh-vien.json';
+    errBox.hidden=true;list.textContent='';
+    var spin=document.createElement('span');spin.className='cd-spin';spin.setAttribute('aria-hidden','true');
+    statusEl.textContent='';statusEl.appendChild(spin);
+    statusEl.appendChild(document.createTextNode(' Đang gửi GET '+url+' …'));
+    loadBtn.disabled=true;
+    try{
+      var response=await fetch(url);
+      if(!response.ok)throw new Error('HTTP '+response.status+' — server không có tài nguyên này');
+      var data=await response.json();
+      var sv=Array.isArray(data.sinhVien)?data.sinhVien:[];
+      statusEl.textContent='✓ 200 OK — nhận '+sv.length+' sinh viên của lớp '+(data.lop||'?')+' từ '+url;
+      sv.forEach(function(s){
+        var card=document.createElement('div');card.className='cd-card';
+        var b=document.createElement('b');b.textContent=s.ten;
+        var sp=document.createElement('span');sp.textContent='điểm '+s.diem+' · '+s.nganh;
+        card.append(b,sp);list.appendChild(card);
+      });
+    }catch(err){
+      statusEl.textContent='';
+      errMsg.textContent='✗ Tải thất bại: '+(err&&err.message?err.message:String(err))+'. Nhánh catch của async/await — người dùng luôn cần biết chuyện gì xảy ra và một lối thoát.';
+      errBox.hidden=false;
+    }finally{
+      loadBtn.disabled=false;
+    }
+  }
+  loadBtn.addEventListener('click',loadStudents);
+  retryBtn.addEventListener('click',function(){failBox.checked=false;loadStudents();});
+  failBox.addEventListener('change',loadStudents);
+  loadStudents();
+  /* ---- Demo 2: form đặt lịch 3 bước ---- */
+  var step=1,stepsEls=document.querySelectorAll('#cd9-steps span'),
+      backBtn=$('cd9-back'),nextBtn=$('cd9-next'),finishBtn=$('cd9-finish'),
+      stepErr=$('cd9-step-err'),bookOut=$('cd9-book-out');
+  function showStep(n){
+    [1,2,3].forEach(function(i){$('cd9-step-'+i).hidden=i!==n;});
+    stepsEls.forEach(function(s,i){
+      s.classList.toggle('on',i===n-1);
+      s.classList.toggle('done',i<n-1);
+    });
+    backBtn.disabled=n===1;
+    nextBtn.hidden=n===3;
+    finishBtn.hidden=n!==3;
+    stepErr.hidden=true;
+    step=n;
+  }
+  function failStep(msg){stepErr.textContent='✗ '+msg;stepErr.hidden=false;}
+  function layDichVu(){
+    var dv=document.querySelector('input[name="cd9-dv"]:checked');
+    return dv?dv.value:'';
+  }
+  nextBtn.addEventListener('click',function(){
+    if(step===1&&!layDichVu())return failStep('Bước 1: chọn một dịch vụ để tiếp tục.');
+    if(step===2){
+      var d=$('cd9-date');
+      if(!d.value)return failStep('Bước 2: chọn ngày đặt lịch.');
+      var today=new Date();today.setHours(0,0,0,0);
+      if(new Date(d.value+'T00:00:00')<today)return failStep('Bước 2: ngày đặt phải từ hôm nay trở đi.');
+    }
+    showStep(step+1);
+  });
+  backBtn.addEventListener('click',function(){if(step>1)showStep(step-1);});
+  finishBtn.addEventListener('click',function(){
+    var name=$('cd9-name').value.trim(),phone=$('cd9-phone').value.trim();
+    if(name.length<2)return failStep('Bước 3: nhập họ tên (ít nhất 2 ký tự).');
+    if(!/^0[0-9]{9}$/.test(phone))return failStep('Bước 3: số điện thoại phải gồm 10 chữ số và bắt đầu bằng 0.');
+    var payload={
+      dichVu:layDichVu(),
+      ngay:$('cd9-date').value,
+      gio:$('cd9-time').value,
+      khachHang:{ten:name,dienThoai:phone}
+    };
+    bookOut.textContent='POST /api/dat-lich HTTP/1.1\nContent-Type: application/json\n\n'+JSON.stringify(payload,null,2)+'\n\n✓ Server (mô phỏng) trả về: 201 Created — đã đặt lịch!';
+    stepErr.hidden=true;
+    stepsEls.forEach(function(s){s.classList.add('done');s.classList.remove('on');});
+  });
+  var today=new Date();
+  $('cd9-date').min=today.getFullYear()+'-'+String(today.getMonth()+1).padStart(2,'0')+'-'+String(today.getDate()).padStart(2,'0');
+  showStep(1);
+})();
+</script>
+
+</body></html>

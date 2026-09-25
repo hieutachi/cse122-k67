@@ -1,0 +1,80 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Demo Chương 7 – Bootstrap Components | CSE122</title>
+<meta name="description" content="Demo chương 7 CSE122: navbar, buttons, badges, card, form validation, accordion, modal Bootstrap 5.3.3 chạy sống trong iframe cách ly.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260921-phase1">
+<link rel="stylesheet" href="chuong.css?v=20260925-chap1">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main">
+<p class="meta"><a href="index.html#demo-theo-chuong">Demo theo chương</a> · Chương 7/9 · Lý thuyết: <a href="../ebook/chuong-7.html">Ebook chương 7</a> · <a href="../baidoc/index.html#ch7">Bài giảng</a> · <a href="de-cuong/index.html#dc-c7-7-1">Đề cương</a></p>
+<h1>Demo Chương 7 — Bootstrap Components</h1>
+<p>Bootstrap là bộ component dựng sẵn: chỉ cần ghép class là có navbar, card, modal, form validation chuẩn production. Demo sống bên dưới nằm trong <code>&lt;iframe&gt;</code> để CSS Bootstrap <strong>không lẫn</strong> vào CSS của cả site — đúng bài học “cách ly phạm vi ảnh hưởng”.</p>
+
+<section class="cd-sec" id="cd-7-1">
+<h2>1. Components chạy thật (Bootstrap 5.3.3 qua CDN)</h2>
+<p class="cd-why">Khung dưới đây là trang <a href="bootstrap-mini.html" target="_blank" rel="noopener">bootstrap-mini.html</a> — thử trực tiếp: thu hẹp trình duyệt xem navbar thành nút hamburger, bấm × để đóng alert, bỏ trống form rồi bấm Gửi để thấy validation, mở modal/accordion/offcanvas. Tất cả hành vi do <code>bootstrap.bundle.min.js</code> đảm nhiệm, không có dòng JS tự viết nào ngoài 5 dòng bật validation.</p>
+<iframe class="cd-frame" id="cd7-frame" src="bootstrap-mini.html" title="Trang demo Bootstrap components (navbar, buttons, badges, alert, grid, card, form validation, accordion, modal, offcanvas)"></iframe>
+<p class="cd-warn">Trang con cần Internet để tải Bootstrap từ CDN <code>cdn.jsdelivr.net</code>. Không có mạng: cấu trúc HTML vẫn đúng nhưng mất toàn bộ style — bản thân đó là một bài học: CSS đến từ đâu thì giao diện phụ thuộc vào đó.</p>
+<details class="cd-code"><summary>Xem 2 dòng nhúng Bootstrap (đầu &lt;head&gt; và cuối &lt;body&gt;)</summary>
+<figure class="cd-code"><pre><code>&lt;!-- CSS: trong &lt;head&gt;, TRƯỚC css tự viết --&gt;
+&lt;link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"&gt;
+
+&lt;!-- JS bundle: cuối &lt;body&gt;; bundle = JS lõi + Popper, không cần jQuery --&gt;
+&lt;script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"&gt;&lt;/script&gt;</code></pre></figure></details>
+</section>
+<section class="cd-sec" id="cd-7-2">
+<h2>2. Giải phẫu grid 12 cột &amp; utility classes</h2>
+<p class="cd-why">Mọi hàng Bootstrap chia thành <strong>12 phần bằng nhau</strong>: <code>.col-6</code> chiếm 6/12 (50%), <code>.col-md-8</code> chiếm 8/12 từ breakpoint md trở lên. Hình minh hoạ bên phải vẽ bằng CSS thuần (tỉ lệ y hệt) để không phụ thuộc CDN.</p>
+<div class="cd-grid2">
+  <div>
+    <div class="cd-row"><div class="cd-col cd-col-8"><div>.col-8 · 66.7%</div></div><div class="cd-col cd-col-4"><div>.col-4 · 33.3%</div></div></div>
+    <div class="cd-row"><div class="cd-col cd-col-3"><div>.col-3</div></div><div class="cd-col cd-col-3"><div>.col-3</div></div><div class="cd-col cd-col-6"><div>.col-6</div></div></div>
+    <div class="cd-row"><div class="cd-col cd-col-12"><div>.col-12 · tràn hàng</div></div></div>
+  </div>
+  <div>
+    <details class="cd-code" open><summary>Xem markup Bootstrap tương ứng</summary>
+<figure class="cd-code"><pre><code>&lt;div class="row"&gt;
+  &lt;div class="col-12 col-md-8"&gt;…&lt;/div&gt;
+  &lt;div class="col-12 col-md-4"&gt;…&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- utilities: spacing / màu / hiển thị --&gt;
+&lt;div class="d-flex gap-2 mt-3"&gt;
+  &lt;span class="badge text-bg-primary"&gt;Mới&lt;/span&gt;
+  &lt;button class="btn btn-outline-danger btn-sm"&gt;Xoá&lt;/button&gt;
+&lt;/div&gt;</code></pre></figure></details>
+    <div class="table-card" style="margin-top:10px">
+      <table>
+        <caption>Utility hay dùng nhất</caption>
+        <thead><tr><th scope="col">Class</th><th scope="col">Tác dụng</th></tr></thead>
+        <tbody>
+          <tr><td><code>d-flex</code>, <code>d-grid</code>, <code>d-none</code></td><td>đổi display; ẩn/hiện theo breakpoint (<code>d-md-none</code>)</td></tr>
+          <tr><td><code>m*-0…5</code>, <code>p*-0…5</code></td><td>margin/padding: <code>mt-3</code> = margin-top 1rem; <code>mx-auto</code> căn giữa</td></tr>
+          <tr><td><code>gap-2</code>, <code>row-gap-3</code></td><td>khe hở flex/grid không cần CSS riêng</td></tr>
+          <tr><td><code>text-bg-primary</code>, <code>text-secondary</code></td><td>màu chữ/nền theo bảng màu chủ đề</td></tr>
+          <tr><td><code>w-100</code>, <code>h-100</code>, <code>mw-100</code></td><td>kích thước 100% (max-width chống tràn)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<p class="cd-note">Quy tắc nhớ: <strong>component</strong> (navbar, card, modal) = cụm class phức tạp + JS bundle; <strong>utility</strong> (<code>mt-3</code>, <code>d-flex</code>) = một class một việc, tinh chỉnh nhanh mà không cần mở file CSS.</p>
+</section>
+
+<nav class="cd-nav" aria-label="Chuyển chương demo"><a href="chuong-6.html" rel="prev">← Chương 6 · Responsive &amp; Animation</a><a href="index.html#demo-theo-chuong">☰ Danh sách demo</a><a class="cd-next" href="chuong-8.html" rel="next">Chương 8 · JavaScript &amp; DOM →</a></nav>
+
+</main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260921-phase1"></script>
+</body></html>

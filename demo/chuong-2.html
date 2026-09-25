@@ -1,0 +1,123 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Demo Chương 2 – HTML cơ bản | CSE122</title>
+<meta name="description" content="Demo chương 2 CSE122: xem mã HTML dựng thành giao diện và máy tính đường dẫn tương đối chạy trực tiếp trong trình duyệt.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260921-phase1">
+<link rel="stylesheet" href="chuong.css?v=20260925-chap1">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main">
+<p class="meta"><a href="index.html#demo-theo-chuong">Demo theo chương</a> · Chương 2/9 · Lý thuyết: <a href="../ebook/chuong-2.html">Ebook chương 2</a> · <a href="../baidoc/index.html#ch2">Bài giảng</a> · <a href="de-cuong/index.html#dc-c2-2-1">Đề cương</a></p>
+<h1>Demo Chương 2 — HTML cơ bản: cấu trúc, văn bản, liên kết</h1>
+<p>HTML là <strong>bản mô tả cấu trúc</strong> của trang: mỗi thẻ là một phần tử, trình duyệt đọc mã và dựng thành cây tài liệu rồi hiển thị. Hai demo dưới đây cho thấy mối liên hệ “mã ↔ giao diện” và cách viết <strong>đường dẫn tương đối</strong> — kỹ năng gây lỗi nhiều nhất khi mới học.</p>
+
+<section class="cd-sec" id="cd-2-1">
+<h2>1. Từ mã ra giao diện</h2>
+<p class="cd-why">Bên trái là mã nguồn, bên phải là <em>chính đoạn mã đó</em> được trình duyệt dựng lên. Đối chiếu từng thẻ với kết quả: <code>&lt;h2&gt;</code> thành tiêu đề, <code>&lt;strong&gt;</code> thành chữ đậm, <code>&lt;ul&gt;&lt;li&gt;</code> thành danh sách gạch đầu dòng.</p>
+<div class="cd-grid2">
+  <figure class="cd-code"><pre><code>&lt;article class="post"&gt;
+  &lt;h2&gt;Buổi học đầu tiên&lt;/h2&gt;
+  &lt;p&gt;Hôm nay lớp học &lt;strong&gt;HTML&lt;/strong&gt;
+     và &lt;em&gt;đường dẫn tương đối&lt;/em&gt;.&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Cấu trúc tài liệu&lt;/li&gt;
+    &lt;li&gt;Thẻ văn bản&lt;/li&gt;
+    &lt;li&gt;Liên kết &lt;a href="../index.html"&gt;trang chủ&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;small&gt;Ghi chú: thẻ lồng nhau tạo cây phần tử.&lt;/small&gt;
+&lt;/article&gt;</code></pre></figure>
+  <div class="cd-pane">
+    <article class="post">
+      <h2>Buổi học đầu tiên</h2>
+      <p>Hôm nay lớp học <strong>HTML</strong> và <em>đường dẫn tương đối</em>.</p>
+      <ul>
+        <li>Cấu trúc tài liệu</li>
+        <li>Thẻ văn bản</li>
+        <li>Liên kết <a href="../index.html">trang chủ</a></li>
+      </ul>
+      <small>Ghi chú: thẻ lồng nhau tạo cây phần tử.</small>
+    </article>
+  </div>
+</div>
+<p class="cd-note">Mở DevTools (F12) → tab <strong>Elements</strong>: bạn sẽ thấy cây phần tử giống hệt cấu trúc lồng nhau của mã. Di chuột vào một nút trong cây để tô sáng nó trên trang.</p>
+</section>
+
+<section class="cd-sec" id="cd-2-2">
+<h2>2. Máy tính đường dẫn tương đối</h2>
+<p class="cd-why">Liên kết trong dự án nhiều thư mục phải viết <em>tương đối so với file đang đứng</em>: <code>../</code> nghĩa là “lùi lên một cấp thư mục”. Chọn vị trí trang hiện tại và file đích — công cụ sẽ tính hộ đường dẫn đúng.</p>
+<div class="cd-ctl">
+  <label for="cd2-from">Trang hiện tại ở:</label>
+  <select id="cd2-from">
+    <option value="/">/ (thư mục gốc)</option>
+    <option value="/demo/" selected>/demo/</option>
+    <option value="/ebook/">/ebook/</option>
+    <option value="/baidoc/">/baidoc/</option>
+  </select>
+  <label for="cd2-to">Muốn liên kết tới:</label>
+  <select id="cd2-to">
+    <option value="index.html">/index.html</option>
+    <option value="demo/index.html" selected>/demo/index.html</option>
+    <option value="ebook/chuong-2.html">/ebook/chuong-2.html</option>
+    <option value="assets/css/style.css">/assets/css/style.css</option>
+    <option value="slides/index.html">/slides/index.html</option>
+  </select>
+</div>
+<div class="cd-out" id="cd2-out" aria-live="polite"></div>
+<h3 class="cd-tag" style="margin-top:14px">Liên kết thật từ chính trang này (đang ở /demo/)</h3>
+<div class="cd-pane">
+  <ul>
+    <li><code>../index.html</code> → <a href="../index.html">Trang chủ môn học</a></li>
+    <li><code>../ebook/chuong-2.html</code> → <a href="../ebook/chuong-2.html">Ebook chương 2</a></li>
+    <li><code>index.html</code> → <a href="index.html">Demo hub (cùng thư mục, không cần ../)</a></li>
+    <li><code>../assets/css/style.css</code> → <a href="../assets/css/style.css">File CSS của cả site</a></li>
+  </ul>
+</div>
+<p class="cd-warn">Lỗi kinh điển: đứng ở <code>/demo/</code> mà viết <code>href="/ebook/chuong-2.html"</code> (dấu <code>/</code> đầu = tuyệt đối từ gốc domain). Khi site chạy dưới <code>github.io/cse122-k67/</code> link sẽ hỏng vì trỏ ra ngoài thư mục dự án.</p>
+</section>
+<nav class="cd-nav" aria-label="Chuyển chương demo"><a href="chuong-1.html" rel="prev">← Chương 1 · Nhập môn Web</a><a href="index.html#demo-theo-chuong">☰ Danh sách demo</a><a class="cd-next" href="chuong-3.html" rel="next">Chương 3 · HTML nâng cao →</a></nav>
+</main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260921-phase1"></script>
+<script>
+'use strict';
+(function(){
+  function $(id){return document.getElementById(id);}
+  var from=$('cd2-from'),to=$('cd2-to'),out=$('cd2-out');
+  function relPath(fromDir,toFile){
+    var a=fromDir.split('/').filter(Boolean);
+    var b=('/'+toFile).split('/').filter(Boolean);
+    var i=0;
+    while(i<a.length&&i<b.length&&a[i]===b[i])i++;
+    var parts=[];
+    for(var k=i;k<a.length;k++)parts.push('..');
+    parts=parts.concat(b.slice(i));
+    return parts.join('/');
+  }
+  function update(){
+    var href=relPath(from.value,to.value);
+    var ups=(href.match(/\.\.(\/|$)/g)||[]).length;
+    var down=href.split('/').slice(ups).join('/');
+    out.textContent=
+      'Trang hiện tại: '+from.value+'\n'+
+      'File đích:      /'+to.value+'\n\n'+
+      'Viết trong HTML:  <a href="'+href+'">…</a>\n\n'+
+      (ups
+        ? '→ Lùi lên '+ups+' cấp thư mục ('+'../'.repeat(ups)+'), rồi đi xuống: '+down
+        : '→ Hai file cùng nhánh "'+from.value.split('/').filter(Boolean).pop()+'/" nên không cần "../": '+down);
+  }
+  from.addEventListener('change',update);
+  to.addEventListener('change',update);
+  update();
+})();
+</script>
+</body></html>

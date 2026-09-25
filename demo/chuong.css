@@ -1,0 +1,135 @@
+/* ============ Demo theo chương (demo/chuong-*.html) ============
+   Widget styles for the per-chapter teaching demos.
+   Every custom class is prefixed `cd-` to avoid clashing with
+   .chip/.demo/.note in assets/css/style.css. */
+
+/* ---------- Layout blocks ---------- */
+.cd-sec{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);
+  padding:22px 24px;margin:22px 0;box-shadow:var(--sh-sm)}
+.cd-sec>h2{margin:0 0 6px;font-size:21px;letter-spacing:-.01em}
+.cd-sec>p.cd-why{margin:0 0 14px;color:var(--muted);font-size:14.5px}
+.cd-grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;align-items:start}
+@media(max-width:900px){.cd-grid2{grid-template-columns:1fr}}
+.cd-pane{border:1.5px dashed var(--accent-line);border-radius:var(--r-md);padding:16px;
+  background:#fafaff;min-height:80px;overflow:auto}
+.cd-out{background:var(--code-bg);color:#dbe4f3;font-family:var(--mono);font-size:13px;
+  line-height:1.55;border-radius:var(--r-md);padding:12px 14px;margin:10px 0 0;
+  overflow:auto;min-height:44px;border:1px solid #1e293b;white-space:pre-wrap;word-break:break-word}
+.cd-out:empty::before{content:"Kết quả hiển thị ở đây";color:#64748b}
+.cd-ctl{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:0 0 12px}
+.cd-ctl label{font-size:13px;font-weight:600;color:var(--ink-2);display:inline-flex;align-items:center;gap:6px}
+.cd-note{border-left:4px solid var(--ok);background:var(--ok-soft);padding:10px 14px;
+  border-radius:0 var(--r-sm) var(--r-sm) 0;margin:12px 0 0;font-size:14px}
+.cd-warn{border-left:4px solid var(--warn);background:var(--warn-soft);padding:10px 14px;
+  border-radius:0 var(--r-sm) var(--r-sm) 0;margin:12px 0 0;font-size:14px}
+.cd-tag{display:inline-block;font:600 11.5px var(--mono);background:var(--accent-soft);color:#4338ca;
+  border:1px solid var(--accent-line);border-radius:999px;padding:2px 10px;margin:0 6px 6px 0}
+
+/* ---------- Controls ---------- */
+.cd-seg{display:inline-flex;flex-wrap:wrap;gap:6px}
+.cd-seg button{font:inherit;font-size:12.5px;font-weight:600;padding:6px 12px;border-radius:999px;
+  border:1.5px solid var(--line-2);background:#fff;color:var(--ink-2);cursor:pointer;transition:all .15s}
+.cd-seg button:hover{border-color:var(--accent);color:var(--accent)}
+.cd-seg button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+/* Nút dùng chung trong demo (biến thể nền sáng của .btn site) */
+.cd-sec .btn.btn-ghost{background:#fff;color:var(--accent);border:1.5px solid var(--accent-line);box-shadow:none}
+.cd-sec .btn.btn-ghost:hover{background:var(--accent-soft);color:var(--accent-2);box-shadow:none;filter:none}
+.btn.btn-sm{padding:6px 14px;font-size:13px;border-radius:10px;box-shadow:none}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.btn:disabled:hover{transform:none;box-shadow:0 8px 20px -6px rgba(79,70,229,.5);filter:none}
+.cd-seg button:focus-visible,.cd-pane button:focus-visible,.cd-sec button:focus-visible,
+.cd-sec input:focus-visible,.cd-sec select:focus-visible,.cd-sec textarea:focus-visible{
+  outline:3px solid rgba(79,70,229,.35);outline-offset:1px}
+input[type=range]{accent-color:var(--accent)}
+.cd-sec input[type=text],.cd-sec input[type=url],.cd-sec input[type=email],.cd-sec input[type=tel],
+.cd-sec input[type=number],.cd-sec input[type=date],.cd-sec input[type=time],
+.cd-sec select,.cd-sec textarea{font:inherit;font-size:14px;padding:8px 12px;
+  border:1.5px solid var(--line-2);border-radius:10px;background:#fff;color:var(--ink);max-width:100%}
+.cd-sec textarea{width:100%;min-height:90px;resize:vertical}
+details.cd-code summary{cursor:pointer;font-weight:600;font-size:13.5px;color:var(--accent);
+  padding:4px 0;user-select:none}
+figure.cd-code{margin:10px 0 0;position:relative}
+figure.cd-code pre{margin:0;font-size:12.5px}
+
+/* ---------- Chapter footer nav ---------- */
+.cd-nav{display:flex;gap:12px;flex-wrap:wrap;justify-content:space-between;align-items:center;
+  margin:28px 0 8px;padding-top:18px;border-top:1px solid var(--line)}
+.cd-nav a{font-weight:600}
+.cd-nav .cd-next{margin-left:auto}
+
+/* ---------- Chương 1: URL anatomy + HTTP sim ---------- */
+.cd-url-table td:first-child{font-family:var(--mono);color:#4338ca;white-space:nowrap}
+.cd-http{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;text-align:center;margin:6px 0 14px}
+.cd-http .cd-node{border:1.5px solid var(--line-2);border-radius:var(--r-md);padding:14px 10px;
+  background:#fff;font-weight:700;font-size:14px}
+.cd-http .cd-node small{display:block;font-weight:500;color:var(--muted);font-size:11.5px}
+.cd-http .cd-arrow{font-size:22px;color:var(--line-2);transition:color .2s}
+.cd-http .cd-node.active{border-color:var(--accent);background:var(--accent-soft);box-shadow:var(--sh-sm)}
+.cd-http .cd-arrow.active{color:var(--accent)}
+@media(max-width:560px){.cd-http{grid-template-columns:1fr}.cd-http .cd-arrow{transform:rotate(90deg)}}
+
+/* ---------- Chương 4: selector playground ---------- */
+.cd-sample{background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:14px 16px}
+.cd-sample .hl{outline:3px solid #f59e0b;outline-offset:2px;background:#fffbeb;border-radius:4px}
+.cd-swatch{height:96px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:15px;background:var(--cd-accent,#4f46e5);color:var(--cd-ink,#fff);
+  transition:background-color .2s,color .2s}
+
+/* ---------- Chương 5: box model / flex / grid ---------- */
+.cd-boxlab{display:flex;justify-content:center;padding:26px 8px}
+.cd-box-margin{background:#fde68a}
+.cd-box-border{background:#f97316}
+.cd-box-padding{background:#bbf7d0}
+.cd-box-content{background:#2563eb;color:#fff;display:flex;align-items:center;justify-content:center;
+  font:700 12px var(--mono);text-align:center}
+.cd-flexbox{display:flex;background:#fff;border:1.5px solid var(--accent-line);border-radius:var(--r-md);
+  padding:10px;min-height:170px}
+.cd-item{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border-radius:10px;
+  font:700 13px var(--mono);padding:14px 12px;text-align:center}
+.cd-gridlab{display:grid;background:#fff;border:1.5px solid var(--accent-line);border-radius:var(--r-md);padding:10px}
+.cd-gridlab .cd-item{padding:18px 8px}
+
+/* ---------- Chương 6: device simulator + animation ---------- */
+.cd-device{border:3px solid #0f172a;border-radius:14px;overflow:hidden;background:#fff;
+  margin:0 auto;transition:width .15s ease;max-width:100%}
+.cd-device iframe{display:block;width:100%;height:520px;border:0}
+.cd-transbox{width:110px;height:70px;border-radius:12px;background:#4f46e5}
+.cd-transbox.go{background:#f59e0b;transform:translateX(160px)}
+.cd-animbox{width:96px;height:96px;border-radius:16px;background:linear-gradient(135deg,#4f46e5,#0ea5e9);margin:10px}
+@keyframes cd-spin{to{transform:rotate(360deg)}}
+@keyframes cd-bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-38px)}}
+@keyframes cd-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
+@keyframes cd-fade{0%,100%{opacity:1}50%{opacity:.15}}
+
+/* ---------- Chương 7: bootstrap frame + mini grid ---------- */
+.cd-frame{width:100%;height:760px;border:1.5px solid var(--line-2);border-radius:var(--r-md);background:#fff}
+.cd-row{display:flex;flex-wrap:wrap;margin:0 -6px}
+.cd-col{padding:0 6px 10px;flex:0 0 auto}
+.cd-col>div{background:var(--accent-soft);border:1px dashed var(--accent-line);border-radius:8px;
+  padding:10px;text-align:center;font:600 12px var(--mono);color:#4338ca}
+.cd-col-3{width:25%}.cd-col-4{width:33.3333%}.cd-col-6{width:50%}
+.cd-col-8{width:66.6667%}.cd-col-12{width:100%}
+
+/* ---------- Chương 8: DOM / events ---------- */
+.cd-list{list-style:none;margin:0;padding:0}
+.cd-list li{padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin:0 0 6px;
+  background:#fff;cursor:pointer;font-size:14px}
+.cd-list li:hover{border-color:var(--accent);background:var(--accent-soft)}
+
+/* ---------- Chương 9: fetch + booking ---------- */
+.cd-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-top:12px}
+.cd-card{background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:12px 14px;box-shadow:var(--sh-sm)}
+.cd-card b{display:block;font-size:14.5px}
+.cd-card span{font-size:12.5px;color:var(--muted)}
+.cd-spin{display:inline-block;width:16px;height:16px;border:3px solid var(--accent-line);
+  border-top-color:var(--accent);border-radius:50%;animation:cd-spin .8s linear infinite;
+  vertical-align:-3px;margin-right:8px}
+.cd-alert{border-left:4px solid #dc2626;background:#fef2f2;color:#991b1b;padding:10px 14px;
+  border-radius:0 var(--r-sm) var(--r-sm) 0;margin:10px 0 0;font-size:14px}
+.cd-steps{display:flex;gap:8px;margin:0 0 14px}
+.cd-steps span{flex:1;text-align:center;font:600 12px var(--font);padding:8px 4px;border-radius:999px;
+  background:#eef2f7;color:var(--muted);border:1px solid var(--line)}
+.cd-steps span.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.cd-steps span.done{background:var(--ok-soft);color:var(--ok);border-color:#a7f3d0}
+.cd-step[hidden]{display:none}
+

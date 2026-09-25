@@ -1,0 +1,181 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Demo Chương 5 – CSS Layout: Box Model, Flexbox, Grid | CSE122</title>
+<meta name="description" content="Demo chương 5 CSE122: phòng thí nghiệm Box Model, sân chơi Flexbox và Grid chỉnh thông số thấy kết quả ngay.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260921-phase1">
+<link rel="stylesheet" href="chuong.css?v=20260925-chap1">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main">
+<p class="meta"><a href="index.html#demo-theo-chuong">Demo theo chương</a> · Chương 5/9 · Lý thuyết: <a href="../ebook/chuong-5.html">Ebook chương 5</a> · <a href="../baidoc/index.html#ch5">Bài giảng</a> · <a href="de-cuong/index.html#dc-c5-5-1">Đề cương</a> · Xem thêm: <a href="ba-cach-nhung-css.html">Box Model tĩnh</a></p>
+<h1>Demo Chương 5 — CSS Layout: Box Model, Flexbox, Grid</h1>
+<p>Ba công cụ layout quan trọng nhất của CSS, mỗi thứ một “phòng thí nghiệm” chỉnh thông số thấy kết quả ngay: <strong>Box Model</strong> (một phần tử chiếm bao nhiêu chỗ), <strong>Flexbox</strong> (xếp một hàng/cột), <strong>Grid</strong> (chia lưới hai chiều).</p>
+
+<section class="cd-sec" id="cd-5-1">
+<h2>1. Phòng thí nghiệm Box Model</h2>
+<p class="cd-why">Kéo các thanh trượt để thay 4 lớp của hộp: <span class="cd-tag">margin — vàng</span><span class="cd-tag">border — cam</span><span class="cd-tag">padding — xanh lá</span><span class="cd-tag">content — xanh dương</span>. Bật <code>box-sizing: border-box</code> để thấy <code>width</code> “nuốt” luôn padding + border — lý do mọi dự án hiện đại đều đặt <code>* { box-sizing: border-box }</code>.</p>
+<div class="cd-grid2">
+  <div>
+    <div class="cd-ctl"><label for="cd5-cw">width: <b id="cd5-cw-v">200</b>px</label><input type="range" id="cd5-cw" min="80" max="320" value="200"></div>
+    <div class="cd-ctl"><label for="cd5-p">padding: <b id="cd5-p-v">20</b>px</label><input type="range" id="cd5-p" min="0" max="48" value="20"></div>
+    <div class="cd-ctl"><label for="cd5-b">border: <b id="cd5-b-v">8</b>px</label><input type="range" id="cd5-b" min="0" max="24" value="8"></div>
+    <div class="cd-ctl"><label for="cd5-m">margin: <b id="cd5-m-v">24</b>px</label><input type="range" id="cd5-m" min="0" max="48" value="24"></div>
+    <div class="cd-ctl"><label><input type="checkbox" id="cd5-bs"> box-sizing: border-box</label></div>
+    <div class="cd-out" id="cd5-box-out" role="status" aria-live="polite"></div>
+  </div>
+  <div class="cd-pane cd-boxlab">
+    <div class="cd-box-margin" id="cd5-m-box">
+      <div class="cd-box-border" id="cd5-b-box">
+        <div class="cd-box-padding" id="cd5-p-box">
+          <div class="cd-box-content" id="cd5-c-box">content</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<p class="cd-note">Công thức <em>content-box</em> (mặc định): chỗ chiếm = width + 2×(padding + border + margin). Với <em>border-box</em>: chỗ chiếm = width + 2×margin, và vùng nội dung thực = width − 2×(padding + border).</p>
+</section>
+<section class="cd-sec" id="cd-5-2">
+<h2>2. Sân chơi Flexbox</h2>
+<p class="cd-why">Flexbox xếp các phần tử theo <strong>một trục</strong>. Đổi từng thuộc tính và quan sát: <code>flex-direction</code> chọn trục, <code>justify-content</code> chia khoảng cách dọc trục chính, <code>align-items</code> canh trục chéo, <code>gap</code> tạo khe hở. Code CSS bên phải tự cập nhật theo đúng trạng thái đang thấy.</p>
+<div class="cd-grid2">
+  <div class="cd-pane">
+    <div class="cd-flexbox" id="cd5-flex">
+      <div class="cd-item">1</div>
+      <div class="cd-item">2</div>
+      <div class="cd-item">item 3 dài hơn</div>
+      <div class="cd-item">4</div>
+      <div class="cd-item">5</div>
+    </div>
+  </div>
+  <div>
+    <p style="margin:0 0 6px"><span class="cd-tag">flex-direction</span>
+      <span class="cd-seg" data-lab="flex" role="group" aria-label="Thuộc tính flex">
+        <button type="button" class="on" data-prop="flexDirection" data-v="row" aria-pressed="true">row</button>
+        <button type="button" data-prop="flexDirection" data-v="row-reverse" aria-pressed="false">row-reverse</button>
+        <button type="button" data-prop="flexDirection" data-v="column" aria-pressed="false">column</button>
+      </span></p>
+    <p style="margin:0 0 6px"><span class="cd-tag">justify-content</span>
+      <span class="cd-seg" data-lab="flex" role="group" aria-label="justify-content">
+        <button type="button" class="on" data-prop="justifyContent" data-v="flex-start" aria-pressed="true">flex-start</button>
+        <button type="button" data-prop="justifyContent" data-v="center" aria-pressed="false">center</button>
+        <button type="button" data-prop="justifyContent" data-v="flex-end" aria-pressed="false">flex-end</button>
+        <button type="button" data-prop="justifyContent" data-v="space-between" aria-pressed="false">space-between</button>
+        <button type="button" data-prop="justifyContent" data-v="space-around" aria-pressed="false">space-around</button>
+        <button type="button" data-prop="justifyContent" data-v="space-evenly" aria-pressed="false">space-evenly</button>
+      </span></p>
+    <p style="margin:0 0 6px"><span class="cd-tag">align-items</span>
+      <span class="cd-seg" data-lab="flex" role="group" aria-label="align-items">
+        <button type="button" class="on" data-prop="alignItems" data-v="stretch" aria-pressed="true">stretch</button>
+        <button type="button" data-prop="alignItems" data-v="flex-start" aria-pressed="false">flex-start</button>
+        <button type="button" data-prop="alignItems" data-v="center" aria-pressed="false">center</button>
+        <button type="button" data-prop="alignItems" data-v="flex-end" aria-pressed="false">flex-end</button>
+      </span></p>
+    <p style="margin:0 0 6px"><span class="cd-tag">flex-wrap</span>
+      <span class="cd-seg" data-lab="flex" role="group" aria-label="flex-wrap">
+        <button type="button" class="on" data-prop="flexWrap" data-v="nowrap" aria-pressed="true">nowrap</button>
+        <button type="button" data-prop="flexWrap" data-v="wrap" aria-pressed="false">wrap</button>
+      </span></p>
+    <p class="cd-ctl"><label for="cd5-gap">gap: <b id="cd5-gap-v">12</b>px</label><input type="range" id="cd5-gap" min="0" max="32" value="12"></p>
+    <div class="cd-out" id="cd5-flex-code" aria-live="polite"></div>
+  </div>
+</div>
+</section>
+
+<section class="cd-sec" id="cd-5-3">
+<h2>3. Sân chơi CSS Grid</h2>
+<p class="cd-why">Grid chia mặt phẳng theo <strong>hai chiều</strong>: <code>grid-template-columns: repeat(n, 1fr)</code> tạo n cột đều nhau, các item tự chảy vào ô. Đổi số cột và gap — số item cũng đổi theo (2 hàng).</p>
+<div class="cd-grid2">
+  <div class="cd-pane">
+    <div class="cd-gridlab" id="cd5-grid" aria-label="Lưới demo"></div>
+  </div>
+  <div>
+    <div class="cd-ctl"><label for="cd5-cols">grid-template-columns: repeat(<b id="cd5-cols-v">3</b>, 1fr)</label><input type="range" id="cd5-cols" min="1" max="6" value="3"></div>
+    <div class="cd-ctl"><label for="cd5-ggap">gap: <b id="cd5-ggap-v">12</b>px</label><input type="range" id="cd5-ggap" min="0" max="32" value="12"></div>
+    <div class="cd-out" id="cd5-grid-code" aria-live="polite"></div>
+  </div>
+</div>
+<p class="cd-note">Khi nào dùng gì? <strong>Flexbox</strong> cho một hàng điều hướng, nhóm nút, thẻ nằm ngang. <strong>Grid</strong> cho bố cục trang, lưới card nhiều hàng nhiều cột. Cả hai thường phối hợp: Grid dựng khung, Flex căn nội dung trong từng ô.</p>
+</section>
+<nav class="cd-nav" aria-label="Chuyển chương demo"><a href="chuong-4.html" rel="prev">← Chương 4 · CSS cơ bản</a><a href="index.html#demo-theo-chuong">☰ Danh sách demo</a><a class="cd-next" href="chuong-6.html" rel="next">Chương 6 · Responsive &amp; Animation →</a></nav>
+</main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260921-phase1"></script>
+<script>
+'use strict';
+(function(){
+  function $(id){return document.getElementById(id);}
+  /* ---- Demo 1: Box Model ---- */
+  var ids=['cd5-cw','cd5-p','cd5-b','cd5-m'];
+  var mBox=$('cd5-m-box'),bBox=$('cd5-b-box'),pBox=$('cd5-p-box'),cBox=$('cd5-c-box'),boxOut=$('cd5-box-out'),bsBox=$('cd5-bs');
+  function renderBoxModel(){
+    var cw=+$('cd5-cw').value,p=+$('cd5-p').value,b=+$('cd5-b').value,m=+$('cd5-m').value,bs=bsBox.checked;
+    ids.forEach(function(id){$(id+'-v').textContent=$(id).value;});
+    mBox.style.padding=m+'px';
+    bBox.style.padding=b+'px';
+    pBox.style.padding=p+'px';
+    var contentW=bs?Math.max(cw-2*p-2*b,0):cw;
+    cBox.style.width=contentW+'px';
+    cBox.style.height='80px';
+    cBox.textContent='content '+contentW+'px';
+    var total=bs?(cw+2*m):(cw+2*p+2*b+2*m);
+    boxOut.textContent='.box{\n  width: '+cw+'px;\n  padding: '+p+'px;\n  border: '+b+'px solid;\n  margin: '+m+'px;\n  box-sizing: '+(bs?'border-box':'content-box')+';\n}\n\n→ Tổng chỗ chiếm ngang: '+total+'px\n→ Vùng nội dung thực:   '+contentW+'px';
+  }
+  ids.forEach(function(id){$(id).addEventListener('input',renderBoxModel);});
+  bsBox.addEventListener('change',renderBoxModel);
+  renderBoxModel();
+  /* ---- Demo 2: Flexbox ---- */
+  var flex=$('cd5-flex'),flexCode=$('cd5-flex-code'),gap=$('cd5-gap');
+  var state={flexDirection:'row',justifyContent:'flex-start',alignItems:'stretch',flexWrap:'nowrap'};
+  function renderFlex(){
+    flex.style.flexDirection=state.flexDirection;
+    flex.style.justifyContent=state.justifyContent;
+    flex.style.alignItems=state.alignItems;
+    flex.style.flexWrap=state.flexWrap;
+    flex.style.gap=gap.value+'px';
+    $('cd5-gap-v').textContent=gap.value;
+    flexCode.textContent='.container{\n  display: flex;\n  flex-direction: '+state.flexDirection+';\n  justify-content: '+state.justifyContent+';\n  align-items: '+state.alignItems+';\n  flex-wrap: '+state.flexWrap+';\n  gap: '+gap.value+'px;\n}';
+  }
+  document.querySelectorAll('.cd-seg[data-lab="flex"]').forEach(function(seg){
+    seg.addEventListener('click',function(event){
+      var btn=event.target.closest?event.target.closest('button[data-prop]'):null;
+      if(!btn||!seg.contains(btn))return;
+      seg.querySelectorAll('button[data-prop="'+btn.dataset.prop+'"]').forEach(function(b){b.classList.remove('on');b.setAttribute('aria-pressed','false');});
+      btn.classList.add('on');btn.setAttribute('aria-pressed','true');
+      state[btn.dataset.prop]=btn.dataset.v;
+      renderFlex();
+    });
+  });
+  gap.addEventListener('input',renderFlex);
+  renderFlex();
+  /* ---- Demo 3: Grid ---- */
+  var grid=$('cd5-grid'),gridCode=$('cd5-grid-code');
+  function renderGrid(){
+    var cols=+$('cd5-cols').value,gapPx=+$('cd5-ggap').value;
+    $('cd5-cols-v').textContent=cols;$('cd5-ggap-v').textContent=gapPx;
+    grid.style.gridTemplateColumns='repeat('+cols+',minmax(0,1fr))';
+    grid.style.gap=gapPx+'px';
+    grid.textContent='';
+    for(var i=1;i<=cols*2;i++){
+      var cell=document.createElement('div');
+      cell.className='cd-item';cell.textContent='item '+i;
+      grid.appendChild(cell);
+    }
+    gridCode.textContent='.grid{\n  display: grid;\n  grid-template-columns: repeat('+cols+', 1fr);\n  gap: '+gapPx+'px;\n}\n\n/* '+(cols*2)+' item tự chảy đầy 2 hàng */';
+  }
+  $('cd5-cols').addEventListener('input',renderGrid);
+  $('cd5-ggap').addEventListener('input',renderGrid);
+  renderGrid();
+})();
+</script>
+</body></html>

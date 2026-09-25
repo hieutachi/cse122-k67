@@ -1,0 +1,209 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Demo Chương 8 – JavaScript cơ bản và DOM | CSE122</title>
+<meta name="description" content="Demo chương 8 CSE122: trực quan hoá map/filter/sort/reduce, sự kiện DOM với event delegation và sổ tay localStorage.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260921-phase1">
+<link rel="stylesheet" href="chuong.css?v=20260925-chap1">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../index.html">Trang chủ</a><a href="../ebook/index.html">Ebook</a><a href="../baidoc/index.html">Bài giảng</a><a href="../slides/index.html">Slide</a><a href="../demo/index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main">
+<p class="meta"><a href="index.html#demo-theo-chuong">Demo theo chương</a> · Chương 8/9 · Lý thuyết: <a href="../ebook/chuong-8.html">Ebook chương 8</a> · <a href="../baidoc/index.html#ch8">Bài giảng</a> · <a href="de-cuong/index.html#dc-c8-8-1">Đề cương</a></p>
+<h1>Demo Chương 8 — JavaScript cơ bản và DOM</h1>
+<p>JavaScript làm trang web <strong>biết phản ứng</strong>: xử lý dữ liệu bằng array methods, lắng nghe sự kiện, thay đổi DOM và ghi nhớ bằng localStorage. Ba demo dưới đây chạy ngay trong trang — mở DevTools Console để xem thêm log.</p>
+
+<section class="cd-sec" id="cd-8-1">
+<h2>1. Trực quan hoá array methods</h2>
+<p class="cd-why">Cùng một mảng 6 sinh viên, mỗi method trả về một thứ khác nhau: <code>map</code> biến đổi từng phần tử, <code>filter</code> chọn theo điều kiện, <code>sort</code> sắp xếp, <code>reduce</code> gộp về một giá trị, <code>find</code> lấy phần tử đầu tiên thoả mãn. Bấm từng nút và đọc kết quả kèm biểu thức đã chạy.</p>
+<div class="cd-grid2">
+  <div>
+    <div class="cd-ctl">
+      <span class="cd-seg" id="cd8-arr" role="group" aria-label="Chọn array method">
+        <button type="button" class="on" data-m="raw" aria-pressed="true">dữ liệu gốc</button>
+        <button type="button" data-m="map" aria-pressed="false">map</button>
+        <button type="button" data-m="filter" aria-pressed="false">filter</button>
+        <button type="button" data-m="sort" aria-pressed="false">sort</button>
+        <button type="button" data-m="reduce" aria-pressed="false">reduce</button>
+        <button type="button" data-m="find" aria-pressed="false">find</button>
+      </span>
+    </div>
+    <div class="cd-out" id="cd8-arr-out" role="status" aria-live="polite" style="max-height:340px"></div>
+  </div>
+  <div>
+    <details class="cd-code" open><summary>Xem code</summary>
+<figure class="cd-code"><pre><code>const sinhVien = [
+  { ten: 'Nguyễn Văn An',  diem: 8.5 },
+  { ten: 'Trần Thị Bình',  diem: 9.2 },
+  { ten: 'Lê Minh Châu',   diem: 7.0 },
+  { ten: 'Phạm Quốc Đạt',  diem: 6.5 },
+  { ten: 'Hoàng Thị Em',   diem: 8.0 },
+  { ten: 'Vũ Thành Long',  diem: 9.8 }
+];
+
+sinhVien.map(s =&gt; s.ten);            // → mảng tên
+sinhVien.filter(s =&gt; s.diem &gt;= 8);   // → mảng con
+[...sinhVien].sort((a, b) =&gt; b.diem - a.diem);
+sinhVien.reduce((sum, s) =&gt; sum + s.diem, 0); // → 1 số
+sinhVien.find(s =&gt; s.diem &gt;= 9);     // → 1 phần tử</code></pre></figure></details>
+    <p class="cd-note"><code>map/filter</code> luôn trả <em>mảng mới</em> — mảng gốc không đổi. <code>sort</code> thì ngược lại: nó sắp xếp tại chỗ, nên phải copy bằng <code>[...mang]</code> trước khi sort nếu muốn giữ mảng cũ.</p>
+  </div>
+</div>
+</section>
+<section class="cd-sec" id="cd-8-2">
+<h2>2. Sự kiện &amp; DOM: đếm, uỷ quyền (delegation), phản chiếu</h2>
+<p class="cd-why">DOM là cây phần tử mà JS có thể đọc/sửa; sự kiện là cách người dùng “nói chuyện” với trang. Ba thí nghiệm nhỏ: nút đếm (<code>addEventListener</code>), danh sách dùng <strong>một</strong> listener cho cả <code>&lt;ul&gt;</code> (event delegation), và ô nhập phản chiếu chữ tức thì (<code>input</code>).</p>
+<div class="cd-grid2">
+  <div class="cd-pane">
+    <p class="cd-ctl" style="margin:0 0 10px"><button type="button" class="btn" id="cd8-count">Bấm để đếm +1</button><b id="cd8-count-v" style="font-family:var(--mono)">0</b></p>
+    <p style="margin:0 0 6px;font-size:13.5px;color:var(--muted)">Bấm một môn học (listener đặt trên UL cha):</p>
+    <ul class="cd-list" id="cd8-deleg">
+      <li data-id="1">HTML — cấu trúc trang</li>
+      <li data-id="2">CSS — trình bày giao diện</li>
+      <li data-id="3">JavaScript — hành vi tương tác</li>
+      <li data-id="4">Bootstrap — component dựng sẵn</li>
+    </ul>
+    <p class="cd-ctl" style="margin:10px 0 0"><label for="cd8-mirror">Gõ thử:</label><input type="text" id="cd8-mirror" placeholder="chữ hiện ngay bên dưới…"></p>
+    <p style="margin:6px 0 0;font-family:var(--mono);font-size:14px" id="cd8-mirror-out" aria-live="polite"></p>
+  </div>
+  <div>
+    <div class="cd-out" id="cd8-ev-out" role="status" aria-live="polite" style="min-height:120px"></div>
+    <details class="cd-code"><summary>Xem code 3 listener</summary>
+<figure class="cd-code"><pre><code>// 1) Đếm click
+nut.addEventListener('click', () =&gt; {
+  count++; hien.textContent = count;
+});
+
+// 2) Event delegation: 1 listener cho N phần tử con
+ul.addEventListener('click', (e) =&gt; {
+  const li = e.target.closest('li');
+  if (!li) return;
+  log(e.target, e.currentTarget); // LI vs UL
+});
+
+// 3) Phản chiếu khi gõ
+input.addEventListener('input', () =&gt; {
+  out.textContent = input.value;
+});</code></pre></figure></details>
+  </div>
+</div>
+<p class="cd-note"><code>e.target</code> là phần tử <em>thực sự bị bấm</em> (có thể là LI), còn <code>e.currentTarget</code> là phần tử <em>đang giữ listener</em> (UL). Delegation giúp thêm/bớt LI thoải mái mà không cần gắn lại listener — chính trang Đề cương của môn này dùng kỹ thuật đó cho 126 mảnh nội dung.</p>
+</section>
+
+<section class="cd-sec" id="cd-8-3">
+<h2>3. Sổ tay localStorage — dữ liệu sống sót sau F5</h2>
+<p class="cd-why"><code>localStorage</code> lưu chuỗi theo cặp khoá–giá trị ngay trong trình duyệt, không mất khi tải lại trang. Gõ ghi chú, bấm Lưu, rồi <strong>bấm F5</strong> — chữ vẫn còn. Đây là cơ chế trang Đề cương nhớ tiến độ “Đã xem” của bạn.</p>
+<div class="cd-grid2">
+  <div class="cd-pane">
+    <label for="cd8-note" style="font-weight:600;font-size:14px">Ghi chú hôm nay:</label>
+    <textarea id="cd8-note" placeholder="Ví dụ: ôn lại specificity trước buổi học sau…"></textarea>
+    <p class="cd-ctl" style="margin:10px 0 0">
+      <button type="button" class="btn" id="cd8-save">💾 Lưu</button>
+      <button type="button" class="btn btn-ghost" id="cd8-clear">🗑 Xoá</button>
+      <span id="cd8-status" role="status" aria-live="polite" style="font-size:13px;color:var(--muted)"></span>
+    </p>
+  </div>
+  <div>
+    <details class="cd-code" open><summary>Xem code (có try/catch)</summary>
+<figure class="cd-code"><pre><code>const KEY = 'cse122-demo-notepad-v1';
+
+function luu() {
+  try {
+    localStorage.setItem(KEY, note.value);
+    status.textContent = 'Đã lưu lúc ' + gio();
+  } catch (err) {
+    // Chế độ ẩn danh / bị chặn storage
+    status.textContent = 'Không lưu được: ' + err.message;
+  }
+}
+
+// Khi tải trang: đọc lại
+try {
+  note.value = localStorage.getItem(KEY) ?? '';
+} catch (err) { /* bỏ qua */ }</code></pre></figure></details>
+    <p class="cd-warn">Luôn bọc storage trong <code>try/catch</code>: trình duyệt có thể chặn (chế độ ẩn danh, hết dung lượng). Chỉ lưu dữ liệu nhỏ, không nhạy cảm — localStorage <em>không phải</em> cơ sở dữ liệu.</p>
+  </div>
+</div>
+</section>
+
+<nav class="cd-nav" aria-label="Chuyển chương demo"><a href="chuong-7.html" rel="prev">← Chương 7 · Bootstrap Components</a><a href="index.html#demo-theo-chuong">☰ Danh sách demo</a><a class="cd-next" href="chuong-9.html" rel="next">Chương 9 · Fetch API &amp; dự án →</a></nav>
+
+</main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="../assets/js/app.js?v=20260921-phase1"></script>
+<script>
+'use strict';
+(function(){
+  function $(id){return document.getElementById(id);}
+  /* ---- Demo 1: array methods ---- */
+  var sinhVien=[
+    {ten:'Nguyễn Văn An',diem:8.5},
+    {ten:'Trần Thị Bình',diem:9.2},
+    {ten:'Lê Minh Châu',diem:7.0},
+    {ten:'Phạm Quốc Đạt',diem:6.5},
+    {ten:'Hoàng Thị Em',diem:8.0},
+    {ten:'Vũ Thành Long',diem:9.8}
+  ];
+  var arrOut=$('cd8-arr-out'),arrSeg=$('cd8-arr');
+  var METHODS={
+    raw:{expr:'sinhVien',run:function(){return sinhVien;}},
+    map:{expr:'sinhVien.map(s => s.ten)',run:function(){return sinhVien.map(function(s){return s.ten;});}},
+    filter:{expr:'sinhVien.filter(s => s.diem >= 8)',run:function(){return sinhVien.filter(function(s){return s.diem>=8;});}},
+    sort:{expr:'[...sinhVien].sort((a, b) => b.diem - a.diem)',run:function(){return sinhVien.slice().sort(function(a,b){return b.diem-a.diem;});}},
+    reduce:{expr:'sinhVien.reduce((sum, s) => sum + s.diem, 0)',run:function(){
+      var tong=sinhVien.reduce(function(sum,s){return sum+s.diem;},0);
+      return {tong:tong,soLuong:sinhVien.length,trungBinh:+(tong/sinhVien.length).toFixed(2)};}},
+    find:{expr:'sinhVien.find(s => s.diem >= 9)',run:function(){return sinhVien.find(function(s){return s.diem>=9;});}}
+  };
+  arrSeg.addEventListener('click',function(event){
+    var btn=event.target.closest?event.target.closest('button[data-m]'):null;
+    if(!btn||!arrSeg.contains(btn))return;
+    arrSeg.querySelectorAll('button').forEach(function(b){b.classList.remove('on');b.setAttribute('aria-pressed','false');});
+    btn.classList.add('on');btn.setAttribute('aria-pressed','true');
+    var m=METHODS[btn.dataset.m];
+    if(!m)return;
+    arrOut.textContent='> '+m.expr+'\n\n'+JSON.stringify(m.run(),null,2);
+  });
+  arrSeg.querySelector('button[data-m="raw"]').click();
+  /* ---- Demo 2: sự kiện & DOM ---- */
+  var count=0,evOut=$('cd8-ev-out');
+  $('cd8-count').addEventListener('click',function(){
+    count++;
+    $('cd8-count-v').textContent=count;
+    evOut.textContent='sự kiện: click\nnguồn:  <button id="cd8-count">\nbộ đếm:  '+count;
+  });
+  $('cd8-deleg').addEventListener('click',function(event){
+    var li=event.target.closest?event.target.closest('li'):null;
+    if(!li)return;
+    evOut.textContent='sự kiện: click — event delegation\ne.target:         <li data-id="'+li.dataset.id+'"> '+li.textContent.trim()+'\ne.currentTarget:  <ul id="cd8-deleg">  ← nơi listener đang đặt';
+  });
+  var mirror=$('cd8-mirror'),mirrorOut=$('cd8-mirror-out');
+  mirror.addEventListener('input',function(){mirrorOut.textContent=mirror.value?'“'+mirror.value+'”':'';});
+  /* ---- Demo 3: localStorage ---- */
+  var KEY='cse122-demo-notepad-v1',note=$('cd8-note'),noteStatus=$('cd8-status');
+  function gio(){return new Date().toLocaleTimeString('vi-VN');}
+  try{var saved=localStorage.getItem(KEY);if(saved!==null)note.value=saved;}catch(err){/* storage bị chặn */}
+  $('cd8-save').addEventListener('click',function(){
+    try{
+      localStorage.setItem(KEY,note.value);
+      noteStatus.textContent='✓ Đã lưu lúc '+gio();
+    }catch(err){
+      noteStatus.textContent='✗ Không lưu được: '+(err&&err.message?err.message:'storage bị chặn');
+    }
+  });
+  $('cd8-clear').addEventListener('click',function(){
+    try{localStorage.removeItem(KEY);}catch(err){/* bỏ qua */}
+    note.value='';noteStatus.textContent='Đã xoá ghi chú.';
+  });
+})();
+</script>
+
+</body></html>
