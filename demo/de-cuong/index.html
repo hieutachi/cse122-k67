@@ -1,0 +1,724 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Đề cương tương tác | CSE122</title>
+<meta name="description" content="DEMO đề cương học phần CSE122 – Phát triển ứng dụng Web cơ bản: toàn bộ nội dung được băm thành các mảnh nhỏ, bấm vào để xem chi tiết, phân chia theo 9 chương.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
+<link rel="stylesheet" href="../../assets/css/style.css?v=20260925-decuong">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%98%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="vi_VN">
+<style>
+/* ---------- Đề cương tương tác (scoped .dc-*) ---------- */
+.dc-lede{max-width:78ch;color:var(--ink-2);font-size:16.5px}
+.dc-stats{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 6px}
+.dc-stats span{font-size:13px;color:var(--ink-2);background:var(--paper);
+  border:1px solid var(--line);border-radius:999px;padding:6px 14px}
+.dc-stats strong{color:var(--accent);font-size:14px}
+.dc-bar{margin:16px 0 4px;background:var(--paper);border:1px solid var(--line);
+  border-radius:var(--r-md);padding:16px 18px;box-shadow:var(--sh-sm)}
+.dc-bar-top{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.dc-bar-top b{font-size:15px}
+.dc-track{height:10px;background:var(--bg);border:1px solid var(--line);
+  border-radius:999px;overflow:hidden}
+.dc-fill{height:100%;width:0;background:linear-gradient(90deg,#4f46e5,#38bdf8);
+  transition:width .35s ease}
+.dc-note{font-size:12.5px;color:var(--muted);margin:10px 0 0}
+.dc-toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:20px 0 10px}
+.dc-toolbar input{flex:1;min-width:230px;max-width:420px;padding:11px 16px;
+  font:inherit;font-size:14.5px;color:var(--ink);background:var(--paper);
+  border:1.5px solid var(--line-2);border-radius:999px}
+.dc-toolbar input:focus{outline:none;border-color:var(--accent);
+  box-shadow:0 0 0 4px var(--accent-soft)}
+.dc-btn{font:inherit;font-size:13px;font-weight:600;background:var(--paper);
+  color:var(--ink-2);border:1.5px solid var(--line-2);border-radius:999px;
+  padding:8px 15px;cursor:pointer;transition:all .15s;min-height:38px}
+.dc-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+.dc-count{font-size:13px;font-weight:600;color:var(--muted)}
+.dc-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 26px;padding:0}
+.dc-tab{font:inherit;font-size:13px;font-weight:700;background:var(--paper);
+  color:var(--ink-2);border:1.5px solid var(--line);border-radius:12px;
+  padding:8px 14px;cursor:pointer;transition:all .15s;min-height:40px}
+.dc-tab:hover{border-color:var(--accent-line);color:var(--accent)}
+.dc-tab[aria-pressed="true"]{background:linear-gradient(135deg,#4f46e5,#6d28d9);
+  color:#fff;border-color:transparent;box-shadow:var(--sh-sm)}
+.dc-tab small{display:block;font-size:10.5px;font-weight:600;opacity:.75}
+.dc-group{margin:0 0 40px;scroll-margin-top:80px}
+.dc-group-hd{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;
+  margin:0 0 6px;padding-bottom:10px;border-bottom:2px solid var(--line)}
+.dc-group-hd h2{margin:0;padding-left:0;font-size:21px}
+.dc-group-hd h2::before{display:none}
+.dc-group-hd .dc-count{margin-left:auto}
+.dc-group-blurb{color:var(--muted);font-size:13.5px;margin:8px 0 16px;max-width:80ch}
+.dc-ch{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);
+  padding:20px 22px 22px;margin:0 0 18px;box-shadow:var(--sh-sm);
+  display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start}
+.dc-ch-n{flex:0 0 auto;width:52px;height:52px;border-radius:14px;display:grid;
+  place-items:center;font-size:22px;font-weight:800;color:#fff;
+  background:linear-gradient(135deg,#4f46e5,#7c3aed)}
+.dc-ch-body{flex:1;min-width:240px}
+.dc-ch-body h3{margin:0 0 4px;font-size:18px;letter-spacing:-.01em}
+.dc-ch-body p{margin:0 0 10px;font-size:14px;color:var(--ink-2)}
+.dc-pills{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
+.dc-pill{font-size:11.5px;font-weight:700;padding:4px 11px;border-radius:999px;
+  background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-line);
+  white-space:nowrap}
+.dc-pill.th{background:var(--ok-soft);color:var(--ok);border-color:#a7f3d0}
+.dc-pill.warn{background:var(--warn-soft);color:var(--warn);border-color:#fde68a}
+.dc-items{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.dc-item{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-md);
+  overflow:hidden;transition:border-color .15s,box-shadow .15s}
+.dc-item:hover{border-color:var(--accent-line)}
+.dc-item[open]{border-color:var(--accent-line);box-shadow:var(--sh-sm)}
+.dc-item > summary{list-style:none;cursor:pointer;display:flex;gap:12px;
+  align-items:flex-start;padding:14px 16px;font-weight:600;font-size:15px;color:var(--ink)}
+.dc-item > summary::-webkit-details-marker{display:none}
+.dc-code{flex:0 0 auto;font-family:var(--mono);font-size:11.5px;font-weight:600;
+  color:var(--accent);background:var(--accent-soft);border:1px solid var(--accent-line);
+  border-radius:7px;padding:2px 8px;margin-top:1px;white-space:nowrap}
+.dc-sum-main{flex:1;min-width:0}
+.dc-sum-main span{display:block}
+.dc-sum-hint{font-weight:500;font-size:12.5px;color:var(--muted);margin-top:3px}
+.dc-caret{flex:0 0 auto;width:22px;height:22px;border-radius:7px;display:grid;
+  place-items:center;font-size:15px;font-weight:700;color:var(--accent);
+  background:var(--accent-soft);transition:transform .18s;margin-top:1px}
+.dc-item[open] .dc-caret{transform:rotate(45deg)}
+.dc-item.seen > summary{background:var(--ok-soft)}
+.dc-item.seen .dc-caret{background:#a7f3d0;color:var(--ok)}
+.dc-a{padding:2px 18px 18px;border-top:1px dashed var(--line);
+  font-size:14.5px;color:var(--ink-2);line-height:1.75}
+.dc-a h4{margin:16px 0 6px;font-size:13px;font-weight:800;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--muted)}
+.dc-a p{margin:8px 0}
+.dc-a ul{margin:8px 0;padding-left:22px}
+.dc-a li{margin:5px 0;overflow-wrap:anywhere}
+.dc-kv{margin:10px 0;padding:0;list-style:none;display:grid;gap:6px}
+.dc-kv li{display:flex;gap:10px;flex-wrap:wrap;font-size:14px}
+.dc-kv b{flex:0 0 auto;min-width:110px;color:var(--ink);font-weight:700}
+.dc-checks{list-style:none;margin:8px 0;padding:0;display:grid;gap:6px}
+.dc-checks li{display:flex;gap:9px;align-items:flex-start;font-size:14px}
+.dc-checks li::before{content:"\2713";flex:0 0 auto;width:19px;height:19px;border-radius:6px;
+  display:grid;place-items:center;font-size:11px;font-weight:800;
+  background:var(--ok-soft);color:var(--ok);border:1px solid #a7f3d0;margin-top:2px}
+.dc-res{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 2px}
+.dc-res a{font-size:12.5px;font-weight:600;text-decoration:none;color:var(--accent);
+  background:var(--accent-soft);border:1px solid var(--accent-line);
+  border-radius:999px;padding:5px 12px}
+.dc-res a:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+.dc-seen{font:inherit;font-size:12.5px;font-weight:700;background:var(--bg);
+  color:var(--ink-2);border:1.5px solid var(--line-2);border-radius:999px;
+  padding:7px 14px;cursor:pointer;margin-top:14px;min-height:36px;transition:all .15s}
+.dc-seen:hover{border-color:var(--ok);color:var(--ok);background:var(--ok-soft)}
+.dc-seen[aria-pressed="true"]{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.dc-foot{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:14px}
+.dc-foot .dc-seen{margin-top:0}
+.dc-copy{background:var(--paper)}
+.dc-copy:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+.dc-empty{padding:40px 20px;text-align:center;color:var(--muted);
+  background:var(--paper);border:1px dashed var(--line-2);border-radius:var(--r-md)}
+.dc-map{background:var(--warn-soft);border:1px solid #fde68a;border-radius:var(--r-md);
+  padding:14px 18px;margin:22px 0;font-size:13.5px;color:#78350f}
+.dc-map strong{display:block;margin-bottom:4px}
+.dc-sec{margin:0 0 26px;scroll-margin-top:88px}
+.dc-sec-t{font-size:16.5px;margin:0 0 12px;padding:9px 14px;background:var(--bg);
+  border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px}
+.dc-chap{margin:0 0 30px;scroll-margin-top:88px}
+.dc-item{scroll-margin-top:88px}
+.dc-item[hidden],.dc-sec[hidden],.dc-chap[hidden],.dc-group[hidden],.dc-items>li[hidden]{display:none}
+@media (max-width:640px){
+  .dc-ch{padding:16px}
+  .dc-item > summary{padding:12px 13px;font-size:14.5px;gap:9px}
+  .dc-a{padding:2px 14px 16px}
+  .dc-kv b{min-width:100%}
+  .dc-group-hd .dc-count{margin-left:0;width:100%}
+}
+@media print{
+  .topbar,.dc-toolbar,.dc-tabs,#totop,#readbar,.dc-seen,.dc-caret,.footer-nav{display:none!important}
+  .dc-item{break-inside:avoid;border:1px solid #94a3b8}
+  .dc-item > .dc-a{display:block!important}
+  body{background:#fff}
+}
+</style>
+</head><body>
+<a class="skip" href="#main">Bỏ qua tới nội dung chính</a>
+<div id="readbar" aria-hidden="true"></div>
+<button id="totop" aria-label="Về đầu trang" title="Về đầu trang">&#8593;</button>
+<header class="topbar"><div class="wrap">
+<div class="brand">CSE122 – Phát triển ứng dụng Web cơ bản<small>Basic Web Application Development · 3TC (2-0-1)</small></div>
+<nav class="nav" aria-label="Main"><a href="../../index.html">Trang chủ</a><a href="../../ebook/index.html">Ebook</a><a href="../../baidoc/index.html">Bài giảng</a><a href="../../slides/index.html">Slide</a><a href="../index.html">Demo</a></nav>
+</div></header><main class="wrap" id="main">
+<p class="meta"><a href="../../index.html">Trang chủ</a> &#8250; <a href="../index.html">Demo</a> &#8250; Đề cương tương tác</p>
+<h1>Đề cương học phần &mdash; bản tương tác</h1>
+<p class="dc-lede">Toàn bộ đề cương CSE122 được <strong>băm thành từng mảnh nhỏ</strong>. Sinh viên chỉ việc <strong>bấm vào một mục</strong> để mở ra xem chi tiết: nội dung, hoạt động dạy&ndash;học, chuẩn đầu ra, tiêu chí tự kiểm và học liệu đi kèm. Cấu trúc chia theo <strong>9 chương</strong> để dễ theo dõi.</p>
+<div class="dc-stats" id="dcstats" aria-label="Thống kê đề cương"></div>
+<div class="dc-bar">
+<div class="dc-bar-top"><b>Tiến độ tự kiểm của bạn</b><span class="dc-count" id="dcprogress"></span></div>
+<div class="dc-track" aria-hidden="true"><div class="dc-fill" id="dcfill"></div></div>
+<p class="dc-note">Bấm &ldquo;Đã xem&rdquo; ở mỗi mảnh để ghi nhận. Tiến độ chỉ lưu trên trình duyệt này (<code>localStorage</code>), không phải điểm đánh giá và không đồng bộ giữa các thiết bị.</p>
+</div>
+<div class="dc-toolbar">
+<input id="dcq" type="search" placeholder="Tìm trong đề cương: CLO, Bootstrap, async, rubric&hellip;" aria-label="Tìm kiếm trong đề cương" autocomplete="off">
+<button class="dc-btn" type="button" id="dcexpand">Mở tất cả</button>
+<button class="dc-btn" type="button" id="dccollapse">Đóng tất cả</button>
+<button class="dc-btn" type="button" id="dcreset">Đặt lại tiến độ</button>
+<span class="dc-count" id="dccount" role="status" aria-live="polite"></span>
+</div>
+<div class="dc-tabs" id="dctabs" role="group" aria-label="Lọc theo chương"></div>
+<div id="dcroot"></div>
+<div class="dc-map">
+<strong>Lưu ý về liên kết học liệu</strong>
+Ebook và slide trên site được tổ chức theo 9 chương <em>học liệu</em> (HTML cơ bản &rarr; HTML nâng cao &rarr; CSS cơ bản &rarr; CSS Layout &rarr; Bootstrap &rarr; JavaScript &rarr; Fetch API), còn đề cương này chia theo 9 chương <em>học phần</em>. Vì vậy các liên kết ở mỗi mảnh là <strong>ánh xạ theo chủ đề</strong>, không phải trùng số chương. Luôn đối chiếu tiêu đề chương ở trang đích.
+</div>
+</main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: Đề cương học phần CSE122 (bản đã chỉnh sửa) · 38 decks · 163 ảnh trực quan</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer>
+<script type="application/json" id="dc-data">
+{
+"course":{"code":"CSE122","vi":"Phát triển ứng dụng Web cơ bản","en":"Basic Web Application Development","unit":"Khoa Công nghệ thông tin – Bộ môn Hệ thống thông tin, Trường Đại học Thủy Lợi","level":"Trình độ đào tạo: Đại học"},
+"groups":[
+{"id":"thong-tin","label":"Thông tin học phần","blurb":"15 mục của đề cương: từ thông tin chung, chuẩn đầu ra, đánh giá, rubric đến yêu cầu kỹ thuật của sản phẩm và giảng viên phụ trách. Bấm từng mảnh để xem chi tiết.","sections":[
+{"id":"s1","title":"1. Thông tin chung","items":[
+{"code":"1.1","t":"Mã học phần","hint":"CSE122","kv":[["Mã số","CSE122"],["Tên tiếng Việt","Phát triển ứng dụng Web cơ bản"],["Tên tiếng Anh","Basic Web Application Development"]],"check":["Ghi đúng mã CSE122 khi tạo repository và đặt tên thư mục dự án.","Dùng một mã học phần thống nhất trong README, commit message và slide bảo vệ."],"tags":["hành chính"]},
+{"code":"1.2","t":"Số tín chỉ","hint":"3 TC (2-0-1)","kv":[["Số tín chỉ","3 (2-0-1)"],["Diễn giải","2 tín chỉ lý thuyết – 0 tín chỉ bài tập – 1 tín chỉ thực hành/thí nghiệm"]],"check":["Hiểu rằng 1 TC thực hành đòi hỏi sản phẩm chạy được, không chỉ báo cáo chữ."],"tags":["khối lượng"]},
+{"code":"1.3","t":"Số tiết","hint":"45 tiết = 30 LT + 15 TH/TN","kv":[["Tổng số tiết","45"],["Lý thuyết","30 tiết"],["Bài tập","0 tiết"],["Thực hành / thí nghiệm","15 tiết"]],"check":["Cộng được số tiết của 9 chương và khớp với 30 LT + 15 TH (xem nhóm 9 Chương).","Biết tiết thực hành gắn với lab và các mốc bài tập lớn, không phải giờ giảng lại lý thuyết."],"tags":["khối lượng"]},
+{"code":"1.4","t":"Tính chất học phần","hint":"Học phần nền tảng phía máy khách","p":["Học phần nền tảng về phát triển phía máy khách trong chuỗi học phần Phát triển ứng dụng Web; nội dung backend được triển khai trong học phần Phát triển ứng dụng Web nâng cao."],"check":["Xác định được phạm vi: môn này chỉ làm client-side (HTML/CSS/JS/Fetch), không viết server, không thiết kế CSDL.","Biết sản phẩm Frontend của môn này là đầu vào của môn Web nâng cao."],"tags":["định vị"]},
+{"code":"1.5","t":"Thuộc chương trình đào tạo","hint":"Theo quyết định ban hành từng CTĐT/khóa","p":["Cần thống nhất theo từng chương trình/khóa đào tạo trong quyết định ban hành. Không ghi đồng thời một ngành ở cả nhóm bắt buộc và tự chọn."],"check":["Tra cứu quyết định ban hành CTĐT của khóa mình để biết học phần là bắt buộc hay tự chọn.","Không tự suy diễn vị trí học phần trong chương trình."],"tags":["hành chính"]}
+]},
+{"id":"s2","title":"2. Điều kiện ràng buộc học phần","items":[
+{"code":"2.1","t":"Học phần học trước","hint":"Nhập môn lập trình; Cơ sở dữ liệu","kv":[["Học trước","Nhập môn lập trình"],["Học trước","Cơ sở dữ liệu"]],"check":["Ôn lại biến, kiểu dữ liệu, hàm, vòng lặp, mảng trước khi vào Chương 5.","Nhắc lại khái niệm bản ghi/tập dữ liệu vì Chương 8 làm việc với JSON trả về từ API."],"tags":["tiên quyết"]},
+{"code":"2.2","t":"Yêu cầu khác","hint":"Dự án Frontend xuyên suốt + Git + triển khai","p":["Sinh viên phải hoàn thành dự án Frontend xuyên suốt học phần, sử dụng Git để quản lý phiên bản, triển khai sản phẩm trực tuyến và bảo vệ cá nhân/nhóm. Sản phẩm là nền tảng đầu vào cho học phần Phát triển ứng dụng Web nâng cao."],"ul":["Dự án Frontend hoàn chỉnh, làm xuyên suốt học phần (không phải bài nộp một lần).","Dùng Git/GitHub để quản lý phiên bản và chứng minh đóng góp cá nhân.","Triển khai sản phẩm lên một địa chỉ công khai.","Bảo vệ cá nhân và/hoặc nhóm (có vấn đáp)."],"check":["Có repository Git ngay từ tuần đầu và commit đều, không dồn một commit cuối kỳ.","Có đường dẫn sản phẩm đã deploy hoạt động được trên điện thoại.","Mỗi thành viên giải thích được phần mã nguồn của mình khi vấn đáp."],"tags":["bắt buộc"]}
+]},
+{"id":"s3","title":"3. Mô tả học phần","items":[
+{"code":"3.1","t":"Mô tả (Tiếng Việt)","hint":"8 nhóm nội dung chính","p":["Học phần cung cấp nền tảng khoa học và kỹ năng thực hành về phát triển ứng dụng Web phía máy khách. Sinh viên nghiên cứu cơ chế hoạt động của Web và mô hình client-server ở mức cơ bản; xây dựng tài liệu HTML có ngữ nghĩa; thiết kế giao diện bằng CSS và Bootstrap theo hướng responsive, mobile-first và hỗ trợ khả năng tiếp cận; lập trình tương tác bằng JavaScript, DOM và sự kiện; xử lý bất đồng bộ; tiêu thụ REST API bằng Fetch API; sử dụng Git, GitHub và Chrome DevTools để quản lý phiên bản, gỡ lỗi và triển khai sản phẩm. Học phần kết thúc bằng dự án Frontend tích hợp, tạo nền tảng cho học phần Phát triển ứng dụng Web nâng cao về backend, cơ sở dữ liệu và tích hợp hệ thống."],"ul":["Cơ chế Web và mô hình client–server (Chương 1)","HTML có ngữ nghĩa (Chương 2)","CSS + Bootstrap: responsive, mobile-first, accessibility (Chương 3–4)","JavaScript, DOM, sự kiện (Chương 5–6)","Bất đồng bộ (Chương 7)","REST API bằng Fetch API (Chương 8)","Git, GitHub, Chrome DevTools (xuyên suốt, Chương 1–9)","Dự án Frontend tích hợp (Chương 9)"],"check":["Kể được 8 ý trên theo đúng thứ tự chương mà không cần mở đề cương."],"tags":["tổng quan"]},
+{"code":"3.2","t":"Mô tả (English)","hint":"Bản dịch tiếng Anh chính thức","p":["This course provides scientific foundations and practical skills for client-side Web application development. Students examine basic Web and client-server mechanisms; create semantic HTML documents; build responsive, mobile-first and accessible user interfaces with CSS and Bootstrap; implement interactions using JavaScript, the DOM and events; handle asynchronous operations; consume REST APIs with the Fetch API; and use Git, GitHub and Chrome DevTools for version control, debugging and deployment. The course culminates in an integrated Frontend project that prepares students for the Advanced Web Application Development course covering backend, databases and system integration."],"check":["Dùng đúng thuật ngữ tiếng Anh khi viết README và tài liệu dự án: semantic, responsive, mobile-first, accessible, asynchronous, REST API, version control, deployment."],"tags":["tổng quan","EN"]}
+]},
+{"id":"s4","title":"4. Mục tiêu học phần","items":[
+{"code":"G1","t":"Mục tiêu 1 — Kiến thức nền tảng kiến trúc Web","p":["Trang bị kiến thức nền tảng về kiến trúc Web, trình duyệt, HTTP request-response và vai trò của các thành phần phía máy khách."],"kv":[["Chương liên quan","1, 7, 8"],["CLO tương ứng","CLO1"]],"check":["Vẽ được sơ đồ client–server và mô tả một lượt request–response."],"tags":["mục tiêu"]},
+{"code":"G2","t":"Mục tiêu 2 — Phân tích yêu cầu & hiện thực website","p":["Hình thành năng lực phân tích yêu cầu giao diện và hiện thực website semantic, responsive, có khả năng truy cập cơ bản."],"kv":[["Chương liên quan","2, 3, 4"],["CLO tương ứng","CLO2, CLO3"]],"check":["Từ một mô tả yêu cầu, dựng được trang semantic + responsive mà không cần bản vẽ chi tiết."],"tags":["mục tiêu"]},
+{"code":"G3","t":"Mục tiêu 3 — Lập trình JavaScript","p":["Phát triển năng lực lập trình JavaScript cho xử lý dữ liệu, DOM, sự kiện, biểu mẫu, bất đồng bộ và tích hợp API."],"kv":[["Chương liên quan","5, 6, 7, 8"],["CLO tương ứng","CLO4, CLO5"]],"check":["Xây được một ứng dụng nhỏ: đọc dữ liệu → render DOM → xử lý sự kiện → gọi API → cập nhật giao diện."],"tags":["mục tiêu"]},
+{"code":"G4","t":"Mục tiêu 4 — Thói quen kỹ nghệ","p":["Hình thành thói quen kỹ nghệ: quản lý mã nguồn, gỡ lỗi, tổ chức mã, kiểm tra chất lượng, triển khai và bảo vệ sản phẩm."],"kv":[["Chương liên quan","1–9 (xuyên suốt)"],["CLO tương ứng","CLO6, CLO7"]],"check":["Có lịch sử commit có ý nghĩa, biết dùng DevTools để tìm lỗi thay vì đoán."],"tags":["mục tiêu"]},
+{"code":"G5","t":"Mục tiêu 5 — Chuẩn bị tư duy component","p":["Chuẩn bị nền tảng khái niệm về component-based Frontend để chuyển tiếp sang các framework và học phần Web nâng cao."],"kv":[["Chương liên quan","9"],["CLO tương ứng","CLO7"]],"check":["Phân biệt được imperative DOM manipulation và declarative UI; gọi tên được props/state/event."],"tags":["mục tiêu"]}
+]},
+{"id":"s5","title":"5. Chuẩn đầu ra học phần (CLO)","items":[
+{"code":"CLO1","t":"Kiến trúc client-server & vòng đời HTTP","hint":"Nhóm: Kiến thức","kv":[["Nhóm năng lực","Kiến thức"],["Nội dung","Chương 1, 7, 8"],["Minh chứng","Phân tích request, sơ đồ kiến trúc, câu hỏi tình huống"],["Đánh giá","Chuyên cần; BTL"]],"p":["Giải thích được kiến trúc client-server, vòng đời HTTP request-response và vai trò của HTML, CSS, JavaScript, API và trình duyệt."],"check":["Nói được trình duyệt làm gì từ lúc gõ URL đến lúc trang hiển thị.","Phân biệt vai trò HTML (cấu trúc), CSS (trình bày), JavaScript (hành vi), API (dữ liệu).","Đọc được một dòng trong Network panel: URL, method, status, Content-Type."],"tags":["CLO","kiến thức"]},
+{"code":"CLO2","t":"HTML semantic, form hợp lệ, SEO & accessibility","hint":"Nhóm: Kiến thức/Kỹ năng","kv":[["Nhóm năng lực","Kiến thức/Kỹ năng"],["Nội dung","Chương 2"],["Minh chứng","Lab semantic HTML, form và accessibility"],["Đánh giá","Kiểm tra thực hành 1; BTL"]],"p":["Phân tích yêu cầu và xây dựng được tài liệu HTML semantic, biểu mẫu hợp lệ, đáp ứng các nguyên tắc SEO và accessibility cơ bản."],"check":["Chọn đúng thẻ theo ý nghĩa (header/nav/main/section/article/footer) chứ không phải theo hình thức.","Mỗi input có label; form có validation và thông báo lỗi rõ ràng.","Heading theo đúng cấp bậc; ảnh có alt phù hợp; chạy được HTML validator."],"tags":["CLO","HTML"]},
+{"code":"CLO3","t":"Giao diện responsive mobile-first (CSS + Bootstrap 5)","hint":"Nhóm: Kỹ năng","kv":[["Nhóm năng lực","Kỹ năng"],["Nội dung","Chương 3, 4"],["Minh chứng","Lab CSS, responsive và Bootstrap"],["Đánh giá","Kiểm tra thực hành 1; BTL"]],"p":["Hiện thực được giao diện responsive theo hướng mobile-first bằng CSS, Flexbox, Grid và Bootstrap 5."],"check":["Viết CSS mobile-first rồi mở rộng bằng min-width media query.","Chọn đúng Flexbox hay Grid cho từng loại bố cục và giải thích được lý do.","Trang dùng được ở mobile, tablet, desktop; dùng Bootstrap utilities đúng chỗ, không lạm dụng."],"tags":["CLO","CSS","Bootstrap"]},
+{"code":"CLO4","t":"JavaScript: dữ liệu, DOM, sự kiện, form, storage","hint":"Nhóm: Kỹ năng","kv":[["Nhóm năng lực","Kỹ năng"],["Nội dung","Chương 5, 6, 7"],["Minh chứng","Coding exercise, ứng dụng DOM"],["Đánh giá","Kiểm tra thực hành 2; BTL"]],"p":["Vận dụng được JavaScript để xử lý dữ liệu, DOM, sự kiện, biểu mẫu và lưu trữ phía trình duyệt."],"check":["Dùng được map/filter/reduce trên mảng dữ liệu; biết object và JSON.","Truy vấn, tạo, chèn, xóa phần tử DOM và cập nhật class/attribute/style.","Gắn sự kiện đúng cách, hiểu bubbling và delegation; lưu/đọc LocalStorage."],"tags":["CLO","JavaScript","DOM"]},
+{"code":"CLO5","t":"Tích hợp REST API bằng Fetch & 4 trạng thái giao diện","hint":"Nhóm: Kỹ năng","kv":[["Nhóm năng lực","Kỹ năng"],["Nội dung","Chương 8"],["Minh chứng","API lab, ứng dụng dữ liệu"],["Đánh giá","Bài tập lớn"]],"p":["Tích hợp được REST API bằng Fetch API; xử lý được các trạng thái loading, success, empty và error."],"check":["Gọi fetch, kiểm tra response.ok, parse JSON và bắt lỗi bằng try/catch.","Giao diện có đủ 4 trạng thái: loading, success, empty, error.","Không hard-code dữ liệu giả khi đã có API thật; không lộ API key trong mã công khai."],"tags":["CLO","API","fetch"]},
+{"code":"CLO6","t":"Git/GitHub & Chrome DevTools","hint":"Nhóm: Kỹ năng","kv":[["Nhóm năng lực","Kỹ năng"],["Nội dung","Chương 1–9"],["Minh chứng","Git workflow, DevTools, code review"],["Đánh giá","Chuyên cần; BTL"]],"p":["Sử dụng được Git/GitHub và Chrome DevTools để quản lý phiên bản, cộng tác, gỡ lỗi và cải tiến sản phẩm."],"check":["Thành thạo add/commit/push/pull, branch và pull request.","Commit message mô tả được thay đổi, không phải \"fix\" hay \"update\".","Dùng Console, Network, Elements, Lighthouse để tìm và sửa lỗi."],"tags":["CLO","Git","DevTools"]},
+{"code":"CLO7","t":"Làm việc nhóm & bảo vệ sản phẩm Web hoàn chỉnh","hint":"Nhóm: Tự chủ/Trách nhiệm","kv":[["Nhóm năng lực","Tự chủ/Trách nhiệm"],["Nội dung","Xuyên suốt"],["Minh chứng","Project sprint, demo, phản biện"],["Đánh giá","BTL; vấn đáp"]],"p":["Làm việc nhóm có trách nhiệm để phân tích, hiện thực, kiểm thử, triển khai và bảo vệ một ứng dụng Web Frontend hoàn chỉnh."],"check":["Có phân công rõ ràng và minh chứng đóng góp trong lịch sử Git.","Tham gia code review cho thành viên khác, không chỉ viết mã của mình.","Tự tin demo và trả lời vấn đáp về bất kỳ phần nào mình phụ trách."],"tags":["CLO","kỹ năng mềm"]}
+]},
+{"id":"s6","title":"6. Phương pháp tổ chức dạy và học","items":[
+{"code":"PP1","t":"Bài giảng ngắn + minh họa trực quan","p":["Bài giảng ngắn kết hợp minh họa trực quan, trình diễn mã nguồn và phân tích tình huống."],"check":["Ghi chú lại các tình huống GV phân tích trên lớp — đó là dạng câu hỏi chuyên cần và vấn đáp."],"tags":["dạy học"]},
+{"code":"PP2","t":"Lab theo chu trình 6 bước","p":["Lab theo chu trình: yêu cầu - phân tích - hiện thực - chạy thử - gỡ lỗi - cải tiến."],"ul":["1. Yêu cầu — đọc kỹ đề, liệt kê chức năng.","2. Phân tích — chia giao diện thành khối, xác định dữ liệu.","3. Hiện thực — viết HTML trước, rồi CSS, rồi JavaScript.","4. Chạy thử — mở trên trình duyệt, thử nhiều kích thước.","5. Gỡ lỗi — dùng DevTools, đọc thông báo lỗi.","6. Cải tiến — refactor, thêm accessibility, tối ưu."],"check":["Áp dụng đúng 6 bước cho mỗi lab, không nhảy thẳng vào viết mã.","Lưu lại bằng chứng bước 4–5 (ảnh chụp, log) để đưa vào báo cáo."],"tags":["dạy học","lab"]},
+{"code":"PP3","t":"Học theo dự án với mốc sản phẩm","p":["Học theo dự án với các mốc sản phẩm, code review và phản hồi định kỳ."],"check":["Xem 8 mốc BTL ở mục 8 và gắn lịch làm việc của nhóm theo từng mốc.","Tham gia code review cho nhóm khác và nhận phản hồi cho nhóm mình."],"tags":["dạy học","dự án"]},
+{"code":"PP4","t":"Tự học có hướng dẫn","p":["Tự học có hướng dẫn bằng tài liệu chính thức; sinh viên phải ghi lại nguồn tham khảo và quyết định kỹ thuật."],"check":["Ưu tiên MDN, WHATWG, W3C, Bootstrap 5, Git docs — xem mục 11.","Ghi lại decision log: chọn giải pháp nào, vì sao, nguồn tham khảo ở đâu."],"tags":["dạy học","tự học"]},
+{"code":"PP5","t":"Đánh giá cá nhân trong sản phẩm nhóm","p":["Đánh giá cá nhân trong sản phẩm nhóm thông qua lịch sử Git, nhật ký công việc, demo và vấn đáp."],"check":["Có nhật ký công việc (work log) của riêng mình.","Lịch sử Git cho thấy bạn commit thật, không phải được người khác add hộ.","Chuẩn bị trả lời vấn đáp về phần việc của mình."],"tags":["dạy học","đánh giá cá nhân"]}
+]},
+{"id":"s7","title":"7. Phương pháp đánh giá","items":[
+{"code":"ĐG1","t":"Chuyên cần và hoạt động học tập — 10%","hint":"Xuyên suốt · 1 lần","kv":[["Trọng số","10%"],["Số lần","1"],["Thời điểm","Xuyên suốt"]],"p":["Chuẩn bị bài, hoàn thành lab, tham gia truy vấn, code review và thái độ học tập."],"check":["Đến lớp đã đọc trước tài liệu của chương.","Nộp lab đúng hạn và có tham gia đặt câu hỏi / code review.","10% này là điểm dễ lấy nhất — đừng mất vì vắng mặt hoặc không nộp lab."],"tags":["10%","đánh giá"]},
+{"code":"ĐG2","t":"Kiểm tra thực hành 1 — 20%","hint":"Sau Chương 4 · Landing page","kv":[["Trọng số","20%"],["Số lần","1"],["Thời điểm","Sau Chương 4"],["Sản phẩm","Landing page semantic + responsive"]],"p":["Xây dựng landing page semantic và responsive bằng HTML, CSS, Bootstrap; kiểm tra accessibility cơ bản."],"check":["Phạm vi ôn: Chương 1–4 (nền tảng Web, HTML semantic, CSS nền tảng, Layout + Bootstrap 5).","Xem rubric 11.1 để biết phân bổ điểm từng tiêu chí.","Làm thử một landing page trong 90 phút để canh thời gian."],"res":[{"label":"Ebook Ch.2 – HTML cơ bản","href":"../../ebook/chuong-2.html"},{"label":"Ebook Ch.4 – CSS cơ bản","href":"../../ebook/chuong-4.html"},{"label":"Ebook Ch.7 – Bootstrap Components","href":"../../ebook/chuong-7.html"}],"tags":["20%","thực hành"]},
+{"code":"ĐG3","t":"Kiểm tra thực hành 2 — 20%","hint":"Sau Chương 6 · Ứng dụng JavaScript","kv":[["Trọng số","20%"],["Số lần","1"],["Thời điểm","Sau Chương 6"],["Sản phẩm","Ứng dụng JS tương tác"]],"p":["Xây dựng ứng dụng JavaScript tương tác sử dụng DOM, events, form và tổ chức mã."],"check":["Phạm vi ôn: Chương 5–6 (JavaScript nền tảng, DOM/Events/Form/Browser Storage).","Tổ chức mã rõ ràng chiếm 15% và khả năng giải thích mã chiếm 5% — viết mã đọc được.","Xem rubric 11.2 để biết phân bổ điểm."],"res":[{"label":"Ebook Ch.8 – JavaScript và DOM","href":"../../ebook/chuong-8.html"},{"label":"Demo CampusConnect","href":"../CNTT2/index.html"}],"tags":["20%","thực hành"]},
+{"code":"ĐG4","t":"Bài tập lớn — 50%","hint":"1–2 tuần sau kết thúc · Dự án nhóm","kv":[["Trọng số","50%"],["Số lần","1"],["Thời điểm","1–2 tuần sau kết thúc học phần"],["Sản phẩm","Dự án nhóm Frontend hoàn chỉnh"]],"p":["Dự án nhóm xuyên suốt: Frontend hoàn chỉnh, responsive, JavaScript, REST API, Git, triển khai; demo và vấn đáp cá nhân."],"check":["50% điểm tổng kết nằm ở đây — bắt đầu từ tuần 1, không để nước rút.","Có đủ 8 mốc minh chứng (xem mục 8) và demo + vấn đáp cá nhân.","Sản phẩm phải deploy công khai và chạy được trên điện thoại."],"tags":["50%","BTL"]}
+]},
+{"id":"s8","title":"8. Cấu trúc và mốc đánh giá bài tập lớn","items":[
+{"code":"M1","t":"Mốc 1 — Đề xuất bài toán & backlog","hint":"5%","kv":[["Tỷ trọng trong BTL","5%"],["Minh chứng","Đề xuất bài toán, nhóm người dùng, phạm vi và backlog"]],"check":["Xác định rõ người dùng là ai và vấn đề cần giải quyết.","Phạm vi vừa sức cho 1 nhóm trong 1 học kỳ — ghi rõ phần KHÔNG làm.","Backlog liệt kê các user story/đầu việc, có thứ tự ưu tiên."],"tags":["BTL","5%"]},
+{"code":"M2","t":"Mốc 2 — Wireframe, IA, kế hoạch Git & phân công","hint":"10%","kv":[["Tỷ trọng trong BTL","10%"],["Minh chứng","Wireframe, kiến trúc thông tin, kế hoạch Git và phân công"]],"check":["Có wireframe từng trang (kể cả trạng thái trống/lỗi).","Kiến trúc thông tin: sơ đồ trang, điều hướng, luồng người dùng.","Kế hoạch Git: quy ước branch, commit message, ai review ai.","Bảng phân công có tên người phụ trách từng hạng mục."],"tags":["BTL","10%"]},
+{"code":"M3","t":"Mốc 3 — HTML/CSS/Bootstrap responsive","hint":"15%","kv":[["Tỷ trọng trong BTL","15%"],["Minh chứng","Giao diện responsive bằng HTML, CSS, Bootstrap 5"]],"check":["Ảnh chụp ở 3 kích thước: mobile, tablet, desktop.","HTML semantic, chạy validator không lỗi nghiêm trọng.","Không còn bố cục vỡ khi co giãn cửa sổ."],"res":[{"label":"Ebook Ch.5 – CSS Layout","href":"../../ebook/chuong-5.html"},{"label":"Ebook Ch.6 – Responsive & Bootstrap","href":"../../ebook/chuong-6.html"}],"tags":["BTL","15%"]},
+{"code":"M4","t":"Mốc 4 — JavaScript, DOM, form & browser storage","hint":"15%","kv":[["Tỷ trọng trong BTL","15%"],["Minh chứng","Tương tác JavaScript, xử lý form, lưu trữ trình duyệt"]],"check":["Có tương tác thật (không phải giao diện tĩnh).","Form validate được và báo lỗi rõ ràng.","Dữ liệu người dùng được lưu LocalStorage/SessionStorage và khôi phục khi tải lại."],"res":[{"label":"Ebook Ch.8 – JavaScript và DOM","href":"../../ebook/chuong-8.html"}],"tags":["BTL","15%"]},
+{"code":"M5","t":"Mốc 5 — Tích hợp REST API & quản lý trạng thái","hint":"15%","kv":[["Tỷ trọng trong BTL","15%"],["Minh chứng","Gọi API thật, quản lý trạng thái giao diện"]],"check":["Có request thật tới REST API (ảnh chụp Network panel).","Đủ 4 trạng thái: loading, success, empty, error.","Có search/filter/pagination nếu dữ liệu nhiều."],"res":[{"label":"Ebook Ch.9 – Fetch API và dự án","href":"../../ebook/chuong-9.html"}],"tags":["BTL","15%"]},
+{"code":"M6","t":"Mốc 6 — Chất lượng sản phẩm cuối","hint":"20%","kv":[["Tỷ trọng trong BTL","20%"],["Minh chứng","Chức năng, UX, accessibility, code quality"]],"check":["Mọi chức năng trong backlog đã chạy, không còn nút chết.","Điều hướng được bằng bàn phím; màu sắc và thông báo lỗi nhận biết được.","Mã tách module hợp lý, đặt tên rõ ràng, không có biến toàn cục thừa."],"tags":["BTL","20%"]},
+{"code":"M7","t":"Mốc 7 — Quy trình Git, tài liệu, triển khai, kiểm thử","hint":"10%","kv":[["Tỷ trọng trong BTL","10%"],["Minh chứng","Quy trình Git, tài liệu, triển khai và minh chứng kiểm thử"]],"check":["README có mô tả, hướng dẫn chạy, đường dẫn sản phẩm deploy.","Lịch sử commit đều và có ý nghĩa; có pull request/code review.","Có minh chứng kiểm thử (danh sách test case + kết quả)."],"tags":["BTL","10%"]},
+{"code":"M8","t":"Mốc 8 — Demo và vấn đáp cá nhân","hint":"10%","kv":[["Tỷ trọng trong BTL","10%"],["Minh chứng","Demo và vấn đáp cá nhân"]],"check":["Chuẩn bị kịch bản demo 5 phút, chạy trên máy chiếu và trên điện thoại.","Mỗi thành viên trả lời được câu hỏi về phần mã của mình.","Tổng 8 mốc = 5+10+15+15+15+20+10+10 = 100%."],"tags":["BTL","10%"]}
+]},
+{"id":"s10","title":"10. Ma trận liên kết chuẩn đầu ra – nội dung – đánh giá","items":[
+{"code":"CLO1","t":"CLO1 → Chương 1, 7, 8","hint":"Kiến thức · Chuyên cần; BTL","kv":[["Nội dung","Chương 1, 7, 8"],["Hoạt động/minh chứng","Phân tích request, sơ đồ kiến trúc, câu hỏi tình huống"],["Đánh giá","Chuyên cần; BTL"]],"check":["Chuẩn bị được sơ đồ kiến trúc và phân tích một request để trình bày khi được hỏi."],"tags":["ma trận"]},
+{"code":"CLO2","t":"CLO2 → Chương 2","hint":"Kiến thức/Kỹ năng · KT1; BTL","kv":[["Nội dung","Chương 2"],["Hoạt động/minh chứng","Lab semantic HTML, form và accessibility"],["Đánh giá","Kiểm tra thực hành 1; BTL"]],"check":["Hoàn thành lab semantic HTML trước kỳ kiểm tra thực hành 1."],"tags":["ma trận"]},
+{"code":"CLO3","t":"CLO3 → Chương 3, 4","hint":"Kỹ năng · KT1; BTL","kv":[["Nội dung","Chương 3, 4"],["Hoạt động/minh chứng","Lab CSS, responsive và Bootstrap"],["Đánh giá","Kiểm tra thực hành 1; BTL"]],"check":["Có sản phẩm lab CSS/responsive/Bootstrap nộp đúng hạn."],"tags":["ma trận"]},
+{"code":"CLO4","t":"CLO4 → Chương 5, 6, 7","hint":"Kỹ năng · KT2; BTL","kv":[["Nội dung","Chương 5, 6, 7"],["Hoạt động/minh chứng","Coding exercise, ứng dụng DOM"],["Đánh giá","Kiểm tra thực hành 2; BTL"]],"check":["Làm đủ coding exercise của Chương 5–7; có ứng dụng DOM hoàn chỉnh."],"tags":["ma trận"]},
+{"code":"CLO5","t":"CLO5 → Chương 8","hint":"Kỹ năng · BTL","kv":[["Nội dung","Chương 8"],["Hoạt động/minh chứng","API lab, ứng dụng dữ liệu"],["Đánh giá","Bài tập lớn"]],"check":["Hoàn thành API lab và đưa vào dự án BTL."],"tags":["ma trận"]},
+{"code":"CLO6","t":"CLO6 → Chương 1–9","hint":"Kỹ năng · Chuyên cần; BTL","kv":[["Nội dung","Chương 1–9"],["Hoạt động/minh chứng","Git workflow, DevTools, code review"],["Đánh giá","Chuyên cần; BTL"]],"check":["Duy trì Git workflow và code review suốt học phần — đây là minh chứng xuyên suốt."],"tags":["ma trận"]},
+{"code":"CLO7","t":"CLO7 → Xuyên suốt","hint":"Tự chủ/Trách nhiệm · BTL; vấn đáp","kv":[["Nội dung","Xuyên suốt"],["Hoạt động/minh chứng","Project sprint, demo, phản biện"],["Đánh giá","BTL; vấn đáp"]],"check":["Tham gia đầy đủ sprint, demo và phản biện; chuẩn bị vấn đáp cá nhân."],"tags":["ma trận"]}
+]},
+{"id":"s11","title":"11. Rubric tóm tắt cho các bài đánh giá","items":[
+{"code":"11.1","t":"Rubric Kiểm tra thực hành 1 — Landing Page","hint":"7 tiêu chí · tổng 100%","kv":[["Áp dụng cho","Kiểm tra thực hành 1 (20% điểm HP)"],["Thời điểm","Sau Chương 4"]],"ul":["HTML semantic và cấu trúc nội dung: 15%","CSS và bố cục: 20%","Responsive/mobile-first: 25%","Sử dụng Bootstrap hợp lý: 15%","Accessibility và form: 10%","Chất lượng mã nguồn: 10%","Git và quy cách nộp bài: 5%"],"check":["Responsive/mobile-first là tiêu chí nặng nhất (25%) — ưu tiên kiểm thử 3 kích thước màn hình.","CSS và bố cục 20%: dùng Flexbox/Grid đúng chỗ, không dùng float/margin âm để dàn trang.","Đừng bỏ mất 5% Git và quy cách nộp bài — chỉ cần commit đúng và nộp đúng chỗ."],"tags":["rubric","KTTH1"]},
+{"code":"11.2","t":"Rubric Kiểm tra thực hành 2 — Ứng dụng DOM","hint":"6 tiêu chí · tổng 100%","kv":[["Áp dụng cho","Kiểm tra thực hành 2 (20% điểm HP)"],["Thời điểm","Sau Chương 6"]],"ul":["Mô hình dữ liệu và hàm xử lý: 20%","DOM và render giao diện: 25%","Events và xử lý tương tác: 20%","Form/validation và xử lý lỗi: 15%","Tổ chức module, naming và readability: 15%","Khả năng giải thích mã nguồn: 5%"],"check":["Tách dữ liệu khỏi giao diện: có mảng/object dữ liệu, có hàm render riêng — chiếm 20%.","DOM và render 25%: render danh sách bằng vòng lặp, không viết tay từng thẻ.","5% giải thích mã: viết mã bạn hiểu được, vì GV sẽ hỏi trực tiếp."],"tags":["rubric","KTTH2"]},
+{"code":"11.3","t":"Rubric Bài tập lớn","hint":"5 nhóm tiêu chí","kv":[["Áp dụng cho","Bài tập lớn (50% điểm HP)"],["Thời điểm","1–2 tuần sau kết thúc học phần"]],"ul":["Đúng và đầy đủ chức năng; trải nghiệm người dùng; responsive và accessibility.","Kiến trúc Frontend, chất lượng JavaScript, API states, xử lý lỗi và bảo mật cơ bản.","Lịch sử Git, phân chia công việc, pull request/code review và tài liệu.","Triển khai trực tuyến, minh chứng kiểm thử và khả năng bảo trì.","Vấn đáp cá nhân để xác minh đóng góp và mức độ làm chủ sản phẩm."],"check":["Đủ chức năng thôi chưa đủ — cần UX, responsive và accessibility.","API states nghĩa là có loading/success/empty/error, không chỉ gọi fetch.","Vấn đáp cá nhân dùng để xác minh đóng góp: không làm thì không giải thích được."],"tags":["rubric","BTL"]}
+]},
+{"id":"s12","title":"12. Giáo trình và tài liệu tham khảo","items":[
+{"code":"GT","t":"Giáo trình hiện có (dùng cho kiến thức nền tảng)","hint":"4 tài liệu","ul":["Jeremy Osborn, HTML5 và CSS3 – Thiết kế trang Web thích ứng giàu tính năng, NXB Khoa học Kỹ thuật, 2018.","Steve Suehring, JavaScript – Hướng dẫn học qua ví dụ, NXB Khoa học Kỹ thuật, 2019.","Randy Connolly, Fundamentals of Web Development, Pearson, 2017.","Jon Duckett, HTML and CSS: Design and Build Websites, Wiley, 2011."],"check":["Dùng giáo trình để nắm khái niệm, nhưng luôn đối chiếu MDN cho cú pháp hiện hành.","Khi trích dẫn trong báo cáo, ghi đủ tác giả – tên sách – NXB – năm."],"tags":["giáo trình"]},
+{"code":"TL","t":"Tài liệu cập nhật bắt buộc","hint":"7 nguồn chuẩn","ul":["MDN Web Docs: HTML, CSS, JavaScript, DOM, Fetch API và Web APIs.","WHATWG HTML Living Standard.","W3C Web Content Accessibility Guidelines (WCAG) 2.2.","ECMAScript Language Specification và JavaScript Guide.","Bootstrap 5 Documentation.","Git Documentation và Chrome DevTools Documentation.","Tài liệu chính thức của React, Vue và Angular dùng cho nội dung khảo sát ở Chương 9."],"res":[{"label":"MDN Web Docs","href":"https://developer.mozilla.org/en-US/docs/Web"},{"label":"WHATWG HTML","href":"https://html.spec.whatwg.org/multipage/"},{"label":"WCAG 2.2","href":"https://www.w3.org/TR/WCAG22/"},{"label":"Bootstrap 5","href":"https://getbootstrap.com/docs/5.3/"},{"label":"Git Docs","href":"https://git-scm.com/doc"},{"label":"Chrome DevTools","href":"https://developer.chrome.com/docs/devtools"},{"label":"React","href":"https://react.dev/learn"},{"label":"Vue","href":"https://vuejs.org/guide/introduction.html"},{"label":"Angular","href":"https://angular.dev/overview"}],"check":["Ưu tiên MDN hơn blog/tutorial khi có mâu thuẫn cú pháp.","WCAG 2.2 là chuẩn accessibility được nêu trong đề cương — dùng cho tiêu chí accessibility của rubric.","React/Vue/Angular chỉ ở mức KHẢO SÁT (Chương 9), không bắt buộc thành thạo."],"tags":["tham khảo","bắt buộc"]},
+{"code":"SITE","t":"Tài liệu của site này","hint":"Ebook 9 chương · Slide 38 decks · Bài giảng","p":["Site CSE122 cung cấp ebook 9 chương, slide 38 decks và bài giảng, kèm demo và công cụ tự luyện — đều bám theo đề cương này."],"res":[{"label":"Ebook 9 chương","href":"../../ebook/index.html"},{"label":"Slide 38 decks","href":"../../slides/index.html"},{"label":"Bài giảng","href":"../../baidoc/index.html"},{"label":"Demo & công cụ","href":"../index.html"}],"check":["Đọc chương ebook tương ứng TRƯỚC buổi học để lấy điểm chuyên cần.","Làm demo và công cụ tự luyện trước kỳ kiểm tra thực hành."],"tags":["site"]}
+]},
+{"id":"s13","title":"13. Yêu cầu kỹ thuật tối thiểu đối với sản phẩm","items":[
+{"code":"YC1","t":"HTML hợp lệ, semantic, heading đúng cấp","p":["Mã HTML hợp lệ, có cấu trúc semantic và heading hierarchy hợp lý."],"check":["Chạy HTML validator: không còn lỗi.","Chỉ có một thẻ h1 mỗi trang; heading không nhảy cấp.","Dùng landmark: header, nav, main, section, article, aside, footer."],"tags":["bắt buộc"]},
+{"code":"YC2","t":"Responsive ở 3 nhóm kích thước","p":["Giao diện hoạt động ở tối thiểu ba nhóm kích thước: mobile, tablet và desktop."],"check":["Chụp ảnh/ghi video ở 3 kích thước và đưa vào báo cáo.","Không có thanh cuộn ngang trên mobile; chữ không bị tràn hay chồng lấn."],"tags":["bắt buộc"]},
+{"code":"YC3","t":"Truy cập bằng bàn phím; màu & lỗi nhận biết được","p":["Các thành phần tương tác chính có thể sử dụng bằng bàn phím; màu sắc và thông báo lỗi có khả năng nhận biết."],"check":["Bỏ chuột, dùng Tab/Shift+Tab/Enter để đi hết luồng chính; focus nhìn thấy được.","Không truyền thông tin chỉ bằng màu (kèm icon/chữ cho trạng thái lỗi).","Tương phản chữ/nền đạt mức đọc được."],"tags":["bắt buộc","accessibility"]},
+{"code":"YC4","t":"JS tách module, không innerHTML với dữ liệu lạ","p":["JavaScript được tách module hợp lý, hạn chế biến toàn cục và không chèn dữ liệu không tin cậy bằng innerHTML."],"check":["Dùng ES module (type=module) hoặc tách file rõ ràng; không có biến global thừa.","Dữ liệu từ API/người dùng phải qua textContent hoặc escape trước khi chèn.","Không dùng eval, không gán onclick inline trong chuỗi HTML."],"tags":["bắt buộc","bảo mật"]},
+{"code":"YC5","t":"API có 4 trạng thái; không lộ secret","p":["Tích hợp API có xử lý loading, empty, success và error; không công khai secret nhạy cảm trong mã Frontend."],"check":["Có spinner/skeleton khi loading, thông báo khi empty, thông báo + nút thử lại khi error.","Kiểm tra response.ok và bắt lỗi mạng bằng try/catch.","Không đặt API key/secret trong JS công khai; chỉ dùng API công khai hoặc khóa phía người dùng tự tạo."],"tags":["bắt buộc","API"]},
+{"code":"YC6","t":"Repository có README, commit ý nghĩa, link deploy","p":["Repository có commit có ý nghĩa, README, hướng dẫn chạy và đường dẫn sản phẩm triển khai."],"check":["README: mô tả, tính năng, cấu trúc thư mục, cách chạy, link demo, thành viên.","Lịch sử commit đều, message mô tả thay đổi; không phải một commit \"final\".","Link deploy mở được từ máy khác, không chỉ localhost."],"tags":["bắt buộc","Git"]},
+{"code":"YC7","t":"Mỗi thành viên có minh chứng đóng góp","p":["Mỗi thành viên phải có minh chứng đóng góp và có khả năng giải thích phần việc của mình."],"check":["Git cho thấy commit của từng thành viên; kèm bảng phân công và work log.","Chuẩn bị trả lời vấn đáp về phần mình phụ trách — đây là cách GV xác minh đóng góp."],"tags":["bắt buộc","cá nhân"]}
+]},
+{"id":"s14","title":"14. Cán bộ tham gia giảng dạy","items":[
+{"code":"GV1","t":"ThS. Kiều Tuấn Dũng","hint":"Giảng viên chính","kv":[["Học hàm, học vị","Thạc sĩ"],["Chức danh","Giảng viên chính"],["Điện thoại","0888400513"],["Email","dungkt@tlu.edu.vn"]],"res":[{"label":"Gửi email","href":"mailto:dungkt@tlu.edu.vn"}],"tags":["giảng viên"]},
+{"code":"GV2","t":"TS. Nguyễn Tu Trung","hint":"Giảng viên chính","kv":[["Học hàm, học vị","Tiến sĩ"],["Chức danh","Giảng viên chính"],["Điện thoại","0966550565"],["Email","trungnt@tlu.edu.vn"]],"res":[{"label":"Gửi email","href":"mailto:trungnt@tlu.edu.vn"}],"tags":["giảng viên"]},
+{"code":"GV3","t":"ThS. Tạ Chí Hiếu","hint":"Giảng viên","kv":[["Học hàm, học vị","Thạc sĩ"],["Chức danh","Giảng viên"],["Điện thoại","0354647622"],["Email","hieutc@tlu.edu.vn"]],"res":[{"label":"Gửi email","href":"mailto:hieutc@tlu.edu.vn"}],"tags":["giảng viên"]}
+]},
+{"id":"s15","title":"15. Thông tin liên hệ Bộ môn","items":[
+{"code":"BM","t":"Bộ môn Hệ thống thông tin","hint":"Phòng 205 – Nhà C1, Trường Đại học Thủy Lợi","kv":[["Địa chỉ","Phòng 205 – Nhà C1, Trường Đại học Thủy lợi"],["Trưởng bộ môn","TS. Trần Mạnh Tuấn"],["Điện thoại","0983.668.841"],["Email","tmtuan@tlu.edu.vn"],["Đơn vị quản lý","Khoa Công nghệ thông tin – Bộ môn Hệ thống thông tin"]],"res":[{"label":"Gửi email Trưởng bộ môn","href":"mailto:tmtuan@tlu.edu.vn"},{"label":"Trang chủ site CSE122","href":"../../index.html"}],"check":["Ghi rõ mã lớp, họ tên, MSSV và nội dung khi liên hệ qua email.","Vấn đề điểm số/khiếu nại: liên hệ bộ môn, không trao đổi qua tin nhắn cá nhân."],"tags":["liên hệ"]}
+]}
+]}
+],
+"chapters":[
+{"n":1,"t":"Nền tảng phát triển Web","lt":3,"bt":0,"th":1,"clos":["CLO1","CLO6"],"gv":"giảng giải, minh họa Network panel, hướng dẫn tạo repository","sv":"phân tích một request, tạo trang Web đầu tiên, commit và triển khai","res":[{"label":"Ebook Ch.1 – Nhập môn Web","href":"../../ebook/chuong-1.html"},{"label":"Bài giảng","href":"../../baidoc/index.html"}],"topics":[
+{"code":"1.1","t":"Internet và World Wide Web","check":["Phân biệt Internet (hạ tầng mạng toàn cầu) và Web (dịch vụ chia sẻ tài liệu chạy trên Internet).","Kể được các dịch vụ khác trên Internet ngoài Web: email, DNS, FTP, streaming."]},
+{"code":"1.2","t":"Website, Web application và kiến trúc client-server","check":["Phân biệt website tĩnh (đọc nội dung) và web application (người dùng thao tác, có trạng thái).","Vẽ sơ đồ client → request → server → response và nói rõ trình duyệt thuộc phía nào.","Kể tên 4 lớp phía client trong môn này: HTML, CSS, JavaScript, dữ liệu từ API."]},
+{"code":"1.3","t":"URL, domain, DNS và hosting ở mức nhập môn","check":["Chỉ ra được scheme, host, port, path, query string trong một URL cụ thể.","Giải thích DNS phân giải tên miền thành địa chỉ IP như thế nào (ở mức nhập môn).","Phân biệt hosting, domain và deploy sản phẩm tĩnh."]},
+{"code":"1.4","t":"HTTP request-response; vai trò HTML, CSS, JavaScript, API","check":["Mở Network panel, chỉ ra method, URL, status code và Content-Type của một request.","Nói được vai trò: HTML = cấu trúc, CSS = trình bày, JavaScript = hành vi, API = dữ liệu.","Biết các status quen thuộc: 200, 301/302, 404, 500."]},
+{"code":"1.5","t":"Website tĩnh, MPA và SPA","check":["Phân biệt MPA (mỗi trang một tài liệu HTML mới) và SPA (một trang, cập nhật bằng JavaScript).","Nêu ưu/nhược điểm của SPA: trải nghiệm mượt nhưng nặng JS, khó SEO và khó debug hơn.","Biết sản phẩm BTL của môn này là SPA thuần JavaScript, không dùng framework."]},
+{"code":"1.6","t":"VS Code, Chrome DevTools, Git/GitHub","check":["Cài đặt VS Code với extension Live Server, Prettier; biết phím tắt mở terminal và tìm kiếm toàn dự án.","Mở được 4 panel DevTools: Elements, Console, Network, Lighthouse và nói rõ mỗi panel dùng để làm gì.","Tạo tài khoản GitHub, cài Git, cấu hình user.name và user.email."]},
+{"code":"1.7","t":"Cấu trúc dự án và quy trình nộp bài","check":["Tổ chức thư mục theo chuẩn: index.html ở gốc, assets/css, assets/js, assets/img, data/.","Dùng đường dẫn tương đối, không hard-code đường dẫn tuyệt đối của máy mình.","Nắm quy trình nộp: push lên GitHub → deploy → gửi link; đúng hạn và đúng định dạng tên."]}
+]},
+{"n":2,"t":"HTML semantic, biểu mẫu và accessibility","lt":4,"bt":0,"th":2,"clos":["CLO2","CLO6"],"gv":"phân tích tài liệu đúng/sai, trình diễn form và công cụ kiểm tra","sv":"xây dựng website nhiều trang semantic, form hợp lệ và sửa lỗi accessibility","res":[{"label":"Ebook Ch.2 – HTML cơ bản","href":"../../ebook/chuong-2.html"},{"label":"Ebook Ch.3 – HTML nâng cao","href":"../../ebook/chuong-3.html"}],"topics":[
+{"code":"2.1","t":"Cấu trúc tài liệu, metadata và heading hierarchy","check":["Viết được skeleton HTML5: doctype, html lang, head (meta charset, viewport, title, description), body.","Chỉ có đúng một h1 mỗi trang; heading không nhảy cấp (h2 → h4).","Biết thẻ meta viewport là bắt buộc để responsive hoạt động trên điện thoại."]},
+{"code":"2.2","t":"Text, link, image, list, table và media","check":["Dùng đúng thẻ theo ngữ nghĩa: p, ul/ol/li, table (kèm thead/tbody, th scope), figure/figcaption.","Mọi ảnh nội dung có alt mô tả; ảnh trang trí dùng alt rỗng.","Link mở tab mới có rel=noopener; dùng đường dẫn tương đối trong dự án."]},
+{"code":"2.3","t":"Semantic landmarks và kiến trúc nội dung","check":["Bố cục trang bằng header, nav, main, section, article, aside, footer thay vì div lồng nhau.","Biết landmark giúp screen reader và giúp SEO hiểu cấu trúc trang.","Phân biệt section (một khối chủ đề) và article (nội dung độc lập, tái sử dụng được)."]},
+{"code":"2.4","t":"Form controls, label và HTML validation","check":["Mỗi input có label gắn qua for/id; dùng fieldset/legend khi nhóm câu hỏi.","Dùng đúng type: email, tel, number, date, url, password; kèm required, minlength, pattern, placeholder.","Hiểu validate phía trình duyệt chỉ là lớp đầu, vẫn cần kiểm tra lại ở JavaScript/server."]},
+{"code":"2.5","t":"SEO cơ bản","check":["Title ngắn, chứa từ khóa, khác nhau giữa các trang; có meta description.","Dùng heading đúng cấp để máy tìm kiếm đọc được cấu trúc; alt cho ảnh.","Đặt tên file và thư mục không dấu, dùng gạch nối — ví dụ: san-pham-moi.html, không phải Sản Phẩm Mới.html."]},
+{"code":"2.6","t":"Accessibility, keyboard và ARIA nhập môn","check":["Điều hướng được toàn bộ trang bằng Tab/Shift+Tab/Enter; focus ring không bị xóa bằng outline:none.","Không truyền thông tin chỉ bằng màu; nút icon phải có aria-label.","ARIA chỉ dùng khi HTML thuần không diễn đạt được; tránh lạm dụng role thừa."]},
+{"code":"2.7","t":"Kiểm tra HTML bằng validator","check":["Chạy W3C Validator cho toàn bộ trang và sửa hết lỗi trước khi nộp.","Biết đọc thông báo lỗi: dòng, cột, nguyên nhân và cách sửa.","Chạy Lighthouse để lấy điểm Accessibility và SEO, ghi lại ảnh chụp vào báo cáo."]}
+]},
+{"n":3,"t":"CSS nền tảng","lt":4,"bt":0,"th":2,"clos":["CLO3","CLO6"],"gv":"trực quan hóa cascade/box model, live coding và debugging","sv":"chuyển bản thiết kế đơn giản thành giao diện, giải thích specificity và sửa lỗi bố cục","res":[{"label":"Ebook Ch.4 – CSS cơ bản","href":"../../ebook/chuong-4.html"},{"label":"Ebook Ch.5 – CSS Layout","href":"../../ebook/chuong-5.html"},{"label":"Demo: 3 cách nhúng CSS","href":"../ba-cach-nhung-css.html"},{"label":"Demo: hướng dẫn CSS cơ bản","href":"../huong-dan-css-co-ban.html"}],"topics":[
+{"code":"3.1","t":"Cách nhúng CSS; cascade và inheritance","check":["Biết 3 cách nhúng: inline (style), internal (thẻ style), external (file .css) và vì sao external được ưu tiên.","Hiểu cascade: nguồn → importance → specificity → thứ tự xuất hiện.","Biết thuộc tính nào được kế thừa (color, font, line-height) và thuộc tính nào không (margin, border, background)."]},
+{"code":"3.2","t":"Selector và specificity","check":["Dùng được: type, class, id, attribute, descendant, child, sibling, grouping.","Tính specificity và giải thích vì sao một khai báo thắng khai báo khác.","Tránh !important trừ trường hợp bất khả kháng; ưu tiên class thay vì id để tái sử dụng."]},
+{"code":"3.3","t":"Màu sắc, đơn vị và typography","check":["Dùng được hex, rgb/rgba, hsl/hsla và biết khi nào cần alpha.","Phân biệt đơn vị tuyệt đối (px) và tương đối (rem, em, %, vw, vh, ch); ưu tiên rem cho cỡ chữ.","Thiết lập font-family có fallback, line-height 1.5–1.7 cho văn bản dài, và giới hạn độ rộng dòng (~65–75 ký tự)."]},
+{"code":"3.4","t":"Box model, box-sizing và display","check":["Chỉ ra được content, padding, border, margin trên một phần tử bằng DevTools.","Đặt box-sizing: border-box để chiều rộng tính cả padding và border.","Phân biệt display: block, inline, inline-block, none và ảnh hưởng tới width/margin."]},
+{"code":"3.5","t":"Normal flow, position và overflow","check":["Hiểu normal flow trước khi dùng position để can thiệp.","Dùng đúng position: static, relative, absolute, fixed, sticky và biết absolute định vị theo ancestor gần nhất có position khác static.","Xử lý nội dung tràn bằng overflow: hidden/scroll/auto; tránh margin âm để dàn trang."]},
+{"code":"3.6","t":"Pseudo-class, pseudo-element và custom properties","check":["Dùng :hover, :focus, :focus-visible, :active, :first-child, :nth-child(), :not().","Dùng ::before/::after đúng chỗ (trang trí), kèm content.","Định nghĩa custom properties (--mau-chinh) trong :root và dùng var() để đổi theme nhất quán."]},
+{"code":"3.7","t":"Gỡ lỗi CSS bằng DevTools","check":["Mở Elements → Styles, tắt/bật từng khai báo để tìm nguyên nhân.","Xem Computed để biết giá trị cuối cùng và hộp của phần tử.","Biết đọc chỉ báo specificity và khai báo bị gạch ngang (bị đè)."]}
+]},
+{"n":4,"t":"Layout, responsive design và Bootstrap 5","lt":4,"bt":0,"th":3,"clos":["CLO3","CLO6"],"gv":"phân rã layout, so sánh CSS thuần và Bootstrap","sv":"xây dựng landing page responsive; kiểm thử mobile, tablet, desktop","res":[{"label":"Ebook Ch.5 – CSS Layout","href":"../../ebook/chuong-5.html"},{"label":"Ebook Ch.6 – Responsive & Bootstrap","href":"../../ebook/chuong-6.html"},{"label":"Ebook Ch.7 – Bootstrap Components","href":"../../ebook/chuong-7.html"},{"label":"Demo CNTT2 (Bootstrap 5)","href":"../CNTT2/index.html"}],"topics":[
+{"code":"4.1","t":"Flexbox và CSS Grid","check":["Flexbox: hiểu trục chính/trục chéo, justify-content, align-items, flex-direction, gap, flex-wrap, flex-grow/shrink/basis.","Grid: dùng grid-template-columns/rows, gap, grid-area, fr và auto-fit/minmax cho lưới thích ứng.","Quy tắc chọn: Flexbox cho một chiều (hàng HOẶC cột), Grid cho hai chiều (hàng VÀ cột)."]},
+{"code":"4.2","t":"Mobile-first, breakpoint và media query","check":["Viết CSS cho mobile trước, rồi mở rộng bằng min-width media query.","Chọn breakpoint theo nội dung (khi bố cục bắt đầu xấu), không rập khuôn theo kích thước thiết bị.","Có meta viewport; kiểm thử ở 3 mốc phổ biến: ~360px, ~768px, ~1200px."]},
+{"code":"4.3","t":"Responsive image, typography và navigation","check":["Ảnh: max-width 100%, height auto; dùng srcset/sizes hoặc picture khi cần nhiều độ phân giải.","Chữ: dùng clamp() cho tiêu đề để co giãn mượt giữa mobile và desktop.","Điều hướng: có menu thu gọn (hamburger) trên mobile và mở được bằng bàn phím."]},
+{"code":"4.4","t":"Bootstrap grid, utilities và components","check":["Dùng container, row, col và col-md-*/col-lg-* đúng ngữ nghĩa mobile-first của Bootstrap 5.","Tận dụng utilities (spacing, flex, text, display, border) thay vì viết CSS trùng chức năng.","Biết các component cốt lõi: navbar, card, accordion, modal, alert, badge, table responsive."]},
+{"code":"4.5","t":"Form, navigation và customization","check":["Dùng Bootstrap form-control, form-label, input-group, form-check, validation classes.","Navbar dùng đúng collapse + data-bs-toggle và hoạt động trên mobile.","Customize bằng CSS variables của Bootstrap 5 hoặc một file override riêng — không sửa trực tiếp bootstrap.css."]},
+{"code":"4.6","t":"Accessibility của component","check":["Modal/accordion/dropdown của Bootstrap cần aria-expanded, aria-controls, và đóng được bằng Esc.","Nút icon chỉ có chữ biểu tượng phải có aria-label; form error cần liên kết với input.","Kiểm tra focus trap trong modal và focus quay lại nút mở khi đóng."]},
+{"code":"4.7","t":"Kiểm thử nhiều kích thước màn hình","check":["Dùng device toolbar của DevTools và thử thêm trên điện thoại thật.","Kiểm tra: không cuộn ngang, chữ không tràn, nút chạm được (≥44px), ảnh không méo.","Chụp ảnh 3 kích thước làm minh chứng cho Mốc 3 của bài tập lớn."]}
+]},
+{"n":5,"t":"JavaScript nền tảng","lt":4,"bt":0,"th":2,"clos":["CLO4","CLO6"],"gv":"giải thích đặc trưng JavaScript, coding exercise và tracing","sv":"xử lý tập dữ liệu, viết hàm, tổ chức module và sửa lỗi","res":[{"label":"Ebook Ch.8 – JavaScript cơ bản và DOM","href":"../../ebook/chuong-8.html"}],"topics":[
+{"code":"5.1","t":"Môi trường chạy và cách nhúng JavaScript","check":["Biết JS chạy trong engine của trình duyệt (V8 trên Chrome) và cả ở Node.js.","Nhúng bằng file ngoài với defer (ưu tiên) hoặc đặt script cuối body; hiểu khác biệt defer/async.","Không viết JavaScript inline trong thuộc tính onclick — tách ra file .js."]},
+{"code":"5.2","t":"let, const, kiểu dữ liệu và toán tử","check":["Ưu tiên const, chỉ dùng let khi cần gán lại; không dùng var.","Phân biệt 7 kiểu nguyên thủy (string, number, bigint, boolean, null, undefined, symbol) và object.","Hiểu === khác == ở chỗ không ép kiểu; biết truthy/falsy và optional chaining (?.)."]},
+{"code":"5.3","t":"Điều kiện, vòng lặp và hàm","check":["Dùng if/else, switch, ternary đúng ngữ cảnh; tránh điều kiện lồng quá 2 cấp.","Vòng lặp: for, for...of (phần tử), for...in (khóa), while; biết break/continue.","Hàm: khai báo, biểu thức, tham số mặc định, return sớm (early return) để giảm lồng."]},
+{"code":"5.4","t":"Array, object và các array methods","check":["Thành thạo map, filter, find, some, every, reduce, sort (cẩn thận sort mặc định theo chuỗi).","Truy cập object bằng dot và bracket; biết Object.keys/values/entries.","Biết cách biến đổi dữ liệu API (mảng object) thành dữ liệu hiển thị bằng map/filter."]},
+{"code":"5.5","t":"Scope, arrow function, destructuring, spread/rest","check":["Phân biệt global, function, block scope và hoisting của let/const (temporal dead zone).","Arrow function không có this riêng — hiểu khi nào KHÔNG nên dùng (phương thức object).","Destructuring mảng/object, spread để sao chép, rest để gom tham số."]},
+{"code":"5.6","t":"JSON, module và exception handling","check":["Chuyển đổi bằng JSON.stringify và JSON.parse; biết JSON không hỗ trợ hàm, undefined, Date.","Tách mã thành ES module: export/import, hiểu phạm vi riêng của mỗi module.","try/catch/finally và throw Error có thông điệp rõ ràng; không bắt lỗi rồi bỏ im lặng."]},
+{"code":"5.7","t":"Debugging bằng Console và breakpoint","check":["Dùng console.log/table/dir/group có chủ đích và xóa trước khi nộp bài.","Đặt breakpoint, xem Call Stack, Scope, dùng Step Over/Into/Out và Watch.","Đọc được thông báo lỗi: loại lỗi, file và số dòng; biết các lỗi quen thuộc ReferenceError, TypeError, SyntaxError."]}
+]},
+{"n":6,"t":"DOM, events, form và browser storage","lt":4,"bt":0,"th":2,"clos":["CLO4","CLO6"],"gv":"live coding ứng dụng tương tác và phân tích luồng sự kiện","sv":"xây dựng Task Manager/Product Filter; lưu dữ liệu phía trình duyệt","res":[{"label":"Ebook Ch.8 – JavaScript cơ bản và DOM","href":"../../ebook/chuong-8.html"},{"label":"Demo CNTT2","href":"../CNTT2/index.html"}],"topics":[
+{"code":"6.1","t":"DOM tree và truy vấn phần tử","check":["Hiểu document, node, element, text node và quan hệ cha/con/anh em.","Dùng querySelector/querySelectorAll với CSS selector; biết getElementById nhanh nhất cho id.","Biết querySelectorAll trả về NodeList tĩnh, khác HTMLCollection sống."]},
+{"code":"6.2","t":"Cập nhật text, attribute, class và style","check":["Dùng textContent cho văn bản người dùng (an toàn), innerHTML chỉ khi kiểm soát được nguồn dữ liệu.","setAttribute/getAttribute/hasAttribute; thuộc tính DOM như .value, .checked, .disabled.","classList.add/remove/toggle thay vì gán chuỗi className thủ công."]},
+{"code":"6.3","t":"Tạo, chèn và xóa phần tử","check":["createElement + append/appendChildren; biết insertAdjacentHTML khi cần chèn chuỗi HTML.","remove() và replaceWith(); hiểu fragment để chèn nhiều phần tử hiệu quả hơn.","Xóa phần tử con đang có listener thì listener đi theo — không gây rò rỉ nếu tham chiếu được giải phóng."]},
+{"code":"6.4","t":"Event object, bubbling và delegation","check":["addEventListener với tham số thứ ba (capture/bubbling); gọi event.preventDefault() và stopPropagation() đúng lúc.","Hiểu 3 pha: capture → target → bubble.","Event delegation: gắn một listener trên phần tử cha, đọc event.target để xử lý danh sách dài — cần cho danh sách render động."]},
+{"code":"6.5","t":"Xử lý form và validation","check":["Ngăn submit mặc định bằng preventDefault; đọc dữ liệu qua FormData hoặc từng input.","Validate bằng JS: kiểm tra rỗng, định dạng, độ dài; hiện thông báo lỗi cạnh từng trường.","Gắn aria-invalid và liên kết thông báo lỗi với input qua aria-describedby; focus vào trường lỗi đầu tiên."]},
+{"code":"6.6","t":"Render danh sách và tách mã thành module","check":["Tách dữ liệu (state) khỏi giao diện: có hàm render(state) dựng lại danh sách từ dữ liệu.","Không hard-code từng thẻ HTML — render bằng vòng lặp và template.","Tách module theo trách nhiệm: data.js, ui.js, events.js, storage.js, app.js."]},
+{"code":"6.7","t":"Local Storage và Session Storage","check":["setItem/getItem/removeItem/clear; giá trị luôn là chuỗi nên phải JSON.stringify/parse.","localStorage tồn tại sau khi đóng trình duyệt; sessionStorage mất khi đóng tab; dung lượng ~5MB.","Bọc try/catch khi parse — dữ liệu cũ có thể hỏng hoặc khác cấu trúc; có phiên bản khóa (versioned key)."]},
+{"code":"6.8","t":"Gỡ lỗi DOM và sự kiện","check":["Elements → Event Listeners để xem listener đang gắn ở đâu.","Dùng getEventListeners(element) trong Console của Chrome.","Kiểm tra thứ tự thực thi bằng console.log và breakpoint; xác định listener bị gắn trùng nhiều lần."]}
+]},
+{"n":7,"t":"JavaScript bất đồng bộ","lt":2,"bt":0,"th":1,"clos":["CLO1","CLO4","CLO6"],"gv":"mô phỏng event loop và so sánh các cách tổ chức async","sv":"dự đoán thứ tự thực thi, chuyển Promise chain sang async/await","res":[{"label":"Ebook Ch.9 – Fetch API và dự án","href":"../../ebook/chuong-9.html"}],"topics":[
+{"code":"7.1","t":"Mã đồng bộ và bất đồng bộ","check":["Giải thích vì sao JS đơn luồng nhưng không bị chặn khi gọi mạng (non-blocking I/O).","Kể các tác vụ bất đồng bộ quen thuộc: fetch, setTimeout, event listener, đọc file."]},
+{"code":"7.2","t":"Call stack, Web APIs, task queue, microtask queue và event loop","check":["Mô tả được luồng: stack → Web APIs → queue → event loop đưa về stack.","Biết microtask queue (Promise) ưu tiên hơn task queue (setTimeout).","Dự đoán đúng thứ tự in ra của một đoạn code trộn console.log, setTimeout và Promise."]},
+{"code":"7.3","t":"Callback và hạn chế của callback lồng nhau","check":["Viết được hàm nhận callback và gọi lại khi xong việc.","Chỉ ra callback hell và vì sao khó đọc, khó xử lý lỗi.","Hiểu callback vẫn được dùng ở sự kiện DOM — không phải lúc nào cũng cần Promise."]},
+{"code":"7.4","t":"Promise, then/catch/finally","check":["Biết 3 trạng thái: pending, fulfilled, rejected; một Promise không đổi trạng thái lần hai.","Dùng then/catch/finally; hiểu then trả về Promise mới nên chuỗi được.","Promise.all cho song song, Promise.allSettled khi muốn nhận cả kết quả lỗi."]},
+{"code":"7.5","t":"async/await và try/catch","check":["Hàm async luôn trả về Promise; await chỉ dùng được trong async (hoặc top-level module).","Bọc await bằng try/catch để xử lý lỗi; dùng finally để tắt loading.","Chuyển được một Promise chain tương đương sang async/await mà không đổi hành vi."]},
+{"code":"7.6","t":"Tác vụ tuần tự, song song; loading và error state","check":["Tuần tự khi bước sau phụ thuộc kết quả bước trước; song song bằng Promise.all khi độc lập.","Luôn có trạng thái loading trước khi có dữ liệu.","Thiết kế error state: thông báo dễ hiểu + nút thử lại, không để giao diện treo."]}
+]},
+{"n":8,"t":"REST API và Fetch API","lt":3,"bt":0,"th":2,"clos":["CLO1","CLO5","CLO6"],"gv":"phân tích request/response, trình diễn lỗi và xử lý trạng thái","sv":"xây dựng ứng dụng tin tức/sản phẩm/thời tiết có API","res":[{"label":"Ebook Ch.9 – Fetch API và dự án","href":"../../ebook/chuong-9.html"}],"topics":[
+{"code":"8.1","t":"API, REST, resource và endpoint","check":["Định nghĩa được API và REST; resource là danh từ (users, products), endpoint là địa chỉ truy cập.","Phân biệt resource tập thể (/products) và một bản ghi (/products/42)."]},
+{"code":"8.2","t":"HTTP methods, status codes, headers, query/path parameters","check":["GET đọc, POST tạo, PUT/PATCH sửa, DELETE xóa; GET không nên thay đổi dữ liệu.","Đọc status: 200/201, 400, 401, 403, 404, 429, 500.","Phân biệt path parameter (/products/42) và query parameter (?q=ao&page=2); biết Content-Type: application/json."]},
+{"code":"8.3","t":"JSON và hợp đồng dữ liệu","check":["Đọc cấu trúc JSON trả về và ánh xạ sang object JavaScript.","Thỏa thuận hợp đồng dữ liệu: tên trường, kiểu, trường tùy chọn — ghi lại trong README.","Kiểm tra dữ liệu trước khi dùng: optional chaining, giá trị mặc định."]},
+{"code":"8.4","t":"fetch, response.ok, GET và POST","check":["fetch không tự bắt lỗi HTTP — phải kiểm tra response.ok rồi mới await response.json().","Gửi POST với method, headers Content-Type và body JSON.stringify.","Bọc toàn bộ trong try/catch; tách hàm gọi API ra khỏi hàm render."]},
+{"code":"8.5","t":"Loading, success, empty và error states","check":["Giao diện phải có đủ 4 trạng thái và chuyển đúng lúc.","Loading dùng spinner/skeleton và tắt nút để tránh gửi trùng.","Empty state khác error state: rỗng là hợp lệ, lỗi là cần thông báo + thử lại."]},
+{"code":"8.6","t":"Search, filter và pagination cơ bản","check":["Lọc phía client với filter trên mảng đã tải; lọc phía server bằng query parameter.","Debounce ô tìm kiếm để không gọi API mỗi lần gõ phím.","Pagination: giới hạn số mục mỗi trang, giữ trạng thái trang hiện tại."]},
+{"code":"8.7","t":"CORS, AbortController và bảo mật API key nhập môn","check":["Nhận biết lỗi CORS và biết cách xử lý đúng (server cho phép origin, hoặc dùng proxy được cấp).","Hủy request cũ bằng AbortController khi người dùng tìm kiếm liên tiếp.","Không đặt secret trong mã Frontend công khai; mọi dữ liệu ở client đều có thể bị đọc."]},
+{"code":"8.8","t":"Mock API và render dữ liệu","check":["Dùng JSON tĩnh trong thư mục data/ để phát triển giao diện khi chưa có API thật.","Chuyển từ mock sang API thật bằng cách thay đổi đúng một chỗ (hàm gọi dữ liệu).","Lưu ảnh chụp Network panel làm minh chứng cho Mốc 5 của bài tập lớn."]}
+]},
+{"n":9,"t":"Tư duy component và tích hợp dự án Frontend","lt":2,"bt":0,"th":0,"clos":["CLO6","CLO7"],"gv":"minh họa cùng một component bằng một framework đại diện, hướng dẫn tích hợp dự án","sv":"hoàn thiện dự án, code review, triển khai và chuẩn bị bảo vệ","res":[{"label":"Ebook Ch.9 – Fetch API và dự án","href":"../../ebook/chuong-9.html"},{"label":"React","href":"https://react.dev/learn"},{"label":"Vue","href":"https://vuejs.org/guide/introduction.html"},{"label":"Angular","href":"https://angular.dev/overview"}],"topics":[
+{"code":"9.1","t":"Hạn chế của thao tác DOM thủ công","check":["Chỉ ra vấn đề: mã dài, khó bảo trì, trạng thái và giao diện dễ lệch nhau.","Biết các lỗi thường gặp: listener gắn trùng, quên cập nhật một chỗ, xung đột id."]},
+{"code":"9.2","t":"Declarative UI và component tree","check":["Phân biệt imperative (ra lệnh từng bước cho DOM) và declarative (mô tả giao diện theo trạng thái).","Vẽ được cây component của ứng dụng: layout → page → section → item."]},
+{"code":"9.3","t":"Component, input/props, state và event","check":["Định nghĩa được component là đơn vị giao diện tái sử dụng có props vào và event ra.","Phân biệt props (cha truyền xuống, không sửa trực tiếp) và state (component tự giữ).","Biết luồng dữ liệu một chiều và vì sao nó giúp dễ suy luận."]},
+{"code":"9.4","t":"Routing và shared state ở mức khái niệm","check":["Giải thích routing phía client: đổi URL mà không tải lại trang.","Biết shared state cần được đặt ở tổ tiên chung hoặc một store, tránh đồng bộ thủ công."]},
+{"code":"9.5","t":"Khảo sát React, Vue và Angular; tiêu chí lựa chọn","check":["So sánh 3 framework về cú pháp, hệ sinh thái, độ dốc học tập và nhu cầu tuyển dụng.","Nêu tiêu chí lựa chọn cho dự án cụ thể: quy mô, thời gian, kỹ năng nhóm, tài liệu.","Nội dung ở mức KHẢO SÁT — không bị kiểm tra viết mã framework trong kỳ thực hành."]},
+{"code":"9.6","t":"Chuyển một phần giao diện sang một framework được chọn","check":["Chọn MỘT phần nhỏ (ví dụ danh sách sản phẩm) để viết lại bằng framework.","Giữ nguyên phần còn lại bằng JavaScript thuần; ghi lại điểm khác biệt trong decision log.","Không bắt buộc hoàn thiện toàn bộ ứng dụng bằng framework trong học phần này."]},
+{"code":"9.7","t":"Hoàn thiện, kiểm thử, triển khai và bảo vệ dự án","check":["Rà soát theo mục 13 (yêu cầu kỹ thuật tối thiểu) trước khi nộp.","Chạy Lighthouse, sửa các cảnh báo accessibility và hiệu năng cơ bản.","Deploy lên GitHub Pages/Netlify/Vercel; kiểm tra link từ máy khác.","Chuẩn bị demo 5 phút và trả lời vấn đáp về phần việc của mình."]}
+]}
+]
+}
+</script>
+<script>
+(function(){
+'use strict';
+var KEY='cse122-syllabus-v1';
+var $=function(s,c){return (c||document).querySelector(s);};
+var $$=function(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s));};
+var E={root:$('#dcroot'),tabs:$('#dctabs'),q:$('#dcq'),count:$('#dccount'),stats:$('#dcstats'),
+  fill:$('#dcfill'),prog:$('#dcprogress'),expand:$('#dcexpand'),collapse:$('#dccollapse'),reset:$('#dcreset')};
+var DATA=null;
+try{DATA=JSON.parse($('#dc-data').textContent||'');}catch(err){DATA=null;}
+if(!DATA||!DATA.groups||!DATA.chapters){
+  if(E.root){E.root.innerHTML='<p class="dc-empty">Không đọc được dữ liệu đề cương nhúng trong trang này.</p>';}
+  return;
+}
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function norm(s){return String(s==null?'':s).toLowerCase().replace(/\s+/g,' ').trim();}
+function acc(s){var t=norm(s);try{return t.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d');}catch(e){return t;}}
+var seen={},state={tab:'all',q:''};
+try{var rs=localStorage.getItem(KEY);if(rs){var o=JSON.parse(rs);
+  if(o&&typeof o==='object'){if(o.seen&&typeof o.seen==='object'){seen=o.seen;}
+  if(typeof o.tab==='string'){state.tab=o.tab;}}}}catch(e){seen={};}
+function save(){try{localStorage.setItem(KEY,JSON.stringify({v:1,tab:state.tab,seen:seen}));}catch(e){}}
+var IDS={},TOTAL=0,EXTRA='';
+function linkHtml(r){var ext=/^(https?:|mailto:)/.test(r.href||'');
+  return '<a href="'+esc(r.href)+'"'+(ext?' target="_blank" rel="noopener"':'')+'>'+esc(r.label)+'</a>';}
+function bodyHtml(it){
+  var h='';
+  if(it.p&&it.p.length){it.p.forEach(function(t){h+='<p>'+esc(t)+'</p>';});}
+  if(it.kv&&it.kv.length){h+='<ul class="dc-kv">';
+    it.kv.forEach(function(kv){h+='<li><b>'+esc(kv[0])+'</b><span>'+esc(kv[1])+'</span></li>';});
+    h+='</ul>';}
+  if(it.ul&&it.ul.length){h+='<ul>';it.ul.forEach(function(t){h+='<li>'+esc(t)+'</li>';});h+='</ul>';}
+  if(it.check&&it.check.length){h+='<h4>Tiêu chí tự kiểm</h4><ul class="dc-checks">';
+    it.check.forEach(function(t){h+='<li><span>'+esc(t)+'</span></li>';});h+='</ul>';}
+  if(it.res&&it.res.length){h+='<h4>Học liệu liên quan</h4><div class="dc-res">';
+    it.res.forEach(function(r){h+=linkHtml(r);});h+='</div>';}
+  return h;
+}
+function searchText(it){
+  var p=[it.code,it.t,it.hint||'',EXTRA];
+  ['p','ul','check'].forEach(function(k){if(it[k]){it[k].forEach(function(x){p.push(x);});}});
+  if(it.kv){it.kv.forEach(function(kv){p.push(kv[0]);p.push(kv[1]);});}
+  if(it.res){it.res.forEach(function(r){p.push(r.label);});}
+  if(it.tags){p.push(it.tags.join(' '));}
+  return esc(acc(p.join(' ')));
+}
+function itemHtml(it,id,scope,sec,chap){
+  IDS[id]=1;TOTAL++;
+  var on=!!seen[id];
+  return '<li><details class="dc-item'+(on?' seen':'')+'" id="'+id+'" data-scope="'+scope+'"'
+    +(sec?' data-sec="'+sec+'"':'')+(chap?' data-chap="'+chap+'"':'')
+    +' data-search="'+searchText(it)+'">'
+    +'<summary><span class="dc-code">'+esc(it.code)+'</span>'
+    +'<span class="dc-sum-main"><span>'+esc(it.t)+'</span>'
+    +(it.hint?'<span class="dc-sum-hint">'+esc(it.hint)+'</span>':'')+'</span>'
+    +'<span class="dc-caret" aria-hidden="true">+</span></summary>'
+    +'<div class="dc-a">'+bodyHtml(it)
+    +'<div class="dc-foot">'
+    +'<button type="button" class="dc-seen" data-id="'+id+'" aria-pressed="'+(on?'true':'false')+'">'
+    +(on?'Đã xem ✓':'Đánh dấu đã xem')+'</button>'
+    +'<button type="button" class="dc-seen dc-copy" data-copy="'+id+'" title="Sao chép liên kết trực tiếp tới mảnh này">🔗 Sao chép liên kết</button>'
+    +'</div>'
+    +'</div></details></li>';
+}
+  /* ---------- id mảnh (duy nhất toàn trang) ---------- */
+  function slug(s){var t=acc(s).replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');return t||'x';}
+  function idOf(key,it){return 'dc-'+key+'-'+slug(it.code);}
+  function msg(t){if(typeof window.toast==='function'){window.toast(t);}}
+
+  /* ---------- thống kê đầu trang ---------- */
+  var INFO_TOTAL=0,CHAP_TOTAL=0,SEC_TOTAL=0,CLO_TOTAL=0,LT=0,BT=0,TH=0;
+  function measure(){
+    INFO_TOTAL=0;SEC_TOTAL=0;CLO_TOTAL=0;
+    var cloSet={};
+    DATA.groups.forEach(function(g){(g.sections||[]).forEach(function(s){
+      SEC_TOTAL++;INFO_TOTAL+=(s.items||[]).length;
+      (s.items||[]).forEach(function(it){
+        var c=acc(it.code);
+        if(/^clo\s*\d/.test(c)){cloSet[c]=1;}
+      });
+    });});
+    CLO_TOTAL=Object.keys(cloSet).length;
+    CHAP_TOTAL=0;LT=0;BT=0;TH=0;
+    DATA.chapters.forEach(function(c){
+      CHAP_TOTAL+=(c.topics||[]).length;LT+=c.lt||0;BT+=c.bt||0;TH+=c.th||0;
+    });
+  }
+  function statsHtml(){
+    var o=[];
+    o.push('<span><strong>'+esc(DATA.course.code)+'</strong> · '+esc(DATA.course.level||'Đại học')+' · 3 TC (2-0-1)</span>');
+    o.push('<span><strong>'+(LT+BT+TH)+'</strong> tiết = '+LT+' LT + '+BT+' BT + '+TH+' TH</span>');
+    o.push('<span><strong>'+DATA.chapters.length+'</strong> chương · <strong>'+SEC_TOTAL+'</strong> mục đề cương</span>');
+    o.push('<span><strong>'+CLO_TOTAL+'</strong> chuẩn đầu ra CLO</span>');
+    o.push('<span><strong>'+(INFO_TOTAL+CHAP_TOTAL)+'</strong> mảnh nội dung bấm để xem</span>');
+    o.push('<span>'+esc(DATA.course.unit)+'</span>');
+    return o.join('');
+  }
+
+  /* ---------- dựng HTML ---------- */
+  function sectionHtml(sec){
+    var n=(sec.items||[]).length,i=0;
+    var h='<section class="dc-sec" id="sec-'+esc(sec.id)+'" data-sec="'+esc(sec.id)+'">';
+    h+='<h3 class="dc-sec-t">'+esc(sec.title)+'</h3><ul class="dc-items">';
+    EXTRA=sec.title;
+    for(;i<n;i++){h+=itemHtml(sec.items[i],idOf(sec.id,sec.items[i]),'info',sec.id,null);}
+    EXTRA='';
+    return h+'</ul></section>';
+  }
+  function groupHtml(g){
+    var n=0,i=0,secs=g.sections||[];
+    secs.forEach(function(s){n+=(s.items||[]).length;});
+    var h='<section class="dc-group" id="g-'+esc(g.id)+'" data-scope="info">';
+    h+='<div class="dc-group-hd"><h2>'+esc(g.label)+'</h2>'
+      +'<span class="dc-count" data-count-for="info">'+n+' mảnh · '+secs.length+' mục</span></div>';
+    if(g.blurb){h+='<p class="dc-group-blurb">'+esc(g.blurb)+'</p>';}
+    for(;i<secs.length;i++){h+=sectionHtml(secs[i]);}
+    return h+'</section>';
+  }
+  function chapterHtml(c){
+    var ts=c.topics||[],i=0,d=[];
+    var h='<section class="dc-chap" id="chuong-'+c.n+'" data-chap="'+c.n+'">';
+    h+='<div class="dc-ch"><div class="dc-ch-n" aria-hidden="true">'+c.n+'</div><div class="dc-ch-body">';
+    h+='<h3>Chương '+c.n+' &mdash; '+esc(c.t)+'</h3>';
+    if(c.gv){d.push('<b>Giảng viên:</b> '+esc(c.gv));}
+    if(c.sv){d.push('<b>Sinh viên:</b> '+esc(c.sv));}
+    if(d.length){h+='<p>'+d.join(' &nbsp;·&nbsp; ')+'</p>';}
+    h+='<div class="dc-pills">';
+    if(c.lt){h+='<span class="dc-pill">'+c.lt+' tiết LT</span>';}
+    if(c.bt){h+='<span class="dc-pill warn">'+c.bt+' tiết BT</span>';}
+    if(c.th){h+='<span class="dc-pill th">'+c.th+' tiết TH</span>';}
+    h+='<span class="dc-pill">'+ts.length+' mảnh</span>';
+    if(c.clos&&c.clos.length){h+='<span class="dc-pill warn">'+esc(c.clos.join(' · '))+'</span>';}
+    h+='</div>';
+    if(c.res&&c.res.length){h+='<div class="dc-res">';c.res.forEach(function(r){h+=linkHtml(r);});h+='</div>';}
+    h+='</div></div><ul class="dc-items">';
+    EXTRA=c.t;
+    for(;i<ts.length;i++){h+=itemHtml(ts[i],idOf('c'+c.n,ts[i]),'chap',null,String(c.n));}
+    EXTRA='';
+    return h+'</ul></section>';
+  }
+  function chaptersHtml(){
+    var i=0,h='<section class="dc-group" id="g-chuong" data-scope="chap">';
+    h+='<div class="dc-group-hd"><h2>Nội dung chi tiết theo '+DATA.chapters.length+' chương</h2>'
+      +'<span class="dc-count" data-count-for="chap">'+CHAP_TOTAL+' mảnh</span></div>';
+    h+='<p class="dc-group-blurb">Mỗi chương nêu số tiết, CLO liên quan, hoạt động của giảng viên và sinh viên,'
+      +' học liệu gợi ý và các chủ đề nhỏ. Bấm vào từng chủ đề để xem tiêu chí tự kiểm tương ứng.</p>';
+    for(;i<DATA.chapters.length;i++){h+=chapterHtml(DATA.chapters[i]);}
+    return h+'</section>';
+  }
+  function renderRoot(){
+    IDS={};TOTAL=0;
+    var h='',i=0;
+    for(;i<DATA.groups.length;i++){h+=groupHtml(DATA.groups[i]);}
+    h+=chaptersHtml();
+    h+='<p class="dc-empty" id="dcempty" hidden>Không có mảnh nào khớp với bộ lọc hiện tại.'
+      +' Hãy xóa từ khóa hoặc chọn tab &ldquo;Tất cả&rdquo;.</p>';
+    E.root.innerHTML=h;
+  }
+
+  /* ---------- tabs ---------- */
+  var TABS={all:1,info:1};
+  function renderTabs(){
+    var h='<button type="button" class="dc-tab" data-tab="all" aria-pressed="false" title="Xem toàn bộ đề cương">'
+      +'Tất cả<small>'+(INFO_TOTAL+CHAP_TOTAL)+' mảnh</small></button>';
+    h+='<button type="button" class="dc-tab" data-tab="info" aria-pressed="false" title="Các mục hành chính, CLO, đánh giá, rubric, học liệu">'
+      +'Thông tin học phần<small>'+INFO_TOTAL+' mảnh · '+SEC_TOTAL+' mục</small></button>';
+    DATA.chapters.forEach(function(c){
+      TABS['c'+c.n]=1;
+      h+='<button type="button" class="dc-tab" data-tab="c'+c.n+'" aria-pressed="false" title="'+esc(c.t)+'">'
+        +'Chương '+c.n+'<small>'+(c.topics||[]).length+' mảnh</small></button>';
+    });
+    E.tabs.innerHTML=h;
+  }
+  function paintTabs(){
+    $$('.dc-tab',E.tabs).forEach(function(b){
+      b.setAttribute('aria-pressed',b.getAttribute('data-tab')===state.tab?'true':'false');
+    });
+  }
+  /* ---------- lọc theo tab + tìm kiếm ---------- */
+  var autoOpened=[];
+  function matchTab(el){
+    if(state.tab==='all')return true;
+    if(state.tab==='info')return el.getAttribute('data-scope')==='info';
+    return el.getAttribute('data-chap')===state.tab.slice(1);
+  }
+  function setCount(scope,n,tot){
+    var el=$('[data-count-for="'+scope+'"]',E.root);
+    if(el)el.textContent=(n===tot?tot:n+' / '+tot)+' mảnh';
+  }
+  function applyFilter(){
+    autoOpened.forEach(function(el){el.open=false;});
+    autoOpened=[];
+    var q=acc(state.q),items=$$('.dc-item',E.root),shown=0,vInfo=0,vChap=0;
+    items.forEach(function(el){
+      var ok=matchTab(el)&&(!q||(el.getAttribute('data-search')||'').indexOf(q)>=0);
+      el.parentNode.hidden=!ok;
+      if(ok){
+        shown++;
+        if(el.getAttribute('data-scope')==='chap'){vChap++;}else{vInfo++;}
+        if(q.length>1&&!el.open){el.open=true;autoOpened.push(el);}
+      }
+    });
+    $$('.dc-sec,.dc-chap',E.root).forEach(function(s){
+      s.hidden=!$$('.dc-item',s).some(function(el){return !el.parentNode.hidden;});
+    });
+    $$('.dc-group',E.root).forEach(function(g){
+      g.hidden=!$$('.dc-sec,.dc-chap',g).some(function(x){return !x.hidden;});
+    });
+    var em=$('#dcempty',E.root);if(em){em.hidden=shown>0;}
+    setCount('info',vInfo,INFO_TOTAL);setCount('chap',vChap,CHAP_TOTAL);
+    if(E.count){
+      var t=(shown===TOTAL?'Hiển thị toàn bộ '+TOTAL+' mảnh':'Hiện '+shown+' / '+TOTAL+' mảnh');
+      if(q){t+=' khớp với “'+String(state.q).trim()+'”';}
+      E.count.textContent=t;
+    }
+  }
+
+  /* ---------- tiến độ tự kiểm ---------- */
+  function updateProgress(){
+    var keys=Object.keys(IDS),done=0,i=0;
+    for(;i<keys.length;i++){if(seen[keys[i]]){done++;}}
+    var tot=keys.length,pct=tot?Math.round(done*100/tot):0;
+    if(E.fill){E.fill.style.width=pct+'%';}
+    if(E.prog){E.prog.textContent=done+' / '+tot+' mảnh đã xem · '+pct+'%';}
+  }
+
+  /* ---------- liên kết trực tiếp tới một mảnh ---------- */
+  function copyLink(id){
+    var url=location.href.split('#')[0]+'#'+id;
+    function ok(){msg('Đã sao chép liên kết tới mảnh này');}
+    function fb(){
+      try{
+        var ta=document.createElement('textarea');
+        ta.value=url;ta.setAttribute('readonly','');
+        ta.style.position='fixed';ta.style.top='-1000px';
+        document.body.appendChild(ta);ta.select();document.execCommand('copy');
+        document.body.removeChild(ta);ok();
+      }catch(e){msg('Không sao chép được. Liên kết: '+url);}
+    }
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(url).then(ok,fb);
+    }else{fb();}
+  }
+  function reduceMotion(){
+    try{return !!(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches);}catch(e){return false;}
+  }
+  function scrollToEl(el,instant){
+    var y=Math.max(0,el.getBoundingClientRect().top+(window.pageYOffset||0)-96);
+    try{window.scrollTo({top:y,left:0,behavior:(instant||reduceMotion())?'auto':'smooth'});}
+    catch(e){window.scrollTo(0,y);}
+  }
+  function tabOf(el){return el.getAttribute('data-scope')==='chap'?'c'+el.getAttribute('data-chap'):'info';}
+  function focusHash(instant){
+    var h='';
+    try{h=decodeURIComponent((location.hash||'').replace(/^#/,''));}catch(e){h=(location.hash||'').replace(/^#/,'');}
+    if(!h||!IDS[h]){return false;}
+    var el=document.getElementById(h);
+    if(!el){return false;}
+    if(state.q){state.q='';if(E.q){E.q.value='';}}
+    if(state.tab!==tabOf(el)){state.tab=tabOf(el);save();paintTabs();}
+    applyFilter();
+    el.open=true;
+    scrollToEl(el,instant);
+    return true;
+  }
+  /* ---------- sự kiện ---------- */
+  function setTab(t,noScroll){
+    if(!TABS[t]){t='all';}
+    state.tab=t;save();paintTabs();applyFilter();
+    if(!noScroll){scrollToEl(E.tabs);}
+  }
+  E.tabs.addEventListener('click',function(ev){
+    var t=ev.target,b=(t&&t.closest)?t.closest('.dc-tab'):null;
+    if(b){setTab(b.getAttribute('data-tab'));}
+  });
+  E.root.addEventListener('click',function(ev){
+    var t=ev.target;
+    if(!t||!t.closest){return;}
+    var cp=t.closest('.dc-copy');
+    if(cp&&E.root.contains(cp)){
+      ev.preventDefault();ev.stopPropagation();
+      copyLink(cp.getAttribute('data-copy'));
+      return;
+    }
+    var b=t.closest('.dc-seen');
+    if(!b||!E.root.contains(b)){return;}
+    ev.preventDefault();ev.stopPropagation();
+    var id=b.getAttribute('data-id'),det=document.getElementById(id),on=!!seen[id];
+    if(on){
+      delete seen[id];
+      b.setAttribute('aria-pressed','false');b.textContent='Đánh dấu đã xem';
+      if(det){det.classList.remove('seen');}
+    }else{
+      seen[id]=1;
+      b.setAttribute('aria-pressed','true');b.textContent='Đã xem ✓';
+      if(det){det.classList.add('seen');}
+    }
+    save();updateProgress();
+    msg(on?'Đã bỏ đánh dấu':'Tuyệt! Đã ghi nhận tiến độ');
+  });
+  var tmr=null;
+  E.q.addEventListener('input',function(){
+    var v=E.q.value;
+    clearTimeout(tmr);
+    tmr=setTimeout(function(){state.q=v;applyFilter();},160);
+  });
+  E.q.addEventListener('keydown',function(ev){
+    if(ev.key==='Escape'||ev.key==='Esc'){E.q.value='';state.q='';applyFilter();}
+  });
+  document.addEventListener('keydown',function(ev){
+    if(ev.defaultPrevented||ev.altKey||ev.ctrlKey||ev.metaKey||ev.key!=='/'){return;}
+    var a=document.activeElement;
+    if(a&&a.closest&&a.closest('input,textarea,select,[contenteditable]')){return;}
+    ev.preventDefault();E.q.focus();E.q.select();
+  });
+  E.expand.addEventListener('click',function(){
+    var n=0;
+    $$('.dc-item',E.root).forEach(function(el){
+      if(!el.parentNode.hidden&&!el.open){el.open=true;n++;}
+    });
+    msg(n?('Đã mở '+n+' mảnh'):'Tất cả mảnh đang mở');
+  });
+  E.collapse.addEventListener('click',function(){
+    var n=0;
+    $$('.dc-item',E.root).forEach(function(el){if(el.open){el.open=false;n++;}});
+    autoOpened=[];
+    msg(n?('Đã đóng '+n+' mảnh'):'Không có mảnh nào đang mở');
+  });
+  E.reset.addEventListener('click',function(){
+    if(!window.confirm('Xóa toàn bộ đánh dấu "Đã xem" trên trình duyệt này?')){return;}
+    seen={};save();
+    $$('.dc-item',E.root).forEach(function(el){
+      el.classList.remove('seen');
+      var b=$('.dc-seen:not(.dc-copy)',el);
+      if(b){b.setAttribute('aria-pressed','false');b.textContent='Đánh dấu đã xem';}
+    });
+    updateProgress();msg('Đã đặt lại tiến độ tự kiểm');
+  });
+  var printState=[];
+  window.addEventListener('beforeprint',function(){
+    printState=[];
+    $$('.dc-item',E.root).forEach(function(el){
+      printState.push([el,el.open]);
+      if(!el.parentNode.hidden){el.open=true;}
+    });
+  });
+  window.addEventListener('afterprint',function(){
+    printState.forEach(function(p){p[0].open=p[1];});
+    printState=[];
+  });
+  window.addEventListener('hashchange',function(){focusHash();});
+
+  /* ---------- khởi tạo ---------- */
+  measure();
+  renderRoot();
+  renderTabs();
+  if(!TABS[state.tab]){state.tab='all';}
+  if(E.stats){E.stats.innerHTML=statsHtml();}
+  if(E.q&&state.q){E.q.value=state.q;}
+  paintTabs();
+  applyFilter();
+  updateProgress();
+  focusHash(true);
+})();
+</script>
+<script src="../../assets/js/app.js?v=20260925-decuong"></script></body></html>
+

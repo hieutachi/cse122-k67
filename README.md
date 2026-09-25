@@ -6,7 +6,7 @@ Static course website for GitHub Pages: Ebook (9 chapters) + slide viewer + live
 - `index.html` - landing page with 9 chapter cards + search
 - `ebook/` - Ebook chapter pages (ASCII diagrams + live demos + visual slide gallery)
 - `slides/` - slide viewer: 163 visual JPGs grouped by chapter; `bai.html` = Bai 1-44 title index
-- `demo/` - runnable HTML/CSS/JS examples (Box Model, CSS guide, CampusConnect)
+- `demo/` - runnable HTML/CSS/JS examples (Box Model, CSS guide, CampusConnect, interactive syllabus at `demo/de-cuong/`)
 - `assets/` - css/js + `img/trucquan/*.jpg` (converted from PNG via `tools/convert_trucquan.py`)
 - `data/` - `decks.json` (38 CSE122 decks), `bai.json` (Bai 1-44 titles)
 

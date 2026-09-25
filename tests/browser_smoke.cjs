@@ -156,6 +156,52 @@ async function main() {
     await check(`document.querySelector('[data-last-lesson]').href===${JSON.stringify(base+'ebook/chuong-4.html')}`,'Most recent chapter replaces older lesson');
     await evaluate('Object.defineProperty(window,"localStorage",{get(){throw new Error("Storage blocked")}});initLastLesson();updateLessonProgress()');
 
+    // Interactive syllabus (demo/de-cuong): rendered from embedded JSON, filters, self-check progress, deep links.
+    await navigate('demo/de-cuong/index.html');
+    await wait('document.querySelectorAll(".dc-item").length===126');
+    await check('document.querySelectorAll(".dc-tab").length===11 && document.querySelectorAll(".dc-sec").length===14 && document.querySelectorAll(".dc-chap").length===9','Syllabus renders 14 sections, 9 chapters and 11 filters');
+    await check('new Set([...document.querySelectorAll(".dc-item")].map(e=>e.id)).size===126','Every syllabus chunk has a unique deep-link id');
+    await check('document.querySelector("#dccount").textContent.includes("126") && document.querySelector("#dcprogress").textContent.includes("0 / 126")','Chunk count and self-check progress initialised');
+    await check('[...document.querySelectorAll(".dc-pill")].every(p=>p.getBoundingClientRect().height<=34)','Chapter pills render as single-line chips');
+    await screenshot('desktop-syllabus');
+    await click('.dc-tab[data-tab="c8"]');
+    await check('[...document.querySelectorAll(".dc-item")].filter(e=>!e.parentNode.hidden).length===8 && document.querySelector("#g-thong-tin").hidden && [...document.querySelectorAll(".dc-chap")].filter(c=>!c.hidden).length===1','Chapter filter isolates chapter 8');
+    await click('.dc-tab[data-tab="all"]');
+    await check('[...document.querySelectorAll(".dc-item")].filter(e=>!e.parentNode.hidden).length===126','All-chunks filter restores every chunk');
+    await evaluate('(()=>{const q=document.querySelector("#dcq");q.value="RUBRIC";q.dispatchEvent(new Event("input"));})()');
+    await wait('[...document.querySelectorAll(".dc-item")].filter(e=>!e.parentNode.hidden).length<126');
+    await check('[...document.querySelectorAll(".dc-item")].filter(e=>!e.parentNode.hidden).every(e=>e.open&&e.dataset.search.includes("rubric"))','Search ignores case and diacritics, auto-opening matches');
+    await evaluate('(()=>{const q=document.querySelector("#dcq");q.value="";q.dispatchEvent(new Event("input"));})()');
+    await wait('[...document.querySelectorAll(".dc-item")].filter(e=>!e.parentNode.hidden).length===126');
+    await check('[...document.querySelectorAll(".dc-item")].every(e=>!e.open)','Clearing the query closes auto-opened chunks');
+    await click('.dc-item summary');
+    await check('document.querySelector(".dc-item").open && document.querySelector(".dc-item .dc-seen").getBoundingClientRect().height>0','Chunk opens on click and reveals its actions');
+    await click('.dc-item .dc-seen:not(.dc-copy)');
+    await check('document.querySelector(".dc-item").classList.contains("seen") && document.querySelector("#dcprogress").textContent.includes("1 / 126") && JSON.parse(localStorage.getItem("cse122-syllabus-v1")).seen["dc-s1-1-1"]===1','Marking a chunk as seen persists to localStorage');
+    await evaluate('document.querySelector(".dc-item summary").focus()');
+    await key('Enter');
+    await check('document.querySelector(".dc-item").open===false && document.activeElement===document.querySelector(".dc-item summary")','Chunk is keyboard operable and keeps focus');
+    await navigate('index.html');
+    await navigate('demo/de-cuong/index.html#dc-c7-7-2');
+    await wait('document.getElementById("dc-c7-7-2")?.open===true');
+    await check('document.querySelector(".dc-tab[data-tab=c7]").getAttribute("aria-pressed")==="true"','Deep link switches to the owning chapter filter');
+    await check('document.querySelector("#dcprogress").textContent.includes("1 / 126") && !!document.querySelector(".dc-item.seen")','Deep link reload keeps saved self-check progress');
+    await wait('(()=>{const e=document.getElementById("dc-c7-7-2");if(!e)return false;const r=e.getBoundingClientRect();return r.top>=0&&r.bottom<=innerHeight})()');
+    await check('(()=>{const r=document.getElementById("dc-c7-7-2").getBoundingClientRect();return r.top>=0&&r.bottom<=innerHeight})()','Deep-linked chunk is scrolled into view');
+    await screenshot('desktop-syllabus-deeplink');
+
+    for(const width of [390,320]) {
+      await send('Emulation.setDeviceMetricsOverride',{width,height:844,deviceScaleFactor:1,mobile:true});
+      await navigate('demo/de-cuong/index.html');
+      await wait('document.querySelectorAll(".dc-item").length===126');
+      await check('document.documentElement.scrollWidth<=innerWidth+1','No horizontal overflow on the syllabus at '+width);
+      await check('[...document.querySelectorAll(".dc-toolbar button,.dc-tab,.dc-stats span")].every(b=>b.getBoundingClientRect().right<=innerWidth+1)','Syllabus controls stay inside the viewport at '+width);
+      await check('(()=>{const c=[...document.querySelectorAll(".dc-tab")];return c.length===11&&c.every(b=>{const r=b.getBoundingClientRect();return r.left>=0&&r.height>=40})})()','All 11 filter chips are tappable targets inside the viewport');
+      await click('.dc-tab[data-tab="c9"]');
+      await check('[...document.querySelectorAll(".dc-item")].filter(e=>!e.parentNode.hidden).length===7','Touch filter works at '+width);
+      if(width===390)await screenshot('mobile-syllabus');
+    }
+
     for(const width of [390,320]) {
       await send('Emulation.setDeviceMetricsOverride',{width,height:844,deviceScaleFactor:1,mobile:true});
       for(const file of ['index.html',...Array.from({length:5},(_,i)=>`ebook/chuong-${i+1}.html`),lesson]) {
