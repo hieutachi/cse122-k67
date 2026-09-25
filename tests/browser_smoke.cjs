@@ -31,16 +31,33 @@ const server = http.createServer(async (req, res) => {
 async function main() {
   await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
   const base = `http://127.0.0.1:${server.address().port}/cse122-k67/`;
-  const profile = await fsp.mkdtemp(path.join(os.tmpdir(), 'cse122-browser-'));
-  const proc = spawn(browser, ['--headless=new', '--disable-gpu', '--no-first-run', '--no-default-browser-check', '--remote-debugging-port=0', `--user-data-dir=${profile}`, 'about:blank'], {stdio:'ignore'});
   let ws, send, id = 0, checks = 0;
   const exceptions = [];
-  try {
+  // Launch headless Chromium and wait for its DevTools port. Slow CI runners
+  // occasionally need >10s, so allow 30s and retry the whole launch once.
+  const launchBrowser = async () => {
+    const profile = await fsp.mkdtemp(path.join(os.tmpdir(), 'cse122-browser-'));
+    const proc = spawn(browser, ['--headless=new', '--disable-gpu', '--no-first-run', '--no-default-browser-check', '--remote-debugging-port=0', `--user-data-dir=${profile}`, 'about:blank'], {stdio:['ignore','ignore','pipe']});
+    let stderr = '';
+    proc.stderr.on('data', chunk => {stderr += chunk;});
     let port;
-    for (let i=0; i<100; i++) {
+    for (let i=0; i<300; i++) {
       try {port = (await fsp.readFile(path.join(profile,'DevToolsActivePort'),'utf8')).split('\n')[0]; break;} catch {await sleep(100);}
     }
-    assert.ok(port, 'Browser debugging port started');
+    if (!port) {
+      try {proc.kill('SIGKILL');} catch {}
+      await fsp.rm(profile, {recursive:true, force:true}).catch(() => {});
+      throw new Error('Browser debugging port not started within 30s. stderr: ' + stderr.slice(-1500));
+    }
+    return {proc, profile, port};
+  };
+  let proc = null, profile = null;
+  try {
+    let launched;
+    try {launched = await launchBrowser();}
+    catch (firstError) {console.error('First browser launch failed:', firstError.message); launched = await launchBrowser();}
+    proc = launched.proc; profile = launched.profile;
+    const port = launched.port;
     const targets = await (await fetch(`http://127.0.0.1:${port}/json/list`)).json();
     ws = new WebSocket(targets.find(t => t.type === 'page').webSocketDebuggerUrl);
     await new Promise((resolve,reject) => {ws.addEventListener('open',resolve,{once:true});ws.addEventListener('error',reject,{once:true});});
@@ -233,7 +250,7 @@ async function main() {
     console.log(`PASS: ${checks} real-browser assertions; desktop, mobile, keyboard, quiz, resume and lightbox.`);
   } finally {
     if(send)try{await send('Browser.close');}catch{}
-    ws?.close();proc.kill();server.close();
+    ws?.close();proc?.kill();server.close();
     await sleep(500);await fsp.rm(profile,{recursive:true,force:true,maxRetries:6,retryDelay:300}).catch(()=>{});
   }
 }
