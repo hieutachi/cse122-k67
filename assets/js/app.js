@@ -136,6 +136,18 @@ function initReveal(){
   let obs=new IntersectionObserver(es=>{es.forEach(en=>{if(en.isIntersecting){en.target.classList.add('in');obs.unobserve(en.target);}});},{threshold:.08});
   qa('.card,.lesson-ch,.quiz-panel').forEach(el=>{el.classList.add('reveal');obs.observe(el);});
 }
+
+function readLearningPath(){try{return JSON.parse(localStorage.getItem('cse122-learning-path')||'{}');}catch(e){return {};}}
+function initLearningPath(){
+  let file=location.pathname.replace(/\\/g,'/'),depth=file.includes('/ebook/')?'../':'';
+  qa('.learning-path li:nth-child(3) a').forEach(a=>a.addEventListener('click',e=>{if(a.getAttribute('href')==='#chapter-practice'){e.preventDefault();location.hash='chapter-practice';document.getElementById('chapter-practice')?.scrollIntoView({block:'start'});}}));
+  fetch(depth+'data/learning_paths.json').then(r=>r.json()).then(data=>{
+    let chapters=data.chapters||{},done=readDoneLessons(),match=file.match(/ebook\/chuong-(\d+)\.html/),id=match?match[1]:null,guide=id&&chapters[id],host=q('#chapter-learning-panel');
+    if(!host&&match&&!q('.chapter-guide')){host=document.createElement('section');host.id='chapter-learning-panel';host.className='chapter-learning-panel';host.innerHTML='<p class="meta">Đang tải checklist chương…</p>';let path=q('.learning-path');if(path)path.after(host);}
+    if(host&&guide){host.innerHTML='<div class="path-heading"><div><span class="eyebrow">Lộ trình chương '+id+'</span><h2>Học xong chương này, bạn làm được gì?</h2><p>'+guide.goal+'</p></div><span class="path-time">4 bước</span></div><div class="path-columns"><section><h3>Checklist hoàn thành</h3><ol class="path-checklist">'+guide.checklist.map((x,i)=>'<li><span class="path-step">'+(i+1)+'</span><span>'+x+'</span></li>').join('')+'</ol></section><section class="homework-card"><span class="eyebrow">Bài về nhà / sản phẩm</span><h3>'+guide.homework+'</h3><p><strong>Trọng tâm:</strong> '+guide.focus+'</p></section></div>';}
+    let dashboard=q('#study-dashboard');if(dashboard){let keys=Object.keys(chapters),finished=done.filter(v=>/^chuong-[1-9]\.html$/.test(v)).length,pct=Math.round(finished/keys.length*100),next=keys.find(k=>!done.includes('chuong-'+k+'.html'))||'1';q('#study-percent').textContent=pct+'%';q('#study-meter-fill').style.width=pct+'%';q('#study-status').textContent=finished?'Bạn đã hoàn thành '+finished+'/'+keys.length+' chương. Bước tiếp theo: '+chapters[next].title+'.':'Bắt đầu từ Chương 1, đi theo 4 bước và đánh dấu bài sau khi học.';let link=q('#study-next');link.href='ebook/chuong-'+next+'.html';link.textContent='Học tiếp Chương '+next+' →';}
+  }).catch(()=>{});
+}
 const LB={items:[],idx:0,zoom:false,el:null,img:null,cap:null,cnt:null,keyHandler:null,trigger:null,overflow:'',background:[]};
 function lbRender(){
   let it=LB.items[LB.idx];if(!it)return;
@@ -262,6 +274,7 @@ async function initQuiz(){
 }
 document.addEventListener('DOMContentLoaded',()=>{
   initChrome();
+  initLearningPath();
   q('#q')?.addEventListener('input',filterChapters);filterChapters();updateLessonProgress();
   let y=q('#year');if(y)y.textContent=new Date().getFullYear();
   initLightbox();initProgress();initCopyCode();initBackToTop();initLesson();initLastLesson();initSearchHotkey();initQuiz();initReveal();
