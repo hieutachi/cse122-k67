@@ -39,7 +39,7 @@ def head(title, depth=0):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&subset=vietnamese&display=swap">
-<link rel="stylesheet" href="@PRE@assets/css/style.css?v=20260921-phase1">
+<link rel="stylesheet" href="@PRE@assets/css/style.css?v=20261008-slidezoom">
 <meta name="theme-color" content="#0f172a">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
 <meta property="og:type" content="website">
@@ -54,7 +54,7 @@ def head(title, depth=0):
 </div></header><main class="wrap" id="main">"""
     return tpl.replace("@PRE@", pre).replace("@TITLE@", title)
 
-FOOT = """</main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="@PRE@assets/js/app.js?v=20260919f"></script></body></html>"""
+FOOT = """</main><footer><div class="wrap"><span>CSE122 – Khoa Công nghệ thông tin, Đại học Thủy Lợi</span><span>Nguồn: 38 decks CSE122_ · Bài 1–44 · 163 ảnh trực quan · ViDU + upstream 64 bài</span><span id="year"></span><nav class="footer-nav" aria-label="Liên kết nhanh"><a href="#main">Về đầu trang ↑</a></nav></div></footer><script src="@PRE@assets/js/app.js?v=20261008-slidezoom"></script></body></html>"""
 
 def foot(depth=0):
     return FOOT.replace("@PRE@", "../" * depth).replace("v=20260919f", "v=20260921-phase1")

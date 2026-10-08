@@ -148,11 +148,35 @@ async function main() {
       await key('ArrowRight');await check('LB.idx===1','Arrow navigation after open/reopen');
       await key('PageDown');await check('LB.idx===2','PageDown navigation');
       await key('ArrowLeft');await check('LB.idx===1','ArrowLeft navigation');
+      await evaluate('document.querySelector(".lb-close").focus()');
       await key('Tab',8);await check('document.activeElement.classList.contains("lb-next")','Shift+Tab stays in modal');
       await key('Tab');await check('document.activeElement.classList.contains("lb-close")','Tab wraps within modal');
       await key('Escape');
       await check('!document.querySelector(".lightbox") && !document.querySelector("main").inert && document.activeElement===document.querySelector(".slide-grid figure")','Close returns focus and restores page');
     }
+    await navigate('slides/index.html');await click('.slide-grid figure');
+    await wait('LB.img.complete && LB.img.naturalWidth>0 && LB.img.style.visibility==="visible"');
+    await check('LB.img.src.endsWith("/trucquan/full/1.0.png") && LB.img.naturalWidth===1491','Viewer loads original PNG without thumbnail resizing');
+    await click('[data-lb="actual"]');await check('LB.scale===1 && LB.level.textContent==="100%"','Native 100% resolution');
+    await click('[data-lb="in"]');await check('LB.scale===1.25','Incremental zoom in');
+    await click('[data-lb="out"]');await check('LB.scale===1','Incremental zoom out');
+    for(const [corner,x,y] of [['tl',1,1],['tr',-1,1],['bl',1,-1],['br',-1,-1]]) {
+      await click(`[data-lb="${corner}"]`);
+      await check(`LB.x*${x}>0 && LB.y*${y}>0 && LB.scale>LB.fit`,'Zoom reaches '+corner);
+    }
+    await evaluate('window.panX=LB.x;window.panY=LB.y;LB.stage.dispatchEvent(new WheelEvent("wheel",{deltaY:-100,clientX:600,clientY:350,bubbles:true,cancelable:true}))');
+    await check('LB.scale>1 && LB.img.getBoundingClientRect().width>LB.stage.clientWidth','Wheel zoom preserves full image dimensions');
+    await evaluate('lbCorner(1,1);window.panX=LB.x');await key('ArrowRight');
+    await check('LB.x<window.panX && LB.idx===0','Arrow keys pan zoomed image without changing slide');
+    await evaluate('window.panX=LB.x');
+    await send('Input.dispatchMouseEvent',{type:'mousePressed',x:500,y:300,button:'left',clickCount:1});
+    await send('Input.dispatchMouseEvent',{type:'mouseMoved',x:400,y:280,button:'left',buttons:1});
+    await send('Input.dispatchMouseEvent',{type:'mouseReleased',x:400,y:280,button:'left',clickCount:1});
+    await check('LB.x<window.panX','Pointer drag pans image');
+    await click('[data-lb="fit"]');await check('LB.scale===LB.fit && LB.x===0 && LB.y===0','Fit resets zoom and position');
+    await key('PageDown');await wait('LB.img.complete && LB.img.naturalWidth>0');
+    await check('LB.idx===1 && LB.scale===LB.fit','Changing slide resets zoom');
+    await key('Escape');
     const lesson='baidoc/09-javascript-basics-array-methods-c-t-loi.html';
     await evaluate('localStorage.setItem("cse122-done",JSON.stringify(["09-javascript-basics-array-methods-c-t-loi.html"]));localStorage.setItem("cse122-last","chuong-1")');
     await navigate(lesson);
@@ -279,6 +303,11 @@ async function main() {
       }
       await navigate('ebook/chuong-2.html');await click('.slide-grid figure');await key('ArrowRight');
       await check('LB.idx===1 && document.querySelector(".lb-close").getBoundingClientRect().right<=innerWidth','Mobile lightbox controls reachable');
+      await wait('LB.img.complete && LB.img.naturalWidth>0 && LB.img.style.visibility==="visible"');
+      await click('[data-lb="br"]');
+      await check('LB.x<0 && LB.y<0 && document.querySelector(".lb-tools").getBoundingClientRect().right<=innerWidth','Mobile corner zoom and toolbar fit viewport');
+      await evaluate('lbFit();LB.pointers.set(11,{x:100,y:200});LB.pointers.set(12,{x:200,y:200});LB.stage.dispatchEvent(new PointerEvent("pointermove",{pointerId:12,clientX:280,clientY:200}));LB.pointers.clear()');
+      await check('LB.scale>LB.fit','Two-pointer pinch zoom on mobile');
       await key('Escape');
     }
     // Chapter demo pages must stay inside a phone-sized viewport (pre blocks, iframes, tables scroll internally).

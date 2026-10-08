@@ -148,16 +148,45 @@ function initLearningPath(){
     let dashboard=q('#study-dashboard');if(dashboard){let keys=Object.keys(chapters),finished=done.filter(v=>/^chuong-[1-9]\.html$/.test(v)).length,pct=Math.round(finished/keys.length*100),next=keys.find(k=>!done.includes('chuong-'+k+'.html'))||'1';q('#study-percent').textContent=pct+'%';q('#study-meter-fill').style.width=pct+'%';q('#study-status').textContent=finished?'Bạn đã hoàn thành '+finished+'/'+keys.length+' chương. Bước tiếp theo: '+chapters[next].title+'.':'Bắt đầu từ Chương 1, đi theo 4 bước và đánh dấu bài sau khi học.';let link=q('#study-next');link.href='ebook/chuong-'+next+'.html';link.textContent='Học tiếp Chương '+next+' →';}
   }).catch(()=>{});
 }
-const LB={items:[],idx:0,zoom:false,el:null,img:null,cap:null,cnt:null,keyHandler:null,trigger:null,overflow:'',background:[]};
+const LB={items:[],idx:0,scale:1,x:0,y:0,el:null,img:null,cap:null,cnt:null,keyHandler:null,trigger:null,overflow:'',background:[],pointers:new Map()};
+function lbFit(){
+  if(!LB.img.naturalWidth||!LB.stage.clientWidth)return;
+  LB.fit=Math.min(LB.stage.clientWidth/LB.img.naturalWidth,LB.stage.clientHeight/LB.img.naturalHeight,1)||1;
+  LB.scale=LB.fit;LB.x=0;LB.y=0;lbTransform();
+}
+function lbTransform(){
+  let w=LB.img.naturalWidth*LB.scale,h=LB.img.naturalHeight*LB.scale;
+  let mx=Math.max(0,(w-LB.stage.clientWidth)/2),my=Math.max(0,(h-LB.stage.clientHeight)/2);
+  LB.x=Math.max(-mx,Math.min(mx,LB.x));LB.y=Math.max(-my,Math.min(my,LB.y));
+  LB.img.style.width=LB.img.naturalWidth+'px';LB.img.style.height=LB.img.naturalHeight+'px';
+  LB.img.style.transform='translate(-50%,-50%) translate('+LB.x+'px,'+LB.y+'px) scale('+LB.scale+')';
+  LB.el.classList.toggle('zoomed',LB.scale>LB.fit+.001);
+  LB.level.textContent=Math.round(LB.scale*100)+'%';
+}
+function lbZoom(scale,cx,cy){
+  if(!LB.img.complete||!LB.img.naturalWidth)return;
+  let rect=LB.stage.getBoundingClientRect(),px=(cx??(rect.left+rect.width/2))-rect.left-rect.width/2,py=(cy??(rect.top+rect.height/2))-rect.top-rect.height/2;
+  scale=Math.max(LB.fit,Math.min(4,scale));
+  LB.x=px-(px-LB.x)*scale/LB.scale;LB.y=py-(py-LB.y)*scale/LB.scale;
+  LB.scale=scale;lbTransform();
+}
+function lbCorner(x,y){
+  if(!LB.img.complete||!LB.img.naturalWidth)return;
+  lbZoom(Math.max(1,LB.fit*2.5));
+  LB.x=x*Math.max(0,(LB.img.naturalWidth*LB.scale-LB.stage.clientWidth)/2);
+  LB.y=y*Math.max(0,(LB.img.naturalHeight*LB.scale-LB.stage.clientHeight)/2);lbTransform();
+}
 function lbRender(){
   let it=LB.items[LB.idx];if(!it)return;
-  LB.img.src=it.src;LB.img.alt=it.alt||'';
+  LB.pointers.clear();LB.img.style.visibility='hidden';LB.img.src=it.src;LB.img.alt=it.alt||'';
+  LB.original.href=it.src;
   LB.cap.textContent=it.cap||it.alt||'';
   LB.cnt.textContent=(LB.idx+1)+'/'+LB.items.length;
-  LB.el.classList.toggle('zoomed',LB.zoom);
+  if(LB.img.complete&&LB.img.naturalWidth){lbFit();LB.img.style.visibility='visible';}
 }
-function lbNav(d){LB.idx=(LB.idx+d+LB.items.length)%LB.items.length;LB.zoom=false;lbRender();let n=LB.items[(LB.idx+1)%LB.items.length];if(n){let im=new Image();im.src=n.src;}}
+function lbNav(d){LB.idx=(LB.idx+d+LB.items.length)%LB.items.length;lbRender();}
 function lbClose(){
+  LB.pointers.clear();
   if(LB.el&&LB.el.parentNode)LB.el.remove();
   document.body.style.overflow=LB.overflow;
   if(LB.keyHandler)document.removeEventListener('keydown',LB.keyHandler);
@@ -171,46 +200,85 @@ function lbOpen(items,idx,trigger=document.activeElement){
     LB.background=[...document.body.children].map(el=>[el,el.inert]);
     LB.background.forEach(([el])=>el.inert=true);
   }
-  LB.items=items;LB.idx=idx;LB.zoom=false;
+  LB.items=items;LB.idx=idx;
   if(!LB.el){
     LB.el=document.createElement('div');LB.el.className='lightbox';LB.el.setAttribute('role','dialog');LB.el.setAttribute('aria-modal','true');LB.el.setAttribute('aria-label','Xem ảnh lớn');
     LB.el.innerHTML='<button class="lb-btn lb-close" aria-label="Đóng">×</button>'+
       '<button class="lb-btn lb-prev" aria-label="Ảnh trước">‹</button>'+
-      '<img src="" alt=""><div class="lb-zoom-hint">Cuộn chuột / nhấp đôi để phóng to — Esc để đóng</div>'+
+      '<div class="lb-stage"><img alt="" draggable="false"></div><div class="lb-zoom-hint">Cuộn / nhấp đôi để zoom tại điểm đang xem · Kéo hoặc chụm hai ngón · Phím mũi tên di chuyển khi zoom · Esc đóng</div>'+
+      '<div class="lb-tools" role="toolbar" aria-label="Phóng to và chọn góc ảnh">'+
+      '<button type="button" data-lb="out" aria-label="Thu nhỏ">−</button><output class="lb-level" aria-label="Tỷ lệ ảnh">100%</output><button type="button" data-lb="in" aria-label="Phóng to">+</button>'+
+      '<button type="button" data-lb="fit">Vừa màn hình</button><button type="button" data-lb="actual">Ảnh 100%</button>'+
+      '<button type="button" data-lb="tl" aria-label="Zoom góc trên trái">↖</button><button type="button" data-lb="tr" aria-label="Zoom góc trên phải">↗</button><button type="button" data-lb="bl" aria-label="Zoom góc dưới trái">↙</button><button type="button" data-lb="br" aria-label="Zoom góc dưới phải">↘</button>'+
+      '<a class="lb-original" target="_blank" rel="noopener">Mở ảnh gốc ↗</a></div>'+
       '<button class="lb-btn lb-next" aria-label="Ảnh sau">›</button>'+
       '<div class="lb-counter"></div><div class="lb-caption"></div>';
     LB.img=LB.el.querySelector('img');LB.cap=LB.el.querySelector('.lb-caption');LB.cnt=LB.el.querySelector('.lb-counter');
+    LB.stage=q('.lb-stage',LB.el);LB.level=q('.lb-level',LB.el);LB.original=q('.lb-original',LB.el);
+    LB.img.addEventListener('load',()=>{lbFit();LB.img.style.visibility='visible';});
+    LB.img.addEventListener('error',()=>{LB.cap.textContent='Không tải được ảnh. Hãy đóng và mở lại để thử lại.';});
+    window.addEventListener('resize',()=>{if(LB.el.isConnected)lbFit();});
+    q('.lb-tools',LB.el).addEventListener('click',e=>{
+      let action=e.target.dataset.lb;
+      if(action==='in')lbZoom(LB.scale*1.25);
+      if(action==='out')lbZoom(LB.scale/1.25);
+      if(action==='fit')lbFit();
+      if(action==='actual')lbZoom(1);
+      if(action==='tl')lbCorner(1,1);if(action==='tr')lbCorner(-1,1);
+      if(action==='bl')lbCorner(1,-1);if(action==='br')lbCorner(-1,-1);
+    });
     LB.el.querySelector('.lb-close').addEventListener('click',e=>{e.stopPropagation();lbClose();});
     LB.el.querySelector('.lb-prev').addEventListener('click',e=>{e.stopPropagation();lbNav(-1);});
     LB.el.querySelector('.lb-next').addEventListener('click',e=>{e.stopPropagation();lbNav(1);});
     LB.el.addEventListener('click',e=>{if(e.target===LB.el)lbClose();});
-    LB.img.addEventListener('dblclick',e=>{e.preventDefault();LB.zoom=!LB.zoom;LB.el.classList.toggle('zoomed',LB.zoom);});
-    LB.el.addEventListener('wheel',e=>{e.preventDefault();LB.zoom=e.deltaY<0;LB.el.classList.toggle('zoomed',LB.zoom);},{passive:false});
-    let tx=null;
-    LB.el.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;},{passive:true});
-    LB.el.addEventListener('touchend',e=>{if(tx===null)return;let dx=e.changedTouches[0].clientX-tx;tx=null;if(Math.abs(dx)>50)lbNav(dx<0?1:-1);},{passive:true});
+    LB.stage.addEventListener('dblclick',e=>{e.preventDefault();if(LB.scale>LB.fit+.001)lbFit();else lbZoom(Math.max(1,LB.fit*2),e.clientX,e.clientY);});
+    LB.stage.addEventListener('wheel',e=>{e.preventDefault();lbZoom(LB.scale*(e.deltaY<0?1.15:1/1.15),e.clientX,e.clientY);},{passive:false});
+    LB.stage.addEventListener('pointerdown',e=>{
+      if(e.button!==0)return;e.preventDefault();LB.stage.setPointerCapture(e.pointerId);
+      LB.pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+    });
+    LB.stage.addEventListener('pointermove',e=>{
+      if(!LB.pointers.has(e.pointerId))return;
+      let old=[...LB.pointers.values()],previous=LB.pointers.get(e.pointerId);
+      LB.pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});let now=[...LB.pointers.values()];
+      if(now.length===2){
+        let distance=p=>Math.hypot(p[0].x-p[1].x,p[0].y-p[1].y);
+        let ox=(old[0].x+old[1].x)/2,oy=(old[0].y+old[1].y)/2,nx=(now[0].x+now[1].x)/2,ny=(now[0].y+now[1].y)/2;
+        if(distance(old)>0)lbZoom(LB.scale*distance(now)/distance(old),ox,oy);
+        LB.x+=nx-ox;LB.y+=ny-oy;
+      }else{LB.x+=e.clientX-previous.x;LB.y+=e.clientY-previous.y;}
+      lbTransform();
+    });
+    ['pointerup','pointercancel','lostpointercapture'].forEach(type=>LB.stage.addEventListener(type,e=>LB.pointers.delete(e.pointerId)));
     LB.keyHandler=e=>{
       if(e.altKey||e.ctrlKey||e.metaKey)return;
       if(e.key==='Tab'){
-        let buttons=qa('button',LB.el),first=buttons[0],last=buttons[buttons.length-1];
+        let buttons=qa('button,a[href]',LB.el),first=buttons[0],last=buttons[buttons.length-1];
         if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
         else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
         return;
       }
       if(e.key==='Escape'){e.preventDefault();lbClose();}
+      else if(e.key==='+'||e.key==='='){e.preventDefault();lbZoom(LB.scale*1.25);}
+      else if(e.key==='-'){e.preventDefault();lbZoom(LB.scale/1.25);}
+      else if(e.key==='0'){e.preventDefault();lbFit();}
+      else if(e.key.startsWith('Arrow')&&LB.scale>LB.fit+.001){
+        e.preventDefault();LB.x+=e.key==='ArrowLeft'?80:e.key==='ArrowRight'?-80:0;
+        LB.y+=e.key==='ArrowUp'?80:e.key==='ArrowDown'?-80:0;lbTransform();
+      }
       else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();lbNav(-1);}
       else if(e.key==='ArrowRight'||e.key==='PageDown'){e.preventDefault();lbNav(1);}
       else if(e.key===' '&&document.activeElement.tagName!=='BUTTON'){e.preventDefault();lbNav(1);}
     };
   }
   document.addEventListener('keydown',LB.keyHandler);
-  lbRender();document.body.appendChild(LB.el);document.body.style.overflow='hidden';
+  document.body.appendChild(LB.el);lbRender();document.body.style.overflow='hidden';
   let cl=LB.el.querySelector('.lb-close');if(cl)cl.focus();
 }
 function initLightbox(){
   qa('.slide-grid').forEach(grid=>{
     let figs=qa('figure',grid);if(!figs.length)return;
-    let items=figs.map(f=>{let im=q('img',f);return{src:im.src,alt:im.alt,cap:(q('figcaption',f)||{}).textContent||''};});
+    let items=figs.map(f=>{let im=q('img',f);return{src:im.dataset.full||im.src.replace(/\/trucquan\/([^/]+)\.jpg$/, '/trucquan/full/$1.png'),alt:im.alt,cap:(q('figcaption',f)||{}).textContent||''};});
     figs.forEach((f,i)=>{f.style.cursor='zoom-in';f.setAttribute('tabindex','0');f.setAttribute('role','button');f.setAttribute('aria-label','Xem slide '+(items[i].cap||i+1));f.addEventListener('click',ev=>{ev.preventDefault();lbOpen(items,i,f);});f.addEventListener('keydown',ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();lbOpen(items,i,f);}});});
   });
 }
