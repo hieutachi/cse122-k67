@@ -10,6 +10,12 @@
   const next = document.getElementById('lesson-next');
   const title = document.title;
   const names = panels.map(panel => panel.querySelector('h2').textContent);
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  let panelAnimation;
+  const play = (element, frames, duration = 360) => {
+    if (reducedMotion.matches || typeof element.animate !== 'function') return;
+    return element.animate(frames, { duration, easing: 'cubic-bezier(.22,1,.36,1)' });
+  };
   let current = 0;
   panels.forEach((panel, index) => {
     const heading = panel.querySelector('h2');
@@ -27,6 +33,7 @@
   mobile.addEventListener('change', fitMenu);
 
   function route(focus = true) {
+    const last = current;
     let id;
     try { id = decodeURIComponent(location.hash.slice(1)); } catch { id = ''; }
     const target = document.getElementById(id);
@@ -43,6 +50,18 @@
       else link.removeAttribute('aria-current');
     });
     status.textContent = `${current + 1} / ${panels.length} · ${names[current]}`;
+    document.getElementById('lesson-position').textContent = `${String(current + 1).padStart(2, '0')} / ${panels.length}`;
+    const activeLink = links.find(link => link.hash === '#' + panels[current].id);
+    let group = activeLink?.previousElementSibling;
+    while (group && group.tagName !== 'STRONG') group = group.previousElementSibling;
+    document.getElementById('lesson-group').textContent = group?.textContent || 'Tự học';
+    if (last !== current) {
+      panelAnimation?.cancel();
+      panelAnimation = play(panels[current], [
+        { opacity: .35, transform: 'translateY(12px)' },
+        { opacity: 1, transform: 'translateY(0)' }
+      ]);
+    }
     previous.disabled = current === 0;
     next.disabled = current === panels.length - 1;
     document.title = `${names[current]} | CSE122`;
@@ -75,4 +94,29 @@
   window.addEventListener('load', () => setTimeout(() => route(false), 0), { once: true });
   window.addEventListener('beforeprint', () => { document.title = title; });
   window.addEventListener('afterprint', () => { document.title = `${names[current]} | CSE122`; });
+  // Progressive enhancement: content never depends on an observer or animation.
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        play(entry.target, [{ opacity: .55, transform: 'translateY(14px)' }, { opacity: 1, transform: 'translateY(0)' }], 500);
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: .12 });
+    document.querySelectorAll('.visual-map,.reading-coach').forEach(element => observer.observe(element));
+  }
+  const outputAnimations = new WeakMap();
+  const outputObserver = new MutationObserver(records => {
+    const changed = new Set(records.map(record => record.target.nodeType === Node.ELEMENT_NODE ? record.target : record.target.parentElement));
+    changed.forEach(element => {
+      if (element.closest('.reading[hidden]')) return;
+      outputAnimations.get(element)?.cancel();
+      const animation = play(element, [{ boxShadow: '0 0 0 3px #31ad9566' }, { boxShadow: getComputedStyle(element).boxShadow }], 650);
+      if (animation) outputAnimations.set(element, animation);
+    });
+  });
+  document.querySelectorAll('.queue-box span,.lab .notice,.lab .log').forEach(element => outputObserver.observe(element, { childList: true, characterData: true, subtree: true }));
+  reducedMotion.addEventListener('change', () => {
+    if (reducedMotion.matches) document.getAnimations().forEach(animation => animation.cancel());
+  });
 })();

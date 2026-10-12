@@ -15,8 +15,22 @@
     const saved = JSON.parse(localStorage.getItem(storageKey));
     if (Array.isArray(saved)) completed = saved.filter(id => checks.some(c => c.dataset.complete === id));
   } catch { /* Progress is optional; the reading remains usable. */ }
+  const progressMeter = document.createElement('progress');
+  progressMeter.className = 'course-progress-meter';
+  progressMeter.max = checks.length;
+  progressMeter.setAttribute('aria-label', 'Tiến độ tự kiểm bài học');
+  $('course-progress').after(progressMeter);
   const updateProgress = suffix => {
-    $('course-progress').textContent = `${checks.filter(c => c.checked).length} / ${checks.length} mục đã tự kiểm${suffix || ''}`;
+    const count = checks.filter(c => c.checked).length;
+    $('course-progress').textContent = `${count} / ${checks.length} mục đã tự kiểm${suffix || ''}`;
+    progressMeter.value = count;
+    checks.forEach(check => {
+      const link = document.querySelector(`.course-toc a[href="#${check.dataset.complete}"]`);
+      if (!link) return;
+      link.classList.toggle('is-complete', check.checked);
+      if (check.checked) link.setAttribute('aria-label', link.textContent + ' · Đã tự kiểm');
+      else link.removeAttribute('aria-label');
+    });
   };
   checks.forEach(c => {
     c.checked = completed.includes(c.dataset.complete);

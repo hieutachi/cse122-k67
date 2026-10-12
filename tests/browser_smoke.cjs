@@ -30,7 +30,7 @@ const server = http.createServer(async (req, res) => {
 
 async function main() {
   await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
-  const base = `http://127.0.0.1:${server.address().port}/cse122-k67/`;
+  const base = process.env.CSE122_BASE_URL || `http://127.0.0.1:${server.address().port}/cse122-k67/`;
   let ws, send, id = 0, checks = 0;
   const exceptions = [];
   // Launch headless Chromium and wait for its DevTools port. Slow CI runners
@@ -108,6 +108,7 @@ async function main() {
       await send('Input.dispatchMouseEvent',{type:'mouseReleased',button:'left',clickCount:1,...point});
     };
     const screenshot = async name => {
+      await sleep(550); // Capture settled lesson/reveal effects, not transient low opacity.
       const dir=path.join(root,'.preview');await fsp.mkdir(dir,{recursive:true});
       const image=await send('Page.captureScreenshot',{format:'png'});
       await fsp.writeFile(path.join(dir,name+'.png'),Buffer.from(image.data,'base64'));

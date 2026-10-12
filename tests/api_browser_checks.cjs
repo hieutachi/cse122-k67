@@ -26,6 +26,10 @@ module.exports = async function apiBrowserChecks({send, evaluate, check, wait, n
   await navigate('demo/tu-hoc-api/index.html');
   await wait('document.body.classList.contains("spa-ready")');
   await check('location.hash==="#lo-trinh" && document.querySelectorAll(".course-content > .reading:not([hidden])").length===1 && document.getElementById("lesson-prev").disabled', 'SPA opens only the roadmap and disables previous at the start');
+  await check('getComputedStyle(document.querySelector(".studio-banner")).display==="grid" && document.querySelectorAll(".lab").length===9', 'Learning Studio banner preserves the nine mounted demos');
+  await check('document.getElementById("lesson-position").textContent==="01 / 23" && document.getElementById("lesson-group").textContent==="Chuẩn bị" && document.querySelector(".course-progress-meter").max===17', 'Studio lesson metadata and accessible progress meter initialize from course content');
+  await evaluate('scrollTo({top:0,behavior:"instant"})');
+  await screenshot('desktop-api-studio');
   await evaluate('window.spaToken={};window.initialSpaToken=window.spaToken');
   await press('#lesson-next'); await wait('location.hash==="#ban-do-noi-dung"');
   await check('document.activeElement.id==="title-ban-do-noi-dung" && document.querySelector(".course-toc [aria-current=page]").hash==="#ban-do-noi-dung"', 'Next route announces the active lesson and moves keyboard focus');
@@ -34,6 +38,16 @@ module.exports = async function apiBrowserChecks({send, evaluate, check, wait, n
   await check('window.spaToken===window.initialSpaToken && !document.getElementById("ban-do-noi-dung").hidden', 'Back and Forward update the view without reloading the document');
   await set('lesson-picker','promise'); await wait('location.hash==="#promise" && !document.getElementById("promise").hidden');
   await check('document.title.includes("Promise") && document.getElementById("lesson-status").textContent.includes("Promise")', 'Lesson picker updates the route, document title and status');
+  await check('document.getElementById("lesson-group").textContent.includes("Buổi 1") && document.getElementById("lesson-position").textContent==="06 / 23"', 'Studio metadata follows the selected lesson group');
+  await send('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'reduce'}]});
+  await wait('matchMedia("(prefers-reduced-motion: reduce)").matches && document.getAnimations().length===0');
+  await route('event-loop'); await press('#loop-step');
+  await check('document.getAnimations().length===0 && document.getElementById("loop-log").textContent.includes("A: bắt đầu")', 'Reduced motion disables CSS and script effects while demo output still updates');
+  await send('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'no-preference'}]});
+  await route('promise');
+  await evaluate('document.querySelector("#promise .visual-map").scrollIntoView({block:"center",behavior:"instant"})');
+  await wait('document.getAnimations().filter(animation=>animation.effect?.target.closest(".reading")).length===0');
+  await screenshot('desktop-api-studio-promise');
   await route('lab-loop');
   await check('!document.getElementById("event-loop").hidden && document.querySelectorAll(".course-content > .reading:not([hidden])").length===1', 'Nested lab links reveal their parent lesson');
   await route('reference');
@@ -53,11 +67,14 @@ module.exports = async function apiBrowserChecks({send, evaluate, check, wait, n
   await check('document.querySelector("#practice iframe").contentDocument.getElementById("patient").value==="SV SPA"', 'Practice iframe state survives switching between lessons');
   await send('Emulation.setEmulatedMedia',{media:'print'});
   await check('[...document.querySelectorAll(".course-content > .reading")].every(el=>getComputedStyle(el).display!=="none") && getComputedStyle(document.getElementById("lesson-toolbar")).display==="none"', 'Print includes every lesson while hiding SPA navigation');
+  await check('getComputedStyle(document.querySelector(".studio-banner")).display==="none" && getComputedStyle(document.querySelector(".reading pre")).color==="rgb(0, 0, 0)"', 'Print hides the decorative banner and retains readable code contrast');
   await send('Emulation.setEmulatedMedia',{media:''});
   await route('lo-trinh');
   await check('document.querySelectorAll("[data-reading]").length===17 && document.querySelectorAll("[data-complete]").length===17', 'Course renders all 17 readings and self-checks');
   await screenshot('desktop-api-course');
   await check('document.querySelectorAll(".visual-map").length>=8 && document.querySelectorAll(".reading-coach").length>=14', 'Remaining syllabus has responsive maps and guided observations');
+  await route('event-loop');
+  await check('[...document.querySelectorAll("#event-loop .visual-flow li")].every((element,index,items)=>index===0 || element.getBoundingClientRect().top>items[index-1].getBoundingClientRect().bottom)', 'Desktop flow connectors follow a single ordered path without row-wrap ambiguity');
   await evaluate('window.searchOriginalFetch=window.fetch;window.searchRequests=0;window.fetch=(...args)=>{window.searchRequests++;return window.searchOriginalFetch(...args)}');
   await press('#search-load');
   await wait('!document.getElementById("search-load").disabled');
@@ -142,6 +159,7 @@ module.exports = async function apiBrowserChecks({send, evaluate, check, wait, n
   await press('[data-complete="promise"]');
   await navigate('demo/tu-hoc-api/index.html#promise');
   await check('document.querySelector("[data-complete=promise]").checked && document.getElementById("course-progress").textContent.includes("1 / 17")','Reading progress survives navigation');
+  await check(`document.querySelector('.course-progress-meter').value===1 && document.querySelector('.course-toc a[href="#promise"]').classList.contains('is-complete') && document.querySelector('.course-toc a[href="#promise"]').getAttribute('aria-label').includes('Đã tự kiểm')`, 'Progress meter and accessible completion mark restore after reload');
   await check('!document.getElementById("promise").hidden && document.querySelectorAll(".course-content > .reading:not([hidden])").length===1', 'Reload with a shared lesson URL restores the correct single panel');
 
   const project = async () => {
@@ -231,6 +249,10 @@ module.exports = async function apiBrowserChecks({send, evaluate, check, wait, n
     await check('document.getElementById("lesson-toolbar").getBoundingClientRect().top >= document.querySelector(".topbar").getBoundingClientRect().bottom', 'Initial lesson picker label is not obscured by the sticky header at '+width);
     await check('document.documentElement.scrollWidth<=innerWidth+1','Reading has no horizontal page overflow at '+width);
     if(width===390) await screenshot('mobile-api-course');
+    if(width===390) {
+      await evaluate('scrollTo({top:0,behavior:"instant"})');
+      await screenshot('mobile-api-studio');
+    }
     await check('!document.querySelector(".course-toc").open && document.getElementById("lesson-picker").getBoundingClientRect().width>0', 'Mobile navigation starts compact with a visible lesson picker at '+width);
     await click('.course-toc summary');
     await check('document.querySelector(".course-toc").open', 'Mobile table of contents opens with real pointer input at '+width);
@@ -248,6 +270,7 @@ module.exports = async function apiBrowserChecks({send, evaluate, check, wait, n
       if(width===390 || width===768) await screenshot((width===768?'tablet':'mobile')+'-api-'+section);
       if(width===390) {
         await evaluate(`document.querySelector('#'+${JSON.stringify(section)}+' .visual-map').scrollIntoView({block:'start',behavior:'instant'})`);
+        if(section==='promise') await check('getComputedStyle(document.querySelector("#promise .visual-outcome"),"::before").display==="none"', 'Mobile Promise alternatives do not acquire misleading sequential connectors');
         await screenshot('mobile-api-map-'+section);
       }
     }

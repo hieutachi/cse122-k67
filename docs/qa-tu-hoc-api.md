@@ -127,3 +127,37 @@ Kết quả mới và exit code được lưu local trong `.preview/browser-resu
   Đã sửa cuộn theo chiều cao header thực tế; lượt cuối xác nhận nhãn hiện đầy đủ
   ở 768, 390 và 320px. Không dùng báo cáo PASS cũ để thay cho lượt thất bại.
 - `git diff --check` đạt. Chưa commit, push hoặc deploy SPA.
+
+## Learning Studio — tiếp tục ngày 12/10/2026
+
+- Banner navy–teal, nhãn nhóm/vị trí bài, mục lục có trạng thái hoàn thành,
+  thanh tiến độ native có accessible name và giao diện phòng khám đồng bộ.
+- Sơ đồ tuần tự dùng một cột và đường nối theo đúng thứ tự số ở mọi viewport;
+  các kết quả Promise/UI vẫn là nhánh, không diễn đạt thành chuỗi thao tác.
+- Chuyển bài, reveal sơ đồ và nhấn mạnh đầu ra demo dùng progressive enhancement.
+  Nội dung không bị ẩn để chờ animation; reduced motion tắt cả CSS và Web Animations.
+- Cập nhật đầu ra dùng viền sáng thay vì nền sáng trên log có chữ sáng.
+- CSS cache version được đồng bộ giữa bài học và phòng khám; print giữ tương phản code.
+- Browser checks bổ sung banner, số demo, metadata, progress/accessible completion,
+  reduced motion, thứ tự sơ đồ và print contrast. Screenshot chờ animation ổn định.
+- Harness hỗ trợ `CSE122_BASE_URL` để chạy cùng bộ tương tác trên site đã publish.
+  Không sửa dữ liệu repo hay server; localStorage của bài test thuộc profile tạm.
+
+Kết quả đã quan sát ở lượt tiếp tục: Python 19/19, runtime 5/5; Chrome 154
+đạt 400 assertions, exit code 0 lúc `2026-10-12T07:13:00.315Z`.
+Lượt đầu thất bại do escape nháy trong biểu thức test CDP mới, không phải lỗi ứng dụng;
+đã sửa test và chạy lại toàn bộ. Hai assertions print/order và thời gian chờ ảnh
+được bổ sung sau đó; phải dùng kết quả lượt cuối và workflow cho trạng thái deploy.
+
+Lượt release cuối đạt **403 assertions**, Chrome 154, exit code 0 lúc
+`2026-10-12T07:17:22.559Z`, trên 1440×1000, 768×844, 390×844 và 320×844.
+Đã xem ảnh desktop studio/Promise/phòng khám và mobile studio/Event Loop/Promise/
+phòng khám. Nhánh Promise xếp dọc bỏ đường nối để tránh đọc thành chuỗi;
+assertion mới xác nhận điều này. Syntax checks và `git diff --check` đều đạt.
+
+Lệnh kiểm tra bản đã publish (từ repository, PowerShell):
+
+```powershell
+$env:CSE122_BASE_URL = 'https://hieutachi.github.io/cse122-k67/'
+node tests/browser_smoke.cjs
+```
