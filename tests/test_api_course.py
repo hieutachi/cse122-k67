@@ -33,6 +33,22 @@ class Page(HTMLParser):
 
 
 class ApiCourseTests(unittest.TestCase):
+    def test_spa_shell_keeps_static_content_and_shared_routes(self):
+        source = (COURSE / "index.html").read_text(encoding="utf-8")
+        page = Page(source)
+        for element in ["lesson-toolbar", "lesson-picker", "lesson-status",
+                        "lesson-navigation", "lesson-prev", "lesson-next", "practice"]:
+            self.assertIn(element, page.ids)
+        self.assertIn('src="spa.js?', source)
+        self.assertIn('<noscript>', source)
+        self.assertEqual(source.count('<iframe'), 1)
+        self.assertIn('href="#practice"', source)
+        script = (COURSE / "spa.js").read_text(encoding="utf-8")
+        for feature in ["hashchange", "history.replaceState", "aria-current", "preventScroll"]:
+            self.assertIn(feature, script)
+        css = (COURSE / "course.css").read_text(encoding="utf-8")
+        self.assertIn('.course-content > .reading[hidden] { display:block!important; }', css)
+
     def test_all_destinations_and_unique_ids(self):
         for file in COURSE.glob("*.html"):
             page = Page(file.read_text(encoding="utf-8"))

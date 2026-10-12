@@ -92,7 +92,8 @@ async function main() {
     };
     const navigate = async file => {
       await send('Page.navigate',{url:base+file});
-      await wait(`location.href === ${JSON.stringify(base+file)} && document.readyState !== 'loading' && typeof initQuiz === 'function' && document.querySelector('#year')?.textContent !== ''`);
+      const address = file.includes('#') ? 'location.href' : 'location.href.split("#")[0]';
+      await wait(`${address} === ${JSON.stringify(base+file)} && document.readyState !== 'loading' && typeof initQuiz === 'function' && document.querySelector('#year')?.textContent !== ''`);
     };
     const key = async (value,modifiers=0) => {
       const code={Enter:13,Tab:9,Escape:27,ArrowLeft:37,ArrowRight:39,PageDown:34,PageUp:33,' ':32}[value] || 0;

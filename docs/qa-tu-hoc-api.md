@@ -48,6 +48,7 @@ Chạy từ thư mục repository:
 python -m unittest discover -s tests -v
 node --check demo/tu-hoc-api/course.js
 node --check demo/tu-hoc-api/project.js
+node --check demo/tu-hoc-api/spa.js
 node --check tests/api_browser_checks.cjs
 node --test tests/test_runtime.cjs
 node tests/browser_smoke.cjs
@@ -66,7 +67,10 @@ cuộn ngang. Cần đọc ảnh ở chính các mục giảng dạy, không ch�
 
 Chưa commit, push hoặc deploy trong lượt QA này.
 
-### Kết quả đã kiểm chứng ngày 12/10/2026
+### Báo cáo trước SPA ngày 12/10/2026
+
+Các số liệu dưới đây được ghi ở lượt trước; không dùng chúng để kết luận
+về bản SPA. Lượt tiếp tục chỉ kiểm chứng độc lập mã và kết quả local mới.
 
 - Python: 18/18 tests đạt, exit code 0.
 - JavaScript runtime: 5/5 tests đạt, exit code 0; các syntax checks đạt.
@@ -87,3 +91,39 @@ chạy kế tiếp hoàn tất toàn bộ. Không dùng báo cáo PASS cũ để
 Nội dung hiện có 17 mục tự kiểm, 9 demo, 10 sơ đồ dạng thẻ và 21 câu hỏi có
 giải thích. Phần đào sâu và bài chuyển framework nên bố trí tự học/thực hành
 riêng nếu 150 phút trên lớp không đủ; thời lượng lộ trình chỉ là gợi ý.
+
+## Tích hợp SPA local
+
+- JavaScript thuần, hash routing, không thêm dependency hoặc yêu cầu server rewrite.
+- 23 màn hình bài đọc/thực hành; vẫn có 17 mục đánh dấu tự kiểm.
+- Chọn bài, Bài trước/Bài tiếp, mục lục active, tiêu đề trang và live status.
+- Hash tới lab/sơ đồ mở đúng bài cha; Back/Forward không tải lại trang.
+- Hash lạ hoặc encode lỗi trở về lộ trình. Skip link vẫn đưa focus tới main
+  mà không đổi bài đang đọc.
+- Không tháo các panel khỏi DOM: demo và iframe phòng khám giữ state khi chuyển bài.
+- Phòng khám có route `#practice` riêng; `project.html` vẫn mở độc lập được.
+- Mobile thu gọn mục lục, in/PDF hiện toàn bộ bài, tắt JavaScript vẫn đọc được.
+- Tests tương tác mở đúng bài trước khi thao tác; kiểm tra thực tế cả click mục lục,
+  Enter, focus, tiến độ, lưu state, print media và tắt script execution.
+- Workflow chỉ được bổ sung syntax check SPA; không chạy deploy trong lượt này.
+
+Kết quả mới và exit code được lưu local trong `.preview/browser-results.json`,
+`.preview/qa-detail.exit.json` và `.preview/spa-qa.stdout.log` /
+`.preview/spa-qa.stderr.log`. Các lượt browser chạy nối tiếp, không chồng nhau.
+
+### Kết quả SPA được kiểm chứng độc lập ngày 12/10/2026
+
+- Python: 19/19 tests đạt, exit code 0.
+- JavaScript runtime: 5/5 tests đạt, exit code 0.
+- Syntax checks: course.js, project.js, spa.js và hai browser test files đạt.
+- Chrome 154: 395 assertions đạt; hoàn tất `2026-10-12T04:57:24.424Z`,
+  wrapper exit code 0. Không có uncaught JavaScript exception.
+- Viewport: 1440×1000, 768×844, 390×844, 320×844; toàn bộ 23 panel được
+  kiểm tra overflow ở ba viewport tablet/mobile.
+- Kiểm tra riêng: initial/nested/invalid/malformed hash, Back/Forward, picker,
+  boundary buttons, mobile TOC, focus/skip link, retained demo/iframe state,
+  persisted progress, print media và no-JavaScript fallback.
+- Có một lượt QA thất bại khi kiểm tra nhãn picker bị sticky header che ở 390px.
+  Đã sửa cuộn theo chiều cao header thực tế; lượt cuối xác nhận nhãn hiện đầy đủ
+  ở 768, 390 và 320px. Không dùng báo cáo PASS cũ để thay cho lượt thất bại.
+- `git diff --check` đạt. Chưa commit, push hoặc deploy SPA.

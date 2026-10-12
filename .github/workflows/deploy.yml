@@ -32,6 +32,7 @@ jobs:
         run: |
           node --check assets/js/app.js
           node --check demo/tu-hoc-api/course.js
+          node --check demo/tu-hoc-api/spa.js
           node --check demo/tu-hoc-api/project.js
           node --test tests/test_runtime.cjs
       - name: Validate real-browser learning interactions

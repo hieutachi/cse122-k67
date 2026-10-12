@@ -98,5 +98,18 @@
 @media(max-width:560px) { .queue-grid,.doctor-grid { grid-template-columns:1fr; } .project-app .field-grid { grid-template-columns:1fr; } .metrics { grid-template-columns:1fr 1fr; } .reading p,.reading li { font-size:16px; } .project-app main { padding:12px; } .project-app section { padding:16px; } }
 @media(max-width:768px) { .visual-flow,.visual-branches,.state-branches,.coverage-grid,#component-cards { grid-template-columns:1fr; } .visual-map { padding:14px; } }
 @media(max-width:560px) { .api-course .course-hero .btn { display:block; margin:12px 0; width:100%; text-align:center; } .api-course .lab-controls { align-items:stretch; } .api-course .lab-controls label { width:100%; } .api-course .course-toc a { padding:10px 5px; } }
+.spa-ready .course-hero { display:none; }
+.spa-ready .course-layout { margin-top:24px; }
+.course-toc a[aria-current="page"] { background:var(--lab-soft); color:var(--lab-accent); border-left:4px solid var(--lab-accent); font-weight:800; }
+.lesson-toolbar { background:#edf6f4; border:1px solid #c5dcd7; padding:16px; border-radius:12px; margin-bottom:18px; scroll-margin-top:140px; }
+.lesson-toolbar label { display:block; font-weight:700; margin-bottom:8px; }
+.api-course #lesson-picker { width:100%; }
+.lesson-toolbar p { margin:10px 0 0; font:14px/1.6 system-ui; overflow-wrap:anywhere; }
+.lesson-navigation { display:flex; justify-content:space-between; gap:16px; margin:24px 0; }
+.lesson-navigation button { flex:1; min-width:0; }
+.spa-ready .reading h2:focus { outline:3px solid #d37a18; outline-offset:6px; }
+.spa-ready .reading h2 { scroll-margin-top:140px; }
+@media(max-width:900px) { .spa-ready .course-layout { gap:16px; } .spa-ready .course-toc { padding:14px; } }
 @media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto!important; } }
+@media print { .api-course.spa-ready .course-content > .reading[hidden] { display:block!important; } .api-course.spa-ready .course-hero { display:block; } .lesson-toolbar,.lesson-navigation { display:none!important; } }
 @media print { .topbar,.course-toc,.lab-controls,.self-check,.demo-frame,#totop { display:none!important; } .course-layout { display:block; } .reading { border:0; padding:0; } .reading pre { white-space:pre-wrap; background:#eee; color:#000; } .course-hero { background:#fff!important; color:#000!important; } .api-course .course-hero h1,.api-course .course-hero p { color:#000; } }

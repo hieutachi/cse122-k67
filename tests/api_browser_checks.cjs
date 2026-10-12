@@ -1,8 +1,22 @@
 'use strict';
 // Run inside the existing dependency-free CDP browser harness.
 module.exports = async function apiBrowserChecks({send, evaluate, check, wait, navigate, click, screenshot, base}) {
-  const set = async (id, value, type = 'change') => evaluate(`(()=>{const el=document.getElementById(${JSON.stringify(id)});el.value=${JSON.stringify(value)};el.dispatchEvent(new Event(${JSON.stringify(type)},{bubbles:true}));})()`);
-  const press = selector => evaluate(`document.querySelector(${JSON.stringify(selector)}).click()`);
+  const route = async id => {
+    await evaluate(`location.hash=${JSON.stringify(id)}`);
+    await wait(`location.hash===${JSON.stringify('#'+id)} && !document.getElementById(${JSON.stringify(id)}).closest('.reading').hidden`);
+  };
+  const reveal = async selector => {
+    const id = await evaluate(`document.querySelector(${JSON.stringify(selector)}).closest('.course-content > .reading[hidden]')?.id`);
+    if (id) await route(id);
+  };
+  const set = async (id, value, type = 'change') => {
+    await reveal('#'+id);
+    return evaluate(`(()=>{const el=document.getElementById(${JSON.stringify(id)});el.value=${JSON.stringify(value)};el.dispatchEvent(new Event(${JSON.stringify(type)},{bubbles:true}));})()`);
+  };
+  const press = async selector => {
+    await reveal(selector);
+    return evaluate(`document.querySelector(${JSON.stringify(selector)}).click()`);
+  };
   const enter = async () => {
     await send('Input.dispatchKeyEvent',{type:'keyDown',key:'Enter',windowsVirtualKeyCode:13,text:'\r'});
     await send('Input.dispatchKeyEvent',{type:'keyUp',key:'Enter',windowsVirtualKeyCode:13});
@@ -10,6 +24,37 @@ module.exports = async function apiBrowserChecks({send, evaluate, check, wait, n
   await navigate('index.html');
   await check(`!!document.querySelector('#tu-hoc-api a[href="demo/tu-hoc-api/index.html"]')`, 'Homepage exposes the three-session course');
   await navigate('demo/tu-hoc-api/index.html');
+  await wait('document.body.classList.contains("spa-ready")');
+  await check('location.hash==="#lo-trinh" && document.querySelectorAll(".course-content > .reading:not([hidden])").length===1 && document.getElementById("lesson-prev").disabled', 'SPA opens only the roadmap and disables previous at the start');
+  await evaluate('window.spaToken={};window.initialSpaToken=window.spaToken');
+  await press('#lesson-next'); await wait('location.hash==="#ban-do-noi-dung"');
+  await check('document.activeElement.id==="title-ban-do-noi-dung" && document.querySelector(".course-toc [aria-current=page]").hash==="#ban-do-noi-dung"', 'Next route announces the active lesson and moves keyboard focus');
+  await evaluate('history.back()'); await wait('location.hash==="#lo-trinh"');
+  await evaluate('history.forward()'); await wait('location.hash==="#ban-do-noi-dung"');
+  await check('window.spaToken===window.initialSpaToken && !document.getElementById("ban-do-noi-dung").hidden', 'Back and Forward update the view without reloading the document');
+  await set('lesson-picker','promise'); await wait('location.hash==="#promise" && !document.getElementById("promise").hidden');
+  await check('document.title.includes("Promise") && document.getElementById("lesson-status").textContent.includes("Promise")', 'Lesson picker updates the route, document title and status');
+  await route('lab-loop');
+  await check('!document.getElementById("event-loop").hidden && document.querySelectorAll(".course-content > .reading:not([hidden])").length===1', 'Nested lab links reveal their parent lesson');
+  await route('reference');
+  await check('document.getElementById("lesson-next").disabled', 'Last route disables next');
+  await evaluate('location.hash="missing-lesson"'); await wait('location.hash==="#lo-trinh"');
+  await check('!document.getElementById("lo-trinh").hidden', 'Unknown route recovers to the roadmap');
+  await evaluate('location.hash="%E0%A4%A"'); await wait('location.hash==="#lo-trinh"');
+  await check('!document.getElementById("lo-trinh").hidden', 'Malformed encoded hash recovers without throwing');
+  await route('promise');
+  await evaluate('document.querySelector(".skip").focus()'); await enter();
+  await wait('location.hash==="#main" && document.activeElement.id==="main"');
+  await check('!document.getElementById("promise").hidden', 'Keyboard skip link focuses main without discarding the current lesson');
+  await route('practice');
+  await wait('document.querySelector("#practice iframe").contentDocument?.querySelectorAll("#doctor option").length===7');
+  await evaluate('document.querySelector("#practice iframe").contentDocument.getElementById("patient").value="SV SPA"');
+  await route('booking'); await route('practice');
+  await check('document.querySelector("#practice iframe").contentDocument.getElementById("patient").value==="SV SPA"', 'Practice iframe state survives switching between lessons');
+  await send('Emulation.setEmulatedMedia',{media:'print'});
+  await check('[...document.querySelectorAll(".course-content > .reading")].every(el=>getComputedStyle(el).display!=="none") && getComputedStyle(document.getElementById("lesson-toolbar")).display==="none"', 'Print includes every lesson while hiding SPA navigation');
+  await send('Emulation.setEmulatedMedia',{media:''});
+  await route('lo-trinh');
   await check('document.querySelectorAll("[data-reading]").length===17 && document.querySelectorAll("[data-complete]").length===17', 'Course renders all 17 readings and self-checks');
   await screenshot('desktop-api-course');
   await check('document.querySelectorAll(".visual-map").length>=8 && document.querySelectorAll(".reading-coach").length>=14', 'Remaining syllabus has responsive maps and guided observations');
@@ -53,6 +98,9 @@ module.exports = async function apiBrowserChecks({send, evaluate, check, wait, n
   await check(`document.getElementById("loop-log").textContent===${JSON.stringify('A: bắt đầu\nD: kết thúc script\nC: Promise.then\nB: timer 0ms')}`, 'Real browser event loop produces A D C B');
   await press('#loop-reset');
   for (let i=0;i<7;i++) await press('#loop-step');
+  const retainedLoop = await evaluate('document.getElementById("loop-log").textContent');
+  await route('promise'); await route('event-loop');
+  await check(`document.getElementById("loop-log").textContent===${JSON.stringify(retainedLoop)}`, 'Interactive lesson state is retained across route changes');
   await check('document.getElementById("loop-stack").textContent==="(rỗng)" && document.getElementById("loop-log").textContent.includes("B: timer")', 'Step model reaches settled queues');
   await press('#promise-run');
   await check('document.getElementById("promise-state").textContent.startsWith("pending") && document.getElementById("promise-log").textContent.includes("Executor chạy ngay")', 'Promise executor is synchronous and state starts pending');
@@ -92,8 +140,9 @@ module.exports = async function apiBrowserChecks({send, evaluate, check, wait, n
   await press('#race-good'); await wait('!document.getElementById("race-good").disabled');
   await check('document.getElementById("race-screen").textContent.includes("An (đúng)")','Request guard protects the latest result');
   await press('[data-complete="promise"]');
-  await navigate('demo/tu-hoc-api/index.html');
+  await navigate('demo/tu-hoc-api/index.html#promise');
   await check('document.querySelector("[data-complete=promise]").checked && document.getElementById("course-progress").textContent.includes("1 / 17")','Reading progress survives navigation');
+  await check('!document.getElementById("promise").hidden && document.querySelectorAll(".course-content > .reading:not([hidden])").length===1', 'Reload with a shared lesson URL restores the correct single panel');
 
   const project = async () => {
     const url=base+'demo/tu-hoc-api/project.html';
@@ -172,10 +221,29 @@ module.exports = async function apiBrowserChecks({send, evaluate, check, wait, n
   for(const width of [768,390,320]) {
     await send('Emulation.setDeviceMetricsOverride',{width,height:844,deviceScaleFactor:1,mobile:true});
     await navigate('demo/tu-hoc-api/index.html');
+    try {
+      await wait('document.getElementById("lesson-toolbar").getBoundingClientRect().top >= document.querySelector(".topbar").getBoundingClientRect().bottom');
+    } catch (error) {
+      console.error('SPA scroll diagnostic:', await evaluate('({hash:location.hash,width:innerWidth,y:scrollY,toolbar:document.getElementById("lesson-toolbar").getBoundingClientRect().toJSON(),header:document.querySelector(".topbar").getBoundingClientRect().toJSON()})'));
+      await screenshot('spa-scroll-failure');
+      throw error;
+    }
+    await check('document.getElementById("lesson-toolbar").getBoundingClientRect().top >= document.querySelector(".topbar").getBoundingClientRect().bottom', 'Initial lesson picker label is not obscured by the sticky header at '+width);
     await check('document.documentElement.scrollWidth<=innerWidth+1','Reading has no horizontal page overflow at '+width);
     if(width===390) await screenshot('mobile-api-course');
-    await check('[...document.querySelectorAll(".visual-map,.visual-flow li,.visual-outcome,.coverage-grid article")].every(el=>{const r=el.getBoundingClientRect();return r.left>=0&&r.right<=innerWidth+1&&el.scrollWidth<=el.clientWidth+1})', 'Visual explanation cards stay readable without internal horizontal scrolling at '+width);
+    await check('!document.querySelector(".course-toc").open && document.getElementById("lesson-picker").getBoundingClientRect().width>0', 'Mobile navigation starts compact with a visible lesson picker at '+width);
+    await click('.course-toc summary');
+    await check('document.querySelector(".course-toc").open', 'Mobile table of contents opens with real pointer input at '+width);
+    await click('.course-toc a[href="#promise"]');
+    await wait('location.hash==="#promise" && !document.getElementById("promise").hidden');
+    await check('!document.querySelector(".course-toc").open && document.activeElement.id==="title-promise"', 'Mobile TOC navigation closes the menu and focuses the lesson at '+width);
+    const panelIds = await evaluate('[...document.querySelectorAll(".course-content > .reading")].map(el=>el.id)');
+    for (const id of panelIds) {
+      await route(id);
+      await check('document.documentElement.scrollWidth<=innerWidth+1 && [...document.querySelectorAll(".reading:not([hidden]) .visual-map,.reading:not([hidden]) .visual-flow li,.reading:not([hidden]) .visual-outcome,.reading:not([hidden]) .coverage-grid article")].every(el=>{const r=el.getBoundingClientRect();return r.left>=0&&r.right<=innerWidth+1&&el.scrollWidth<=el.clientWidth+1})', 'Active SPA lesson and visual cards fit at '+width+': '+id);
+    }
     for(const section of ['event-loop','promise','search-pagination','components']) {
+      await route(section);
       await evaluate(`document.getElementById(${JSON.stringify(section)}).scrollIntoView({block:'start',behavior:'instant'})`);
       if(width===390 || width===768) await screenshot((width===768?'tablet':'mobile')+'-api-'+section);
       if(width===390) {
@@ -190,6 +258,7 @@ module.exports = async function apiBrowserChecks({send, evaluate, check, wait, n
     await check('document.getElementById("component-summary").textContent.includes("BS. Hà")', 'Component shared state works at '+width);
     if(width===390) {
       for(const lab of ['lab-loop','lab-search','lab-component']) {
+        await route(lab);
         await evaluate(`document.getElementById(${JSON.stringify(lab)}).scrollIntoView({block:'start',behavior:'instant'})`);
         await screenshot('mobile-api-'+lab);
       }
@@ -200,4 +269,16 @@ module.exports = async function apiBrowserChecks({send, evaluate, check, wait, n
     if(width===390) await screenshot('mobile-api-project');
   }
   await send('Emulation.setDeviceMetricsOverride',{width:1440,height:1000,deviceScaleFactor:1,mobile:false});
+  await navigate('demo/tu-hoc-api/index.html#lab-loop');
+  await check('!document.getElementById("event-loop").hidden && document.getElementById("lesson-picker").value==="event-loop"', 'Initial shared nested hash selects its parent lesson');
+  await send('Emulation.setScriptExecutionDisabled',{value:true});
+  try {
+    const url = await evaluate('new URL("index.html",location.href).href');
+    await send('Page.navigate',{url});
+    await wait('document.readyState==="complete" && !!document.getElementById("reference")');
+    await check('!document.body.classList.contains("spa-ready") && [...document.querySelectorAll(".course-content > .reading")].every(el=>!el.hidden && getComputedStyle(el).display!=="none") && document.getElementById("lesson-toolbar").hidden && document.querySelector("noscript p").getBoundingClientRect().height>0', 'No-JavaScript fallback keeps every lesson readable and hides inactive SPA controls');
+    await screenshot('desktop-api-nojs');
+  } finally {
+    await send('Emulation.setScriptExecutionDisabled',{value:false});
+  }
 };
