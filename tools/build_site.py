@@ -191,6 +191,7 @@ def build_index():
 <p>Học liệu số tích hợp: Ebook 9 chương với sơ đồ ASCII và demo HTML chạy trực tiếp, 163 slide trực quan theo chương, 44 bài slide gốc và bộ demo HTML/CSS/JS.</p>
 <div class="hero-stats" aria-label="Thống kê học liệu"><span><strong>9</strong> chương</span><span><strong>64</strong> bài giảng</span><span><strong>163</strong> slide trực quan</span><span><strong>38</strong> decks</span></div>
 <p><a class="btn" href="ebook/chuong-1.html">Bắt đầu học Chương 1 &#8594;</a><a class="btn ghost" href="slides/index.html">Xem slide trực quan</a></p></div></section>
+<section class="card" id="tu-hoc-api" aria-labelledby="api-study-title"><span class="chip">3 BUỔI CUỐI</span><h2 id="api-study-title">Từ Web APIs đến Fetch &amp; dự án hoàn chỉnh</h2><p>Site tự học riêng: bài đọc chi tiết, câu chuyện quán cà phê và đặt lịch khám, sơ đồ trực quan dễ đọc trên điện thoại, phòng thí nghiệm Event Loop/Promise/HTTP/Fetch, tìm kiếm/phân trang và component và dự án đặt lịch chạy được. Đọc theo 3 buổi; buổi thứ tư dành cho báo cáo, chữa bài.</p><p><a class="btn" href="demo/tu-hoc-api/index.html">Mở chuyên đề tự học →</a> <a class="btn ghost" href="demo/tu-hoc-api/project.html">Thử dự án đặt lịch khám</a></p></section>
 <div class="sec-head"><h2>Nội dung học phần</h2><span class="meta">9 chương &#8226; 38 decks &#8226; 163 slide trực quan</span></div>
 <a class="btn ghost resume-link hidden" data-last-lesson href="ebook/chuong-1.html">&#8634; <span>Tiếp tục học</span></a>
 <div class="toolbar"><input id="q" type="search" placeholder="Tìm kiếm chương, chủ đề, công nghệ... (bấm / để focus)" aria-label="Tìm kiếm"><span class="count" id="count"></span></div>
@@ -203,7 +204,8 @@ def build_index():
 <article class="card"><h3><a href="demo/index.html">Demo chạy được</a></h3><p>Ví dụ HTML/CSS/JS thực tế, kể cả dự án CampusConnect hoàn chỉnh.</p></article>
 </div>
 """ + foot(0)
-    open(os.path.join(ROOT, "index.html"), "w", encoding="utf-8").write(page)
+    with open(os.path.join(ROOT, "index.html"), "w", encoding="utf-8") as output:
+        output.write(page)
 
 def render_learning_guide(guide, practice):
     def items(values):

@@ -1,0 +1,8 @@
+[
+  {"id":1,"name":"BS. Nguyễn Minh An","specialty":"Tim mạch","fee":250000},
+  {"id":2,"name":"BS. Trần Thu Hà","specialty":"Nội tổng quát","fee":180000},
+  {"id":3,"name":"BS. Lê Hoàng Nam","specialty":"Nhi khoa","fee":200000},
+  {"id":4,"name":"BS. Phạm Ngọc Mai","specialty":"Tim mạch","fee":280000},
+  {"id":5,"name":"BS. Đỗ Thanh Bình","specialty":"Nội tổng quát","fee":190000},
+  {"id":6,"name":"BS. Vũ Lan Anh","specialty":"Nhi khoa","fee":220000}
+]

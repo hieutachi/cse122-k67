@@ -14,6 +14,16 @@ spec.loader.exec_module(generator)
 
 
 class GeneratorTests(unittest.TestCase):
+    def test_homepage_regeneration_keeps_api_course_links(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            with patch.object(generator, "ROOT", tmp), \
+                    patch.object(generator, "imgs_for", return_value=[]):
+                generator.build_index()
+            text = (Path(tmp) / "index.html").read_text(encoding="utf-8")
+            self.assertIn('id="tu-hoc-api"', text)
+            for entry in ("index.html", "project.html"):
+                self.assertIn(f'href="demo/tu-hoc-api/{entry}"', text)
+
     def test_learning_guide_escapes_content_and_matches_generated_pages(self):
         guides = json.loads((ROOT / "data/learning_guides.json").read_text(encoding="utf-8"))
         for chapter, guide in guides.items():

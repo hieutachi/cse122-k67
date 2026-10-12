@@ -84,6 +84,7 @@ async function main() {
       const value=await evaluate(expression);
       if(value!==true)console.error('Browser diagnostic:',await evaluate('({url:location.href,active:document.activeElement.outerHTML.slice(0,300),answered:document.querySelectorAll(".answered").length,feedback:document.querySelector(".quiz-feedback")?.textContent})'));
       assert.equal(value,true,label);checks++;
+      if(process.env.CSE122_VERBOSE)console.log('PASS:', label);
     };
     const wait = async expression => {
       for(let i=0;i<150;i++){if(await evaluate(expression))return;await sleep(100);}
@@ -273,6 +274,8 @@ async function main() {
     await click('#cd9-next');
     await check('!document.getElementById("cd9-step-err").hidden','Multi-step booking refuses to advance without a choice');
 
+    await require('./api_browser_checks.cjs')({send,evaluate,check,wait,navigate,click,screenshot,base});
+
     for(const width of [390,320]) {
       await send('Emulation.setDeviceMetricsOverride',{width,height:844,deviceScaleFactor:1,mobile:true});
       await navigate('demo/de-cuong/index.html');
@@ -323,7 +326,7 @@ async function main() {
     await evaluate('document.querySelector(".quiz-opts button").click();document.querySelector(".quiz-panel").scrollIntoView({block:"start",behavior:"instant"})');
     await screenshot('mobile-quiz-feedback');
     assert.deepEqual(exceptions, [], 'No uncaught JavaScript exceptions');
-    const report={browser:await send('Browser.getVersion'),checks,viewports:['1440x1000','390x844','320x844'],result:'PASS',date:new Date().toISOString()};
+    const report={browser:await send('Browser.getVersion'),checks,viewports:['1440x1000','768x844','390x844','320x844'],result:'PASS',date:new Date().toISOString()};
     await fsp.writeFile(path.join(root,'.preview/browser-results.json'),JSON.stringify(report,null,2));
     console.log(`PASS: ${checks} real-browser assertions; desktop, mobile, keyboard, quiz, resume and lightbox.`);
   } finally {

@@ -1,0 +1,1 @@
+Đây là văn bản thường, không phải JSON. HTTP 200 không bảo đảm response.json() sẽ thành công.

@@ -10,6 +10,38 @@ Static course website for GitHub Pages: Ebook (9 chapters) + slide viewer + live
 - `assets/` - css/js + `img/trucquan/*.jpg` (converted from PNG via `tools/convert_trucquan.py`)
 - `data/` - `decks.json` (38 CSE122 decks), `bai.json` (Bai 1-44 titles)
 
+## Three-session closing course (Vietnamese)
+
+The homepage links to `demo/tu-hoc-api/index.html`: 17 detailed readings grouped
+into three suggested 150-minute teaching sessions, nine interactive labs,
+responsive visual maps, 21 explained review questions, local reading self-checks and
+print/PDF styling. Session four is reserved for project presentations and feedback.
+The homepage generator retains this entry when rebuilding.
+
+- Session 1: browser Web APIs, callback, event loop, Promise lifecycle, async/await.
+- Session 2: API/resource/endpoint, REST/HTTP/JSON, UI states, Fetch, errors/CORS,
+  cancellation/timeouts and stale-response guards.
+- Additional session 2 practice: client-side search/filter/pagination with a real
+  GET and visible original/filtered/page counts; server-side contracts are explained,
+  not claimed to exist on the static server.
+- Session 3: project specification, multi-step booking, dashboard, component tree,
+  props/state/events, shared state/routing, framework survey and testing/deploy.
+  The React/JSX example is an optional reading for a separate configured project;
+  the site does not load React, Vue or Angular.
+- Content QA notes: [Vietnamese review](docs/qa-tu-hoc-api.md). New maps and labs
+  are exercised at 768px, 390px and 320px; browser screenshots are in `.preview/`.
+- `demo/tu-hoc-api/project.html` is a complete vanilla-JS frontend demo: real
+  same-origin GET of `data/doctors.json`, specialty filtering, three-step form,
+  local persistence, dashboard status actions and simulated failed saves.
+- There is **no backend, real POST or protected admin**. Use fictional contact
+  data only. Appointments use `cse122-api-lab-appointments-v1`; reading progress
+  uses `cse122-api-reading-v1`. Existing course storage keys are untouched.
+- Open over HTTP, not `file://`. No additional npm/pip dependency or public API
+  is required. The source JS is readable directly; dynamic content uses text nodes.
+- Validation: `tests/test_api_course.py` checks assets, anchors and coverage;
+  `tests/api_browser_checks.cjs` is invoked by the existing browser smoke suite
+  for real event-loop/Promise/Fetch, booking errors/success, storage and phone widths.
+
 ## Rebuild
 The current generator and Markdown converter are now retained in this repository
 under `tools/`, alongside the generated HTML. The 64 upstream Markdown lessons
